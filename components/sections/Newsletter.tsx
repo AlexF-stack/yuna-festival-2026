@@ -4,10 +4,12 @@ import { useState, type FormEvent } from "react";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
+  const [pending, setPending] = useState(false);
   const [ok, setOk] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
 
@@ -17,8 +19,25 @@ export function Newsletter() {
       return;
     }
 
-    setOk(true);
-    setEmail("");
+    setPending(true);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: trimmed, website }),
+      });
+      const payload = (await res.json()) as { ok?: boolean; error?: string };
+      if (!res.ok || !payload.ok) {
+        setError(payload.error ?? "Inscription impossible. Réessaie.");
+        return;
+      }
+      setOk(true);
+      setEmail("");
+    } catch {
+      setError("Réseau indisponible. Vérifie ta connexion.");
+    } finally {
+      setPending(false);
+    }
   }
 
   return (
@@ -36,6 +55,20 @@ export function Newsletter() {
         </p>
       ) : (
         <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-2.5" noValidate>
+          <label className="sr-only" htmlFor="nl-website" aria-hidden>
+            Site web
+          </label>
+          <input
+            id="nl-website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            className="pointer-events-none absolute left-[-9999px] h-0 w-0 opacity-0"
+            aria-hidden
+          />
           <input
             type="email"
             name="email"
@@ -48,9 +81,10 @@ export function Newsletter() {
           />
           <button
             type="submit"
-            className="rounded-full bg-feu px-5 py-3 text-[0.9rem] font-bold text-papier transition-colors duration-200 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-papier"
+            disabled={pending}
+            className="rounded-full bg-feu px-5 py-3 text-[0.9rem] font-bold text-papier transition-colors duration-200 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-papier disabled:opacity-60"
           >
-            Je m&apos;abonne
+            {pending ? "Envoi…" : "Je m'abonne"}
           </button>
         </form>
       )}

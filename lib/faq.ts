@@ -48,4 +48,10 @@ export const FAQ_ITEMS: FaqItem[] = [
     answer:
       "Oui ! Inscris-toi via le formulaire en choisissant « Bénévole » : accueil, sécurité, technique, protocole, action médicale. L'équipe te recontactera sur WhatsApp.",
   },
+  {
+    id: "inscription-place",
+    question: "Et si j'ai un souci à l'inscription en ligne ?",
+    answer:
+      "Pas d'inquiétude : même sans mail de confirmation, ton inscription est enregistrée dès que tu vois ton pass QR. Tu pourras aussi t'inscrire sur place le jour J si besoin.",
+  },
 ];

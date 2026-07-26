@@ -213,6 +213,19 @@ body {
   animation: theme-shimmer 4.5s ease-in-out infinite;
 }
 
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee-scroll 42s linear infinite;
+}
+
 .section-dots {
   background-image: radial-gradient(
     color-mix(in srgb, var(--bleu) 28%, transparent) 1px,
@@ -230,7 +243,8 @@ body {
   .tee-pulse,
   .wa-float::before,
   .hero-horizon,
-  .theme-debout {
+  .theme-debout,
+  .marquee-track {
     animation: none !important;
   }
 }

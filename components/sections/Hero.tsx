@@ -13,6 +13,7 @@ import {
 import { YunaLogo } from "@/components/brand/YunaLogo";
 import { AnimatedThemeTitle } from "@/components/sections/AnimatedThemeTitle";
 import { HeroCountdown } from "@/components/sections/HeroCountdown";
+import { SunriseSceneDynamic } from "@/components/sections/SunriseSceneDynamic";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FESTIVAL, HERO_COPY } from "@/lib/festival";
 
@@ -87,6 +88,8 @@ export function Hero({ eventStartIso }: HeroProps) {
           aria-hidden
           className="hero-horizon pointer-events-none absolute bottom-[12%] left-1/2 -z-10 h-px w-[min(92vw,880px)] -translate-x-1/2 bg-gradient-to-r from-transparent via-bleu/50 to-transparent"
         />
+
+        <SunriseSceneDynamic />
 
         <motion.div
           style={{ y: contentY }}

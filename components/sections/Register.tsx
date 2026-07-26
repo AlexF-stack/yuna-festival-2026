@@ -15,6 +15,7 @@ export function Register() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
   const [errors, setErrors] = useState<FieldErrors>({});
   const [pending, setPending] = useState(false);
 
@@ -27,7 +28,7 @@ export function Register() {
       const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, email }),
+        body: JSON.stringify({ name, phone, email, website }),
       });
 
       const payload = (await res.json()) as {
@@ -88,7 +89,8 @@ export function Register() {
           </h2>
           <p className="mt-5 max-w-md text-[1.05rem] leading-relaxed text-charbon">
             {FESTIVAL.freeEntry}. Inscris-toi pour recevoir ton pass QR
-            personnel — à présenter à l&apos;entrée.
+            personnel — à présenter à l&apos;entrée. En cas de souci en ligne,
+            l&apos;inscription sur place reste possible le jour J.
           </p>
 
           <ul className="mt-8 space-y-3.5 text-sm text-charbon">
@@ -108,11 +110,24 @@ export function Register() {
         <form
           onSubmit={onSubmit}
           noValidate
-          className="rounded-3xl border border-bleu/10 bg-papier p-6 shadow-[0_20px_50px_rgba(0,90,140,0.1)] min-[480px]:p-8"
+          className="relative rounded-3xl border border-bleu/10 bg-papier p-6 shadow-[0_20px_50px_rgba(0,90,140,0.1)] min-[480px]:p-8"
         >
           <h3 className="mb-6 font-display text-xl font-extrabold uppercase tracking-wide text-bleu">
             Tes infos
           </h3>
+
+          <div className="pointer-events-none absolute left-[-9999px] h-0 w-0 overflow-hidden opacity-0" aria-hidden>
+            <label htmlFor="reg-website">Site web</label>
+            <input
+              id="reg-website"
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+            />
+          </div>
 
           <div className="mb-4">
             <label htmlFor="reg-name" className="mb-1.5 block text-sm font-medium text-encre">

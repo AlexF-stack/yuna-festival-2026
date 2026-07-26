@@ -30,7 +30,8 @@ export const HERO_COPY = {
   edition: FESTIVAL.edition,
   titleLine1: "BÉNIN",
   titleLine2: "DEBOUT",
-  support: FESTIVAL.tagline,
+  support:
+    "Une génération non ordinaire se lève — concerts, adoration et masterclass à Midombo.",
   meta: `${FESTIVAL.datesShort} · ${FESTIVAL.venue}, ${FESTIVAL.city}`,
   verse:
     "« Lève-toi, sois éclairée, car ta lumière arrive, et la gloire de l'Éternel se lève sur toi. »",
@@ -42,6 +43,7 @@ export const HERO_COPY = {
 } as const;
 
 export const NAV_LINKS = [
+  { href: "#mission", label: "Mission" },
   { href: "#artistes", label: "Line-up" },
   { href: "#programme", label: "Programme" },
   { href: "#inscription", label: "Pass" },

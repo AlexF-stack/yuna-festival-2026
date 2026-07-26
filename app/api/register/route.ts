@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 
 import { NextResponse } from "next/server";
 
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { generateRegistrationQr } from "@/lib/registration-qr";
 import { validateRegistrationInput } from "@/lib/registration";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
@@ -12,9 +13,24 @@ type RegisterBody = {
   name?: string;
   phone?: string;
   email?: string;
+  website?: string; // honeypot
 };
 
 export async function POST(request: Request) {
+  const limited = rateLimit(`register:${clientIp(request)}`, {
+    limit: 5,
+    windowMs: 60_000,
+  });
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: "Trop de tentatives. Réessaie dans un instant." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limited.retryAfterSec) },
+      },
+    );
+  }
+
   let body: RegisterBody;
   try {
     body = (await request.json()) as RegisterBody;
@@ -23,6 +39,11 @@ export async function POST(request: Request) {
       { error: "Corps de requête JSON invalide." },
       { status: 400 },
     );
+  }
+
+  // Bot honeypot — silent success without creating a real registration
+  if (body.website && body.website.trim().length > 0) {
+    return NextResponse.json({ ok: true });
   }
 
   const parsed = validateRegistrationInput(body);

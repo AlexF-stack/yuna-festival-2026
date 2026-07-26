@@ -145,6 +145,25 @@ type ProductsTable = {
   Relationships: [];
 };
 
+type NewsletterSubscribersTable = {
+  Row: {
+    id: string;
+    email: string;
+    created_at: string;
+  };
+  Insert: {
+    id?: string;
+    email: string;
+    created_at?: string;
+  };
+  Update: {
+    id?: string;
+    email?: string;
+    created_at?: string;
+  };
+  Relationships: [];
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -152,6 +171,7 @@ export type Database = {
       schedule: ScheduleTable;
       registrations: RegistrationsTable;
       products: ProductsTable;
+      newsletter_subscribers: NewsletterSubscribersTable;
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
