@@ -1,0 +1,236 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+/* ── Tokens — charte logo YUNA ───────────────────────────────────── */
+:root {
+  --bleu: #0077bb;
+  --bleu-fonce: #005a8c;
+  --feu: #ff6600;
+  --braise: #e55a00;
+  --charbon: #444444;
+  --encre: #1a1a1a;
+  --papier: #ffffff;
+  --nuage: #f3f8fc;
+  --ciel: #e8f4fb;
+  --vert: #008751;
+  --jaune: #fcd116;
+  --rouge: #e8112d;
+
+  /* Alias rétrocompat (composants historiques) */
+  --nuit: var(--encre);
+  --nuit2: var(--nuage);
+  --aube: var(--bleu);
+  --ivoire: var(--papier);
+  --sky-deep: #005a8c;
+  --sky-mid: #0077bb;
+  --sky-horizon: #3a9ad4;
+  --sky-glow-bleu: rgb(0 119 187 / 0.22);
+  --sky-glow-feu: rgb(255 102 0 / 0.14);
+  --sky-glow-aube: rgb(0 119 187 / 0.1);
+  --sky-dawn-top: #e8f4fb;
+  --sky-dawn-mid: #cfe8f6;
+  --sky-dawn-bottom: #ffe0c2;
+
+  --wa: #25d366;
+  --tee-visual-mid: #d6ebf7;
+  --tee-visual-deep: #e8f4fb;
+  --tee-visual-dark-mid: #1a3a52;
+  --tee-visual-dark-deep: #0f2433;
+}
+
+@theme inline {
+  --color-bleu: var(--bleu);
+  --color-bleu-fonce: var(--bleu-fonce);
+  --color-feu: var(--feu);
+  --color-braise: var(--braise);
+  --color-charbon: var(--charbon);
+  --color-encre: var(--encre);
+  --color-papier: var(--papier);
+  --color-nuage: var(--nuage);
+  --color-ciel: var(--ciel);
+  --color-vert: var(--vert);
+  --color-jaune: var(--jaune);
+  --color-rouge: var(--rouge);
+
+  --color-nuit: var(--nuit);
+  --color-nuit2: var(--nuit2);
+  --color-aube: var(--aube);
+  --color-ivoire: var(--ivoire);
+  --color-sky-deep: var(--sky-deep);
+  --color-sky-mid: var(--sky-mid);
+  --color-sky-horizon: var(--sky-horizon);
+  --color-wa: var(--wa);
+
+  --font-display: var(--font-baloo-2), system-ui, sans-serif;
+  --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --ease-yuna: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  min-height: 100dvh;
+  background-color: var(--papier);
+  color: var(--encre);
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--feu);
+  color: var(--papier);
+}
+
+:focus-visible {
+  outline: 2px solid var(--bleu);
+  outline-offset: 3px;
+}
+
+/* Hero — ciel clair type festivals culturels BJ */
+@utility bg-sky-night {
+  background:
+    radial-gradient(ellipse 90% 55% at 10% 0%, rgb(0 119 187 / 0.18), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 95% 15%, rgb(255 102 0 / 0.12), transparent 50%),
+    linear-gradient(180deg, #ffffff 0%, #e8f4fb 48%, #d4eaf7 100%);
+}
+
+@utility bg-sky-dawn {
+  background:
+    radial-gradient(
+      ellipse 90% 60% at 50% 100%,
+      color-mix(in srgb, var(--feu) 22%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(180deg, transparent 0%, #ffe8d4 100%);
+}
+
+@keyframes tee-flame {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scaleY(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1.05);
+  }
+}
+
+@keyframes tee-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes wa-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes hero-horizon-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: translateX(-50%) scaleX(0.96);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateX(-50%) scaleX(1);
+  }
+}
+
+@keyframes theme-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.tee-flame {
+  transform-origin: center bottom;
+  animation: tee-flame 1.4s ease-in-out infinite;
+}
+
+.tee-pulse {
+  transform-origin: center;
+  animation: tee-pulse 0.9s ease-in-out infinite;
+}
+
+.wa-float::before {
+  animation: wa-ping 2s infinite;
+}
+
+.hero-horizon {
+  animation: hero-horizon-pulse 4.5s ease-in-out infinite;
+}
+
+.theme-debout {
+  animation: theme-shimmer 4.5s ease-in-out infinite;
+}
+
+.section-dots {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--bleu) 28%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 18px 18px;
+}
+
+.section-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tee-flame,
+  .tee-pulse,
+  .wa-float::before,
+  .hero-horizon,
+  .theme-debout {
+    animation: none !important;
+  }
+}
