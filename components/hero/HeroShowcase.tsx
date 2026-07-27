@@ -33,7 +33,7 @@ export function HeroShowcase({ eventStartIso }: HeroShowcaseProps) {
           {FESTIVAL.venue}, {FESTIVAL.city} — {FESTIVAL.freeEntry}
         </p>
 
-        <div className="mx-auto mt-4 aspect-[2/3] w-full max-w-[280px]">
+        <div className="mx-auto mt-5 w-full max-w-[260px]">
           <BeninMap />
         </div>
 
