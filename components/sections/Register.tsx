@@ -3,8 +3,11 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
+import { TorchSceneDynamic } from "@/components/sections/TorchSceneDynamic";
 import { FESTIVAL } from "@/lib/festival";
+import { EASE_YUNA } from "@/lib/motion";
 
 type FieldErrors = {
   form?: string;
@@ -12,10 +15,11 @@ type FieldErrors = {
 
 export function Register() {
   const router = useRouter();
+  const reduce = useReducedMotion();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [website, setWebsite] = useState(""); // honeypot
+  const [website, setWebsite] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [pending, setPending] = useState(false);
 
@@ -74,8 +78,20 @@ export function Register() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_100%_0%,color-mix(in_srgb,var(--feu)_14%,transparent),transparent_55%)]" />
       </div>
 
-      <div className="mx-auto grid max-w-[1240px] items-start gap-12 min-[900px]:grid-cols-[1fr_minmax(0,26rem)] min-[900px]:gap-16">
-        <div>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute bottom-0 left-0 z-0 h-[280px] w-[280px] opacity-70 min-[900px]:h-[360px] min-[900px]:w-[360px]"
+      >
+        <TorchSceneDynamic />
+      </div>
+
+      <div className="relative z-10 mx-auto grid max-w-[1240px] items-start gap-12 min-[900px]:grid-cols-[1fr_minmax(0,26rem)] min-[900px]:gap-16">
+        <motion.div
+          initial={reduce ? false : { opacity: 0, x: -24 }}
+          whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.65, ease: EASE_YUNA }}
+        >
           <p className="mb-3 text-[0.72rem] font-bold uppercase tracking-[0.32em] text-feu">
             Inscription
           </p>
@@ -105,18 +121,25 @@ export function Register() {
               </li>
             ))}
           </ul>
-        </div>
+        </motion.div>
 
-        <form
+        <motion.form
           onSubmit={onSubmit}
           noValidate
-          className="relative rounded-3xl border border-bleu/10 bg-papier p-6 shadow-[0_20px_50px_rgba(0,90,140,0.1)] min-[480px]:p-8"
+          initial={reduce ? false : { opacity: 0, y: 28 }}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease: EASE_YUNA, delay: 0.08 }}
+          className="relative rounded-3xl border border-bleu/10 bg-papier/95 p-6 shadow-[0_20px_50px_rgba(0,90,140,0.1)] backdrop-blur-sm min-[480px]:p-8"
         >
           <h3 className="mb-6 font-display text-xl font-extrabold uppercase tracking-wide text-bleu">
             Tes infos
           </h3>
 
-          <div className="pointer-events-none absolute left-[-9999px] h-0 w-0 overflow-hidden opacity-0" aria-hidden>
+          <div
+            className="pointer-events-none absolute left-[-9999px] h-0 w-0 overflow-hidden opacity-0"
+            aria-hidden
+          >
             <label htmlFor="reg-website">Site web</label>
             <input
               id="reg-website"
@@ -130,7 +153,10 @@ export function Register() {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="reg-name" className="mb-1.5 block text-sm font-medium text-encre">
+            <label
+              htmlFor="reg-name"
+              className="mb-1.5 block text-sm font-medium text-encre"
+            >
               Nom complet *
             </label>
             <input
@@ -147,7 +173,10 @@ export function Register() {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="reg-phone" className="mb-1.5 block text-sm font-medium text-encre">
+            <label
+              htmlFor="reg-phone"
+              className="mb-1.5 block text-sm font-medium text-encre"
+            >
               Téléphone (WhatsApp) *
             </label>
             <input
@@ -164,7 +193,10 @@ export function Register() {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="reg-email" className="mb-1.5 block text-sm font-medium text-encre">
+            <label
+              htmlFor="reg-email"
+              className="mb-1.5 block text-sm font-medium text-encre"
+            >
               Email <span className="text-charbon/50">(optionnel)</span>
             </label>
             <input
@@ -192,7 +224,7 @@ export function Register() {
           >
             {pending ? "Génération du pass…" : "Générer mon pass QR"}
           </button>
-        </form>
+        </motion.form>
       </div>
     </section>
   );

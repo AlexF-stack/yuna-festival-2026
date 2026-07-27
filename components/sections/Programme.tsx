@@ -1,3 +1,4 @@
+import { OrbitHaloDynamic } from "@/components/sections/OrbitHaloDynamic";
 import { ProgrammeTabs } from "@/components/sections/ProgrammeTabs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
@@ -9,7 +10,12 @@ export async function Programme() {
   const items = await getSchedule();
 
   return (
-    <SectionShell id="programme" labelledBy="programme-title" tone="mesh-bleu">
+    <SectionShell
+      id="programme"
+      labelledBy="programme-title"
+      tone="mesh-bleu"
+      overlay={<OrbitHaloDynamic />}
+    >
       <SectionHeading
         eyebrow="Programme"
         title="Deux soirées de feu"

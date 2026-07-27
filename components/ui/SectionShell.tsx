@@ -17,6 +17,8 @@ type SectionShellProps = {
   tone?: SectionTone;
   labelledBy?: string;
   className?: string;
+  /** Calque décoratif (3D, etc.) — positionné sous le contenu. */
+  overlay?: ReactNode;
   children: ReactNode;
 };
 
@@ -36,6 +38,7 @@ export function SectionShell({
   tone = "papier",
   labelledBy,
   className = "",
+  overlay,
   children,
 }: SectionShellProps) {
   const photo = PHOTO[tone];
@@ -87,7 +90,9 @@ export function SectionShell({
         ) : null}
       </div>
 
-      <div className="relative mx-auto max-w-[1240px]">{children}</div>
+      {overlay}
+
+      <div className="relative z-10 mx-auto max-w-[1240px]">{children}</div>
     </section>
   );
 }

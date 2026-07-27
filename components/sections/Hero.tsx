@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 
 import { YunaLogo } from "@/components/brand/YunaLogo";
+import { TiltCard } from "@/components/motion/TiltCard";
 import { AnimatedThemeTitle } from "@/components/sections/AnimatedThemeTitle";
 import { HeroCountdown } from "@/components/sections/HeroCountdown";
 import { SunriseSceneDynamic } from "@/components/sections/SunriseSceneDynamic";
@@ -86,6 +87,10 @@ export function Hero({ eventStartIso }: HeroProps) {
         />
         <div
           aria-hidden
+          className="hero-sparks pointer-events-none absolute inset-0 -z-10"
+        />
+        <div
+          aria-hidden
           className="hero-horizon pointer-events-none absolute bottom-[12%] left-1/2 -z-10 h-px w-[min(92vw,880px)] -translate-x-1/2 bg-gradient-to-r from-transparent via-bleu/50 to-transparent"
         />
 
@@ -153,30 +158,40 @@ export function Hero({ eventStartIso }: HeroProps) {
             variants={reduceMotion ? undefined : rise}
             className="relative hidden min-[900px]:block"
           >
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-[0_30px_80px_rgba(0,90,140,0.28)]">
-              <Image
-                src="/media/stage.jpg"
-                alt="Scène de festival — ambiance live"
-                fill
-                sizes="(min-width: 900px) 420px, 0px"
-                className="object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-bleu-fonce/90 via-bleu/35 to-transparent" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(255,102,0,0.35),transparent_45%)]" />
-              <div className="absolute inset-x-0 bottom-0 p-8 text-papier">
-                <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-papier/70">
-                  Édition {HERO_COPY.edition}
-                </p>
-                <p className="mt-3 font-display text-5xl font-extrabold uppercase leading-none">
-                  2
-                  <span className="mt-1 block text-2xl text-feu">soirées</span>
-                </p>
-                <p className="mt-4 max-w-[14rem] text-sm leading-relaxed text-papier/85">
-                  Adoration, parole et génération qui se lève — Midombo.
-                </p>
-              </div>
-            </div>
+            <TiltCard maxTilt={6} className="group">
+              <motion.div
+                animate={reduceMotion ? undefined : { y: [0, -10, 0] }}
+                transition={{
+                  duration: 5.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-[0_30px_80px_rgba(0,90,140,0.28)]"
+              >
+                <Image
+                  src="/media/stage.jpg"
+                  alt="Scène de festival — ambiance live"
+                  fill
+                  sizes="(min-width: 900px) 420px, 0px"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-bleu-fonce/90 via-bleu/35 to-transparent" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(255,102,0,0.35),transparent_45%)]" />
+                <div className="absolute inset-x-0 bottom-0 p-8 text-papier">
+                  <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-papier/70">
+                    Édition {HERO_COPY.edition}
+                  </p>
+                  <p className="mt-3 font-display text-5xl font-extrabold uppercase leading-none">
+                    2
+                    <span className="mt-1 block text-2xl text-feu">soirées</span>
+                  </p>
+                  <p className="mt-4 max-w-[14rem] text-sm leading-relaxed text-papier/85">
+                    Adorations, parole et génération qui se lève — Midombo.
+                  </p>
+                </div>
+              </motion.div>
+            </TiltCard>
           </motion.aside>
         </motion.div>
       </div>

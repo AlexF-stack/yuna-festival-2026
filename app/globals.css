@@ -226,6 +226,32 @@ body {
   animation: marquee-scroll 42s linear infinite;
 }
 
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.hero-sparks {
+  background-image:
+    radial-gradient(circle at 18% 42%, color-mix(in srgb, var(--feu) 55%, transparent) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 72% 28%, color-mix(in srgb, var(--bleu) 50%, transparent) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 48% 68%, color-mix(in srgb, var(--feu) 40%, transparent) 0 1px, transparent 2px),
+    radial-gradient(circle at 86% 62%, color-mix(in srgb, var(--bleu) 45%, transparent) 0 1px, transparent 2px),
+    radial-gradient(circle at 32% 78%, color-mix(in srgb, var(--feu) 35%, transparent) 0 1px, transparent 2px);
+  animation: hero-sparks-drift 9s ease-in-out infinite alternate;
+  opacity: 0.7;
+}
+
+@keyframes hero-sparks-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.45;
+  }
+  to {
+    transform: translate3d(0, -18px, 0);
+    opacity: 0.85;
+  }
+}
+
 .section-dots {
   background-image: radial-gradient(
     color-mix(in srgb, var(--bleu) 28%, transparent) 1px,
@@ -244,7 +270,8 @@ body {
   .wa-float::before,
   .hero-horizon,
   .theme-debout,
-  .marquee-track {
+  .marquee-track,
+  .hero-sparks {
     animation: none !important;
   }
 }

@@ -1,4 +1,5 @@
 import { ArtistCard } from "@/components/sections/ArtistCard";
+import { EmberFieldDynamic } from "@/components/sections/EmberFieldDynamic";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { getArtists } from "@/lib/artists";
@@ -12,12 +13,17 @@ export async function Lineup() {
   const ordered = headliner ? [headliner, ...others] : artists;
 
   return (
-    <SectionShell id="artistes" labelledBy="lineup-title" tone="photo-crowd">
+    <SectionShell
+      id="artistes"
+      labelledBy="lineup-title"
+      tone="photo-crowd"
+      overlay={<EmberFieldDynamic />}
+    >
       <SectionHeading
         eyebrow="Line-up"
         title="Les artistes"
         titleId="lineup-title"
-        description="Adoration, louange et présence internationale — une génération non ordinaire sur scène."
+        description="Adorations, louange et présence internationale — une génération non ordinaire sur scène."
       />
 
       {ordered.length === 0 ? (

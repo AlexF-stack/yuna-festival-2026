@@ -2,7 +2,9 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
+import { TiltCard } from "@/components/motion/TiltCard";
 import { ProductVisual } from "@/components/sections/ProductVisual";
+import { EASE_YUNA } from "@/lib/motion";
 import type { Product } from "@/types/product";
 import { formatPriceFcfa } from "@/types/product";
 
@@ -21,18 +23,23 @@ export function ProductCard({ product }: ProductCardProps) {
   const visualDark = product.visual_key === "programmable";
 
   return (
-    <motion.article
-      whileHover={
-        reduceMotion
-          ? undefined
-          : { y: -6, transition: { duration: 0.3, ease: [0.2, 0.8, 0.2, 1] } }
-      }
-      className={`overflow-hidden rounded-3xl border bg-papier shadow-[0_14px_40px_rgba(0,90,140,0.07)] ${
-        product.is_featured
-          ? "border-feu/40 ring-2 ring-feu/20"
-          : "border-bleu/10"
-      }`}
-    >
+    <TiltCard className="group h-full" maxTilt={7}>
+      <motion.article
+        initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.55, ease: EASE_YUNA }}
+        whileHover={
+          reduceMotion
+            ? undefined
+            : { y: -4, transition: { duration: 0.3, ease: EASE_YUNA } }
+        }
+        className={`h-full overflow-hidden rounded-3xl border bg-papier shadow-[0_14px_40px_rgba(0,90,140,0.07)] ${
+          product.is_featured
+            ? "border-feu/40 ring-2 ring-feu/20"
+            : "border-bleu/10"
+        }`}
+      >
       {product.flag_label ? (
         <p className="bg-feu px-4 py-2 text-center font-mono text-[0.68rem] font-bold uppercase tracking-[0.12em] text-papier">
           {product.flag_label}
@@ -73,5 +80,6 @@ export function ProductCard({ product }: ProductCardProps) {
         </p>
       </div>
     </motion.article>
+    </TiltCard>
   );
 }
