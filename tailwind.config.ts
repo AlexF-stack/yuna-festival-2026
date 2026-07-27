@@ -23,6 +23,12 @@ const config: Config = {
         vert: "var(--vert)",
         jaune: "var(--jaune)",
         rouge: "var(--rouge)",
+        peach: "var(--peach)",
+        "peach-light": "var(--peach-light)",
+        "peach-wash": "var(--peach-wash)",
+        "peach-soft": "var(--peach-soft)",
+        "don-deep": "var(--don-deep)",
+        "alert-soft": "var(--alert-soft)",
         /* aliases */
         nuit: "var(--nuit)",
         nuit2: "var(--nuit2)",

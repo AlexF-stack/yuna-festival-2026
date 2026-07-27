@@ -1,17 +1,25 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { TorchSceneDynamic } from "@/components/sections/TorchSceneDynamic";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionShell } from "@/components/ui/SectionShell";
 import { FESTIVAL } from "@/lib/festival";
 import { EASE_YUNA } from "@/lib/motion";
+import {
+  REGISTRATION_TYPES,
+  type RegistrationType,
+} from "@/lib/registration-types";
 
 type FieldErrors = {
   form?: string;
 };
+
+const fieldClass =
+  "w-full rounded-xl border border-bleu/15 bg-papier px-4 py-3.5 text-base text-encre outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-charbon/45 focus:border-bleu focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--bleu)_18%,transparent)]";
 
 export function Register() {
   const router = useRouter();
@@ -19,6 +27,8 @@ export function Register() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [registrationType, setRegistrationType] =
+    useState<RegistrationType>("pass");
   const [website, setWebsite] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [pending, setPending] = useState(false);
@@ -32,7 +42,13 @@ export function Register() {
       const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, email, website }),
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          registrationType,
+          website,
+        }),
       });
 
       const payload = (await res.json()) as {
@@ -57,62 +73,45 @@ export function Register() {
     }
   }
 
-  const fieldClass =
-    "w-full rounded-xl border border-bleu/15 bg-papier px-4 py-3.5 text-base text-encre outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-charbon/45 focus:border-bleu focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--bleu)_18%,transparent)]";
-
   return (
-    <section
+    <SectionShell
       id="inscription"
-      aria-labelledby="register-title"
-      className="relative z-10 overflow-hidden px-5 py-24 min-[760px]:px-6 min-[760px]:py-28"
-    >
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <Image
-          src="/media/concert.jpg"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-ciel/95 via-papier/92 to-[#fff0e6]/95" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_100%_0%,color-mix(in_srgb,var(--feu)_14%,transparent),transparent_55%)]" />
-      </div>
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-0 left-0 z-0 h-[280px] w-[280px] opacity-70 min-[900px]:h-[360px] min-[900px]:w-[360px]"
-      >
-        <TorchSceneDynamic />
-      </div>
-
-      <div className="relative z-10 mx-auto grid max-w-[1240px] items-start gap-12 min-[900px]:grid-cols-[1fr_minmax(0,26rem)] min-[900px]:gap-16">
+      labelledBy="register-title"
+      tone="photo-concert"
+      overlay={
         <motion.div
-          initial={reduce ? false : { opacity: 0, x: -24 }}
+          aria-hidden
+          className="pointer-events-none absolute bottom-0 left-0 z-0 h-[280px] w-[280px] opacity-70 min-[900px]:h-[360px] min-[900px]:w-[360px]"
+          initial={false}
+        >
+          <TorchSceneDynamic />
+        </motion.div>
+      }
+    >
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 20 }}
+        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.65, ease: EASE_YUNA }}
+        className="relative z-10 grid items-start gap-12 min-[900px]:grid-cols-[1fr_minmax(0,26rem)] min-[900px]:gap-16"
+      >
+        <motion.div
+          initial={reduce ? false : { opacity: 0, x: -20 }}
           whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.65, ease: EASE_YUNA }}
+          transition={{ duration: 0.6, ease: EASE_YUNA }}
         >
-          <p className="mb-3 text-[0.72rem] font-bold uppercase tracking-[0.32em] text-feu">
-            Inscription
-          </p>
-          <h2
-            id="register-title"
-            className="font-display text-[clamp(2.6rem,7vw,4.75rem)] font-extrabold uppercase leading-[0.95] text-bleu"
-          >
-            Réserve
-            <br />
-            <span className="text-feu">ton pass</span>
-          </h2>
-          <p className="mt-5 max-w-md text-[1.05rem] leading-relaxed text-charbon">
-            {FESTIVAL.freeEntry}. Inscris-toi pour recevoir ton pass QR
-            personnel — à présenter à l&apos;entrée. En cas de souci en ligne,
-            l&apos;inscription sur place reste possible le jour J.
-          </p>
+          <SectionHeading
+            eyebrow="Inscription"
+            title="Réserve ton pass"
+            titleId="register-title"
+            description={`${FESTIVAL.freeEntry}. Choisis ton type d'inscription — pass soirées, masterclass ou bénévolat. En cas de souci en ligne, l'inscription sur place reste possible le jour J.`}
+          />
 
           <ul className="mt-8 space-y-3.5 text-sm text-charbon">
             {[
-              "Accès prioritaire aux deux soirées",
               "Pass QR généré immédiatement",
+              "Masterclass : places limitées, QR obligatoire",
               "Ouverture du site à 17h · concerts dès 18h",
             ].map((line) => (
               <li key={line} className="flex gap-3">
@@ -126,106 +125,182 @@ export function Register() {
         <motion.form
           onSubmit={onSubmit}
           noValidate
-          initial={reduce ? false : { opacity: 0, y: 28 }}
+          initial={reduce ? false : { opacity: 0, y: 24 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: EASE_YUNA, delay: 0.08 }}
-          className="relative rounded-3xl border border-bleu/10 bg-papier/95 p-6 shadow-[0_20px_50px_rgba(0,90,140,0.1)] backdrop-blur-sm min-[480px]:p-8"
+          transition={{ duration: 0.65, ease: EASE_YUNA, delay: 0.06 }}
+          className="relative rounded-3xl border border-bleu/10 bg-papier/95 p-6 shadow-ombre-bleu backdrop-blur-sm min-[480px]:p-8"
         >
-          <h3 className="mb-6 font-display text-xl font-extrabold uppercase tracking-wide text-bleu">
+          <h3 className="mb-5 font-display text-xl font-extrabold uppercase tracking-wide text-bleu">
             Tes infos
           </h3>
 
-          <div
-            className="pointer-events-none absolute left-[-9999px] h-0 w-0 overflow-hidden opacity-0"
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            className="absolute left-[-9999px] h-px w-px opacity-0"
             aria-hidden
+          />
+
+          <fieldset className="mb-5">
+            <legend className="mb-3 text-sm font-medium text-encre">
+              Type d&apos;inscription *
+            </legend>
+            <motion.div
+              className="grid gap-2"
+              variants={
+                reduce
+                  ? undefined
+                  : { hidden: {}, show: { transition: { staggerChildren: 0.05 } } }
+              }
+              initial={reduce ? false : "hidden"}
+              whileInView={reduce ? undefined : "show"}
+              viewport={{ once: true, amount: 0.5 }}
+            >
+              {REGISTRATION_TYPES.map((type) => {
+                const selected = registrationType === type.value;
+                return (
+                  <motion.label
+                    key={type.value}
+                    variants={
+                      reduce ? undefined : { hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }
+                    }
+                    className={`flex cursor-pointer gap-3 rounded-xl border px-3.5 py-3 transition-colors duration-200 ${
+                      selected
+                        ? "border-bleu bg-ciel/60"
+                        : "border-bleu/12 bg-papier hover:border-bleu/30"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="registrationType"
+                      value={type.value}
+                      checked={selected}
+                      onChange={() => setRegistrationType(type.value)}
+                      className="mt-1 shrink-0 accent-bleu"
+                    />
+                    <span>
+                      <span className="block text-sm font-semibold text-encre">
+                        {type.label}
+                      </span>
+                      <span className="mt-0.5 block text-xs text-charbon">
+                        {type.hint}
+                      </span>
+                    </span>
+                  </motion.label>
+                );
+              })}
+            </motion.div>
+          </fieldset>
+
+          <motion.div
+            key={registrationType}
+            initial={reduce ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: EASE_YUNA }}
           >
-            <label htmlFor="reg-website">Site web</label>
-            <input
-              id="reg-website"
-              name="website"
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="reg-name"
-              className="mb-1.5 block text-sm font-medium text-encre"
+            <motion.div
+              className="mb-4"
+              initial={false}
+              animate={reduce ? undefined : { opacity: 1 }}
             >
-              Nom complet *
-            </label>
-            <input
-              id="reg-name"
-              name="name"
-              type="text"
-              autoComplete="name"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Ex : Grâce Ahouansou"
-              className={fieldClass}
-            />
-          </div>
+              <label
+                htmlFor="reg-name"
+                className="mb-1.5 block text-sm font-medium text-encre"
+              >
+                Nom complet *
+              </label>
+              <input
+                id="reg-name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Ex : Grâce Ahouansou"
+                className={fieldClass}
+              />
+            </motion.div>
 
-          <div className="mb-4">
-            <label
-              htmlFor="reg-phone"
-              className="mb-1.5 block text-sm font-medium text-encre"
+            <div className="mb-4">
+              <label
+                htmlFor="reg-phone"
+                className="mb-1.5 block text-sm font-medium text-encre"
+              >
+                Téléphone (WhatsApp) *
+              </label>
+              <input
+                id="reg-phone"
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                required
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+229 01 XX XX XX XX"
+                className={fieldClass}
+              />
+            </div>
+
+            <motion.div
+              className="mb-6"
+              initial={reduce ? false : { opacity: 0, height: 0 }}
+              animate={
+                registrationType !== "pass"
+                  ? { opacity: 1, height: "auto" }
+                  : { opacity: 1, height: "auto" }
+              }
             >
-              Téléphone (WhatsApp) *
-            </label>
-            <input
-              id="reg-phone"
-              name="phone"
-              type="tel"
-              autoComplete="tel"
-              required
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="+229 01 XX XX XX XX"
-              className={fieldClass}
-            />
-          </div>
+              <label
+                htmlFor="reg-email"
+                className="mb-1.5 block text-sm font-medium text-encre"
+              >
+                Email{" "}
+                {registrationType === "benevole" ? (
+                  <span className="text-charbon">*</span>
+                ) : (
+                  <span className="text-charbon/50">(optionnel)</span>
+                )}
+              </label>
+              <input
+                id="reg-email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required={registrationType === "benevole"}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="ton@email.com"
+                className={fieldClass}
+              />
+              {registrationType === "benevole" ? (
+                <p className="mt-1.5 text-xs text-charbon">
+                  Pour te recontacter sur WhatsApp.
+                </p>
+              ) : null}
+            </motion.div>
 
-          <div className="mb-6">
-            <label
-              htmlFor="reg-email"
-              className="mb-1.5 block text-sm font-medium text-encre"
+            {errors.form ? (
+              <p role="alert" className="mb-4 text-sm text-feu">
+                {errors.form}
+              </p>
+            ) : null}
+
+            <button
+              type="submit"
+              disabled={pending}
+              className="w-full rounded-full bg-feu px-4 py-4 text-[1.02rem] font-bold tracking-[0.02em] text-papier transition-[background-color,transform] duration-[250ms] ease-yuna hover:-translate-y-0.5 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             >
-              Email <span className="text-charbon/50">(optionnel)</span>
-            </label>
-            <input
-              id="reg-email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="ton@email.com"
-              className={fieldClass}
-            />
-          </div>
-
-          {errors.form ? (
-            <p role="alert" className="mb-4 text-sm text-feu">
-              {errors.form}
-            </p>
-          ) : null}
-
-          <button
-            type="submit"
-            disabled={pending}
-            className="w-full rounded-full bg-feu px-4 py-4 text-[1.02rem] font-bold tracking-[0.02em] text-papier transition-[background-color,transform] duration-[250ms] ease-yuna hover:-translate-y-0.5 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-          >
-            {pending ? "Génération du pass…" : "Générer mon pass QR"}
-          </button>
+              {pending ? "Génération du pass…" : "Générer mon pass QR"}
+            </button>
+          </motion.div>
         </motion.form>
-      </div>
-    </section>
+      </motion.div>
+    </SectionShell>
   );
 }

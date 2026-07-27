@@ -5,6 +5,7 @@ export type SectionTone =
   | "papier"
   | "nuage"
   | "ciel"
+  | "don"
   | "photo-concert"
   | "photo-crowd"
   | "photo-dawn"
@@ -17,7 +18,6 @@ type SectionShellProps = {
   tone?: SectionTone;
   labelledBy?: string;
   className?: string;
-  /** Calque décoratif (3D, etc.) — positionné sous le contenu. */
   overlay?: ReactNode;
   children: ReactNode;
 };
@@ -29,10 +29,6 @@ const PHOTO: Partial<Record<SectionTone, { src: string; alt: string }>> = {
   "photo-stage": { src: "/media/stage.jpg", alt: "" },
 };
 
-/**
- * Coquille de section — fonds variés (dégradés, motifs, photos) pour un rythme
- * type festival culturel.
- */
 export function SectionShell({
   id,
   tone = "papier",
@@ -43,6 +39,7 @@ export function SectionShell({
 }: SectionShellProps) {
   const photo = PHOTO[tone];
   const isPhoto = Boolean(photo);
+  const skipGrain = isPhoto || tone === "mesh-bleu" || tone === "don";
 
   return (
     <section
@@ -54,7 +51,13 @@ export function SectionShell({
         {tone === "papier" ? <div className="absolute inset-0 bg-papier" /> : null}
         {tone === "nuage" ? <div className="absolute inset-0 bg-nuage" /> : null}
         {tone === "ciel" ? (
-          <div className="absolute inset-0 bg-gradient-to-br from-ciel via-papier to-[#fff3e8]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-ciel via-papier to-peach-wash" />
+        ) : null}
+        {tone === "don" ? (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-r from-bleu via-bleu-fonce to-don-deep" />
+            <div className="absolute -right-20 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-feu/30 blur-3xl" />
+          </>
         ) : null}
         {tone === "mesh-bleu" ? (
           <>
@@ -66,7 +69,7 @@ export function SectionShell({
         ) : null}
         {tone === "mesh-feu" ? (
           <>
-            <div className="absolute inset-0 bg-gradient-to-br from-[#fff8f2] via-papier to-ciel" />
+            <div className="absolute inset-0 bg-gradient-to-br from-peach-soft via-papier to-ciel" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_90%_10%,color-mix(in_srgb,var(--feu)_16%,transparent),transparent_55%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_10%_90%,color-mix(in_srgb,var(--bleu)_12%,transparent),transparent_50%)]" />
           </>
@@ -85,7 +88,7 @@ export function SectionShell({
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,color-mix(in_srgb,var(--papier)_55%,transparent)_100%)]" />
           </>
         ) : null}
-        {!isPhoto && tone !== "mesh-bleu" ? (
+        {!skipGrain ? (
           <div className="section-grain absolute inset-0 opacity-[0.04]" />
         ) : null}
       </div>

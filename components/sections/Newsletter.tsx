@@ -50,23 +50,19 @@ export function Newsletter() {
       </p>
 
       {ok ? (
-        <p className="mt-4 font-medium text-[#ffd2b0]" role="status">
+        <p className="mt-4 font-medium text-alert-soft" role="status">
           C&apos;est noté — tu recevras nos annonces.
         </p>
       ) : (
         <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-2.5" noValidate>
-          <label className="sr-only" htmlFor="nl-website" aria-hidden>
-            Site web
-          </label>
           <input
-            id="nl-website"
-            name="website"
             type="text"
+            name="website"
             tabIndex={-1}
             autoComplete="off"
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
-            className="pointer-events-none absolute left-[-9999px] h-0 w-0 opacity-0"
+            className="absolute left-[-9999px] h-px w-px opacity-0"
             aria-hidden
           />
           <input
@@ -90,7 +86,7 @@ export function Newsletter() {
       )}
 
       {error ? (
-        <p className="mt-2.5 text-sm text-[#ffd2b0]" role="alert">
+        <p className="mt-2.5 text-sm text-alert-soft" role="alert">
           {error}
         </p>
       ) : null}

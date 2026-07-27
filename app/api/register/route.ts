@@ -13,6 +13,7 @@ type RegisterBody = {
   name?: string;
   phone?: string;
   email?: string;
+  registrationType?: string;
   website?: string; // honeypot
 };
 
@@ -63,6 +64,7 @@ export async function POST(request: Request) {
         name: parsed.name,
         phone: parsed.phone,
         email: parsed.email,
+        registration_type: parsed.registrationType,
         qr_code,
       })
       .select("id, name, qr_code")

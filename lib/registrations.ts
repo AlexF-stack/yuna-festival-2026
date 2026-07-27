@@ -1,5 +1,6 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import type { Registration } from "@/lib/registration";
+import { isRegistrationType } from "@/lib/registration-types";
 
 export async function getRegistrationById(
   id: string,
@@ -11,7 +12,7 @@ export async function getRegistrationById(
   const supabase = createSupabaseAdminClient();
   const { data, error } = await supabase
     .from("registrations")
-    .select("id, name, phone, email, created_at, qr_code")
+    .select("id, name, phone, email, registration_type, created_at, qr_code")
     .eq("id", id)
     .maybeSingle();
 
@@ -19,5 +20,10 @@ export async function getRegistrationById(
     throw new Error(`Lecture inscription impossible: ${error.message}`);
   }
 
-  return data;
+  if (!data || !isRegistrationType(data.registration_type)) return null;
+
+  return {
+    ...data,
+    registration_type: data.registration_type,
+  };
 }

@@ -36,6 +36,16 @@
   --tee-visual-deep: #e8f4fb;
   --tee-visual-dark-mid: #1a3a52;
   --tee-visual-dark-deep: #0f2433;
+
+  /* Dérivés charte — éviter les hex en dur dans les composants */
+  --peach: #fff4eb;
+  --peach-light: #fff0e6;
+  --peach-wash: #fff3e8;
+  --peach-soft: #fff8f2;
+  --don-deep: #003d5c;
+  --alert-soft: #ffd2b0;
+  --ombre-bleu: 0 20px 50px rgb(0 90 140 / 0.1);
+  --ombre-bleu-lg: 0 28px 70px rgb(0 90 140 / 0.22);
 }
 
 @theme inline {
@@ -60,6 +70,15 @@
   --color-sky-mid: var(--sky-mid);
   --color-sky-horizon: var(--sky-horizon);
   --color-wa: var(--wa);
+  --color-peach: var(--peach);
+  --color-peach-light: var(--peach-light);
+  --color-peach-wash: var(--peach-wash);
+  --color-peach-soft: var(--peach-soft);
+  --color-don-deep: var(--don-deep);
+  --color-alert-soft: var(--alert-soft);
+
+  --shadow-ombre-bleu: 0 20px 50px rgb(0 90 140 / 0.1);
+  --shadow-ombre-bleu-lg: 0 28px 70px rgb(0 90 140 / 0.22);
 
   --font-display: var(--font-baloo-2), system-ui, sans-serif;
   --font-sans: var(--font-space-grotesk), system-ui, sans-serif;

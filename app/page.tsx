@@ -1,5 +1,4 @@
 import { Boutique } from "@/components/sections/Boutique";
-import { ArtistMarquee } from "@/components/sections/ArtistMarquee";
 import { Donate } from "@/components/sections/Donate";
 import { Faq } from "@/components/sections/Faq";
 import { Hero } from "@/components/sections/Hero";
@@ -15,7 +14,6 @@ import { getEventStartIso } from "@/lib/festival";
 export default async function HomePage() {
   const eventStartIso = getEventStartIso();
   const artists = await getArtists();
-  const marqueeNames = artists.map((a) => a.name);
 
   return (
     <main id="contenu" className="bg-papier text-encre">
@@ -23,8 +21,7 @@ export default async function HomePage() {
       <StatsBar />
       <Mission />
       <Poles />
-      <ArtistMarquee names={marqueeNames} />
-      <Lineup />
+      <Lineup artists={artists} />
       <Programme />
       <Register />
       <Boutique />

@@ -77,6 +77,7 @@ type RegistrationsTable = {
     name: string;
     phone: string;
     email: string | null;
+    registration_type: string;
     created_at: string;
     qr_code: string;
   };
@@ -85,6 +86,7 @@ type RegistrationsTable = {
     name: string;
     phone: string;
     email?: string | null;
+    registration_type?: string;
     created_at?: string;
     qr_code: string;
   };
@@ -93,6 +95,7 @@ type RegistrationsTable = {
     name?: string;
     phone?: string;
     email?: string | null;
+    registration_type?: string;
     created_at?: string;
     qr_code?: string;
   };
