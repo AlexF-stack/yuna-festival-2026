@@ -1,45 +1,35 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
 
-export type SectionTone =
-  | "papier"
-  | "nuage"
-  | "ciel"
-  | "don"
-  | "photo-concert"
-  | "photo-crowd"
-  | "photo-dawn"
-  | "photo-stage"
-  | "mesh-feu"
-  | "mesh-bleu";
+import { SectionPhotoBackground } from "@/components/ui/SectionPhotoBackground";
+import {
+  SECTION_BACKGROUNDS,
+  type SectionBgKey,
+} from "@/lib/section-backgrounds";
+
+export type SectionTone = "papier" | "nuage" | "ciel" | "don" | "mesh-feu";
 
 type SectionShellProps = {
   id?: string;
   tone?: SectionTone;
+  /** Photo unique par section — voir `lib/section-backgrounds.ts` */
+  background?: SectionBgKey;
   labelledBy?: string;
   className?: string;
   overlay?: ReactNode;
   children: ReactNode;
 };
 
-const PHOTO: Partial<Record<SectionTone, { src: string; alt: string }>> = {
-  "photo-concert": { src: "/media/concert.jpg", alt: "" },
-  "photo-crowd": { src: "/media/crowd.jpg", alt: "" },
-  "photo-dawn": { src: "/media/dawn.jpg", alt: "" },
-  "photo-stage": { src: "/media/stage.jpg", alt: "" },
-};
-
 export function SectionShell({
   id,
   tone = "papier",
+  background,
   labelledBy,
   className = "",
   overlay,
   children,
 }: SectionShellProps) {
-  const photo = PHOTO[tone];
-  const isPhoto = Boolean(photo);
-  const skipGrain = isPhoto || tone === "mesh-bleu" || tone === "don";
+  const isPhoto = Boolean(background);
+  const skipGrain = isPhoto || tone === "don";
 
   return (
     <section
@@ -48,46 +38,33 @@ export function SectionShell({
       className={`relative z-10 overflow-x-hidden px-5 py-24 min-[760px]:px-6 min-[760px]:py-28 ${className}`}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        {tone === "papier" ? <div className="absolute inset-0 bg-papier" /> : null}
-        {tone === "nuage" ? <div className="absolute inset-0 bg-nuage" /> : null}
-        {tone === "ciel" ? (
+        {background ? (
+          <SectionPhotoBackground config={SECTION_BACKGROUNDS[background]} />
+        ) : null}
+
+        {!background && tone === "papier" ? (
+          <div className="absolute inset-0 bg-papier" />
+        ) : null}
+        {!background && tone === "nuage" ? (
+          <div className="absolute inset-0 bg-nuage" />
+        ) : null}
+        {!background && tone === "ciel" ? (
           <div className="absolute inset-0 bg-gradient-to-br from-ciel via-papier to-peach-wash" />
         ) : null}
-        {tone === "don" ? (
+        {!background && tone === "don" ? (
           <>
             <div className="absolute inset-0 bg-gradient-to-r from-bleu via-bleu-fonce to-don-deep" />
             <div className="absolute -right-20 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-feu/30 blur-3xl" />
           </>
         ) : null}
-        {tone === "mesh-bleu" ? (
-          <>
-            <div className="absolute inset-0 bg-nuage" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_0%_0%,color-mix(in_srgb,var(--bleu)_18%,transparent),transparent_55%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_100%_100%,color-mix(in_srgb,var(--feu)_10%,transparent),transparent_50%)]" />
-            <div className="section-dots absolute inset-0 opacity-[0.35]" />
-          </>
-        ) : null}
-        {tone === "mesh-feu" ? (
+        {!background && tone === "mesh-feu" ? (
           <>
             <div className="absolute inset-0 bg-gradient-to-br from-peach-soft via-papier to-ciel" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_90%_10%,color-mix(in_srgb,var(--feu)_16%,transparent),transparent_55%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_10%_90%,color-mix(in_srgb,var(--bleu)_12%,transparent),transparent_50%)]" />
           </>
         ) : null}
-        {photo ? (
-          <>
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              sizes="100vw"
-              className="object-cover"
-              priority={false}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-papier/92 via-papier/88 to-papier/94" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,color-mix(in_srgb,var(--papier)_55%,transparent)_100%)]" />
-          </>
-        ) : null}
+
         {!skipGrain ? (
           <div className="section-grain absolute inset-0 opacity-[0.04]" />
         ) : null}

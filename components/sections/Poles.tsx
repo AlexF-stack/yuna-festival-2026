@@ -11,7 +11,7 @@ export function Poles() {
   const reduce = useReducedMotion();
 
   return (
-    <SectionShell id="poles" labelledBy="poles-title" tone="nuage">
+    <SectionShell id="poles" labelledBy="poles-title" background="poles">
       <SectionHeading
         eyebrow="Les pôles"
         title="Des activités pour tous"

@@ -6,12 +6,18 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { REGISTER_COPY } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
 import { EASE_YUNA } from "@/lib/motion";
 import {
   REGISTRATION_TYPES,
   type RegistrationType,
 } from "@/lib/registration-types";
+import { RegistrationGauge } from "@/components/sections/RegistrationGauge";
+
+type RegisterProps = {
+  initialCount?: number;
+};
 
 type FieldErrors = {
   form?: string;
@@ -20,7 +26,7 @@ type FieldErrors = {
 const fieldClass =
   "w-full rounded-xl border border-bleu/15 bg-papier px-4 py-3.5 text-base text-encre outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-charbon/45 focus:border-bleu focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--bleu)_18%,transparent)]";
 
-export function Register() {
+export function Register({ initialCount = 0 }: RegisterProps) {
   const router = useRouter();
   const reduce = useReducedMotion();
   const [name, setName] = useState("");
@@ -76,7 +82,7 @@ export function Register() {
     <SectionShell
       id="inscription"
       labelledBy="register-title"
-      tone="photo-concert"
+      background="register"
     >
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 20 }}
@@ -95,14 +101,17 @@ export function Register() {
             eyebrow="Inscription"
             title="Réserve ton pass"
             titleId="register-title"
-            description={`${FESTIVAL.freeEntry}. Choisis ton type d'inscription — pass soirées, masterclass ou bénévolat. En cas de souci en ligne, l'inscription sur place reste possible le jour J.`}
+            description={REGISTER_COPY.intro}
           />
+
+          <RegistrationGauge initialCount={initialCount} />
 
           <ul className="mt-8 space-y-3.5 text-sm text-charbon">
             {[
               "Pass QR généré immédiatement",
               "Masterclass : places limitées, QR obligatoire",
-              "Ouverture du site à 17h · concerts dès 18h",
+              `Ouverture du site à ${FESTIVAL.siteOpens} · concerts dès 18h`,
+              "Même sans mail de confirmation, ton inscription est enregistrée",
             ].map((line) => (
               <li key={line} className="flex gap-3">
                 <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-feu" />

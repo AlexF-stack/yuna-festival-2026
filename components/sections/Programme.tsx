@@ -1,4 +1,5 @@
 import { LineupTeaser } from "@/components/sections/LineupTeaser";
+import { OrbitHaloDynamic } from "@/components/sections/OrbitHaloDynamic";
 import { ProgrammeTabs } from "@/components/sections/ProgrammeTabs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
@@ -14,7 +15,12 @@ export async function Programme() {
   ]);
 
   return (
-    <SectionShell id="programme" labelledBy="programme-title" tone="mesh-bleu">
+    <SectionShell
+      id="programme"
+      labelledBy="programme-title"
+      background="programme"
+      overlay={<OrbitHaloDynamic />}
+    >
       <div className="flex flex-col gap-5 min-[760px]:flex-row min-[760px]:items-end min-[760px]:justify-between">
         <SectionHeading
           eyebrow="Programme"

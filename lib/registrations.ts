@@ -1,4 +1,5 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { hasSupabaseEnv } from "@/lib/supabase/env";
 import type { Registration } from "@/lib/registration";
 import { isRegistrationType } from "@/lib/registration-types";
 
@@ -26,4 +27,26 @@ export async function getRegistrationById(
     ...data,
     registration_type: data.registration_type,
   };
+}
+
+export async function getRegistrationsCount(): Promise<number> {
+  if (!hasSupabaseEnv() || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return 0;
+  }
+
+  try {
+    const supabase = createSupabaseAdminClient();
+    const { count, error } = await supabase
+      .from("registrations")
+      .select("id", { count: "exact", head: true });
+
+    if (error) {
+      console.error("getRegistrationsCount:", error.message);
+      return 0;
+    }
+
+    return count ?? 0;
+  } catch {
+    return 0;
+  }
 }

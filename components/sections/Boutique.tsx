@@ -12,7 +12,7 @@ export async function Boutique() {
   const preorderHref = getPreorderMailto();
 
   return (
-    <SectionShell id="boutique" labelledBy="boutique-title" tone="photo-stage">
+    <SectionShell id="boutique" labelledBy="boutique-title" background="boutique">
       <div className="flex flex-col gap-8 min-[900px]:flex-row min-[900px]:items-end min-[900px]:justify-between">
         <SectionHeading
           eyebrow="Boutique officielle"

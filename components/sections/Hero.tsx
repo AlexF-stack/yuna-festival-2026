@@ -14,6 +14,7 @@ import { YunaLogo } from "@/components/brand/YunaLogo";
 import { TiltCard } from "@/components/motion/TiltCard";
 import { AnimatedThemeTitle } from "@/components/sections/AnimatedThemeTitle";
 import { HeroCountdown } from "@/components/sections/HeroCountdown";
+import { HeroTools } from "@/components/sections/HeroTools";
 import { SunriseSceneDynamic } from "@/components/sections/SunriseSceneDynamic";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FESTIVAL, HERO_COPY } from "@/lib/festival";
@@ -113,7 +114,14 @@ export function Hero({ eventStartIso }: HeroProps) {
 
             <motion.p
               variants={reduceMotion ? undefined : rise}
-              className="mb-4 inline-flex items-center gap-2 rounded-full bg-bleu/10 px-3.5 py-1.5 font-mono text-[0.7rem] font-bold uppercase tracking-[0.18em] text-bleu"
+              className="mb-4 inline-flex items-center gap-2 rounded-full bg-bleu/10 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.16em] text-bleu"
+            >
+              {HERO_COPY.eyebrow}
+            </motion.p>
+
+            <motion.p
+              variants={reduceMotion ? undefined : rise}
+              className="mb-3 font-mono text-[0.7rem] font-bold uppercase tracking-[0.18em] text-bleu-fonce"
             >
               {FESTIVAL.datesShort} · {FESTIVAL.city}
             </motion.p>
@@ -125,7 +133,21 @@ export function Hero({ eventStartIso }: HeroProps) {
 
             <motion.p
               variants={reduceMotion ? undefined : rise}
-              className="mt-5 max-w-md text-[1.12rem] leading-relaxed text-charbon"
+              className="mt-5 max-w-md text-[1.08rem] italic leading-relaxed text-charbon"
+            >
+              {HERO_COPY.verse}
+            </motion.p>
+
+            <motion.p
+              variants={reduceMotion ? undefined : rise}
+              className="mt-2 font-mono text-[0.78rem] font-bold uppercase tracking-[0.16em] text-feu"
+            >
+              {HERO_COPY.verseRef}
+            </motion.p>
+
+            <motion.p
+              variants={reduceMotion ? undefined : rise}
+              className="mt-4 max-w-md text-[1.05rem] leading-relaxed text-charbon"
             >
               {HERO_COPY.support}
             </motion.p>
@@ -151,6 +173,10 @@ export function Hero({ eventStartIso }: HeroProps) {
 
             <motion.div variants={reduceMotion ? undefined : rise}>
               <HeroCountdown eventStartIso={eventStartIso} />
+            </motion.div>
+
+            <motion.div variants={reduceMotion ? undefined : rise}>
+              <HeroTools />
             </motion.div>
           </div>
 

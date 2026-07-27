@@ -26,7 +26,7 @@ export function Lineup({ artists }: LineupProps) {
       <SectionShell
         id="artistes"
         labelledBy="lineup-title"
-        tone="photo-crowd"
+        background="lineup"
         overlay={<EmberFieldDynamic />}
       >
         <div className="flex flex-col gap-5 min-[760px]:flex-row min-[760px]:items-end min-[760px]:justify-between">

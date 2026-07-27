@@ -8,6 +8,7 @@ const HERO_ASSETS = [
   "/brand/yuna-logo.png",
   "/media/dawn.jpg",
   "/media/stage.jpg",
+  "/media/worship.jpg",
 ] as const;
 
 const MIN_DISPLAY_MS = 700;

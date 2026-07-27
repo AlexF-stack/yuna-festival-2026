@@ -1,6 +1,6 @@
 import { YunaLogo } from "@/components/brand/YunaLogo";
-import { DONATE } from "@/lib/content-site";
-import { FESTIVAL, NAV_LINKS } from "@/lib/festival";
+import { DONATE, ORGANIZER } from "@/lib/content-site";
+import { FESTIVAL, FOOTER_LINKS, HERO_COPY } from "@/lib/festival";
 import { SITE_CONTACT } from "@/lib/site";
 
 export function SiteFooter() {
@@ -12,24 +12,25 @@ export function SiteFooter() {
         <span className="flex-1 bg-rouge" />
       </div>
 
-      <div className="mx-auto grid max-w-[1240px] gap-12 px-5 py-16 min-[760px]:grid-cols-[1.4fr_1fr_1fr] min-[760px]:px-6">
-        <div>
+      <div className="mx-auto grid max-w-[1240px] gap-12 px-5 py-16 min-[760px]:grid-cols-2 min-[1000px]:grid-cols-4 min-[760px]:px-6">
+        <div className="min-[1000px]:col-span-1">
           <YunaLogo size="footer" />
           <p className="mt-5 font-mono text-xs font-bold uppercase tracking-[0.28em] text-feu">
             {FESTIVAL.theme} · {FESTIVAL.edition}
           </p>
+          <p className="mt-3 text-sm text-papier/75">{ORGANIZER.tagline}</p>
+          <p className="mt-2 text-sm text-papier/65">{ORGANIZER.hebrew}</p>
           <p className="mt-4 max-w-sm text-[0.95rem] leading-relaxed text-papier/75">
-            {FESTIVAL.tagline} {FESTIVAL.datesShort} · {FESTIVAL.venue},{" "}
-            {FESTIVAL.city}.
+            {FESTIVAL.tagline} {HERO_COPY.verseRef} · {FESTIVAL.datesShort}
           </p>
         </div>
 
         <div>
           <p className="mb-4 text-[0.7rem] font-bold uppercase tracking-[0.28em] text-papier/45">
-            Explorer
+            Festival
           </p>
           <ul className="space-y-2.5">
-            {NAV_LINKS.map((link) => (
+            {FOOTER_LINKS.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -61,13 +62,25 @@ export function SiteFooter() {
             {SITE_CONTACT.email}
           </a>
           <p className="mt-4 text-sm text-papier/55">
-            {FESTIVAL.freeEntry} · Ouverture du site à 17h
+            {FESTIVAL.city}, {FESTIVAL.country}
+          </p>
+        </div>
+
+        <div>
+          <p className="mb-4 text-[0.7rem] font-bold uppercase tracking-[0.28em] text-papier/45">
+            Organisation
+          </p>
+          <p className="text-papier/80">{ORGANIZER.name}</p>
+          <p className="mt-3 text-sm text-papier/55">{FESTIVAL.datesShort}</p>
+          <p className="mt-2 text-sm text-papier/55">
+            {FESTIVAL.freeEntry} · Ouverture {FESTIVAL.siteOpens}
           </p>
         </div>
       </div>
 
       <div className="border-t border-papier/10 px-5 py-5 text-center font-mono text-[0.68rem] uppercase tracking-[0.18em] text-papier/40 min-[760px]:px-6">
-        © {FESTIVAL.edition} {FESTIVAL.brandFull} · Global Impact Ministries
+        © {FESTIVAL.edition} {FESTIVAL.brandFull} · {ORGANIZER.name} · Tous
+        droits réservés
       </div>
     </footer>
   );

@@ -5,7 +5,7 @@ import { FAQ_ITEMS } from "@/lib/faq";
 
 export function Faq() {
   return (
-    <SectionShell id="faq" labelledBy="faq-title" tone="mesh-feu">
+    <SectionShell id="faq" labelledBy="faq-title" background="faq">
       <div className="grid gap-14 min-[960px]:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] min-[960px]:gap-20">
         <div>
           <SectionHeading
