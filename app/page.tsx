@@ -8,6 +8,7 @@ import { Mission } from "@/components/sections/Mission";
 import { Participate } from "@/components/sections/Participate";
 import { Poles } from "@/components/sections/Poles";
 import { Programme } from "@/components/sections/Programme";
+import { QuoteStrip } from "@/components/sections/QuoteStrip";
 import { Register } from "@/components/sections/Register";
 import { Sponsors } from "@/components/sections/Sponsors";
 import { StatsBar } from "@/components/sections/StatsBar";
@@ -34,6 +35,7 @@ export default async function HomePage() {
     <main id="contenu" className="bg-papier text-encre">
       <Hero eventStartIso={eventStartIso} />
       <StatsBar />
+      <QuoteStrip />
       <Vision />
       <Mission />
       <Lineup artists={artists} />

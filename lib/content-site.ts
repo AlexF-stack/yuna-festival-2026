@@ -21,7 +21,7 @@ export const VISION = {
   eyebrow: "La vision",
   title: "Une génération non ordinaire",
   intro:
-    "YUNA — Youth United for New Awakening — porte aussi un secret : en hébreu, יוֹנָה (Yonah) signifie la colombe — le symbole du Saint-Esprit qui descend (Matthieu 3:16). La colombe et le feu : l'Esprit repose sur une génération qui se lève. Pas des spectateurs. Des Joseph, des Daniel, des David : des jeunes qui portent un esprit supérieur et qui se tiennent devant les rois.",
+    "YUNA — Youth United for New Awakening — porte aussi un secret : en hébreu, יוֹנָה (Yonah) signifie la colombe — le symbole du Saint-Esprit qui descend (Matthieu 3:16). La colombe et le feu : l'Esprit repose sur une génération qui se lève.",
   pillars: [
     {
       id: "joseph",
@@ -29,6 +29,7 @@ export const VISION = {
       title: "Joseph",
       ref: "Genèse 41",
       text: "De la fosse au palais. Le rêveur devient gouverneur. Une jeunesse qui porte des rêves plus grands que ses circonstances — et l'excellence pour les accomplir.",
+      image: "/media/dawn.jpg",
     },
     {
       id: "daniel",
@@ -36,6 +37,7 @@ export const VISION = {
       title: "Daniel",
       ref: "Daniel 6:3",
       text: "« Un esprit supérieur était en lui. » L'esprit extraordinaire. Une jeunesse intègre, excellente, qui influence les empires sans compromis.",
+      image: "/media/worship.jpg",
     },
     {
       id: "david",
@@ -43,6 +45,7 @@ export const VISION = {
       title: "David",
       ref: "1 Samuel 16",
       text: "Oint au milieu de ses frères. Adorateur, guerrier, roi. Une jeunesse qui sert le dessein de Dieu dans sa génération — et qui règne.",
+      image: "/media/lights.jpg",
     },
   ],
 } as const;
@@ -180,6 +183,8 @@ export const POLES = [
     description:
       "Louanges, concerts et temps d'adoration — la flamme au centre de chaque soirée.",
     accent: "feu" as const,
+    image: "/media/worship.jpg",
+    objectPosition: "center 35%",
   },
   {
     id: "art",
@@ -187,6 +192,8 @@ export const POLES = [
     description:
       "Expositions, performances et rencontres pour faire rayonner les talents de la génération.",
     accent: "bleu" as const,
+    image: "/media/festival.jpg",
+    objectPosition: "center center",
   },
   {
     id: "danse",
@@ -194,6 +201,8 @@ export const POLES = [
     description:
       "Spectacles, énergie du corps et moments forts qui font vibrer Midombo.",
     accent: "feu" as const,
+    image: "/media/concert.jpg",
+    objectPosition: "center 25%",
   },
   {
     id: "formation",
@@ -201,6 +210,8 @@ export const POLES = [
     description:
       "VTeam (musiciens & chantres) et Entrepreneuriat — exceller sans quitter le Royaume.",
     accent: "bleu" as const,
+    image: "/media/community.jpg",
+    objectPosition: "center 40%",
   },
 ] as const;
 

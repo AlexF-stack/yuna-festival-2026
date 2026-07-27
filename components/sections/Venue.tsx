@@ -2,8 +2,10 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
+import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { SoftImage } from "@/components/ui/SoftImage";
 import { VENUE } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
 import { EASE_YUNA } from "@/lib/motion";
@@ -13,19 +15,8 @@ export function Venue() {
 
   return (
     <SectionShell id="lieu" labelledBy="lieu-title" background="venue">
-      <motion.div
-        initial={reduce ? false : { opacity: 0, y: 20 }}
-        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.35 }}
-        transition={{ duration: 0.65, ease: EASE_YUNA }}
-        className="grid items-center gap-12 min-[900px]:grid-cols-[1.1fr_0.9fr]"
-      >
-        <motion.div
-          initial={reduce ? false : { opacity: 0, x: -20 }}
-          whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease: EASE_YUNA }}
-        >
+      <div className="grid items-center gap-14 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-16">
+        <Reveal>
           <SectionHeading
             eyebrow={VENUE.eyebrow}
             title={VENUE.title}
@@ -40,28 +31,50 @@ export function Venue() {
               </li>
             ))}
           </ul>
-        </motion.div>
+        </Reveal>
 
-        <motion.aside
-          initial={reduce ? false : { opacity: 0, scale: 0.96 }}
-          whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.7, ease: EASE_YUNA, delay: 0.06 }}
-          className="rounded-[1.75rem] border border-bleu/15 bg-bleu/92 p-10 text-center text-papier shadow-ombre-bleu-lg"
-        >
-          <p className="font-display text-[clamp(2.5rem,8vw,4rem)] font-extrabold uppercase leading-none">
-            Midombo
-          </p>
-          <p className="mt-3 font-mono text-sm font-bold uppercase tracking-[0.2em] text-papier/75">
-            {FESTIVAL.city} · {FESTIVAL.country}
-          </p>
-          <p className="mt-6 text-lg font-bold text-feu">{FESTIVAL.datesShort}</p>
-          <p className="mt-2 text-sm text-papier/80">{FESTIVAL.freeEntry}</p>
-          <p className="mt-6 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-papier/55">
-            Ouverture {FESTIVAL.siteOpens} · Concerts dès 18h
-          </p>
-        </motion.aside>
-      </motion.div>
+        <Reveal delay={0.08}>
+          <div className="relative">
+            <div
+              aria-hidden
+              className="absolute -left-4 -top-4 h-full w-full rounded-[1.75rem] border-2 border-jaune/40"
+            />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-ombre-bleu-lg">
+              <SoftImage
+                src="/media/stage.jpg"
+                alt="Vue du terrain de Midombo"
+                fill
+                sizes="(min-width: 900px) 480px, 100vw"
+                wrapperClassName="absolute inset-0"
+                objectPosition="center 50%"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-encre/90 via-encre/20 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-8 text-papier">
+                <p className="font-display text-[clamp(2.2rem,6vw,3.5rem)] font-extrabold uppercase leading-none">
+                  Midombo
+                </p>
+                <p className="mt-2 font-mono text-sm font-bold uppercase tracking-[0.18em] text-papier/75">
+                  {FESTIVAL.city} · {FESTIVAL.country}
+                </p>
+                <p className="mt-4 text-lg font-bold text-feu">{FESTIVAL.datesShort}</p>
+                <p className="mt-1 text-sm text-papier/80">{FESTIVAL.freeEntry}</p>
+              </div>
+            </div>
+            <motion.aside
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.55, ease: EASE_YUNA, delay: 0.15 }}
+              className="absolute -bottom-6 -right-4 rounded-2xl border border-papier/20 bg-bleu/95 px-5 py-4 text-center text-papier shadow-ombre-bleu-lg backdrop-blur-md min-[900px]:-right-8"
+            >
+              <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-papier/65">
+                Ouverture
+              </p>
+              <p className="font-display text-2xl font-extrabold">{FESTIVAL.siteOpens}</p>
+            </motion.aside>
+          </div>
+        </Reveal>
+      </div>
     </SectionShell>
   );
 }

@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-import { AnimatedThemeTitle } from "@/components/sections/AnimatedThemeTitle";
 import { BeninDeboutSceneDynamic } from "@/components/sections/BeninDeboutSceneDynamic";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -49,15 +48,10 @@ export function Mission() {
         transition={{ duration: 0.55, ease: EASE_YUNA }}
         className="relative z-10 mb-10 min-[900px]:mb-14"
       >
-        <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-bleu/15 bg-papier/80 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-bleu backdrop-blur-sm">
+        <p className="inline-flex items-center gap-2 rounded-full border border-bleu/15 bg-papier/80 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-bleu backdrop-blur-sm">
           <span className="h-1.5 w-1.5 rounded-full bg-vert" aria-hidden />
           Thème {FESTIVAL.edition} · {FESTIVAL.theme}
         </p>
-        <AnimatedThemeTitle
-          line1="BÉNIN"
-          line2="DEBOUT"
-          id="mission-theme-title"
-        />
       </motion.div>
 
       <motion.div

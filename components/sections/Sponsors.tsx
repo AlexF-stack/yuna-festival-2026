@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { SPONSORS } from "@/lib/content-site";
@@ -17,26 +18,28 @@ export function Sponsors() {
   const reduce = useReducedMotion();
 
   return (
-    <SectionShell id="sponsors" labelledBy="sponsors-title" background="sponsors">
-      <SectionHeading
-        eyebrow={SPONSORS.eyebrow}
-        title={SPONSORS.title}
-        titleId="sponsors-title"
-        description={SPONSORS.intro}
-      />
+    <SectionShell id="sponsors" labelledBy="sponsors-title" tone="nuage">
+      <Reveal>
+        <SectionHeading
+          eyebrow={SPONSORS.eyebrow}
+          title={SPONSORS.title}
+          titleId="sponsors-title"
+          description={SPONSORS.intro}
+        />
+      </Reveal>
 
-      <div className="mt-12 grid gap-4 min-[1000px]:grid-cols-3">
+      <div className="mt-14 grid gap-5 min-[1000px]:grid-cols-3">
         {SPONSORS.tiers.map((tier, i) => (
           <motion.article
             key={tier.id}
-            initial={reduce ? false : { opacity: 0, y: 24 }}
+            initial={reduce ? false : { opacity: 0, y: 28 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.55, delay: reduce ? 0 : i * 0.08, ease: EASE_YUNA }}
-            className={`flex flex-col rounded-2xl border p-7 ${
+            transition={{ duration: 0.6, delay: reduce ? 0 : i * 0.08, ease: EASE_YUNA }}
+            className={`surface-card flex flex-col p-7 ${
               tier.featured
-                ? "border-feu/40 bg-gradient-to-b from-peach-wash to-papier shadow-ombre-bleu-lg"
-                : "border-bleu/12 bg-papier/92"
+                ? "ring-2 ring-feu/35 shadow-ombre-bleu-lg"
+                : ""
             }`}
           >
             <p className="font-mono text-[0.72rem] font-bold uppercase tracking-[0.16em] text-feu">
@@ -67,40 +70,19 @@ export function Sponsors() {
         ))}
       </div>
 
-      <motion.div
-        initial={reduce ? false : { opacity: 0, y: 16 }}
-        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.55, ease: EASE_YUNA }}
-        className="mt-14 text-center"
-      >
-        <p className="font-mono text-[0.72rem] font-bold uppercase tracking-[0.2em] text-charbon/70">
-          {SPONSORS.logosTitle}
-        </p>
-        <motion.div
-          className="mx-auto mt-6 grid max-w-3xl grid-cols-2 gap-3 min-[640px]:grid-cols-4"
-          variants={
-            reduce
-              ? undefined
-              : { hidden: {}, show: { transition: { staggerChildren: 0.06 } } }
-          }
-          initial={reduce ? false : "hidden"}
-          whileInView={reduce ? undefined : "show"}
-          viewport={{ once: true, amount: 0.5 }}
-        >
+      <Reveal className="mt-16 text-center">
+        <p className="section-eyebrow justify-center">{SPONSORS.logosTitle}</p>
+        <div className="mx-auto mt-6 grid max-w-3xl grid-cols-2 gap-3 min-[640px]:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <motion.div
+            <div
               key={i}
-              variants={
-                reduce ? undefined : { hidden: { opacity: 0 }, show: { opacity: 1 } }
-              }
-              className="flex h-16 items-center justify-center rounded-xl border border-dashed border-bleu/20 bg-papier/70 text-xs font-semibold uppercase tracking-wider text-charbon/45"
+              className="flex h-16 items-center justify-center rounded-xl border border-dashed border-bleu/20 bg-papier text-xs font-semibold uppercase tracking-wider text-charbon/45"
             >
               Votre logo ici
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
-      </motion.div>
+        </div>
+      </Reveal>
     </SectionShell>
   );
 }

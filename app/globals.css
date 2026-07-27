@@ -46,6 +46,13 @@
   --alert-soft: #ffd2b0;
   --ombre-bleu: 0 20px 50px rgb(0 90 140 / 0.1);
   --ombre-bleu-lg: 0 28px 70px rgb(0 90 140 / 0.22);
+
+  --hero-overlay: linear-gradient(
+    180deg,
+    rgb(15 36 51 / 0.55) 0%,
+    rgb(15 36 51 / 0.82) 55%,
+    rgb(10 20 28 / 0.95) 100%
+  );
 }
 
 @theme inline {
@@ -290,7 +297,170 @@ body {
   .hero-horizon,
   .theme-debout,
   .marquee-track,
-  .hero-sparks {
+  .hero-sparks,
+  .media-kenburns,
+  .scroll-cue {
     animation: none !important;
   }
+}
+
+/* ── Hero cinématique (Herna / Canaan) ─────────────────────────────── */
+@keyframes media-kenburns {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.12) translate3d(-1.2%, -0.8%, 0);
+  }
+}
+
+.media-kenburns {
+  animation: media-kenburns 22s var(--ease-yuna) infinite alternate;
+  will-change: transform;
+}
+
+.media-vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 42%,
+    rgb(0 0 0 / 0.32) 100%
+  );
+  pointer-events: none;
+}
+
+.media-grain {
+  opacity: 0.07;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hero-cinematic-glow {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 100%,
+    color-mix(in srgb, var(--feu) 28%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.hero-divider {
+  height: 2px;
+  width: min(420px, 100%);
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--jaune),
+    color-mix(in srgb, var(--feu) 70%, var(--jaune)),
+    transparent
+  );
+}
+
+.scroll-cue {
+  display: block;
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(to bottom, transparent, rgb(255 255 255 / 0.75));
+  animation: scroll-cue 2.2s var(--ease-yuna) infinite;
+}
+
+@keyframes scroll-cue {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.4);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(1);
+  }
+}
+
+/* ── Layout & surfaces premium ─────────────────────────────────────── */
+.section-pad {
+  padding-block: clamp(3.75rem, 9vw, 7rem);
+  padding-inline: clamp(1.15rem, 4.5vw, 1.5rem);
+}
+
+.section-container {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--feu);
+}
+
+.section-title {
+  font-family: var(--font-baloo-2), system-ui, sans-serif;
+  font-size: clamp(2.35rem, 5.8vw, 4.1rem);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.section-lead {
+  margin-top: 1rem;
+  font-size: clamp(1rem, 2.2vw, 1.08rem);
+  line-height: 1.65;
+}
+
+.surface-card {
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--bleu) 12%, transparent);
+  background: color-mix(in srgb, var(--papier) 94%, transparent);
+  box-shadow: var(--ombre-bleu);
+  transition:
+    border-color 250ms var(--ease-yuna),
+    box-shadow 250ms var(--ease-yuna),
+    transform 250ms var(--ease-yuna);
+}
+
+.surface-card:hover {
+  border-color: color-mix(in srgb, var(--bleu) 22%, transparent);
+  box-shadow: var(--ombre-bleu-lg);
+}
+
+.surface-card-image {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: var(--ombre-bleu-lg);
+}
+
+.hero-glass-panel {
+  background: color-mix(in srgb, var(--papier) 8%, transparent);
+}
+
+.quote-strip {
+  background: linear-gradient(
+    135deg,
+    var(--bleu-fonce) 0%,
+    var(--don-deep) 48%,
+    var(--encre) 100%
+  );
+}
+
+.quote-strip-glow {
+  background:
+    radial-gradient(
+      ellipse 70% 80% at 15% 50%,
+      color-mix(in srgb, var(--feu) 22%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 70% at 85% 30%,
+      color-mix(in srgb, var(--bleu) 18%, transparent),
+      transparent 50%
+    );
 }

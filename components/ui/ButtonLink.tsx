@@ -1,6 +1,6 @@
 import type { ComponentPropsWithoutRef } from "react";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "outline-light" | "ghost";
 
 type ButtonLinkProps = ComponentPropsWithoutRef<"a"> & {
   variant?: Variant;
@@ -11,6 +11,8 @@ const VARIANT: Record<Variant, string> = {
     "bg-feu text-papier shadow-[0_10px_28px_color-mix(in_srgb,var(--feu)_32%,transparent)] hover:bg-braise",
   secondary:
     "border-2 border-bleu bg-transparent text-bleu hover:bg-bleu hover:text-papier",
+  "outline-light":
+    "border-2 border-papier/35 bg-papier/10 text-papier backdrop-blur-sm hover:border-papier/55 hover:bg-papier/18",
   ghost: "bg-transparent text-bleu underline-offset-4 hover:underline",
 };
 

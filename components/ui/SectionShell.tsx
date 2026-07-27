@@ -6,12 +6,11 @@ import {
   type SectionBgKey,
 } from "@/lib/section-backgrounds";
 
-export type SectionTone = "papier" | "nuage" | "ciel" | "don" | "mesh-feu";
+export type SectionTone = "papier" | "nuage" | "ciel" | "don" | "mesh-feu" | "accent";
 
 type SectionShellProps = {
   id?: string;
   tone?: SectionTone;
-  /** Photo unique par section — voir `lib/section-backgrounds.ts` */
   background?: SectionBgKey;
   labelledBy?: string;
   className?: string;
@@ -29,13 +28,13 @@ export function SectionShell({
   children,
 }: SectionShellProps) {
   const isPhoto = Boolean(background);
-  const skipGrain = isPhoto || tone === "don";
+  const skipGrain = isPhoto || tone === "don" || tone === "accent";
 
   return (
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={`relative z-10 overflow-x-hidden px-5 py-24 min-[760px]:px-6 min-[760px]:py-28 ${className}`}
+      className={`section-pad relative z-10 overflow-x-hidden ${className}`}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         {background ? (
@@ -64,6 +63,12 @@ export function SectionShell({
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_10%_90%,color-mix(in_srgb,var(--bleu)_12%,transparent),transparent_50%)]" />
           </>
         ) : null}
+        {!background && tone === "accent" ? (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-bleu-fonce via-bleu to-don-deep" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_20%_0%,color-mix(in_srgb,var(--feu)_22%,transparent),transparent_55%)]" />
+          </>
+        ) : null}
 
         {!skipGrain ? (
           <div className="section-grain absolute inset-0 opacity-[0.04]" />
@@ -72,7 +77,7 @@ export function SectionShell({
 
       {overlay}
 
-      <div className="relative z-10 mx-auto max-w-[1240px]">{children}</div>
+      <div className="section-container relative z-10">{children}</div>
     </section>
   );
 }

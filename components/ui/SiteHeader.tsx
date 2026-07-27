@@ -8,13 +8,22 @@ import { FESTIVAL, NAV_LINKS } from "@/lib/festival";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  const [onHero, setOnHero] = useState(true);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 12);
+      setOnHero(y < window.innerHeight * 0.72);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -24,12 +33,16 @@ export function SiteHeader() {
     };
   }, [open]);
 
+  const heroNav = onHero && !scrolled && !open;
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-[120] transition-[background-color,box-shadow,border-color] duration-300 ease-yuna ${
-        scrolled || open
-          ? "border-b border-bleu/10 bg-papier/95 shadow-[0_8px_30px_rgba(0,90,140,0.08)] backdrop-blur-xl"
-          : "border-b border-transparent bg-papier/80 backdrop-blur-md"
+        heroNav
+          ? "border-b border-papier/10 bg-transparent"
+          : scrolled || open
+            ? "border-b border-bleu/10 bg-papier/95 shadow-[0_8px_30px_rgba(0,90,140,0.08)] backdrop-blur-xl"
+            : "border-b border-transparent bg-papier/80 backdrop-blur-md"
       }`}
     >
       <div aria-hidden className="flex h-1 w-full">
@@ -56,7 +69,11 @@ export function SiteHeader() {
             <a
               key={link.href}
               href={link.href}
-              className="rounded-full px-3.5 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-charbon transition-colors hover:bg-ciel hover:text-bleu"
+              className={`rounded-full px-3.5 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
+                heroNav
+                  ? "text-papier/88 hover:bg-papier/10 hover:text-papier"
+                  : "text-charbon hover:bg-ciel hover:text-bleu"
+              }`}
             >
               {link.label}
             </a>
@@ -71,7 +88,11 @@ export function SiteHeader() {
 
         <button
           type="button"
-          className="relative z-[130] flex h-11 w-11 items-center justify-center rounded-full border border-bleu/20 text-bleu min-[900px]:hidden"
+          className={`relative z-[130] flex h-11 w-11 items-center justify-center rounded-full border min-[900px]:hidden ${
+            heroNav
+              ? "border-papier/30 text-papier"
+              : "border-bleu/20 text-bleu"
+          }`}
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}

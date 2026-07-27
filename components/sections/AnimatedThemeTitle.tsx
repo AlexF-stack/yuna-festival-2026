@@ -6,6 +6,8 @@ type AnimatedThemeTitleProps = {
   line1: string;
   line2: string;
   id?: string;
+  /** Texte clair sur fond sombre (hero cinématique). */
+  variant?: "default" | "dark";
 };
 
 const ease: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
@@ -17,8 +19,11 @@ export function AnimatedThemeTitle({
   line1,
   line2,
   id = "hero-title",
+  variant = "default",
 }: AnimatedThemeTitleProps) {
   const reduceMotion = useReducedMotion();
+  const line1Class =
+    variant === "dark" ? "text-papier drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)]" : "text-bleu";
 
   if (reduceMotion) {
     return (
@@ -26,7 +31,7 @@ export function AnimatedThemeTitle({
         id={id}
         className="font-display text-[clamp(3rem,10vw,6.75rem)] font-extrabold uppercase leading-[0.9] tracking-tight"
       >
-        <span className="block text-bleu">{line1}</span>
+        <span className={`block ${line1Class}`}>{line1}</span>
         <span className="block text-feu">{line2}</span>
       </h1>
     );
@@ -38,7 +43,7 @@ export function AnimatedThemeTitle({
       className="font-display text-[clamp(3rem,10vw,6.75rem)] font-extrabold uppercase leading-[0.9] tracking-tight [perspective:900px]"
     >
       <motion.span
-        className="block origin-bottom-left text-bleu"
+        className={`block origin-bottom-left ${line1Class}`}
         initial={{ opacity: 0, y: 56, rotateX: 35, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
         transition={{ duration: 0.9, ease, delay: 0.15 }}
@@ -46,7 +51,7 @@ export function AnimatedThemeTitle({
         {line1}
       </motion.span>
       <motion.span
-        className="theme-debout relative mt-1 block origin-bottom-left bg-gradient-to-r from-feu via-[#ff9a4a] to-feu bg-[length:200%_100%] bg-clip-text text-transparent"
+        className="theme-debout relative mt-1 block origin-bottom-left bg-gradient-to-r from-feu via-alert-soft to-feu bg-[length:200%_100%] bg-clip-text text-transparent"
         initial={{ opacity: 0, y: 56, rotateX: 35, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
         transition={{ duration: 0.9, ease, delay: 0.32 }}

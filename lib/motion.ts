@@ -1,6 +1,7 @@
 import type { Variants } from "framer-motion";
 
 export const EASE_YUNA: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
+export const EASE_PREMIUM: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export function rise(y = 28): Variants {
   return {

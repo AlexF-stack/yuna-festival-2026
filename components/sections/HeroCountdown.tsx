@@ -11,6 +11,8 @@ import {
 
 type HeroCountdownProps = {
   eventStartIso: string;
+  variant?: "default" | "dark";
+  className?: string;
 };
 
 const LABELS = [
@@ -20,7 +22,11 @@ const LABELS = [
   { key: "seconds", label: "Sec" },
 ] as const;
 
-export function HeroCountdown({ eventStartIso }: HeroCountdownProps) {
+export function HeroCountdown({
+  eventStartIso,
+  variant = "default",
+  className = "",
+}: HeroCountdownProps) {
   const targetMs = parseEventStartMs(eventStartIso);
   const [parts, setParts] = useState<CountdownParts | null>(null);
 
@@ -33,7 +39,7 @@ export function HeroCountdown({ eventStartIso }: HeroCountdownProps) {
 
   return (
     <div
-      className="mt-10 grid max-w-md grid-cols-4 gap-2"
+      className={`mt-10 grid max-w-md grid-cols-4 gap-2 ${className}`}
       aria-live="polite"
       aria-atomic="true"
       aria-label="Compte à rebours jusqu'au festival"
@@ -41,12 +47,24 @@ export function HeroCountdown({ eventStartIso }: HeroCountdownProps) {
       {LABELS.map(({ key, label }) => (
         <div
           key={key}
-          className="rounded-2xl border border-bleu/15 bg-papier px-2 py-3 text-center shadow-[0_8px_24px_rgba(0,90,140,0.06)]"
+          className={
+            variant === "dark"
+              ? "rounded-2xl border border-papier/15 bg-papier/10 px-2 py-3 text-center shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md"
+              : "rounded-2xl border border-bleu/15 bg-papier px-2 py-3 text-center shadow-[0_8px_24px_rgba(0,90,140,0.06)]"
+          }
         >
-          <div className="font-mono text-[clamp(1.25rem,3vw,1.65rem)] font-bold leading-none text-bleu">
+          <div
+            className={`font-mono text-[clamp(1.25rem,3vw,1.65rem)] font-bold leading-none ${
+              variant === "dark" ? "text-papier" : "text-bleu"
+            }`}
+          >
             {parts ? padCountdown(parts[key]) : "--"}
           </div>
-          <div className="mt-1.5 text-[0.62rem] font-bold uppercase tracking-[0.14em] text-charbon">
+          <div
+            className={`mt-1.5 text-[0.62rem] font-bold uppercase tracking-[0.14em] ${
+              variant === "dark" ? "text-papier/65" : "text-charbon"
+            }`}
+          >
             {label}
           </div>
         </div>

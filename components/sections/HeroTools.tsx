@@ -4,8 +4,16 @@ import { useReducedMotion } from "framer-motion";
 
 import { getGoogleCalendarUrl, getShareData } from "@/lib/calendar";
 
-export function HeroTools() {
+type HeroToolsProps = {
+  variant?: "default" | "dark";
+};
+
+export function HeroTools({ variant = "default" }: HeroToolsProps) {
   const reduce = useReducedMotion();
+  const chipClass =
+    variant === "dark"
+      ? "border-papier/20 bg-papier/10 text-papier/90 backdrop-blur-md hover:border-papier/40 hover:bg-papier/15"
+      : "border-bleu/20 bg-papier/80 text-bleu hover:border-bleu hover:bg-ciel";
 
   async function onShare() {
     const data = getShareData(window.location.href);
@@ -30,14 +38,14 @@ export function HeroTools() {
         href={getGoogleCalendarUrl()}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 rounded-full border border-bleu/20 bg-papier/80 px-4 py-2 text-[0.82rem] font-semibold text-bleu transition-colors hover:border-bleu hover:bg-ciel motion-reduce:transition-none"
+        className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[0.82rem] font-semibold transition-colors motion-reduce:transition-none ${chipClass}`}
       >
         Ajouter au calendrier
       </a>
       <button
         type="button"
         onClick={onShare}
-        className="inline-flex items-center gap-2 rounded-full border border-bleu/20 bg-papier/80 px-4 py-2 text-[0.82rem] font-semibold text-bleu transition-colors hover:border-bleu hover:bg-ciel motion-reduce:transition-none"
+        className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[0.82rem] font-semibold transition-colors motion-reduce:transition-none ${chipClass}`}
       >
         Partager
       </button>

@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
+import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { JOURNEE } from "@/lib/content-site";
@@ -12,23 +13,25 @@ export function Journee() {
 
   return (
     <SectionShell id="journee" labelledBy="journee-title" background="journee">
-      <SectionHeading
-        eyebrow={JOURNEE.eyebrow}
-        title={JOURNEE.title}
-        titleId="journee-title"
-        description={JOURNEE.intro}
-      />
+      <Reveal>
+        <SectionHeading
+          eyebrow={JOURNEE.eyebrow}
+          title={JOURNEE.title}
+          titleId="journee-title"
+          description={JOURNEE.intro}
+        />
+      </Reveal>
 
-      <div className="mt-12 grid gap-4 min-[880px]:grid-cols-3">
+      <div className="mt-14 grid gap-5 min-[880px]:grid-cols-3">
         {JOURNEE.items.map((item, i) => (
           <motion.article
             key={item.id}
-            initial={reduce ? false : { opacity: 0, y: 24 }}
+            initial={reduce ? false : { opacity: 0, y: 28 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.55, delay: reduce ? 0 : i * 0.07, ease: EASE_YUNA }}
-            whileHover={reduce ? undefined : { y: -6 }}
-            className="relative overflow-hidden rounded-2xl border border-bleu/10 bg-papier/92 p-7 shadow-ombre-bleu backdrop-blur-sm"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: reduce ? 0 : i * 0.08, ease: EASE_YUNA }}
+            whileHover={reduce ? undefined : { y: -5 }}
+            className="surface-card relative overflow-hidden p-7"
           >
             <div
               aria-hidden
@@ -44,9 +47,14 @@ export function Journee() {
               {item.description}
             </p>
             {"speakers" in item && item.speakers ? (
-              <ul className="mt-4 list-disc space-y-1.5 pl-5 text-[0.9rem] text-charbon/90">
+              <ul className="mt-4 space-y-1.5 border-t border-bleu/10 pt-4 text-[0.9rem] text-charbon/90">
                 {item.speakers.map((name) => (
-                  <li key={name}>{name}</li>
+                  <li key={name} className="flex gap-2">
+                    <span className="text-feu" aria-hidden>
+                      →
+                    </span>
+                    {name}
+                  </li>
                 ))}
               </ul>
             ) : null}

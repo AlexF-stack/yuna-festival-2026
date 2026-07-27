@@ -23,25 +23,27 @@ export function SectionHeading({
       <p
         className={
           centered
-            ? `mb-3 text-[0.72rem] font-bold uppercase tracking-[0.32em] ${light ? "text-feu" : "text-feu"}`
-            : `mb-3 flex items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.32em] text-feu before:block before:h-0.5 before:w-8 before:content-[''] ${light ? "before:bg-feu" : "before:bg-feu"}`
+            ? "section-eyebrow mb-3 justify-center"
+            : "section-eyebrow mb-3"
         }
       >
+        <span
+          aria-hidden
+          className={`h-0.5 w-8 shrink-0 ${light ? "bg-feu" : "bg-feu"}`}
+        />
         {eyebrow}
       </p>
       <h2
         id={titleId}
-        className={`font-display text-[clamp(2.4rem,6vw,4.25rem)] font-extrabold uppercase leading-[0.98] tracking-tight ${
-          light ? "text-papier" : "text-bleu"
-        }`}
+        className={`section-title ${light ? "text-papier" : "text-bleu"}`}
       >
         {title}
       </h2>
       {description ? (
         <p
-          className={`mt-4 text-[1.05rem] leading-relaxed ${
-            light ? "text-papier/80" : "text-charbon"
-          } ${centered ? "mx-auto max-w-xl" : "max-w-xl"}`}
+          className={`section-lead ${light ? "text-papier/80" : "text-charbon"} ${
+            centered ? "mx-auto max-w-xl" : "max-w-xl"
+          }`}
         >
           {description}
         </p>
