@@ -4,6 +4,7 @@ type SectionHeadingProps = {
   titleId: string;
   description?: string;
   align?: "left" | "center";
+  /** light = texte blanc sur fond bleu/feu logo exact */
   variant?: "default" | "light";
 };
 
@@ -21,15 +22,13 @@ export function SectionHeading({
   return (
     <header className={centered ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
       <p
-        className={
-          centered
-            ? "section-eyebrow mb-3 justify-center"
-            : "section-eyebrow mb-3"
-        }
+        className={`mb-3 inline-flex items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] ${
+          centered ? "justify-center" : ""
+        } ${light ? "text-papier/85" : "text-feu"}`}
       >
         <span
           aria-hidden
-          className={`h-0.5 w-8 shrink-0 ${light ? "bg-feu" : "bg-feu"}`}
+          className={`h-0.5 w-8 shrink-0 ${light ? "bg-papier" : "bg-feu"}`}
         />
         {eyebrow}
       </p>

@@ -82,7 +82,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
     <SectionShell
       id="inscription"
       labelledBy="register-title"
-      background="register"
+      tone="papier"
     >
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 20 }}

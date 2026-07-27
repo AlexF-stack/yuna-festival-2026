@@ -18,7 +18,7 @@ export function Sponsors() {
   const reduce = useReducedMotion();
 
   return (
-    <SectionShell id="sponsors" labelledBy="sponsors-title" tone="nuage">
+    <SectionShell id="sponsors" labelledBy="sponsors-title" tone="bleu-soft">
       <Reveal>
         <SectionHeading
           eyebrow={SPONSORS.eyebrow}

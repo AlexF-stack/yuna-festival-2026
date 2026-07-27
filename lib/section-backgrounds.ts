@@ -1,7 +1,18 @@
 /**
- * Fond unique par section — chaque JPG n'est utilisé qu'une fois en arrière-plan.
- * Les cartes (Vision, Pôles) réutilisent des crops en vignette, pas en plein écran.
+ * Fonds de section — palette exacte du logo YUNA (ne pas dériver d’autres hex).
+ * Logo : bleu #0077bb · feu #ff6600 · blanc #ffffff · charbon #444444
  */
+export type SectionTone =
+  | "papier"
+  | "bleu-soft"
+  | "feu-soft"
+  | "bleu"
+  | "feu"
+  | "charbon";
+
+/** Overlay photo teinté aux couleurs exactes du logo (si une photo est gardée). */
+export type SectionBgOverlay = "papier" | "bleu" | "feu";
+
 export type SectionBgKey =
   | "mission"
   | "vision"
@@ -13,8 +24,6 @@ export type SectionBgKey =
   | "boutique"
   | "stats";
 
-export type SectionBgOverlay = "light" | "cool" | "warm" | "deep" | "brand";
-
 export type SectionBgConfig = {
   src: string;
   alt: string;
@@ -23,82 +32,76 @@ export type SectionBgConfig = {
   photoOpacity?: number;
 };
 
-/** 8 photos → 8 sections photo (rythme alterné clair / texture) */
+/** Photos optionnelles — voile toujours en couleur logo exacte. */
 export const SECTION_BACKGROUNDS: Record<SectionBgKey, SectionBgConfig> = {
   mission: {
     src: "/media/worship.jpg",
     alt: "Adoration collective",
     objectPosition: "center 30%",
-    overlay: "brand",
-    photoOpacity: 0.52,
+    overlay: "bleu",
+    photoOpacity: 0.28,
   },
   vision: {
     src: "/media/dawn.jpg",
     alt: "Aube sur le festival",
     objectPosition: "center 20%",
-    overlay: "warm",
-    photoOpacity: 0.48,
+    overlay: "papier",
+    photoOpacity: 0.22,
   },
   lineup: {
     src: "/media/crowd.jpg",
     alt: "Foule en liesse",
     objectPosition: "center center",
-    overlay: "cool",
-    photoOpacity: 0.42,
+    overlay: "feu",
+    photoOpacity: 0.26,
   },
   programme: {
     src: "/media/concert.jpg",
     alt: "Scène de concert",
     objectPosition: "center 20%",
-    overlay: "cool",
-    photoOpacity: 0.4,
+    overlay: "papier",
+    photoOpacity: 0.22,
   },
   journee: {
     src: "/media/community.jpg",
     alt: "Actions communautaires",
     objectPosition: "center 40%",
-    overlay: "light",
-    photoOpacity: 0.45,
+    overlay: "bleu",
+    photoOpacity: 0.24,
   },
   venue: {
     src: "/media/stage.jpg",
     alt: "Terrain de Midombo",
     objectPosition: "center 55%",
-    overlay: "cool",
-    photoOpacity: 0.42,
+    overlay: "feu",
+    photoOpacity: 0.24,
   },
   register: {
     src: "/media/festival.jpg",
     alt: "Ambiance festival",
     objectPosition: "center 35%",
-    overlay: "warm",
-    photoOpacity: 0.38,
+    overlay: "papier",
+    photoOpacity: 0.2,
   },
   boutique: {
     src: "/media/lights.jpg",
     alt: "Lumières de scène",
     objectPosition: "center 30%",
-    overlay: "deep",
-    photoOpacity: 0.35,
+    overlay: "bleu",
+    photoOpacity: 0.22,
   },
   stats: {
     src: "/media/dawn.jpg",
     alt: "",
     objectPosition: "center top",
-    overlay: "brand",
-    photoOpacity: 0.35,
+    overlay: "bleu",
+    photoOpacity: 0.2,
   },
 };
 
+/** Voiles = color-mix sur tokens logo exacts (--bleu / --feu / --papier). */
 export const OVERLAY_CLASS: Record<SectionBgOverlay, string> = {
-  light:
-    "bg-gradient-to-b from-papier/95 via-papier/91 to-papier/97",
-  cool:
-    "bg-gradient-to-b from-ciel/94 via-papier/89 to-papier/96",
-  warm:
-    "bg-gradient-to-b from-peach-wash/93 via-papier/87 to-ciel/93",
-  deep:
-    "bg-gradient-to-b from-papier/92 via-papier/86 to-peach-soft/94",
-  brand:
-    "bg-gradient-to-br from-papier/90 via-ciel/82 to-peach-wash/92",
+  papier: "bg-papier/94",
+  bleu: "bg-[color-mix(in_srgb,var(--bleu)_14%,var(--papier))]",
+  feu: "bg-[color-mix(in_srgb,var(--feu)_12%,var(--papier))]",
 };

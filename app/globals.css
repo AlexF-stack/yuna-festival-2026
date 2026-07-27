@@ -10,8 +10,11 @@
   --charbon: #444444;
   --encre: #1a1a1a;
   --papier: #ffffff;
-  --nuage: #f3f8fc;
-  --ciel: #e8f4fb;
+  /* Lavages = mélange exact logo (pas d’autres hex) */
+  --logo-bleu-soft: color-mix(in srgb, var(--bleu) 12%, var(--papier));
+  --logo-feu-soft: color-mix(in srgb, var(--feu) 10%, var(--papier));
+  --nuage: var(--logo-bleu-soft);
+  --ciel: var(--logo-bleu-soft);
   --vert: #008751;
   --jaune: #fcd116;
   --rouge: #e8112d;
@@ -38,14 +41,14 @@
   --tee-visual-dark-deep: #0f2433;
 
   /* Dérivés charte — éviter les hex en dur dans les composants */
-  --peach: #fff4eb;
-  --peach-light: #fff0e6;
-  --peach-wash: #fff3e8;
-  --peach-soft: #fff8f2;
-  --don-deep: #003d5c;
-  --alert-soft: #ffd2b0;
-  --ombre-bleu: 0 20px 50px rgb(0 90 140 / 0.1);
-  --ombre-bleu-lg: 0 28px 70px rgb(0 90 140 / 0.22);
+  --peach: var(--logo-feu-soft);
+  --peach-light: var(--logo-feu-soft);
+  --peach-wash: var(--logo-feu-soft);
+  --peach-soft: var(--logo-feu-soft);
+  --don-deep: var(--bleu-fonce);
+  --alert-soft: color-mix(in srgb, var(--feu) 35%, var(--papier));
+  --ombre-bleu: 0 20px 50px color-mix(in srgb, var(--bleu) 16%, transparent);
+  --ombre-bleu-lg: 0 28px 70px color-mix(in srgb, var(--bleu) 28%, transparent);
 
   --hero-overlay: linear-gradient(
     180deg,
@@ -68,6 +71,8 @@
   --color-vert: var(--vert);
   --color-jaune: var(--jaune);
   --color-rouge: var(--rouge);
+  --color-logo-bleu-soft: var(--logo-bleu-soft);
+  --color-logo-feu-soft: var(--logo-feu-soft);
 
   --color-nuit: var(--nuit);
   --color-nuit2: var(--nuit2);
@@ -390,6 +395,15 @@ body {
   margin-inline: auto;
 }
 
+/* Fonds section — tokens logo exacts */
+@utility bg-logo-bleu-soft {
+  background-color: var(--logo-bleu-soft);
+}
+
+@utility bg-logo-feu-soft {
+  background-color: var(--logo-feu-soft);
+}
+
 .section-eyebrow {
   display: inline-flex;
   align-items: center;
@@ -443,24 +457,13 @@ body {
 }
 
 .quote-strip {
-  background: linear-gradient(
-    135deg,
-    var(--bleu-fonce) 0%,
-    var(--don-deep) 48%,
-    var(--encre) 100%
-  );
+  background: var(--bleu);
 }
 
 .quote-strip-glow {
-  background:
-    radial-gradient(
-      ellipse 70% 80% at 15% 50%,
-      color-mix(in srgb, var(--feu) 22%, transparent),
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 60% 70% at 85% 30%,
-      color-mix(in srgb, var(--bleu) 18%, transparent),
-      transparent 50%
-    );
+  background: radial-gradient(
+    ellipse 70% 80% at 85% 40%,
+    color-mix(in srgb, var(--feu) 28%, transparent),
+    transparent 55%
+  );
 }

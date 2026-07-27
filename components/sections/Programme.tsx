@@ -18,7 +18,7 @@ export async function Programme() {
     <SectionShell
       id="programme"
       labelledBy="programme-title"
-      background="programme"
+      tone="papier"
       overlay={<OrbitHaloDynamic />}
     >
       <div className="flex flex-col gap-5 min-[760px]:flex-row min-[760px]:items-end min-[760px]:justify-between">

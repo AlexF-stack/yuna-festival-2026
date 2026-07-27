@@ -15,7 +15,7 @@ export function Donate() {
     <SectionShell
       id="don"
       labelledBy="donate-title"
-      tone="don"
+      tone="bleu"
       className="py-20 min-[760px]:py-24"
     >
       <motion.div

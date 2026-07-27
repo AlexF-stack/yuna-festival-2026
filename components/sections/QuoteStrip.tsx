@@ -27,7 +27,7 @@ export function QuoteStrip() {
         <p className="font-display text-[clamp(1.35rem,3.5vw,2rem)] font-bold leading-snug text-papier">
           {HERO_COPY.support}
         </p>
-        <footer className="mt-4 font-mono text-[0.72rem] font-bold uppercase tracking-[0.2em] text-jaune/90">
+        <footer className="mt-4 font-mono text-[0.72rem] font-bold uppercase tracking-[0.2em] text-papier/80">
           {HERO_COPY.verseRef} · Joseph · Daniel · David
         </footer>
       </motion.blockquote>

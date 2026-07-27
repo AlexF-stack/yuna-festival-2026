@@ -12,7 +12,7 @@ export function Vision() {
   const reduce = useReducedMotion();
 
   return (
-    <SectionShell id="vision" labelledBy="vision-title" background="vision">
+    <SectionShell id="vision" labelledBy="vision-title" tone="papier">
       <Reveal>
         <header className="max-w-3xl">
           <p className="section-eyebrow mb-3">

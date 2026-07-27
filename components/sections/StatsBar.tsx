@@ -1,15 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { EVENT_STATS } from "@/lib/festival";
-import { SECTION_BACKGROUNDS } from "@/lib/section-backgrounds";
 import { EASE_YUNA, rise, staggerContainer } from "@/lib/motion";
 
 export function StatsBar() {
   const reduce = useReducedMotion();
-  const bg = SECTION_BACKGROUNDS.stats;
 
   return (
     <section
@@ -17,16 +14,8 @@ export function StatsBar() {
       className="relative z-10 overflow-hidden bg-bleu"
     >
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <Image
-          src={bg.src}
-          alt={bg.alt}
-          fill
-          sizes="100vw"
-          className="object-cover"
-          style={{ objectPosition: bg.objectPosition, opacity: bg.photoOpacity ?? 0.35 }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-bleu/95 via-bleu-fonce/92 to-bleu/95" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,102,0,0.2),transparent_65%)]" />
+        <div className="absolute inset-0 bg-bleu" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--feu)_22%,transparent),transparent_65%)]" />
       </div>
 
       <motion.div

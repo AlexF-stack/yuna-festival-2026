@@ -14,40 +14,26 @@ export function Mission() {
   const reduce = useReducedMotion();
 
   return (
-    <SectionShell
-      id="mission"
-      labelledBy="mission-title"
-      background="mission"
-      overlay={
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-[1] hidden items-center justify-end pr-[4%] opacity-90 min-[900px]:flex"
-        >
-          <div className="h-[min(440px,65vw)] w-[min(440px,65vw)]">
-            <BeninDeboutSceneDynamic />
-          </div>
-        </div>
-      }
-    >
+    <SectionShell id="mission" labelledBy="mission-title" tone="bleu-soft">
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 16 }}
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
+        viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.55, ease: EASE_YUNA }}
-        className="relative z-10 mb-10 min-[900px]:mb-14"
+        className="mb-10 min-[900px]:mb-14"
       >
-        <p className="inline-flex items-center gap-2 rounded-full border border-bleu/15 bg-papier/80 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-bleu backdrop-blur-sm">
+        <p className="inline-flex items-center gap-2 rounded-full border border-bleu/15 bg-papier px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-bleu">
           <span className="h-1.5 w-1.5 rounded-full bg-vert" aria-hidden />
           Thème {FESTIVAL.edition} · {FESTIVAL.theme}
         </p>
       </motion.div>
 
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: 28 }}
+        initial={reduce ? false : { opacity: 0, y: 22 }}
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.35 }}
-        transition={{ duration: 0.7, ease: EASE_YUNA }}
-        className="relative z-10 grid items-center gap-12 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-16"
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ duration: 0.6, ease: EASE_YUNA }}
+        className="grid items-start gap-12 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-16"
       >
         <div>
           <SectionHeading
@@ -67,24 +53,24 @@ export function Mission() {
           </ButtonLink>
         </div>
 
-        <motion.blockquote
-          initial={reduce ? false : { opacity: 0, y: 20 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.55, ease: EASE_YUNA, delay: 0.06 }}
-          className="relative rounded-[1.75rem] border border-bleu/15 bg-bleu p-8 text-papier shadow-ombre-bleu-lg min-[760px]:p-10"
-        >
+        {/* Colonne droite : 3D derrière, citation complète au-dessus — plus de clip */}
+        <div className="relative">
           <div
             aria-hidden
-            className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-feu/30 blur-2xl"
-          />
-          <p className="relative font-display text-[clamp(1.35rem,3vw,1.85rem)] font-extrabold uppercase leading-snug">
-            {MISSION.highlight}
-          </p>
-          <footer className="relative mt-6 font-mono text-[0.7rem] font-bold uppercase tracking-[0.22em] text-papier/70">
-            YUNA · {FESTIVAL.theme}
-          </footer>
-        </motion.blockquote>
+            className="pointer-events-none absolute -right-6 -top-16 hidden h-[280px] w-[280px] opacity-70 min-[900px]:block min-[1100px]:h-[320px] min-[1100px]:w-[320px]"
+          >
+            <BeninDeboutSceneDynamic />
+          </div>
+
+          <blockquote className="relative z-10 overflow-visible rounded-[1.75rem] bg-bleu p-8 text-papier shadow-ombre-bleu-lg min-[760px]:p-10">
+            <p className="font-display text-[clamp(1.25rem,2.8vw,1.75rem)] font-extrabold uppercase leading-[1.2]">
+              {MISSION.highlight}
+            </p>
+            <footer className="mt-6 font-mono text-[0.7rem] font-bold uppercase tracking-[0.22em] text-papier/70">
+              YUNA · {FESTIVAL.theme}
+            </footer>
+          </blockquote>
+        </div>
       </motion.div>
     </SectionShell>
   );

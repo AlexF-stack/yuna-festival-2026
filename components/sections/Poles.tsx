@@ -8,7 +8,7 @@ import { POLES } from "@/lib/content-site";
 
 export function Poles() {
   return (
-    <SectionShell id="poles" labelledBy="poles-title" tone="mesh-feu">
+    <SectionShell id="poles" labelledBy="poles-title" tone="papier">
       <Reveal>
         <SectionHeading
           eyebrow="Les pôles"

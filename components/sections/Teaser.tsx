@@ -10,7 +10,7 @@ export function Teaser() {
   const hasVideo = Boolean(TEASER.youtubeId);
 
   return (
-    <SectionShell id="teaser" labelledBy="teaser-title" tone="ciel">
+    <SectionShell id="teaser" labelledBy="teaser-title" tone="feu-soft">
       <Reveal>
         <SectionHeading
           eyebrow={TEASER.eyebrow}
