@@ -132,7 +132,7 @@ export function SunriseScene() {
 
   return (
     <div
-      className="pointer-events-none absolute inset-x-0 bottom-[-8%] z-0 h-[55%] w-full opacity-50 mix-blend-multiply min-[900px]:opacity-60"
+      className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[48%] w-full opacity-80 min-[900px]:h-[55%] min-[900px]:opacity-90"
       aria-hidden
     >
       <SunriseCanvas reducedMotion={reducedMotion} />

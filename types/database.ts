@@ -15,6 +15,7 @@ type ArtistsTable = {
     name: string;
     role: string;
     is_headliner: boolean;
+    is_revealed: boolean;
     order: number;
     bio_short: string | null;
     created_at: string;
@@ -24,6 +25,7 @@ type ArtistsTable = {
     name: string;
     role: string;
     is_headliner?: boolean;
+    is_revealed?: boolean;
     order: number;
     bio_short?: string | null;
     created_at?: string;
@@ -33,6 +35,7 @@ type ArtistsTable = {
     name?: string;
     role?: string;
     is_headliner?: boolean;
+    is_revealed?: boolean;
     order?: number;
     bio_short?: string | null;
     created_at?: string;
@@ -48,6 +51,7 @@ type ScheduleTable = {
     title: string;
     description: string | null;
     order: number;
+    artist_id: string | null;
     created_at: string;
   };
   Insert: {
@@ -57,6 +61,7 @@ type ScheduleTable = {
     title: string;
     description?: string | null;
     order: number;
+    artist_id?: string | null;
     created_at?: string;
   };
   Update: {
@@ -66,6 +71,7 @@ type ScheduleTable = {
     title?: string;
     description?: string | null;
     order?: number;
+    artist_id?: string | null;
     created_at?: string;
   };
   Relationships: [];

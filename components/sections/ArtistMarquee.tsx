@@ -3,25 +3,22 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 type ArtistMarqueeProps = {
-  names: string[];
+  /** Noms révélés uniquement — sinon placeholders. */
+  revealedNames: string[];
+  totalCount: number;
 };
 
 /**
- * Bandeau défilant type festival pro — noms du line-up.
- * Fallback : artistes phares cités sur yunafestival.com si DB vide.
+ * Bandeau : noms révélés, sinon « Artiste surprise » répété.
+ * Ne jamais passer de noms non révélés.
  */
-const FALLBACK_NAMES = [
-  "Derek Jones",
-  "Moses Bliss",
-  "Travis Greene",
-  "Morijah",
-  "Willy Dumbo",
-  "Ks Bloom",
-];
-
-export function ArtistMarquee({ names }: ArtistMarqueeProps) {
+export function ArtistMarquee({ revealedNames, totalCount }: ArtistMarqueeProps) {
   const reduce = useReducedMotion();
-  const source = names.length > 0 ? names : FALLBACK_NAMES;
+  const count = Math.max(totalCount, 5);
+  const source =
+    revealedNames.length > 0
+      ? revealedNames
+      : Array.from({ length: count }, () => "Artiste surprise");
   const loop = [...source, ...source];
 
   return (
@@ -29,9 +26,7 @@ export function ArtistMarquee({ names }: ArtistMarqueeProps) {
       aria-label="Artistes à l'affiche"
       className="relative z-10 overflow-hidden border-y border-bleu/10 bg-bleu py-5"
     >
-      <div
-        className={`flex w-max gap-10 ${reduce ? "" : "marquee-track"}`}
-      >
+      <div className={`flex w-max gap-10 ${reduce ? "" : "marquee-track"}`}>
         {loop.map((name, i) => (
           <motion.span
             key={`${name}-${i}`}

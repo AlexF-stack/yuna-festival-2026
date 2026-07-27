@@ -11,6 +11,10 @@ import { StatsBar } from "@/components/sections/StatsBar";
 import { getArtists } from "@/lib/artists";
 import { getEventStartIso } from "@/lib/festival";
 
+/**
+ * Parcours clair :
+ * Accroche → preuves → mission → line-up → programme → inscription → boutique → pôles → don → FAQ
+ */
 export default async function HomePage() {
   const eventStartIso = getEventStartIso();
   const artists = await getArtists();
@@ -20,11 +24,11 @@ export default async function HomePage() {
       <Hero eventStartIso={eventStartIso} />
       <StatsBar />
       <Mission />
-      <Poles />
       <Lineup artists={artists} />
       <Programme />
       <Register />
       <Boutique />
+      <Poles />
       <Donate />
       <Faq />
     </main>

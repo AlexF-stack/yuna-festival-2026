@@ -1,11 +1,11 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { hasSupabaseEnv } from "@/lib/supabase/env";
-import type { Artist } from "@/types/artist";
+import { toPublicArtist, type Artist, type PublicArtist } from "@/types/artist";
 
-export async function getArtists(): Promise<Artist[]> {
+export async function getArtists(): Promise<PublicArtist[]> {
   if (!hasSupabaseEnv()) {
     console.warn(
-      "[artists] Supabase non configuré — retour d'un line-up vide. Renseigner .env.local puis appliquer supabase/migrations + seed.sql.",
+      "[artists] Supabase non configuré — retour d'un line-up vide.",
     );
     return [];
   }
@@ -14,12 +14,22 @@ export async function getArtists(): Promise<Artist[]> {
 
   const { data, error } = await supabase
     .from("artists")
-    .select("id, name, role, is_headliner, order, bio_short")
+    .select("id, name, role, is_headliner, is_revealed, order, bio_short")
     .order("order", { ascending: true });
 
   if (error) {
     throw new Error(`Impossible de charger les artistes: ${error.message}`);
   }
 
-  return data ?? [];
+  return ((data ?? []) as Artist[]).map(toPublicArtist);
+}
+
+export async function getArtistsCount(): Promise<number> {
+  if (!hasSupabaseEnv()) return 0;
+  const supabase = await createSupabaseServerClient();
+  const { count, error } = await supabase
+    .from("artists")
+    .select("id", { count: "exact", head: true });
+  if (error) return 0;
+  return count ?? 0;
 }

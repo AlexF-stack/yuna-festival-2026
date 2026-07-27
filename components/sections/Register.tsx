@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
-import { TorchSceneDynamic } from "@/components/sections/TorchSceneDynamic";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { FESTIVAL } from "@/lib/festival";
@@ -78,15 +77,6 @@ export function Register() {
       id="inscription"
       labelledBy="register-title"
       tone="photo-concert"
-      overlay={
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute bottom-0 left-0 z-0 h-[280px] w-[280px] opacity-70 min-[900px]:h-[360px] min-[900px]:w-[360px]"
-          initial={false}
-        >
-          <TorchSceneDynamic />
-        </motion.div>
-      }
     >
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 20 }}

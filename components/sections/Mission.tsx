@@ -51,9 +51,9 @@ export function Mission() {
         <div className="relative">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 -z-0 flex items-center justify-center"
+            className="pointer-events-none absolute inset-0 z-[1] flex items-center justify-center"
           >
-            <div className="h-[min(420px,55vw)] w-[min(420px,55vw)] opacity-80">
+            <div className="h-[min(420px,55vw)] w-[min(420px,55vw)] opacity-90">
               <TorchSceneDynamic />
             </div>
           </div>

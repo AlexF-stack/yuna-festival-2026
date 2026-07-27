@@ -91,7 +91,7 @@ export function EmberField() {
   if (!ready) return null;
 
   return (
-    <div ref={host} className="pointer-events-none absolute inset-0 -z-0" aria-hidden>
+    <div ref={host} className="pointer-events-none absolute inset-0 z-[1]" aria-hidden>
       {active ? (
         <Canvas
           dpr={[1, 1.25]}

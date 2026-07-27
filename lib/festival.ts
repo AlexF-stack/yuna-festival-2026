@@ -44,7 +44,6 @@ export const HERO_COPY = {
 
 export const NAV_LINKS = [
   { href: "#mission", label: "Mission" },
-  { href: "#poles", label: "Pôles" },
   { href: "#artistes", label: "Line-up" },
   { href: "#programme", label: "Programme" },
   { href: "#inscription", label: "Pass" },
@@ -55,6 +54,6 @@ export const NAV_LINKS = [
 export const EVENT_STATS = [
   { value: "2", label: "Soirées" },
   { value: "17", label: "Créneaux" },
-  { value: "5", label: "Artistes phares" },
+  { value: "5", label: "Artistes" },
   { value: "0 F", label: "Entrée" },
 ] as const;

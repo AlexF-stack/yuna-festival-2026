@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-import { WaveRibbonDynamic } from "@/components/sections/WaveRibbonDynamic";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
@@ -18,7 +17,6 @@ export function Donate() {
       labelledBy="donate-title"
       tone="don"
       className="py-20 min-[760px]:py-24"
-      overlay={<WaveRibbonDynamic />}
     >
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 20 }}

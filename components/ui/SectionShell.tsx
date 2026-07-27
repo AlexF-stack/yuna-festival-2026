@@ -45,7 +45,7 @@ export function SectionShell({
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={`relative z-10 overflow-hidden px-5 py-24 min-[760px]:px-6 min-[760px]:py-28 ${className}`}
+      className={`relative z-10 overflow-x-hidden px-5 py-24 min-[760px]:px-6 min-[760px]:py-28 ${className}`}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         {tone === "papier" ? <div className="absolute inset-0 bg-papier" /> : null}
