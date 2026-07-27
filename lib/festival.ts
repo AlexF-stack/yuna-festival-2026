@@ -44,15 +44,14 @@ export const HERO_COPY = {
     "« Lève-toi, sois éclairée, car ta lumière arrive, et la gloire de l'Éternel se lève sur toi. »",
   verseRef: "Ésaïe 60:1",
   ctaPrimary: "Réserver mon pass gratuit",
-  ctaSecondary: "Voir le programme",
+  ctaSecondary: "Voir la journée",
   ctaPrimaryHref: "#inscription",
-  ctaSecondaryHref: "#programme",
+  ctaSecondaryHref: "#journee",
 } as const;
 
 export const NAV_LINKS = [
   { href: "#vision", label: "Vision" },
   { href: "#artistes", label: "Line-up" },
-  { href: "#programme", label: "Programme" },
   { href: "#journee", label: "Journée" },
   { href: "#lieu", label: "Lieu" },
   { href: "#inscription", label: "Pass" },
@@ -63,7 +62,7 @@ export const NAV_LINKS = [
 export const FOOTER_LINKS = [
   { href: "#vision", label: "Vision" },
   { href: "#artistes", label: "Artistes" },
-  { href: "#programme", label: "Programme" },
+  { href: "#journee", label: "Journée" },
   { href: "#lieu", label: "Lieu" },
   { href: "#sponsors", label: "Partenaires" },
 ] as const;

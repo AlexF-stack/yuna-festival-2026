@@ -7,7 +7,6 @@ import { Lineup } from "@/components/sections/Lineup";
 import { Mission } from "@/components/sections/Mission";
 import { Participate } from "@/components/sections/Participate";
 import { Poles } from "@/components/sections/Poles";
-import { Programme } from "@/components/sections/Programme";
 import { QuoteStrip } from "@/components/sections/QuoteStrip";
 import { Register } from "@/components/sections/Register";
 import { Sponsors } from "@/components/sections/Sponsors";
@@ -20,8 +19,8 @@ import { getEventStartIso } from "@/lib/festival";
 import { getRegistrationsCount } from "@/lib/registrations";
 
 /**
- * Parcours aligné sur l'export HTML de référence :
- * Accroche → stats → vision → mission → line-up → programme → journée → lieu
+ * Programme masqué tant que le line-up n'est pas révélé (artistes visibles dans le schedule).
+ * Accroche → stats → vision → mission → line-up → journée → lieu
  * → inscription → boutique → teaser → pôles → partenaires → don → participer → FAQ
  */
 export default async function HomePage() {
@@ -39,7 +38,6 @@ export default async function HomePage() {
       <Vision />
       <Mission />
       <Lineup artists={artists} />
-      <Programme />
       <Journee />
       <Venue />
       <Register initialCount={registrationCount} />

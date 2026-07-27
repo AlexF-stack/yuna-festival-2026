@@ -14,6 +14,8 @@ export function QuoteStrip() {
   return (
     <section
       aria-label="Citation du festival"
+      data-nav-tone="bleu"
+      data-tone="bleu"
       className="quote-strip relative z-10 overflow-hidden py-14 min-[760px]:py-16"
     >
       <div aria-hidden className="quote-strip-glow pointer-events-none absolute inset-0" />

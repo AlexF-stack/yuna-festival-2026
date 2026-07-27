@@ -11,6 +11,8 @@ export function StatsBar() {
   return (
     <section
       aria-label="Chiffres clés du festival"
+      data-nav-tone="bleu"
+      data-tone="bleu"
       className="relative z-10 overflow-hidden bg-bleu"
     >
       <div aria-hidden className="pointer-events-none absolute inset-0">

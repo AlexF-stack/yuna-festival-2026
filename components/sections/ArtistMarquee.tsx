@@ -24,6 +24,8 @@ export function ArtistMarquee({ revealedNames, totalCount }: ArtistMarqueeProps)
   return (
     <section
       aria-label="Artistes à l'affiche"
+      data-tone="bleu"
+      data-nav-tone="bleu"
       className="relative z-10 overflow-hidden border-y border-bleu/10 bg-bleu py-5"
     >
       <div className={`flex w-max gap-10 ${reduce ? "" : "marquee-track"}`}>

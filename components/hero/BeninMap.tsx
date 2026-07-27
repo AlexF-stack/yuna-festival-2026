@@ -10,30 +10,29 @@ type BeninMapProps = {
 };
 
 /**
- * Carte officielle du Bénin (drapeau : vert | jaune / rouge) + pin Cotonou.
+ * Carte Bénin sans fond — PNG transparent + pin Cotonou.
  */
 export function BeninMap({ className = "" }: BeninMapProps) {
   const reduce = useReducedMotion();
 
   return (
     <motion.div
-      className={`relative overflow-hidden rounded-2xl bg-papier ${className}`}
+      className={`relative ${className}`}
       initial={reduce ? false : { opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: EASE_PREMIUM, delay: 0.2 }}
     >
-      <div className="relative aspect-[3/4] w-full">
+      <div className="relative mx-auto aspect-[3/4] w-full max-w-[340px]">
         <Image
-          src="/media/benin-map.png"
+          src="/media/benin-map-clear.png"
           alt="Carte du Bénin aux couleurs du drapeau national"
           fill
-          sizes="(min-width: 900px) 280px, 0px"
-          quality={90}
-          className="object-contain object-center p-2"
+          sizes="(min-width: 900px) 340px, 0px"
+          quality={92}
+          className="object-contain object-center drop-shadow-[0_12px_32px_rgba(0,0,0,0.35)]"
           priority
         />
 
-        {/* Pin Cotonou / Midombo — sud du pays */}
         <motion.div
           className="absolute left-[48%] top-[78%] z-10 -translate-x-1/2"
           initial={reduce ? false : { opacity: 0, y: -8 }}
@@ -43,23 +42,23 @@ export function BeninMap({ className = "" }: BeninMapProps) {
           {!reduce ? (
             <motion.span
               aria-hidden
-              className="absolute left-1/2 top-1/2 h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-feu"
+              className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-feu"
               initial={{ scale: 0.5, opacity: 0.8 }}
               animate={{ scale: 1.6, opacity: 0 }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
             />
           ) : null}
-          <span className="relative flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 border-papier bg-feu shadow-[0_0_0_3px_color-mix(in_srgb,var(--feu)_35%,transparent)]">
+          <span className="relative flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 border-papier bg-feu shadow-[0_0_0_3px_color-mix(in_srgb,var(--feu)_40%,transparent)]">
             <span className="h-1 w-1 rounded-full bg-papier" />
           </span>
         </motion.div>
       </div>
 
-      <div className="border-t border-bleu/10 px-3 pb-3 pt-2 text-center">
-        <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.16em] text-bleu">
+      <div className="mt-3 text-center">
+        <p className="font-mono text-[0.7rem] font-bold uppercase tracking-[0.18em] text-papier">
           Cotonou
         </p>
-        <p className="mt-0.5 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-charbon">
+        <p className="mt-0.5 font-mono text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-papier/65">
           Midombo
         </p>
       </div>

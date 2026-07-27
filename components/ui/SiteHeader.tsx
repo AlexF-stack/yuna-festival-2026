@@ -6,23 +6,94 @@ import { YunaLogo } from "@/components/brand/YunaLogo";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FESTIVAL, NAV_LINKS } from "@/lib/festival";
 
+type NavSurface = "hero" | "bleu" | "feu" | "papier";
+
+/**
+ * Couleur header = inverse vif de la section :
+ * bleu → header feu | feu → header bleu | papier → header bleu
+ */
+function toneToSurface(tone: string | null, isHero: boolean): NavSurface {
+  if (isHero) return "hero";
+  if (tone === "bleu" || tone === "bleu-soft") return "feu";
+  if (tone === "feu" || tone === "feu-soft") return "bleu";
+  if (tone === "charbon") return "feu";
+  return "bleu"; // papier et défaut
+}
+
+const SURFACE_STYLE: Record<
+  NavSurface,
+  { header: string; link: string; burger: string; mobile: string; cta: string }
+> = {
+  hero: {
+    header: "border-b border-papier/10 bg-transparent",
+    link: "text-papier/90 hover:bg-papier/10 hover:text-papier",
+    burger: "border-papier/35 text-papier",
+    mobile: "border-t border-papier/15 bg-encre text-papier",
+    cta: "",
+  },
+  bleu: {
+    header:
+      "border-b border-papier/15 bg-bleu shadow-[0_10px_36px_color-mix(in_srgb,var(--bleu)_45%,transparent)]",
+    link: "text-papier hover:bg-papier/15",
+    burger: "border-papier/40 text-papier",
+    mobile: "border-t border-papier/20 bg-bleu text-papier",
+    cta: "!bg-feu !text-papier hover:!bg-braise",
+  },
+  feu: {
+    header:
+      "border-b border-papier/15 bg-feu shadow-[0_10px_36px_color-mix(in_srgb,var(--feu)_45%,transparent)]",
+    link: "text-papier hover:bg-papier/15",
+    burger: "border-papier/40 text-papier",
+    mobile: "border-t border-papier/20 bg-feu text-papier",
+    cta: "!bg-papier !text-feu hover:!bg-papier/90",
+  },
+  papier: {
+    header:
+      "border-b border-bleu/20 bg-papier shadow-[0_8px_30px_rgba(0,90,140,0.1)]",
+    link: "text-bleu hover:bg-logo-bleu-soft",
+    burger: "border-bleu/25 text-bleu",
+    mobile: "border-t border-bleu/10 bg-papier text-bleu",
+    cta: "",
+  },
+};
+
 export function SiteHeader() {
-  const [scrolled, setScrolled] = useState(false);
-  const [onHero, setOnHero] = useState(true);
+  const [surface, setSurface] = useState<NavSurface>("hero");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 12);
-      setOnHero(y < window.innerHeight * 0.72);
+    const pick = () => {
+      const probeY = 72;
+      const el = document.elementFromPoint(
+        Math.floor(window.innerWidth / 2),
+        probeY,
+      );
+      if (!el) return;
+
+      const section = el.closest("section, [data-tone], [data-nav-surface]");
+      if (!section) {
+        setSurface(window.scrollY < 40 ? "hero" : "bleu");
+        return;
+      }
+
+      const navSurface = section.getAttribute("data-nav-surface");
+      if (navSurface === "hero") {
+        setSurface("hero");
+        return;
+      }
+
+      const tone =
+        section.getAttribute("data-tone") ||
+        section.getAttribute("data-nav-tone");
+      setSurface(toneToSurface(tone, false));
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+
+    pick();
+    window.addEventListener("scroll", pick, { passive: true });
+    window.addEventListener("resize", pick, { passive: true });
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("scroll", pick);
+      window.removeEventListener("resize", pick);
     };
   }, []);
 
@@ -33,17 +104,13 @@ export function SiteHeader() {
     };
   }, [open]);
 
-  const heroNav = onHero && !scrolled && !open;
+  const activeSurface = open && surface === "hero" ? "bleu" : surface;
+  const style = SURFACE_STYLE[activeSurface];
+  const lightText = activeSurface !== "papier";
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-[120] transition-[background-color,box-shadow,border-color] duration-300 ease-yuna ${
-        heroNav
-          ? "border-b border-papier/10 bg-transparent"
-          : scrolled || open
-            ? "border-b border-bleu/10 bg-papier/95 shadow-[0_8px_30px_rgba(0,90,140,0.08)] backdrop-blur-xl"
-            : "border-b border-transparent bg-papier/80 backdrop-blur-md"
-      }`}
+      className={`fixed inset-x-0 top-0 z-[120] transition-[background-color,box-shadow,border-color,color] duration-300 ease-yuna ${style.header}`}
     >
       <div aria-hidden className="flex h-1 w-full">
         <span className="flex-1 bg-vert" />
@@ -58,7 +125,11 @@ export function SiteHeader() {
           onClick={() => setOpen(false)}
           aria-label="YUNA Festival — retour à l'accueil"
         >
-          <YunaLogo size="nav" priority />
+          <YunaLogo
+            size="nav"
+            priority
+            className={activeSurface !== "papier" ? "brightness-110 drop-shadow-sm" : ""}
+          />
         </a>
 
         <nav
@@ -69,11 +140,7 @@ export function SiteHeader() {
             <a
               key={link.href}
               href={link.href}
-              className={`rounded-full px-3.5 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
-                heroNav
-                  ? "text-papier/88 hover:bg-papier/10 hover:text-papier"
-                  : "text-charbon hover:bg-ciel hover:text-bleu"
-              }`}
+              className={`rounded-full px-3.5 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.1em] transition-colors ${style.link}`}
             >
               {link.label}
             </a>
@@ -81,18 +148,17 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden min-[900px]:block">
-          <ButtonLink href="#inscription" className="!px-6 !py-2.5 text-[0.8rem]">
+          <ButtonLink
+            href="#inscription"
+            className={`!px-6 !py-2.5 text-[0.8rem] ${style.cta}`}
+          >
             Réserver
           </ButtonLink>
         </div>
 
         <button
           type="button"
-          className={`relative z-[130] flex h-11 w-11 items-center justify-center rounded-full border min-[900px]:hidden ${
-            heroNav
-              ? "border-papier/30 text-papier"
-              : "border-bleu/20 text-bleu"
-          }`}
+          className={`relative z-[130] flex h-11 w-11 items-center justify-center rounded-full border min-[900px]:hidden ${style.burger}`}
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
@@ -117,7 +183,7 @@ export function SiteHeader() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="border-t border-bleu/10 bg-papier px-5 py-6 min-[900px]:hidden"
+        className={`px-5 py-6 min-[900px]:hidden ${style.mobile}`}
       >
         <nav aria-label="Navigation mobile" className="flex flex-col gap-1">
           {NAV_LINKS.map((link) => (
@@ -125,17 +191,25 @@ export function SiteHeader() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-3.5 font-display text-xl font-extrabold uppercase tracking-wide text-bleu hover:bg-ciel"
+              className={`rounded-xl px-3 py-3.5 font-display text-xl font-extrabold uppercase tracking-wide ${
+                lightText
+                  ? "text-papier hover:bg-papier/10"
+                  : "text-bleu hover:bg-logo-bleu-soft"
+              }`}
             >
               {link.label}
             </a>
           ))}
-          <p className="mt-2 px-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-charbon">
+          <p
+            className={`mt-2 px-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] ${
+              lightText ? "text-papier/70" : "text-charbon"
+            }`}
+          >
             {FESTIVAL.datesHero} · {FESTIVAL.city}
           </p>
           <ButtonLink
             href="#inscription"
-            className="mt-4 w-full"
+            className={`mt-4 w-full ${style.cta}`}
             onClick={() => setOpen(false)}
           >
             Réserver ma place

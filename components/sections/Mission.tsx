@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { BeninDeboutSceneDynamic } from "@/components/sections/BeninDeboutSceneDynamic";
+import { FlameQuote } from "@/components/sections/FlameQuote";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
@@ -33,7 +34,7 @@ export function Mission() {
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 0.6, ease: EASE_YUNA }}
-        className="grid items-start gap-12 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-16"
+        className="grid items-center gap-12 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-14"
       >
         <div>
           <SectionHeading
@@ -53,23 +54,14 @@ export function Mission() {
           </ButtonLink>
         </div>
 
-        {/* Colonne droite : 3D derrière, citation complète au-dessus — plus de clip */}
-        <div className="relative">
+        <div className="relative flex justify-center">
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-6 -top-16 hidden h-[280px] w-[280px] opacity-70 min-[900px]:block min-[1100px]:h-[320px] min-[1100px]:w-[320px]"
+            className="pointer-events-none absolute -right-4 -top-10 hidden h-[240px] w-[240px] opacity-55 min-[900px]:block"
           >
             <BeninDeboutSceneDynamic />
           </div>
-
-          <blockquote className="relative z-10 overflow-visible rounded-[1.75rem] bg-bleu p-8 text-papier shadow-ombre-bleu-lg min-[760px]:p-10">
-            <p className="font-display text-[clamp(1.25rem,2.8vw,1.75rem)] font-extrabold uppercase leading-[1.2]">
-              {MISSION.highlight}
-            </p>
-            <footer className="mt-6 font-mono text-[0.7rem] font-bold uppercase tracking-[0.22em] text-papier/70">
-              YUNA · {FESTIVAL.theme}
-            </footer>
-          </blockquote>
+          <FlameQuote text={MISSION.highlight} />
         </div>
       </motion.div>
     </SectionShell>
