@@ -19,9 +19,10 @@ export const MISSION = {
 
 export const VISION = {
   eyebrow: "La vision",
-  title: "Une génération non ordinaire",
+  titleLine1: "Une génération",
+  titleLine2: "non ordinaire",
   intro:
-    "YUNA — Youth United for New Awakening — porte aussi un secret : en hébreu, יוֹנָה (Yonah) signifie la colombe — le symbole du Saint-Esprit qui descend (Matthieu 3:16). La colombe et le feu : l'Esprit repose sur une génération qui se lève.",
+    "YUNA — Youth United for New Awakening — porte aussi un secret : en hébreu, יוֹנָה (Yonah) signifie la colombe — le symbole du Saint-Esprit qui descend (Matthieu 3:16). La colombe et le feu : l'Esprit repose sur une génération qui se lève. Pas des spectateurs. Des Joseph, des Daniel, des David : des jeunes qui portent un esprit supérieur et qui se tiennent devant les rois.",
   pillars: [
     {
       id: "joseph",

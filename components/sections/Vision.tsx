@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { SoftImage } from "@/components/ui/SoftImage";
 import { VISION } from "@/lib/content-site";
@@ -15,12 +14,17 @@ export function Vision() {
   return (
     <SectionShell id="vision" labelledBy="vision-title" background="vision">
       <Reveal>
-        <SectionHeading
-          eyebrow={VISION.eyebrow}
-          title={VISION.title}
-          titleId="vision-title"
-          description={VISION.intro}
-        />
+        <header className="max-w-3xl">
+          <p className="section-eyebrow mb-3">
+            <span aria-hidden className="h-0.5 w-8 shrink-0 bg-feu" />
+            {VISION.eyebrow}
+          </p>
+          <h2 id="vision-title" className="section-title text-bleu">
+            <span className="block">{VISION.titleLine1}</span>
+            <span className="mt-1 block text-feu">{VISION.titleLine2}</span>
+          </h2>
+          <p className="section-lead max-w-2xl text-charbon">{VISION.intro}</p>
+        </header>
       </Reveal>
 
       <motion.div
