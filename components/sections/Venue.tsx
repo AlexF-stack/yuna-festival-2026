@@ -1,20 +1,15 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { SoftImage } from "@/components/ui/SoftImage";
 import { VENUE } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
-import { EASE_YUNA } from "@/lib/motion";
 
 export function Venue() {
-  const reduce = useReducedMotion();
-
   return (
-    <SectionShell id="lieu" labelledBy="lieu-title" background="venue">
+    <SectionShell id="lieu" labelledBy="lieu-title" tone="ciel">
       <div className="grid items-center gap-14 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-16">
         <Reveal>
           <SectionHeading
@@ -33,7 +28,7 @@ export function Venue() {
           </ul>
         </Reveal>
 
-        <Reveal delay={0.08}>
+        <Reveal delay={0.08} variant="open">
           <div className="relative">
             <div
               aria-hidden
@@ -45,6 +40,7 @@ export function Venue() {
                 alt="Vue du terrain de Midombo"
                 fill
                 sizes="(min-width: 900px) 480px, 100vw"
+                quality={70}
                 wrapperClassName="absolute inset-0"
                 objectPosition="center 50%"
               />
@@ -60,18 +56,12 @@ export function Venue() {
                 <p className="mt-1 text-sm text-papier/80">{FESTIVAL.freeEntry}</p>
               </div>
             </div>
-            <motion.aside
-              initial={reduce ? false : { opacity: 0, y: 12 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.55, ease: EASE_YUNA, delay: 0.15 }}
-              className="absolute -bottom-6 -right-4 rounded-2xl border border-papier/20 bg-bleu/95 px-5 py-4 text-center text-papier shadow-ombre-bleu-lg backdrop-blur-md min-[900px]:-right-8"
-            >
+            <aside className="absolute -bottom-6 -right-4 rounded-2xl border border-papier/20 bg-bleu px-5 py-4 text-center text-papier shadow-ombre-bleu-lg min-[900px]:-right-8">
               <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-papier/65">
                 Ouverture
               </p>
               <p className="font-display text-2xl font-extrabold">{FESTIVAL.siteOpens}</p>
-            </motion.aside>
+            </aside>
           </div>
         </Reveal>
       </div>

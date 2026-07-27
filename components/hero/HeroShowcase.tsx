@@ -18,13 +18,13 @@ export function HeroShowcase({ eventStartIso }: HeroShowcaseProps) {
 
   return (
     <motion.aside
-      initial={reduce ? false : { opacity: 0, x: 28, filter: "blur(8px)" }}
-      animate={reduce ? undefined : { opacity: 1, x: 0, filter: "blur(0px)" }}
-      transition={{ duration: 0.9, ease: EASE_PREMIUM, delay: 0.45 }}
+      initial={reduce ? false : { opacity: 0, x: 24 }}
+      animate={reduce ? undefined : { opacity: 1, x: 0 }}
+      transition={{ duration: 0.7, ease: EASE_PREMIUM, delay: 0.35 }}
       className="hidden min-[900px]:block"
       aria-label="Informations clés du festival"
     >
-      <div className="hero-glass-panel rounded-[1.75rem] border border-papier/15 p-8 shadow-[0_32px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+      <div className="hero-glass-panel rounded-[1.75rem] border border-papier/15 bg-papier/10 p-8 shadow-[0_32px_80px_rgba(0,0,0,0.35)] backdrop-blur-md">
         <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.22em] text-jaune/90">
           Édition {HERO_COPY.edition}
         </p>

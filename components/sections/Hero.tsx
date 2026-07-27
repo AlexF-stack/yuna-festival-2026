@@ -38,8 +38,8 @@ export function Hero({ eventStartIso }: HeroProps) {
       className="relative min-h-[100svh] overflow-hidden"
     >
       <HeroCinematicBackground />
-      <HeroOrbs />
-      <HeroFireCanvas />
+      {!reduceMotion ? <HeroOrbs /> : null}
+      {!reduceMotion ? <HeroFireCanvas /> : null}
 
       <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1240px] items-center gap-12 px-5 pb-16 pt-28 min-[900px]:grid-cols-[1.08fr_0.92fr] min-[900px]:gap-10 min-[900px]:px-6 min-[900px]:pb-20 min-[900px]:pt-32">
         <motion.div

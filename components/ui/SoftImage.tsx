@@ -11,13 +11,14 @@ type SoftImageProps = {
   height?: number;
   sizes?: string;
   priority?: boolean;
+  quality?: number;
   className?: string;
   wrapperClassName?: string;
   objectPosition?: string;
 };
 
 /**
- * Image avec blur-up à l'apparition — rendu premium type Herna.
+ * Image légère — fade opacity uniquement (pas de blur/scale au load = plus fluide).
  */
 export function SoftImage({
   src,
@@ -27,6 +28,7 @@ export function SoftImage({
   height,
   sizes,
   priority = false,
+  quality = 72,
   className = "",
   wrapperClassName = "",
   objectPosition,
@@ -34,10 +36,7 @@ export function SoftImage({
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div
-      className={`relative overflow-hidden bg-ciel/40 ${wrapperClassName}`}
-      style={objectPosition ? { ["--img-pos" as string]: objectPosition } : undefined}
-    >
+    <div className={`relative overflow-hidden bg-ciel/30 ${wrapperClassName}`}>
       <Image
         src={src}
         alt={alt}
@@ -46,9 +45,10 @@ export function SoftImage({
         height={!fill ? height : undefined}
         sizes={sizes}
         priority={priority}
+        quality={quality}
         onLoad={() => setLoaded(true)}
-        className={`object-cover transition-[opacity,filter,transform] duration-700 ease-out motion-reduce:transition-none ${
-          loaded ? "scale-100 opacity-100 blur-0" : "scale-[1.03] opacity-0 blur-md"
+        className={`object-cover transition-opacity duration-500 ease-out motion-reduce:transition-none ${
+          loaded ? "opacity-100" : "opacity-0"
         } ${className}`}
         style={objectPosition ? { objectPosition } : undefined}
       />

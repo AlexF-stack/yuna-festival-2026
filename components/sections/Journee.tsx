@@ -6,7 +6,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { JOURNEE } from "@/lib/content-site";
-import { EASE_YUNA } from "@/lib/motion";
+import { EASE_PREMIUM, cardRise, staggerContainer } from "@/lib/motion";
 
 export function Journee() {
   const reduce = useReducedMotion();
@@ -22,15 +22,18 @@ export function Journee() {
         />
       </Reveal>
 
-      <div className="mt-14 grid gap-5 min-[880px]:grid-cols-3">
-        {JOURNEE.items.map((item, i) => (
+      <motion.div
+        className="mt-14 grid gap-5 min-[880px]:grid-cols-3"
+        variants={reduce ? undefined : staggerContainer}
+        initial={reduce ? false : "hidden"}
+        whileInView={reduce ? undefined : "show"}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        {JOURNEE.items.map((item) => (
           <motion.article
             key={item.id}
-            initial={reduce ? false : { opacity: 0, y: 28 }}
-            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: reduce ? 0 : i * 0.08, ease: EASE_YUNA }}
-            whileHover={reduce ? undefined : { y: -5 }}
+            variants={reduce ? undefined : cardRise}
+            transition={{ duration: 0.5, ease: EASE_PREMIUM }}
             className="surface-card relative overflow-hidden p-7"
           >
             <div
@@ -60,7 +63,7 @@ export function Journee() {
             ) : null}
           </motion.article>
         ))}
-      </div>
+      </motion.div>
     </SectionShell>
   );
 }

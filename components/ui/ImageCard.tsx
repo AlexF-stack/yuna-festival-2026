@@ -43,7 +43,7 @@ export function ImageCard({
         fill
         sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 25vw"
         wrapperClassName="absolute inset-0"
-        className="transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none"
+        className="transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none"
         objectPosition={objectPosition}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-encre/95 via-encre/45 to-transparent" />

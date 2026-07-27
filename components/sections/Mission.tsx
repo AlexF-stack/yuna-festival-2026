@@ -19,26 +19,14 @@ export function Mission() {
       labelledBy="mission-title"
       background="mission"
       overlay={
-        <>
-          <motion.div
-            initial={reduce ? false : { opacity: 0, scale: 0.85 }}
-            whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 1, ease: EASE_YUNA }}
-            aria-hidden
-            className="pointer-events-none absolute inset-0 z-[1] flex items-center justify-center opacity-45 min-[900px]:justify-end min-[900px]:pr-[4%] min-[900px]:opacity-95"
-          >
-            <motion.div className="h-[min(320px,80vw)] w-[min(320px,80vw)] min-[900px]:h-[min(480px,70vw)] min-[900px]:w-[min(480px,70vw)]">
-              <BeninDeboutSceneDynamic />
-            </motion.div>
-          </motion.div>
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-feu/10 blur-3xl"
-            animate={reduce ? undefined : { scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[1] hidden items-center justify-end pr-[4%] opacity-90 min-[900px]:flex"
+        >
+          <div className="h-[min(440px,65vw)] w-[min(440px,65vw)]">
+            <BeninDeboutSceneDynamic />
+          </div>
+        </div>
       }
     >
       <motion.div
@@ -80,17 +68,15 @@ export function Mission() {
         </div>
 
         <motion.blockquote
-          initial={reduce ? false : { opacity: 0, scale: 0.96, y: 24 }}
-          whileInView={reduce ? undefined : { opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.75, ease: EASE_YUNA, delay: 0.08 }}
-          className="relative rounded-[1.75rem] border border-bleu/15 bg-bleu/92 p-8 text-papier shadow-ombre-bleu-lg backdrop-blur-md min-[760px]:p-10"
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.55, ease: EASE_YUNA, delay: 0.06 }}
+          className="relative rounded-[1.75rem] border border-bleu/15 bg-bleu p-8 text-papier shadow-ombre-bleu-lg min-[760px]:p-10"
         >
-          <motion.div
+          <div
             aria-hidden
-            className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-feu/35 blur-2xl"
-            animate={reduce ? undefined : { scale: [1, 1.12, 1] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-feu/30 blur-2xl"
           />
           <p className="relative font-display text-[clamp(1.35rem,3vw,1.85rem)] font-extrabold uppercase leading-snug">
             {MISSION.highlight}

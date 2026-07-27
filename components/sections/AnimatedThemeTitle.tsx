@@ -44,25 +44,22 @@ export function AnimatedThemeTitle({
     >
       <motion.span
         className={`block origin-bottom-left ${line1Class}`}
-        initial={{ opacity: 0, y: 56, rotateX: 35, filter: "blur(8px)" }}
-        animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.9, ease, delay: 0.15 }}
+        initial={{ opacity: 0, y: 36 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease, delay: 0.12 }}
       >
         {line1}
       </motion.span>
       <motion.span
         className="theme-debout relative mt-1 block origin-bottom-left bg-gradient-to-r from-feu via-alert-soft to-feu bg-[length:200%_100%] bg-clip-text text-transparent"
-        initial={{ opacity: 0, y: 56, rotateX: 35, filter: "blur(8px)" }}
-        animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.9, ease, delay: 0.32 }}
+        initial={{ opacity: 0, y: 36 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease, delay: 0.26 }}
       >
         {line2}
-        <motion.span
+        <span
           aria-hidden
-          className="pointer-events-none absolute -inset-x-6 -bottom-3 -z-10 h-8 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--feu)_50%,transparent),transparent_72%)] blur-md"
-          initial={{ opacity: 0, scaleX: 0.6 }}
-          animate={{ opacity: [0.45, 0.9, 0.55], scaleX: [0.85, 1.05, 0.95] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="pointer-events-none absolute -inset-x-6 -bottom-3 -z-10 h-8 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--feu)_45%,transparent),transparent_72%)] blur-md"
         />
       </motion.span>
     </h1>

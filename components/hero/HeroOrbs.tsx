@@ -34,7 +34,7 @@ function Orb({ cx, cy, r, color, delay }: OrbProps) {
   );
 }
 
-/** Orbes flottants — profondeur type Canaan, palette YUNA. */
+/** Orbes flottants — desktop uniquement. */
 export function HeroOrbs() {
   const reduce = useReducedMotion();
   if (reduce) return null;
@@ -42,11 +42,10 @@ export function HeroOrbs() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 z-[2] overflow-hidden"
+      className="pointer-events-none absolute inset-0 z-[2] hidden overflow-hidden min-[900px]:block"
     >
-      <Orb cx="12%" cy="28%" r={240} color="bg-feu/20" delay={0} />
-      <Orb cx="82%" cy="18%" r={200} color="bg-bleu/25" delay={1.4} />
-      <Orb cx="68%" cy="72%" r={220} color="bg-jaune/15" delay={2.8} />
+      <Orb cx="12%" cy="28%" r={200} color="bg-feu/18" delay={0} />
+      <Orb cx="82%" cy="18%" r={160} color="bg-bleu/20" delay={1.4} />
     </div>
   );
 }

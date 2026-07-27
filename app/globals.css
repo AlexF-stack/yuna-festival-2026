@@ -315,8 +315,8 @@ body {
 }
 
 .media-kenburns {
-  animation: media-kenburns 22s var(--ease-yuna) infinite alternate;
-  will-change: transform;
+  /* Désactivé — le scale permanent coûte cher sur mobile / GPU */
+  animation: none;
 }
 
 .media-vignette {

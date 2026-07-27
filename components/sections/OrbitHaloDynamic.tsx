@@ -2,7 +2,18 @@
 
 import dynamic from "next/dynamic";
 
-export const OrbitHaloDynamic = dynamic(
-  () => import("@/components/sections/OrbitHalo"),
-  { ssr: false, loading: () => null },
-);
+import { ViewportMount } from "@/components/ui/ViewportMount";
+
+const Scene = dynamic(() => import("@/components/sections/OrbitHalo"), {
+  ssr: false,
+  loading: () => null,
+});
+
+/** Halo programme — monté au scroll uniquement. */
+export function OrbitHaloDynamic() {
+  return (
+    <ViewportMount className="pointer-events-none absolute inset-0">
+      <Scene />
+    </ViewportMount>
+  );
+}

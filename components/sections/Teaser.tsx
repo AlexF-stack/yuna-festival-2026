@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
@@ -22,7 +20,7 @@ export function Teaser() {
         />
       </Reveal>
 
-      <Reveal delay={0.08} className="relative mt-14">
+      <Reveal delay={0.08} variant="open" className="relative mt-14">
         <div
           aria-hidden
           className="absolute -left-3 -top-3 h-full w-full rounded-3xl border border-bleu/20"

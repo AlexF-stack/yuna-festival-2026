@@ -20,7 +20,7 @@ export function Poles() {
 
       <div className="mt-14 grid grid-cols-1 gap-5 min-[640px]:grid-cols-2 min-[1000px]:grid-cols-4">
         {POLES.map((pole, i) => (
-          <Reveal key={pole.id} delay={i * 0.06}>
+          <Reveal key={pole.id} delay={i * 0.05} variant="card">
             <ImageCard
               image={pole.image}
               imageAlt={pole.title}
