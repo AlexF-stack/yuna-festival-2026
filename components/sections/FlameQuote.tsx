@@ -84,11 +84,7 @@ export function FlameQuote({ text }: FlameQuoteProps) {
           ) : null}
 
           <foreignObject x="58" y="130" width="244" height="300">
-            <div
-              // eslint-disable-next-line react/no-unknown-property -- SVG foreignObject root
-              xmlns="http://www.w3.org/1999/xhtml"
-              className="flex h-full flex-col justify-center px-2 text-center text-papier"
-            >
+            <div className="flex h-full flex-col justify-center px-2 text-center text-papier">
               <p className="font-display text-[clamp(0.95rem,3.2vw,1.2rem)] font-extrabold uppercase leading-[1.28]">
                 {text}
               </p>
