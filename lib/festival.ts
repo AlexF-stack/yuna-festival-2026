@@ -43,28 +43,30 @@ export const HERO_COPY = {
   verse:
     "« Lève-toi, sois éclairée, car ta lumière arrive, et la gloire de l'Éternel se lève sur toi. »",
   verseRef: "Ésaïe 60:1",
-  ctaPrimary: "Réserver mon pass gratuit",
+  ctaPrimary: "Inscris-toi",
   ctaSecondary: "Voir la journée",
-  ctaPrimaryHref: "#inscription",
-  ctaSecondaryHref: "#journee",
+  ctaPrimaryHref: "/#inscription",
+  ctaSecondaryHref: "/#journee",
 } as const;
 
 export const NAV_LINKS = [
-  { href: "#vision", label: "Vision" },
-  { href: "#artistes", label: "Line-up" },
-  { href: "#journee", label: "Journée" },
-  { href: "#lieu", label: "Lieu" },
-  { href: "#inscription", label: "Pass" },
-  { href: "#boutique", label: "Boutique" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#vision", label: "Vision" },
+  { href: "/#artistes", label: "Line-up" },
+  { href: "/#journee", label: "Journée" },
+  { href: "/#lieu", label: "Lieu" },
+  { href: "/#inscription", label: "Inscription" },
+  { href: "/#boutique", label: "Boutique" },
+  { href: "/don", label: "Don" },
+  { href: "/#faq", label: "FAQ" },
 ] as const;
 
 export const FOOTER_LINKS = [
-  { href: "#vision", label: "Vision" },
-  { href: "#artistes", label: "Artistes" },
-  { href: "#journee", label: "Journée" },
-  { href: "#lieu", label: "Lieu" },
-  { href: "#sponsors", label: "Partenaires" },
+  { href: "/#vision", label: "Vision" },
+  { href: "/#artistes", label: "Artistes" },
+  { href: "/#journee", label: "Journée" },
+  { href: "/#lieu", label: "Lieu" },
+  { href: "/don", label: "Faire un don" },
+  { href: "/#sponsors", label: "Partenaires" },
 ] as const;
 
 export const EVENT_STATS = [

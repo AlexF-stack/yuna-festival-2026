@@ -4,6 +4,7 @@ import { motion, useReducedMotion, type Variants } from "framer-motion";
 
 import { HeroCinematicBackground } from "@/components/hero/HeroCinematicBackground";
 import { HeroFireCanvas } from "@/components/hero/HeroFireCanvas";
+import { BeninMap } from "@/components/hero/BeninMap";
 import { HeroOrbs } from "@/components/hero/HeroOrbs";
 import { HeroShowcase } from "@/components/hero/HeroShowcase";
 import { YunaLogo } from "@/components/brand/YunaLogo";
@@ -101,6 +102,13 @@ export function Hero({ eventStartIso }: HeroProps) {
           >
             {HERO_COPY.support}
           </motion.p>
+
+          <motion.div
+            variants={reduceMotion ? undefined : rise}
+            className="mt-6 flex justify-center min-[900px]:hidden"
+          >
+            <BeninMap size="compact" />
+          </motion.div>
 
           <motion.div
             variants={reduceMotion ? undefined : rise}

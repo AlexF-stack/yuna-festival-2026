@@ -1,5 +1,5 @@
 import { YunaLogo } from "@/components/brand/YunaLogo";
-import { DONATE, ORGANIZER } from "@/lib/content-site";
+import { ORGANIZER } from "@/lib/content-site";
 import { FESTIVAL, FOOTER_LINKS, HERO_COPY } from "@/lib/festival";
 import { SITE_CONTACT } from "@/lib/site";
 
@@ -40,14 +40,6 @@ export function SiteFooter() {
                 </a>
               </li>
             ))}
-            <li>
-              <a
-                href={DONATE.href}
-                className="text-papier/80 transition-colors hover:text-feu"
-              >
-                {DONATE.label}
-              </a>
-            </li>
           </ul>
         </div>
 

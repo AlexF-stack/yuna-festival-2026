@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-import { BeninDeboutSceneDynamic } from "@/components/sections/BeninDeboutSceneDynamic";
 import { FlameQuote } from "@/components/sections/FlameQuote";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -54,13 +53,7 @@ export function Mission() {
           </ButtonLink>
         </div>
 
-        <div className="relative flex justify-center">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -right-4 -top-10 hidden h-[240px] w-[240px] opacity-55 min-[900px]:block"
-          >
-            <BeninDeboutSceneDynamic />
-          </div>
+        <div className="flex justify-center">
           <FlameQuote text={MISSION.highlight} />
         </div>
       </motion.div>

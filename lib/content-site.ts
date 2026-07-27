@@ -13,8 +13,8 @@ export const MISSION = {
   highlight:
     "Éveiller des vocations, rallumer des flammes, et rappeler à toute une génération qu'elle a été choisie pour impacter le monde avec amour, vérité et audace.",
   subtitle: "Le RDV de toute une génération chrétienne",
-  ctaLabel: "Je réserve ma place",
-  ctaHref: "#inscription",
+  ctaLabel: "Inscris-toi",
+  ctaHref: "/#inscription",
 } as const;
 
 export const VISION = {
@@ -218,8 +218,28 @@ export const POLES = [
 
 export const DONATE = {
   label: "Faire un don",
+  pageHref: "/don",
   href: "mailto:contact@yunafestival.org?subject=Don%20YUNA%20Festival%202026",
   blurb: "Soutiens le mouvement — chaque contribution allume une flamme de plus.",
+  pageTitle: "Allume une flamme de plus",
+  pageLead:
+    "YUNA Festival est gratuit pour toute une génération. Ton don finance la scène, la logistique, les masterclass et les actions de solidarité à Midombo.",
+  pillars: [
+    {
+      title: "La scène & la prod",
+      text: "Sono, lumières, sécurité et équipe technique pour deux soirées dignes d'une génération qui se lève.",
+    },
+    {
+      title: "Masterclass & formation",
+      text: "Ateliers VTeam et entrepreneuriat — exceller sans quitter le Royaume, avec des formateurs engagés.",
+    },
+    {
+      title: "Solidarité Midombo",
+      text: "Consultations, dépistages et assistance aux familles du quartier — la foi en actes, sur le terrain.",
+    },
+  ],
+  ctaEmail: "Écrire pour donner",
+  ctaHome: "Retour à l'accueil",
 } as const;
 
 export const ORGANIZER = {

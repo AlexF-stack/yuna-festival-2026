@@ -9,15 +9,15 @@ import { FESTIVAL, NAV_LINKS } from "@/lib/festival";
 type NavSurface = "hero" | "bleu" | "feu" | "papier";
 
 /**
- * Couleur header = inverse vif de la section :
- * bleu → header feu | feu → header bleu | papier → header bleu
+ * Header = inverse vif de la section :
+ * sections bleues → header feu | sections orange → header bleu | papier → bleu
  */
 function toneToSurface(tone: string | null, isHero: boolean): NavSurface {
   if (isHero) return "hero";
   if (tone === "bleu" || tone === "bleu-soft") return "feu";
   if (tone === "feu" || tone === "feu-soft") return "bleu";
   if (tone === "charbon") return "feu";
-  return "bleu"; // papier et défaut
+  return "bleu";
 }
 
 const SURFACE_STYLE: Record<
@@ -57,34 +57,42 @@ const SURFACE_STYLE: Record<
   },
 };
 
+/** Hauteur approximative du bandeau header pour le probe. */
+const PROBE_Y = 88;
+
 export function SiteHeader() {
   const [surface, setSurface] = useState<NavSurface>("hero");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const pick = () => {
-      const probeY = 72;
-      const el = document.elementFromPoint(
-        Math.floor(window.innerWidth / 2),
-        probeY,
+      // Ne pas utiliser elementFromPoint : le header fixe intercepte le hit-test.
+      const nodes = document.querySelectorAll<HTMLElement>(
+        "section[data-nav-surface], section[data-tone], [data-nav-tone]",
       );
-      if (!el) return;
 
-      const section = el.closest("section, [data-tone], [data-nav-surface]");
-      if (!section) {
-        setSurface(window.scrollY < 40 ? "hero" : "bleu");
+      let match: HTMLElement | null = null;
+      for (const node of nodes) {
+        const rect = node.getBoundingClientRect();
+        if (rect.top <= PROBE_Y && rect.bottom > PROBE_Y) {
+          match = node;
+          break;
+        }
+      }
+
+      if (!match) {
+        setSurface(window.scrollY < 48 ? "hero" : "bleu");
         return;
       }
 
-      const navSurface = section.getAttribute("data-nav-surface");
-      if (navSurface === "hero") {
+      if (match.getAttribute("data-nav-surface") === "hero") {
         setSurface("hero");
         return;
       }
 
       const tone =
-        section.getAttribute("data-tone") ||
-        section.getAttribute("data-nav-tone");
+        match.getAttribute("data-tone") ||
+        match.getAttribute("data-nav-tone");
       setSurface(toneToSurface(tone, false));
     };
 
@@ -149,10 +157,10 @@ export function SiteHeader() {
 
         <div className="hidden min-[900px]:block">
           <ButtonLink
-            href="#inscription"
+            href="/#inscription"
             className={`!px-6 !py-2.5 text-[0.8rem] ${style.cta}`}
           >
-            Réserver
+            Inscris-toi
           </ButtonLink>
         </div>
 
@@ -208,11 +216,11 @@ export function SiteHeader() {
             {FESTIVAL.datesHero} · {FESTIVAL.city}
           </p>
           <ButtonLink
-            href="#inscription"
+            href="/#inscription"
             className={`mt-4 w-full ${style.cta}`}
             onClick={() => setOpen(false)}
           >
-            Réserver ma place
+            Inscris-toi
           </ButtonLink>
         </nav>
       </div>

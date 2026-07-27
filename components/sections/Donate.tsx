@@ -8,6 +8,7 @@ import { SectionShell } from "@/components/ui/SectionShell";
 import { DONATE } from "@/lib/content-site";
 import { EASE_YUNA } from "@/lib/motion";
 
+/** Teaser accueil — renvoie vers la page dédiée /don */
 export function Donate() {
   const reduce = useReducedMotion();
 
@@ -39,7 +40,7 @@ export function Donate() {
           whileTap={reduce ? undefined : { scale: 0.98 }}
         >
           <ButtonLink
-            href={DONATE.href}
+            href={DONATE.pageHref}
             className="shrink-0 bg-feu hover:bg-braise"
           >
             {DONATE.label}
