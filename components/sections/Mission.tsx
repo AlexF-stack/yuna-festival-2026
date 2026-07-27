@@ -33,7 +33,7 @@ export function Mission() {
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 0.6, ease: EASE_YUNA }}
-        className="grid items-center gap-12 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-14"
+        className="grid items-center gap-12 min-[900px]:grid-cols-[0.9fr_1.1fr] min-[900px]:gap-10"
       >
         <div>
           <SectionHeading
@@ -53,7 +53,7 @@ export function Mission() {
           </ButtonLink>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex w-full justify-center min-[900px]:justify-end">
           <FlameQuote text={MISSION.highlight} />
         </div>
       </motion.div>
