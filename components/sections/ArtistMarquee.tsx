@@ -24,15 +24,17 @@ export function ArtistMarquee({ revealedNames, totalCount }: ArtistMarqueeProps)
   return (
     <section
       aria-label="Artistes à l'affiche"
-      data-tone="bleu"
-      data-nav-tone="bleu"
-      className="relative z-10 overflow-hidden border-y border-bleu/10 bg-bleu py-5"
+      data-tone="papier"
+      data-nav-tone="papier"
+      className="relative z-10 overflow-hidden border-y border-jaune/40 bg-gradient-to-r from-jaune via-[#f5c84a] to-jaune py-5"
     >
-      <div className={`flex w-max gap-10 ${reduce ? "" : "marquee-track"}`}>
+      <div
+        className={`flex w-max gap-10 ${reduce ? "" : "marquee-track"} -rotate-[1.5deg] origin-center`}
+      >
         {loop.map((name, i) => (
           <motion.span
             key={`${name}-${i}`}
-            className="font-display text-[clamp(1.4rem,3vw,2rem)] font-extrabold uppercase tracking-wide text-papier/90"
+            className="font-display text-[clamp(1.4rem,3vw,2rem)] font-extrabold uppercase tracking-wide text-encre"
           >
             {name}
             <span className="mx-10 text-feu" aria-hidden>

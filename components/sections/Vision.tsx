@@ -12,7 +12,12 @@ export function Vision() {
   const reduce = useReducedMotion();
 
   return (
-    <SectionShell id="vision" labelledBy="vision-title" tone="papier">
+    <SectionShell
+      id="vision"
+      labelledBy="vision-title"
+      tone="papier"
+      background="vision"
+    >
       <Reveal>
         <header className="max-w-3xl">
           <p className="section-eyebrow mb-3">
@@ -39,7 +44,7 @@ export function Vision() {
             key={pillar.id}
             variants={reduce ? undefined : cardRise}
             transition={{ duration: 0.5, ease: EASE_PREMIUM }}
-            className="surface-card group overflow-hidden"
+            className="surface-card group overflow-hidden border border-jaune/35"
           >
             <div className="relative h-36 overflow-hidden">
               <SoftImage

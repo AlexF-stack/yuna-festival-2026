@@ -12,7 +12,12 @@ export function Journee() {
   const reduce = useReducedMotion();
 
   return (
-    <SectionShell id="journee" labelledBy="journee-title" tone="bleu-soft">
+    <SectionShell
+      id="journee"
+      labelledBy="journee-title"
+      tone="bleu-soft"
+      background="journee"
+    >
       <Reveal>
         <SectionHeading
           eyebrow={JOURNEE.eyebrow}

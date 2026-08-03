@@ -1,9 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
+import { PassPreview } from "@/components/pass/PassPreview";
+import { RegistrationGauge } from "@/components/sections/RegistrationGauge";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { REGISTER_COPY } from "@/lib/content-site";
@@ -13,7 +15,6 @@ import {
   REGISTRATION_TYPES,
   type RegistrationType,
 } from "@/lib/registration-types";
-import { RegistrationGauge } from "@/components/sections/RegistrationGauge";
 
 type RegisterProps = {
   initialCount?: number;
@@ -24,11 +25,19 @@ type FieldErrors = {
 };
 
 const fieldClass =
-  "w-full rounded-xl border border-bleu/15 bg-papier px-4 py-3.5 text-base text-encre outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-charbon/45 focus:border-bleu focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--bleu)_18%,transparent)]";
+  "w-full rounded-xl border border-bleu/15 bg-papier px-4 py-3.5 text-base text-encre outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-charbon/45 focus:border-bleu focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--bleu)_18%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
+
+function createIdempotencyKey(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+  return `fallback-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
 
 export function Register({ initialCount = 0 }: RegisterProps) {
   const router = useRouter();
   const reduce = useReducedMotion();
+  const [idempotencyKey, setIdempotencyKey] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -38,10 +47,17 @@ export function Register({ initialCount = 0 }: RegisterProps) {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [pending, setPending] = useState(false);
 
+  useEffect(() => {
+    setIdempotencyKey(createIdempotencyKey());
+  }, []);
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setErrors({});
     setPending(true);
+
+    const key = idempotencyKey || createIdempotencyKey();
+    if (!idempotencyKey) setIdempotencyKey(key);
 
     try {
       const res = await fetch("/api/register", {
@@ -52,16 +68,29 @@ export function Register({ initialCount = 0 }: RegisterProps) {
           phone,
           email,
           registrationType,
+          idempotencyKey: key,
           website,
         }),
       });
+
+      if (!res.ok) {
+        let message = "Inscription impossible. Réessaie.";
+        try {
+          const payload = (await res.json()) as { error?: string };
+          if (payload.error) message = payload.error;
+        } catch {
+          /* ignore */
+        }
+        setErrors({ form: message });
+        return;
+      }
 
       const payload = (await res.json()) as {
         id?: string;
         error?: string;
       };
 
-      if (!res.ok || !payload.id) {
+      if (!payload.id) {
         setErrors({
           form: payload.error ?? "Inscription impossible. Réessaie.",
         });
@@ -83,130 +112,90 @@ export function Register({ initialCount = 0 }: RegisterProps) {
       id="inscription"
       labelledBy="register-title"
       tone="papier"
+      background="register"
     >
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 20 }}
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.65, ease: EASE_YUNA }}
-        className="relative z-10 grid items-start gap-12 min-[900px]:grid-cols-[1fr_minmax(0,26rem)] min-[900px]:gap-16"
+        className="relative z-10"
       >
-        <motion.div
-          initial={reduce ? false : { opacity: 0, x: -20 }}
-          whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.6, ease: EASE_YUNA }}
-        >
+        <div className="max-w-2xl">
           <SectionHeading
             eyebrow="Inscription"
             title="Réserve ton pass"
             titleId="register-title"
             description={REGISTER_COPY.intro}
           />
-
           <RegistrationGauge initialCount={initialCount} />
+        </div>
 
-          <ul className="mt-8 space-y-3.5 text-sm text-charbon">
-            {[
-              "Pass QR généré immédiatement",
-              "Masterclass : places limitées, QR obligatoire",
-              `Ouverture du site à ${FESTIVAL.siteOpens} · concerts dès 18h`,
-              "Même sans mail de confirmation, ton inscription est enregistrée",
-            ].map((line) => (
-              <li key={line} className="flex gap-3">
-                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-feu" />
-                {line}
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
-        <motion.form
-          onSubmit={onSubmit}
-          noValidate
-          initial={reduce ? false : { opacity: 0, y: 24 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.65, ease: EASE_YUNA, delay: 0.06 }}
-          className="relative rounded-3xl border border-bleu/10 bg-papier/95 p-6 shadow-ombre-bleu backdrop-blur-sm min-[480px]:p-8"
-        >
-          <h3 className="mb-5 font-display text-xl font-extrabold uppercase tracking-wide text-bleu">
-            Tes infos
-          </h3>
-
-          <input
-            type="text"
-            name="website"
-            tabIndex={-1}
-            autoComplete="off"
-            value={website}
-            onChange={(e) => setWebsite(e.target.value)}
-            className="absolute left-[-9999px] h-px w-px opacity-0"
-            aria-hidden
-          />
-
-          <fieldset className="mb-5">
-            <legend className="mb-3 text-sm font-medium text-encre">
-              Type d&apos;inscription *
-            </legend>
-            <motion.div
-              className="grid gap-2"
-              variants={
-                reduce
-                  ? undefined
-                  : { hidden: {}, show: { transition: { staggerChildren: 0.05 } } }
-              }
-              initial={reduce ? false : "hidden"}
-              whileInView={reduce ? undefined : "show"}
-              viewport={{ once: true, amount: 0.5 }}
-            >
-              {REGISTRATION_TYPES.map((type) => {
-                const selected = registrationType === type.value;
-                return (
-                  <motion.label
-                    key={type.value}
-                    variants={
-                      reduce ? undefined : { hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }
-                    }
-                    className={`flex cursor-pointer gap-3 rounded-xl border px-3.5 py-3 transition-colors duration-200 ${
-                      selected
-                        ? "border-bleu bg-ciel/60"
-                        : "border-bleu/12 bg-papier hover:border-bleu/30"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="registrationType"
-                      value={type.value}
-                      checked={selected}
-                      onChange={() => setRegistrationType(type.value)}
-                      className="mt-1 shrink-0 accent-bleu"
-                    />
-                    <span>
-                      <span className="block text-sm font-semibold text-encre">
-                        {type.label}
-                      </span>
-                      <span className="mt-0.5 block text-xs text-charbon">
-                        {type.hint}
-                      </span>
-                    </span>
-                  </motion.label>
-                );
-              })}
-            </motion.div>
-          </fieldset>
-
-          <motion.div
-            key={registrationType}
-            initial={reduce ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25, ease: EASE_YUNA }}
+        {/* Skill design-system : formulaire gauche + aperçu pass droite */}
+        <div className="mt-12 grid items-start gap-10 min-[960px]:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] min-[960px]:gap-12">
+          <motion.form
+            onSubmit={onSubmit}
+            noValidate
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.65, ease: EASE_YUNA }}
+            className="relative rounded-3xl border border-bleu/10 bg-papier/95 p-6 shadow-ombre-bleu backdrop-blur-sm min-[480px]:p-8"
           >
-            <motion.div
-              className="mb-4"
-              initial={false}
-              animate={reduce ? undefined : { opacity: 1 }}
-            >
+            <h3 className="mb-5 font-display text-xl font-extrabold uppercase tracking-wide text-bleu">
+              Tes infos
+            </h3>
+
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              className="absolute left-[-9999px] h-px w-px opacity-0"
+              aria-hidden
+            />
+
+            <fieldset className="mb-5">
+              <legend className="mb-3 text-sm font-medium text-encre">
+                Type d&apos;inscription *
+              </legend>
+              <div className="grid gap-2">
+                {REGISTRATION_TYPES.map((type) => {
+                  const selected = registrationType === type.value;
+                  return (
+                    <label
+                      key={type.value}
+                      className={`flex cursor-pointer gap-3 rounded-xl border px-3.5 py-3 transition-colors duration-200 ${
+                        selected
+                          ? "border-bleu bg-ciel/60"
+                          : "border-bleu/12 bg-papier hover:border-bleu/30"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="registrationType"
+                        value={type.value}
+                        checked={selected}
+                        onChange={() => setRegistrationType(type.value)}
+                        className="mt-1 shrink-0 accent-bleu"
+                      />
+                      <span>
+                        <span className="block text-sm font-semibold text-encre">
+                          {type.label}
+                        </span>
+                        <span className="mt-0.5 block text-xs text-charbon">
+                          {type.hint}
+                        </span>
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+            </fieldset>
+
+            <div className="mb-4">
               <label
                 htmlFor="reg-name"
                 className="mb-1.5 block text-sm font-medium text-encre"
@@ -224,7 +213,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                 placeholder="Ex : Grâce Ahouansou"
                 className={fieldClass}
               />
-            </motion.div>
+            </div>
 
             <div className="mb-4">
               <label
@@ -246,15 +235,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
               />
             </div>
 
-            <motion.div
-              className="mb-6"
-              initial={reduce ? false : { opacity: 0, height: 0 }}
-              animate={
-                registrationType !== "pass"
-                  ? { opacity: 1, height: "auto" }
-                  : { opacity: 1, height: "auto" }
-              }
-            >
+            <div className="mb-6">
               <label
                 htmlFor="reg-email"
                 className="mb-1.5 block text-sm font-medium text-encre"
@@ -279,10 +260,10 @@ export function Register({ initialCount = 0 }: RegisterProps) {
               />
               {registrationType === "benevole" ? (
                 <p className="mt-1.5 text-xs text-charbon">
-                  Pour te recontacter sur WhatsApp.
+                  Pour le suivi bénévole et WhatsApp.
                 </p>
               ) : null}
-            </motion.div>
+            </div>
 
             {errors.form ? (
               <p role="alert" className="mb-4 text-sm text-feu">
@@ -297,8 +278,48 @@ export function Register({ initialCount = 0 }: RegisterProps) {
             >
               {pending ? "Génération du pass…" : "Générer mon pass QR"}
             </button>
+
+            <p className="mt-4 text-center text-sm text-charbon">
+              Déjà inscrit ?{" "}
+              <a
+                href="/mon-pass"
+                className="font-bold text-bleu underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu"
+              >
+                Retrouver mon pass
+              </a>
+            </p>
+
+            <ul className="mt-6 space-y-2 border-t border-bleu/10 pt-5 text-xs text-charbon">
+              {[
+                "Pass QR généré côté serveur (sécurisé)",
+                "Masterclass : places limitées, QR obligatoire",
+                `Ouverture du site à ${FESTIVAL.siteOpens} · concerts dès 18h`,
+              ].map((line) => (
+                <li key={line} className="flex gap-2">
+                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-feu" />
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </motion.form>
+
+          <motion.div
+            className="min-[960px]:sticky min-[960px]:top-28"
+            initial={reduce ? false : { opacity: 0, x: 20 }}
+            whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: EASE_YUNA, delay: 0.06 }}
+          >
+            <p className="mb-3 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-charbon">
+              Aperçu en direct
+            </p>
+            <PassPreview name={name} registrationType={registrationType} />
+            <p className="mt-4 text-sm leading-relaxed text-charbon">
+              Le QR définitif est créé uniquement après validation — cet aperçu
+              te montre ton pass tel qu&apos;il apparaîtra à l&apos;entrée.
+            </p>
           </motion.div>
-        </motion.form>
+        </div>
       </motion.div>
     </SectionShell>
   );

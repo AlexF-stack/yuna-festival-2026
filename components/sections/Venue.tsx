@@ -9,7 +9,12 @@ import { FESTIVAL } from "@/lib/festival";
 
 export function Venue() {
   return (
-    <SectionShell id="lieu" labelledBy="lieu-title" tone="feu-soft">
+    <SectionShell
+      id="lieu"
+      labelledBy="lieu-title"
+      tone="feu-soft"
+      background="venue"
+    >
       <div className="grid items-center gap-14 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-16">
         <Reveal>
           <SectionHeading

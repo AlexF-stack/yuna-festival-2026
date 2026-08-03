@@ -1,4 +1,5 @@
 import { Boutique } from "@/components/sections/Boutique";
+import { ComingSoon } from "@/components/sections/ComingSoon";
 import { Donate } from "@/components/sections/Donate";
 import { Faq } from "@/components/sections/Faq";
 import { Hero } from "@/components/sections/Hero";
@@ -9,6 +10,7 @@ import { Participate } from "@/components/sections/Participate";
 import { Poles } from "@/components/sections/Poles";
 import { QuoteStrip } from "@/components/sections/QuoteStrip";
 import { Register } from "@/components/sections/Register";
+import { SaveTheDateStrip } from "@/components/sections/SaveTheDateStrip";
 import { Sponsors } from "@/components/sections/Sponsors";
 import { StatsBar } from "@/components/sections/StatsBar";
 import { Teaser } from "@/components/sections/Teaser";
@@ -19,9 +21,9 @@ import { getEventStartIso } from "@/lib/festival";
 import { getRegistrationsCount } from "@/lib/registrations";
 
 /**
- * Programme masqué tant que le line-up n'est pas révélé (artistes visibles dans le schedule).
- * Accroche → stats → vision → mission → line-up → journée → lieu
- * → inscription → boutique → teaser → pôles → partenaires → don → participer → FAQ
+ * Accroche → stats → citation → coming soon → vision → mission → line-up
+ * → journée → lieu → save the date → inscription → boutique → teaser
+ * → pôles → partenaires → don → participer → FAQ
  */
 export default async function HomePage() {
   const eventStartIso = getEventStartIso();
@@ -35,11 +37,13 @@ export default async function HomePage() {
       <Hero eventStartIso={eventStartIso} />
       <StatsBar />
       <QuoteStrip />
+      <ComingSoon />
       <Vision />
       <Mission />
       <Lineup artists={artists} />
       <Journee />
       <Venue />
+      <SaveTheDateStrip />
       <Register initialCount={registrationCount} />
       <Boutique />
       <Teaser />

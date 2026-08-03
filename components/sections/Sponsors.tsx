@@ -38,8 +38,8 @@ export function Sponsors() {
             transition={{ duration: 0.6, delay: reduce ? 0 : i * 0.08, ease: EASE_YUNA }}
             className={`surface-card flex flex-col p-7 ${
               tier.featured
-                ? "ring-2 ring-feu/35 shadow-ombre-bleu-lg"
-                : ""
+                ? "scale-[1.02] border-2 border-jaune bg-papier shadow-ombre-bleu-lg ring-2 ring-feu/25 min-[1000px]:-translate-y-2"
+                : "border border-bleu/10"
             }`}
           >
             <p className="font-mono text-[0.72rem] font-bold uppercase tracking-[0.16em] text-feu">

@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 import * as THREE from "three";
 
 type FireCoreProps = {
@@ -174,15 +174,27 @@ function FireCore({ reducedMotion, particleCount }: FireCoreProps) {
   );
 }
 
+function subscribeMedia(query: string, onChange: () => void) {
+  const mq = window.matchMedia(query);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+function useMediaMatches(query: string, serverSnapshot: boolean) {
+  return useSyncExternalStore(
+    (onChange) => subscribeMedia(query, onChange),
+    () => window.matchMedia(query).matches,
+    () => serverSnapshot,
+  );
+}
+
 export function Fire5DScene() {
-  const [reducedMotion] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
-  const [particleCount] = useState(() => {
-    if (typeof window === "undefined") return 900;
-    return window.matchMedia("(min-width: 900px)").matches ? 1100 : 550;
-  });
+  const reducedMotion = useMediaMatches(
+    "(prefers-reduced-motion: reduce)",
+    false,
+  );
+  const isWide = useMediaMatches("(min-width: 900px)", true);
+  const particleCount = isWide ? 1100 : 550;
 
   return (
     <Canvas

@@ -38,15 +38,15 @@ export function Teaser() {
           ) : (
             <>
               <SoftImage
-                src="/media/concert.jpg"
+                src="/media/coming-soon-balloon.jpg"
                 alt=""
                 fill
                 sizes="(min-width: 900px) 900px, 100vw"
                 wrapperClassName="absolute inset-0"
-                className="opacity-60"
-                objectPosition="center 30%"
+                className="opacity-70"
+                objectPosition="center 40%"
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-bleu-fonce/90 via-bleu/75 to-encre/90" />
+              <div className="absolute inset-0 bg-gradient-to-br from-bleu-fonce/88 via-bleu/70 to-encre/90" />
               <div className="relative flex h-full min-h-[220px] flex-col items-center justify-center gap-4 px-6 text-center text-papier">
                 <span
                   aria-hidden

@@ -123,7 +123,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(musicEventJsonLd),
+            __html: JSON.stringify(musicEventJsonLd).replace(/</g, "\\u003c"),
           }}
         />
         <Loader />

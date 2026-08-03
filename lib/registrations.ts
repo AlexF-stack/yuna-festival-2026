@@ -1,6 +1,6 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { hasSupabaseEnv } from "@/lib/supabase/env";
-import type { Registration } from "@/lib/registration";
+import { normalizePhone, type Registration } from "@/lib/registration";
 import { isRegistrationType } from "@/lib/registration-types";
 
 const REG_SELECT =
@@ -154,6 +154,29 @@ export async function listRegistrationsForCrm(limit = 200): Promise<
     createdAt: r.created_at,
     checkedInAt: r.checked_in_at,
   }));
+}
+
+/** Dernière inscription pour un numéro (récupération de pass). */
+export async function findLatestRegistrationIdByPhone(
+  phoneRaw: string,
+): Promise<string | null> {
+  const phone = normalizePhone(phoneRaw);
+  if (phone.length < 8) return null;
+
+  const supabase = createSupabaseAdminClient();
+  const { data, error } = await supabase
+    .from("registrations")
+    .select("id")
+    .eq("phone", phone)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Recherche pass impossible: ${error.message}`);
+  }
+
+  return data?.id ?? null;
 }
 
 export async function getRegistrationsCount(): Promise<number> {

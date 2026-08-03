@@ -6,7 +6,7 @@ import { DONATE } from "@/lib/content-site";
 export const metadata: Metadata = {
   title: "Faire un don",
   description: DONATE.pageLead,
-  alternates: { canonical: "/don" },
+  alternates: { canonical: "https://yunafestival.com/don" },
   openGraph: {
     title: "Faire un don | YUNA Festival 2026",
     description: DONATE.pageLead,

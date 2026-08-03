@@ -27,6 +27,7 @@ export function Lineup({ artists }: LineupProps) {
         id="artistes"
         labelledBy="lineup-title"
         tone="feu-soft"
+        background="lineup"
         overlay={<EmberFieldDynamic />}
       >
         <div className="flex flex-col gap-5 min-[760px]:flex-row min-[760px]:items-end min-[760px]:justify-between">

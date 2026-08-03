@@ -84,6 +84,7 @@ type RegistrationsTable = {
     phone: string;
     email: string | null;
     registration_type: string;
+    idempotency_key: string;
     created_at: string;
     qr_code: string;
     checked_in_at: string | null;
@@ -95,6 +96,7 @@ type RegistrationsTable = {
     phone: string;
     email?: string | null;
     registration_type?: string;
+    idempotency_key: string;
     created_at?: string;
     qr_code: string;
     checked_in_at?: string | null;
@@ -106,6 +108,7 @@ type RegistrationsTable = {
     phone?: string;
     email?: string | null;
     registration_type?: string;
+    idempotency_key?: string;
     created_at?: string;
     qr_code?: string;
     checked_in_at?: string | null;

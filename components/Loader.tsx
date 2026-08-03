@@ -205,9 +205,9 @@ export function Loader() {
               <div className="mt-10 w-[min(72vw,280px)]">
                 <div className="h-1.5 overflow-hidden rounded-full bg-bleu/15">
                   <motion.div
-                    className="h-full rounded-full bg-gradient-to-r from-bleu via-feu to-feu"
-                    initial={{ width: "0%" }}
-                    animate={{ width: `${progress}%` }}
+                    className="h-full w-full origin-left rounded-full bg-gradient-to-r from-bleu via-feu to-feu"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: progress / 100 }}
                     transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
                   />
                 </div>

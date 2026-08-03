@@ -47,9 +47,9 @@ export function RegistrationGauge({ initialCount }: RegistrationGaugeProps) {
 
       <div className="h-2.5 overflow-hidden rounded-full bg-ciel">
         <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-bleu to-feu"
-          initial={{ width: 0 }}
-          animate={visible ? { width: `${pct}%` } : undefined}
+          className="h-full w-full origin-left rounded-full bg-gradient-to-r from-bleu to-feu"
+          initial={{ scaleX: 0 }}
+          animate={visible ? { scaleX: pct / 100 } : undefined}
           transition={{ duration: 1.1, ease: EASE_YUNA }}
         />
       </div>

@@ -89,12 +89,24 @@ export function StaffScanClient() {
           staffLabel: staffLabel.trim() || "porte-1",
         }),
       });
+      if (!res.ok) {
+        let message = "Scan refusé.";
+        try {
+          const data = (await res.json()) as { error?: string };
+          if (data.error) message = data.error;
+        } catch {
+          /* ignore */
+        }
+        setError(message);
+        setLast(null);
+        return;
+      }
       const data = (await res.json()) as {
         error?: string;
         alreadyCheckedIn?: boolean;
         registration?: ScanResult["registration"];
       };
-      if (!res.ok || !data.registration) {
+      if (!data.registration) {
         setError(data.error ?? "Scan refusé.");
         setLast(null);
         return;
@@ -251,9 +263,15 @@ export function StaffScanClient() {
       </div>
 
       <div className="mt-6 rounded-2xl border border-bleu/15 bg-papier p-4">
-        <p className="text-sm font-semibold text-bleu">Saisie manuelle</p>
+        <label
+          htmlFor="staff-manual-code"
+          className="text-sm font-semibold text-bleu"
+        >
+          Saisie manuelle
+        </label>
         <div className="mt-2 flex gap-2">
           <input
+            id="staff-manual-code"
             value={manual}
             onChange={(e) => setManual(e.target.value)}
             placeholder="UUID ou URL confirmation"

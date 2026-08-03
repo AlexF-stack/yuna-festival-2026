@@ -26,8 +26,19 @@ export function Newsletter() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: trimmed, website }),
       });
+      if (!res.ok) {
+        let message = "Inscription impossible. Réessaie.";
+        try {
+          const payload = (await res.json()) as { error?: string };
+          if (payload.error) message = payload.error;
+        } catch {
+          /* ignore */
+        }
+        setError(message);
+        return;
+      }
       const payload = (await res.json()) as { ok?: boolean; error?: string };
-      if (!res.ok || !payload.ok) {
+      if (!payload.ok) {
         setError(payload.error ?? "Inscription impossible. Réessaie.");
         return;
       }
@@ -54,7 +65,7 @@ export function Newsletter() {
           C&apos;est noté — tu recevras nos annonces.
         </p>
       ) : (
-        <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-2.5" noValidate>
+        <form onSubmit={onSubmit} className="relative mt-5 flex flex-col gap-2.5" noValidate>
           <input
             type="text"
             name="website"
@@ -65,15 +76,18 @@ export function Newsletter() {
             className="absolute left-[-9999px] h-px w-px opacity-0"
             aria-hidden
           />
+          <label htmlFor="newsletter-email" className="text-sm font-medium text-papier/90">
+            Ton e-mail
+          </label>
           <input
+            id="newsletter-email"
             type="email"
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="ton@email.com"
             required
-            aria-label="Ton email"
-            className="w-full rounded-full border-0 bg-papier px-4 py-3 text-[0.95rem] text-encre outline-none placeholder:text-charbon/45 focus:ring-2 focus:ring-feu"
+            className="w-full rounded-full border-0 bg-papier px-4 py-3 text-[0.95rem] text-encre outline-none placeholder:text-charbon/45 focus:ring-2 focus:ring-feu focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-papier"
           />
           <button
             type="submit"

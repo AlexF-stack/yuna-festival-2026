@@ -14,7 +14,12 @@ export function Mission() {
   const reduce = useReducedMotion();
 
   return (
-    <SectionShell id="mission" labelledBy="mission-title" tone="bleu-soft">
+    <SectionShell
+      id="mission"
+      labelledBy="mission-title"
+      tone="bleu-soft"
+      background="mission"
+    >
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 16 }}
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}

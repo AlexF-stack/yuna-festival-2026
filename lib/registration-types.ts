@@ -2,7 +2,7 @@
 export const REGISTRATION_TYPES = [
   {
     value: "pass",
-    label: "Pass soirées",
+    label: "Festival — 2 soirées",
     hint: "Entrée libre · QR pour accès prioritaire",
   },
   {

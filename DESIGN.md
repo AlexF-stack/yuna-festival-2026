@@ -1,6 +1,10 @@
 # Design system — YUNA Festival 2026 « Bénin Debout »
 
-Source de vérité : **logo officiel** (`public/brand/yuna-logo.png`).
+Source de vérité couleurs : **logo officiel** (`public/brand/yuna-logo.png`) —
+voir aussi `.cursor/skills/yuna-design-system` (patterns UI / contenu) et
+`.cursor/skills/yuna-backend` (inscription / QR). La palette nuit du skill
+historique est **remplacée** par les tokens logo ci-dessous.
+
 Toute couleur / police dans un composant passe par ces tokens, jamais en dur.
 
 ## Palette (extraite du logo)

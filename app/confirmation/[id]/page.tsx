@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { PassTicket } from "@/components/pass/PassTicket";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { getRegistrationById } from "@/lib/registrations";
 
@@ -42,47 +43,14 @@ export default async function ConfirmationPage({
         Présente ce QR à l&apos;entrée. Garde une capture sur ton téléphone.
       </p>
 
-      <article className="mt-10 w-full max-w-[420px] overflow-hidden rounded-3xl border border-bleu/15 bg-papier shadow-[0_20px_50px_rgba(0,90,140,0.12)]">
-        <header className="bg-gradient-to-r from-bleu to-bleu-fonce px-6 py-5 text-papier">
-          <p className="font-display text-2xl font-extrabold uppercase leading-none">
-            YUNA · 2026
-          </p>
-          <p className="mt-1.5 text-sm font-medium text-papier/85">
-            Bénin Debout · 5–6 sept · Midombo
-          </p>
-        </header>
-
-        <div className="flex flex-col items-center px-6 py-8">
-          <div className="rounded-2xl border border-bleu/10 bg-nuage p-3">
-            <Image
-              src={registration.qr_code}
-              alt={`QR code pass ${registration.name}`}
-              width={280}
-              height={280}
-              unoptimized
-              className="h-auto w-[min(70vw,280px)]"
-              priority
-            />
-          </div>
-
-          <p className="mt-5 font-display text-[1.4rem] font-extrabold uppercase text-bleu">
-            {registration.name}
-          </p>
-          <p className="mt-2 font-mono text-[0.72rem] font-bold uppercase tracking-[0.2em] text-feu">
-            Entrée libre
-          </p>
-          <p className="mt-3 font-mono text-sm text-charbon">
-            YUNA-{shortId}
-          </p>
-        </div>
-
-        <footer className="flex items-center justify-between border-t border-bleu/10 px-6 py-4 text-sm text-charbon">
-          <span>
-            Entrée <strong className="text-feu">LIBRE</strong>
-          </span>
-          <span className="font-mono text-xs tracking-wider">Ésaïe 60:1</span>
-        </footer>
-      </article>
+      <div className="mt-10 w-full max-w-[420px]">
+        <PassTicket
+          name={registration.name}
+          qrCode={registration.qr_code}
+          registrationId={registration.id}
+          registrationType={registration.registration_type}
+        />
+      </div>
 
       <a
         href={registration.qr_code}
@@ -91,6 +59,16 @@ export default async function ConfirmationPage({
       >
         Télécharger mon pass (PNG)
       </a>
+
+      <p className="mt-6 text-center text-sm text-charbon">
+        Tu perds ce lien ?{" "}
+        <Link
+          href="/mon-pass"
+          className="font-bold text-bleu underline-offset-4 hover:underline"
+        >
+          Retrouve ton pass
+        </Link>
+      </p>
 
       <ButtonLink href="/#inscription" variant="ghost" className="mt-6 !px-0">
         ← Retour au site
