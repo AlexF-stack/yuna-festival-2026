@@ -37,9 +37,9 @@ export function Venue() {
           <div className="relative">
             <div
               aria-hidden
-              className="absolute -left-4 -top-4 h-full w-full rounded-[1.75rem] border-2 border-jaune/40"
+              className="absolute -left-4 -top-4 h-full w-full rounded-[2rem] rounded-bl-[0.4rem] border-2 border-jaune/40"
             />
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-ombre-bleu-lg">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] rounded-tr-[0.45rem] shadow-ombre-bleu-lg">
               <SoftImage
                 src="/media/stage.jpg"
                 alt="Vue du terrain de Midombo"

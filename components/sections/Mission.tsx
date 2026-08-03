@@ -6,6 +6,7 @@ import { FlameQuote } from "@/components/sections/FlameQuote";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { SectionTitleArt } from "@/components/ui/SectionTitleArt";
 import { MISSION } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
 import { EASE_YUNA } from "@/lib/motion";
@@ -47,6 +48,11 @@ export function Mission() {
             titleId="mission-title"
             description={MISSION.subtitle}
           />
+          <SectionTitleArt
+            src="/media/title-mission.jpg"
+            alt="La mission — YUNA Festival 2026"
+            className="mb-2"
+          />
           <p className="mt-5 max-w-xl text-[1.08rem] leading-relaxed text-charbon">
             {MISSION.lead}
           </p>
@@ -58,7 +64,11 @@ export function Mission() {
           </ButtonLink>
         </div>
 
-        <div className="flex w-full justify-center min-[900px]:justify-end">
+        <div className="relative flex w-full justify-center min-[900px]:justify-end">
+          <div
+            aria-hidden
+            className="section-shape-slash pointer-events-none absolute -inset-4 -z-10 hidden rounded-[2rem] bg-feu/10 min-[900px]:block"
+          />
           <FlameQuote text={MISSION.highlight} />
         </div>
       </motion.div>

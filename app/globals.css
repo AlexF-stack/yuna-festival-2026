@@ -418,24 +418,35 @@ body {
   .marquee-track,
   .hero-sparks,
   .media-kenburns,
+  .hero-kenburns,
   .scroll-cue {
     animation: none !important;
   }
 }
 
-/* ── Hero cinématique (Herna / Canaan) ─────────────────────────────── */
+/* ── Hero cinématique (HERNA CinematicMedia) ─────────────────────────── */
 @keyframes media-kenburns {
   from {
-    transform: scale(1.04) translate3d(0, 0, 0);
+    transform: scale(1) translate3d(0, 0, 0);
   }
   to {
-    transform: scale(1.12) translate3d(-1.2%, -0.8%, 0);
+    transform: scale(1.06) translate3d(-0.6%, -0.4%, 0);
   }
 }
 
 .media-kenburns {
-  /* Désactivé — le scale permanent coûte cher sur mobile / GPU */
   animation: none;
+}
+
+/* Ken Burns léger — desktop only via class appliquée si canCycle */
+.hero-kenburns {
+  animation: media-kenburns 8s ease-out forwards;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.section-shape-slash {
+  clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
 }
 
 .media-vignette {

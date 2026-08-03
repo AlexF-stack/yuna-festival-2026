@@ -5,6 +5,7 @@ import { Faq } from "@/components/sections/Faq";
 import { Hero } from "@/components/sections/Hero";
 import { Journee } from "@/components/sections/Journee";
 import { Lineup } from "@/components/sections/Lineup";
+import { MediaBand } from "@/components/sections/MediaBand";
 import { Mission } from "@/components/sections/Mission";
 import { Participate } from "@/components/sections/Participate";
 import { Poles } from "@/components/sections/Poles";
@@ -21,8 +22,8 @@ import { getEventStartIso } from "@/lib/festival";
 import { getRegistrationsCount } from "@/lib/registrations";
 
 /**
- * Accroche → stats → citation → coming soon → vision → mission → line-up
- * → journée → lieu → save the date → inscription → boutique → teaser
+ * Accroche → stats → citation → media band → coming soon → vision → mission
+ * → line-up → journée → lieu → save the date → inscription → boutique → teaser
  * → pôles → partenaires → don → participer → FAQ
  */
 export default async function HomePage() {
@@ -37,6 +38,7 @@ export default async function HomePage() {
       <Hero eventStartIso={eventStartIso} />
       <StatsBar />
       <QuoteStrip />
+      <MediaBand />
       <ComingSoon />
       <Vision />
       <Mission />

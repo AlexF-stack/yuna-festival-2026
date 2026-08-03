@@ -6,9 +6,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const HERO_ASSETS = [
   "/brand/yuna-logo.png",
-  "/media/dawn.jpg",
-  "/media/stage.jpg",
-  "/media/worship.jpg",
+  "/media/crowd.jpg",
+  "/media/concert.jpg",
+  "/media/hero-plate-a.jpg",
 ] as const;
 
 const MIN_DISPLAY_MS = 700;

@@ -4,6 +4,7 @@ import { EmberFieldDynamic } from "@/components/sections/EmberFieldDynamic";
 import { LineupTeaser } from "@/components/sections/LineupTeaser";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { SectionTitleArt } from "@/components/ui/SectionTitleArt";
 import type { PublicArtist } from "@/types/artist";
 
 type LineupProps = {
@@ -31,12 +32,18 @@ export function Lineup({ artists }: LineupProps) {
         overlay={<EmberFieldDynamic />}
       >
         <div className="flex flex-col gap-5 min-[760px]:flex-row min-[760px]:items-end min-[760px]:justify-between">
-          <SectionHeading
-            eyebrow="Line-up"
-            title="Les artistes"
-            titleId="lineup-title"
-            description="Adoration, louange et scènes fortes — le line-up se dévoile progressivement."
-          />
+          <div>
+            <SectionHeading
+              eyebrow="Line-up"
+              title="Les artistes"
+              titleId="lineup-title"
+              description="Adoration, louange et scènes fortes — le line-up se dévoile progressivement."
+            />
+            <SectionTitleArt
+              src="/media/title-lineup.jpg"
+              alt="Line-up — YUNA Festival 2026"
+            />
+          </div>
           <LineupTeaser totalCount={artists.length} className="shrink-0" />
         </div>
 
