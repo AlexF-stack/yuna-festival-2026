@@ -28,6 +28,10 @@ export type RegistrationType =
 export const REGISTRATION_TYPE_VALUES: RegistrationType[] =
   REGISTRATION_TYPES.map((t) => t.value);
 
+export const REGISTRATION_TYPE_LABELS = Object.fromEntries(
+  REGISTRATION_TYPES.map((t) => [t.value, t.label]),
+) as Record<RegistrationType, string>;
+
 export function isRegistrationType(v: unknown): v is RegistrationType {
   return (
     typeof v === "string" &&

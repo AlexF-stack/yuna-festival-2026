@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 
 import { NextResponse } from "next/server";
 
+import { notifyCrmRegistration, siteOrigin } from "@/lib/crm";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { generateRegistrationQr } from "@/lib/registration-qr";
 import { validateRegistrationInput } from "@/lib/registration";
@@ -67,7 +68,7 @@ export async function POST(request: Request) {
         registration_type: parsed.registrationType,
         qr_code,
       })
-      .select("id, name, qr_code")
+      .select("id, name, qr_code, created_at")
       .single();
 
     if (error) {
@@ -86,6 +87,17 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
+
+    // CRM = listing admin externe (ne bloque pas l’inscription)
+    void notifyCrmRegistration({
+      id: data.id,
+      name: parsed.name,
+      phone: parsed.phone,
+      email: parsed.email,
+      registrationType: parsed.registrationType,
+      createdAt: data.created_at,
+      confirmationUrl: `${siteOrigin()}/confirmation/${data.id}`,
+    });
 
     return NextResponse.json({
       id: data.id,

@@ -1,16 +1,19 @@
 import QRCode from "qrcode";
 
-/** QR PNG (data URL) encodant l'id d'inscription. */
+import { siteOrigin } from "@/lib/crm";
+
+/** QR PNG — encode l’URL de confirmation (UUID toujours extractible). */
 export async function generateRegistrationQr(
   registrationId: string,
 ): Promise<string> {
-  return QRCode.toDataURL(registrationId, {
+  const payload = `${siteOrigin()}/confirmation/${registrationId}`;
+  return QRCode.toDataURL(payload, {
     errorCorrectionLevel: "M",
     margin: 2,
     width: 320,
     color: {
-      dark: "#0a0817",
-      light: "#fbf6ec",
+      dark: "#0077bb",
+      light: "#ffffff",
     },
   });
 }

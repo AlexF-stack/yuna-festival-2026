@@ -11,6 +11,8 @@ export type Registration = {
   registration_type: RegistrationType;
   created_at: string;
   qr_code: string;
+  checked_in_at?: string | null;
+  checked_in_by?: string | null;
 };
 
 const PHONE_RE = /^[+0-9\s().-]{8,20}$/;

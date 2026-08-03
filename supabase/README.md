@@ -34,8 +34,18 @@ Seed : `seed_schedule.sql` (source content-yuna-2026.md).
 | `email` | text | Optionnel |
 | `created_at` | timestamptz | Défaut `now()` |
 | `qr_code` | text | Data URL PNG généré serveur (`qrcode`) |
+| `registration_type` | text | `pass` / masterclass / `benevole` |
+| `checked_in_at` | timestamptz | Premier scan entrée (nullable) |
+| `checked_in_by` | text | Poste staff ayant scanné |
 
 RLS activé, **aucune policy anon** : écriture/lecture via `SUPABASE_SERVICE_ROLE_KEY` dans les routes Next.js.
+
+### Scan porte & CRM YUNA
+
+- **Scan** : `/staff/scan` + `POST /api/check-in` (`x-yuna-staff` = `YUNA_STAFF_SECRET`).
+- **CRM YUNA** : projet Supabase séparé (ex. `yuna-festival-crm`) — tables `inscriptions`, `scans`, etc. Voir `CRM-YUNA.md`.
+- Sync : `YUNA_CRM_SUPABASE_URL` + `YUNA_CRM_SERVICE_ROLE_KEY`.
+- Migration check-in site : `20260802120000_registration_check_in.sql`
 
 ## Table `products`
 
@@ -71,4 +81,9 @@ Renseigner `.env.local` :
 ```
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+SUPABASE_SERVICE_ROLE_KEY=...
+NEXT_PUBLIC_SITE_URL=https://yunafestival.com
+YUNA_STAFF_SECRET=...
+CRM_WEBHOOK_URL=https://...
+CRM_API_KEY=...
 ```

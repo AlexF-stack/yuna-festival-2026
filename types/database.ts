@@ -86,6 +86,8 @@ type RegistrationsTable = {
     registration_type: string;
     created_at: string;
     qr_code: string;
+    checked_in_at: string | null;
+    checked_in_by: string | null;
   };
   Insert: {
     id?: string;
@@ -95,6 +97,8 @@ type RegistrationsTable = {
     registration_type?: string;
     created_at?: string;
     qr_code: string;
+    checked_in_at?: string | null;
+    checked_in_by?: string | null;
   };
   Update: {
     id?: string;
@@ -104,6 +108,8 @@ type RegistrationsTable = {
     registration_type?: string;
     created_at?: string;
     qr_code?: string;
+    checked_in_at?: string | null;
+    checked_in_by?: string | null;
   };
   Relationships: [];
 };
