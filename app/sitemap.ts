@@ -11,6 +11,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: "https://yunafestival.com/vision",
+      lastModified: LAST_DEPLOY,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: "https://yunafestival.com/artistes",
+      lastModified: LAST_DEPLOY,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: "https://yunafestival.com/journee",
+      lastModified: LAST_DEPLOY,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: "https://yunafestival.com/lieu",
+      lastModified: LAST_DEPLOY,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: "https://yunafestival.com/boutique",
+      lastModified: LAST_DEPLOY,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: "https://yunafestival.com/faq",
+      lastModified: LAST_DEPLOY,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: "https://yunafestival.com/don",
       lastModified: LAST_DEPLOY,
       changeFrequency: "monthly",

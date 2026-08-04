@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { YunaLogo } from "@/components/brand/YunaLogo";
@@ -127,8 +128,8 @@ export function SiteHeader() {
       </div>
 
       <div className="mx-auto flex h-[4.25rem] max-w-[1240px] items-center justify-between gap-4 px-5 min-[900px]:h-[4.75rem] min-[900px]:px-6">
-        <a
-          href="#hero"
+        <Link
+          href="/"
           className="flex min-w-0 items-center gap-3"
           onClick={() => setOpen(false)}
           aria-label="YUNA Festival — retour à l'accueil"
@@ -138,30 +139,30 @@ export function SiteHeader() {
             priority
             className={activeSurface !== "papier" ? "brightness-110 drop-shadow-sm" : ""}
           />
-        </a>
+        </Link>
 
         <nav
           aria-label="Navigation principale"
           className="hidden items-center gap-0.5 min-[900px]:flex"
         >
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className={`rounded-full px-3.5 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.1em] transition-colors ${style.link}`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="hidden items-center gap-2 min-[900px]:flex">
-          <a
+          <Link
             href="/mon-pass"
             className={`rounded-full px-3.5 py-2 text-[0.76rem] font-bold uppercase tracking-[0.08em] transition-colors ${style.link}`}
           >
             Mon pass
-          </a>
+          </Link>
           <ButtonLink
             href="/#inscription"
             className={`min-h-11 !px-6 !py-2.5 text-[0.8rem] ${style.cta}`}
@@ -201,7 +202,7 @@ export function SiteHeader() {
       >
         <nav aria-label="Navigation mobile" className="flex flex-col gap-1">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
@@ -212,7 +213,7 @@ export function SiteHeader() {
               }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           <p
             className={`mt-2 px-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] ${
@@ -221,7 +222,7 @@ export function SiteHeader() {
           >
             {FESTIVAL.datesHero} · {FESTIVAL.city}
           </p>
-          <a
+          <Link
             href="/mon-pass"
             onClick={() => setOpen(false)}
             className={`mt-4 rounded-xl border px-4 py-3 text-center font-bold uppercase tracking-[0.08em] ${
@@ -231,7 +232,7 @@ export function SiteHeader() {
             }`}
           >
             Pass perdu ? Retrouver mon pass
-          </a>
+          </Link>
           <ButtonLink
             href="/#inscription"
             className={`mt-3 w-full ${style.cta}`}

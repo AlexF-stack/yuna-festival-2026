@@ -232,7 +232,7 @@ body {
   animation: tee-pulse 0.9s ease-in-out infinite;
 }
 
-.wa-float::before {
+.cta-float::before {
   animation: wa-ping 2s infinite;
 }
 
@@ -281,7 +281,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .tee-flame,
   .tee-pulse,
-  .wa-float::before,
+  .cta-float::before,
   .hero-horizon,
   .theme-debout,
   .theme-benin,

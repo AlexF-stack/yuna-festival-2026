@@ -46,25 +46,25 @@ export const HERO_COPY = {
   ctaPrimary: "Inscris-toi",
   ctaSecondary: "Voir la journée",
   ctaPrimaryHref: "/#inscription",
-  ctaSecondaryHref: "/#journee",
+  ctaSecondaryHref: "/journee",
 } as const;
 
 export const NAV_LINKS = [
-  { href: "/#vision", label: "Vision" },
-  { href: "/#artistes", label: "Line-up" },
-  { href: "/#journee", label: "Journée" },
-  { href: "/#lieu", label: "Lieu" },
+  { href: "/vision", label: "Vision" },
+  { href: "/artistes", label: "Line-up" },
+  { href: "/journee", label: "Journée" },
+  { href: "/lieu", label: "Lieu" },
   { href: "/#inscription", label: "Inscription" },
-  { href: "/#boutique", label: "Boutique" },
+  { href: "/boutique", label: "Boutique" },
   { href: "/don", label: "Don" },
-  { href: "/#faq", label: "FAQ" },
+  { href: "/faq", label: "FAQ" },
 ] as const;
 
 export const FOOTER_LINKS = [
-  { href: "/#vision", label: "Vision" },
-  { href: "/#artistes", label: "Artistes" },
-  { href: "/#journee", label: "Journée" },
-  { href: "/#lieu", label: "Lieu" },
+  { href: "/vision", label: "Vision" },
+  { href: "/artistes", label: "Artistes" },
+  { href: "/journee", label: "Journée" },
+  { href: "/lieu", label: "Lieu" },
   { href: "/mon-pass", label: "Retrouver mon pass" },
   { href: "/don", label: "Faire un don" },
   { href: "/confidentialite", label: "Confidentialité" },

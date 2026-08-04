@@ -1,25 +1,13 @@
-import { Boutique } from "@/components/sections/Boutique";
-import { ComingSoon } from "@/components/sections/ComingSoon";
 import { Donate } from "@/components/sections/Donate";
-import { Faq } from "@/components/sections/Faq";
+import { ExploreSections } from "@/components/sections/ExploreSections";
 import { Hero } from "@/components/sections/Hero";
-import { Journee } from "@/components/sections/Journee";
-import { Lineup } from "@/components/sections/Lineup";
-import { MediaBand } from "@/components/sections/MediaBand";
-import { Mission } from "@/components/sections/Mission";
 import { Participate } from "@/components/sections/Participate";
-import { Poles } from "@/components/sections/Poles";
 import { QuoteStrip } from "@/components/sections/QuoteStrip";
 import { Register } from "@/components/sections/Register";
 import { SaveTheDateStrip } from "@/components/sections/SaveTheDateStrip";
 import { StatsBar } from "@/components/sections/StatsBar";
-import { Teaser } from "@/components/sections/Teaser";
-import { Venue } from "@/components/sections/Venue";
-import { Vision } from "@/components/sections/Vision";
 import type { Metadata } from "next";
 
-import { getArtists } from "@/lib/artists";
-import { FAQ_ITEMS } from "@/lib/faq";
 import { getEventStartIso } from "@/lib/festival";
 import { getRegistrationsCount } from "@/lib/registrations";
 
@@ -72,28 +60,15 @@ const festivalJsonLd = {
   },
 } as const;
 
-/** JSON-LD FAQPage — généré depuis la FAQ éditoriale affichée sur la page. */
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQ_ITEMS.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: { "@type": "Answer", text: item.answer },
-  })),
-};
-
 /**
- * Accroche → stats → citation → media band → coming soon → vision → mission
- * → line-up → journée → lieu → save the date → inscription → boutique → teaser
- * → pôles → don → participer → FAQ
+ * Home courte, pensée conversion : accroche → stats → citation → sommaire
+ * des pages de section → save the date → inscription → don → participer.
+ * Le détail (vision, line-up, journée, lieu, boutique, FAQ) vit sur des
+ * pages dédiées pour ne pas rallonger le scroll mobile.
  */
 export default async function HomePage() {
   const eventStartIso = getEventStartIso();
-  const [artists, registrationCount] = await Promise.all([
-    getArtists(),
-    getRegistrationsCount(),
-  ]);
+  const registrationCount = await getRegistrationsCount();
 
   return (
     <main id="contenu" className="bg-papier text-encre">
@@ -103,30 +78,14 @@ export default async function HomePage() {
           __html: JSON.stringify(festivalJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
       <Hero eventStartIso={eventStartIso} />
       <StatsBar />
       <QuoteStrip />
-      <MediaBand />
-      <ComingSoon />
-      <Vision />
-      <Mission />
-      <Lineup artists={artists} />
-      <Journee />
-      <Venue />
+      <ExploreSections />
       <SaveTheDateStrip />
       <Register initialCount={registrationCount} />
-      <Boutique />
-      <Teaser />
-      <Poles />
       <Donate />
       <Participate />
-      <Faq />
     </main>
   );
 }

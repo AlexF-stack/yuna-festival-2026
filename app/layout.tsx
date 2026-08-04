@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Baloo_2, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 
 import { Loader } from "@/components/Loader";
+import { RegisterFloat } from "@/components/ui/RegisterFloat";
 import { SiteFooter } from "@/components/ui/SiteFooter";
 import { SiteHeader } from "@/components/ui/SiteHeader";
-import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 
 import "./globals.css";
 
@@ -88,7 +88,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter />
-        <WhatsAppFloat />
+        <RegisterFloat />
       </body>
     </html>
   );
