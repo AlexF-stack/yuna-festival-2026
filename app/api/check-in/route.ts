@@ -73,6 +73,10 @@ export async function POST(request: Request) {
       );
     }
 
+    // Généré avant les retries : clé primaire du journal `scans` côté CRM,
+    // pour qu'un retry après timeout ne crée jamais de doublon.
+    const scanId = crypto.randomUUID();
+
     after(async () => {
       await notifyCrmRegistration({
         event: "registration.checked_in",
@@ -81,9 +85,11 @@ export async function POST(request: Request) {
         phone: result.registration.phone,
         email: result.registration.email,
         registrationType: result.registration.registrationType,
+        createdAt: result.registration.createdAt,
         checkedInAt: result.registration.checkedInAt,
         checkedInBy: staffLabel,
         alreadyCheckedIn: result.alreadyCheckedIn,
+        scanId,
       });
     });
 

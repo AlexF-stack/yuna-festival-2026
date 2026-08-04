@@ -20,6 +20,12 @@ export type YunaCrmSyncPayload = {
   checkedInBy?: string | null;
   /** Résultat journal scans CRM */
   scanResultat?: "ok" | "deja_scanne" | "inconnu" | "refuse";
+  /**
+   * UUID généré par l'appelant pour cet événement de scan : sert de clé
+   * primaire du journal `scans` et de clé d'idempotence webhook, pour que
+   * les retries ne créent jamais de doublons.
+   */
+  scanId?: string;
 };
 
 export type YunaCrmNewsletterPayload = {
@@ -144,11 +150,15 @@ async function insertScanLog(payload: YunaCrmSyncPayload): Promise<void> {
 
   const resultat = payload.scanResultat ?? "ok";
   const { error } = await crm.from("scans").insert({
+    ...(payload.scanId ? { id: payload.scanId } : {}),
     inscription_id: payload.id,
     resultat,
     poste: payload.checkedInBy ?? "staff",
   });
 
+  // 23505 = le scan a déjà été journalisé par une tentative précédente
+  // (timeout après insert réussi) : le retry est un succès, pas un doublon.
+  if (error && error.code === "23505") return;
   if (error) throw new Error(`scans insert: ${error.message}`);
 }
 
@@ -160,6 +170,8 @@ async function postWebhook(payload: YunaCrmSyncPayload): Promise<void> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      // Même clé à chaque retry : le consommateur peut dédupliquer.
+      "Idempotency-Key": `${payload.event}:${payload.scanId ?? payload.id}`,
       ...(process.env.YUNA_CRM_API_KEY || process.env.CRM_API_KEY
         ? {
             Authorization: `Bearer ${process.env.YUNA_CRM_API_KEY || process.env.CRM_API_KEY}`,
@@ -176,8 +188,9 @@ async function postWebhook(payload: YunaCrmSyncPayload): Promise<void> {
 
 /** Sync CRM YUNA — ne bloque jamais l’API du site, réessaie en cas d'échec. */
 export async function syncYunaCrm(payload: YunaCrmSyncPayload): Promise<void> {
+  // L'inscription d'abord : le journal `scans` porte une FK vers elle.
+  await withRetry("inscriptions", () => upsertInscription(payload));
   await Promise.all([
-    withRetry("inscriptions", () => upsertInscription(payload)),
     withRetry("scans", () => insertScanLog(payload)),
     withRetry("webhook", () => postWebhook(payload)),
   ]);
@@ -212,6 +225,7 @@ export async function notifyCrmRegistration(
   payload: Omit<CrmRegistrationPayload, "event"> & {
     event?: CrmRegistrationPayload["event"];
     alreadyCheckedIn?: boolean;
+    scanId?: string;
   },
 ): Promise<void> {
   const event: YunaCrmSyncPayload["event"] =
@@ -230,6 +244,7 @@ export async function notifyCrmRegistration(
     urlConfirmation: payload.confirmationUrl,
     checkedInAt: payload.checkedInAt,
     checkedInBy: payload.checkedInBy,
+    scanId: payload.scanId,
     scanResultat:
       event === "inscription.checked_in"
         ? payload.alreadyCheckedIn

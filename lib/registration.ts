@@ -19,17 +19,22 @@ const PHONE_RE = /^\+?[0-9]{8,15}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
- * Canonicalise en quasi-E.164 : chiffres seuls, préfixe `+` conservé
- * (`00` converti en `+`). « +229 01 23 45 67 » et « +2290123 4567 »
- * donnent la même valeur — la contrainte d'unicité ne peut plus être
- * contournée par un espacement différent.
+ * Canonicalise en E.164 : chiffres seuls, préfixe `+` (`00` converti).
+ * Les saisies locales béninoises sans indicatif sont ramenées à `+229…`
+ * (plan de numérotation 2024 : mobiles à 10 chiffres commençant par 01,
+ * les anciens numéros à 8 chiffres reçoivent le préfixe 01). Ainsi
+ * « 01 97 XX XX XX » et « +229 01 97 XX XX XX » désignent la même personne.
  */
 export function normalizePhone(raw: string): string {
   const trimmed = raw.trim();
   const international = trimmed.startsWith("+") || trimmed.startsWith("00");
   const digits = trimmed.replace(/\D/g, "").replace(/^00/, "");
   if (!digits) return "";
-  return international ? `+${digits}` : digits;
+  if (international) return `+${digits}`;
+  if (digits.length === 10 && digits.startsWith("01")) return `+229${digits}`;
+  if (digits.length === 8) return `+22901${digits}`;
+  if (digits.length >= 11 && digits.startsWith("229")) return `+${digits}`;
+  return digits;
 }
 
 export function validateRegistrationInput(input: {

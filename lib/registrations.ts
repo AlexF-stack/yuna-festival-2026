@@ -42,6 +42,7 @@ export type CheckInResult =
         phone: string;
         email: string | null;
         registrationType: string;
+        createdAt: string;
         checkedInAt: string;
       };
     }
@@ -67,6 +68,7 @@ export async function checkInRegistration(
         phone: existing.phone,
         email: existing.email,
         registrationType: existing.registration_type,
+        createdAt: existing.created_at,
         checkedInAt: existing.checked_in_at,
       },
     };
@@ -102,6 +104,7 @@ export async function checkInRegistration(
           phone: again.phone,
           email: again.email,
           registrationType: again.registration_type,
+          createdAt: again.created_at,
           checkedInAt: again.checked_in_at,
         },
       };
@@ -118,6 +121,7 @@ export async function checkInRegistration(
       phone: data.phone,
       email: data.email,
       registrationType: data.registration_type,
+      createdAt: data.created_at,
       checkedInAt: data.checked_in_at ?? now,
     },
   };
