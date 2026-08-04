@@ -55,8 +55,12 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
   },
   icons: {
-    icon: [{ url: "/brand/yuna-mark.png", type: "image/png" }],
-    apple: [{ url: "/brand/yuna-mark.png", type: "image/png" }],
+    icon: [
+      { url: "/brand/yuna-mark.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+    shortcut: "/brand/yuna-mark.png",
   },
 };
 

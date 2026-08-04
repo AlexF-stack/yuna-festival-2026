@@ -311,25 +311,17 @@ export function StaffScanClient() {
             Scan QR
           </h1>
         </div>
-        <div className="flex shrink-0 flex-col items-end gap-2">
-          <Link
-            href="/staff/crm"
-            className="inline-flex min-h-10 items-center rounded-full border border-bleu/25 bg-papier px-3 py-2 text-xs font-bold text-bleu"
-          >
-            CRM
-          </Link>
-          <button
-            type="button"
-            className="min-h-10 px-1 text-sm font-semibold text-charbon underline"
-            onClick={() => {
-              void stopCamera();
-              sessionStorage.removeItem(STAFF_KEY);
-              setUnlocked(false);
-            }}
-          >
-            Quitter
-          </button>
-        </div>
+        <button
+          type="button"
+          className="min-h-10 shrink-0 px-1 text-sm font-semibold text-charbon underline"
+          onClick={() => {
+            void stopCamera();
+            sessionStorage.removeItem(STAFF_KEY);
+            setUnlocked(false);
+          }}
+        >
+          Quitter
+        </button>
       </div>
 
       <div

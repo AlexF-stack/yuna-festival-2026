@@ -15,7 +15,7 @@ export default function StaffScanPage() {
   return (
     <main
       id="contenu"
-      className="min-h-dvh bg-logo-bleu-soft px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))] text-encre sm:px-5"
+      className="min-h-dvh bg-logo-bleu-soft px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 text-encre sm:px-5 sm:pt-6"
     >
       <StaffScanClient />
     </main>

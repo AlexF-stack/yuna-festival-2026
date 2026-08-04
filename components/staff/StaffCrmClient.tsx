@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 type Registration = {
@@ -102,33 +101,17 @@ export function StaffCrmClient() {
     : 1;
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] sm:px-6">
-      <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
-        <div className="min-w-0 flex-1">
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-feu">
-            Staff
-          </p>
-          <h1 className="mt-1 font-display text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-none text-bleu">
-            CRM inscriptions
-          </h1>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-charbon">
-            Lecture live des inscriptions site. Même secret que le scan QR.
-          </p>
-        </div>
-        <div className="flex w-full flex-col gap-2 sm:w-auto sm:items-end">
-          <Link
-            href="/staff/scan"
-            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-bleu/25 bg-papier px-4 text-sm font-bold text-bleu"
-          >
-            ← Scan QR
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex min-h-10 items-center justify-center text-center text-sm font-semibold text-charbon underline-offset-4 hover:underline"
-          >
-            Site public
-          </Link>
-        </div>
+    <div className="mx-auto w-full max-w-6xl px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 sm:px-6 sm:pt-6">
+      <div className="mb-6">
+        <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-feu">
+          Staff
+        </p>
+        <h1 className="mt-1 font-display text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-none text-bleu">
+          CRM inscriptions
+        </h1>
+        <p className="mt-2 max-w-xl text-sm leading-relaxed text-charbon">
+          Lecture live des inscriptions site. Même secret que le scan QR.
+        </p>
       </div>
 
       {!unlocked ? (
