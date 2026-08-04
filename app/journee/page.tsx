@@ -23,7 +23,7 @@ export default function JourneePage() {
     <main id="contenu" className="bg-papier text-encre">
       <PageIntro
         eyebrow="Samedi en journée"
-        title="Impact avant la scène"
+        title="La journée d'impact"
         lead="Le réveil commence par le service : action médicale gratuite, masterclass et pôles d'activités — avant les projecteurs, YUNA touche la ville."
         cta={{ href: "/#inscription", label: "Réserver ma place en masterclass" }}
       />

@@ -25,8 +25,8 @@ export default function BoutiquePage() {
   return (
     <main id="contenu" className="bg-papier text-encre">
       <PageIntro
-        eyebrow="Boutique officielle"
-        title="Porte le feu"
+        eyebrow="Porte le feu"
+        title="La boutique"
         lead="Tee-shirts LED YUNA — de la flamme toujours allumée à la matrice pilotée depuis ton téléphone. Pré-commande avant le jour J."
       />
       <Boutique />

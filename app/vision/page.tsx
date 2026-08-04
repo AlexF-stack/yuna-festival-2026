@@ -22,8 +22,8 @@ export default function VisionPage() {
   return (
     <main id="contenu" className="bg-papier text-encre">
       <PageIntro
-        eyebrow="La vision"
-        title="Une génération non ordinaire"
+        eyebrow="La colombe et le feu"
+        title="La vision"
         lead="YUNA — Youth United for New Awakening. En hébreu, יוֹנָה (Yonah) signifie la colombe : l'Esprit qui descend sur une génération qui se lève."
         cta={{ href: "/#inscription", label: "Inscris-toi — pass QR gratuit" }}
       />

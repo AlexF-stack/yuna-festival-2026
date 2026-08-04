@@ -30,8 +30,8 @@ export default async function ArtistesPage() {
   return (
     <main id="contenu" className="bg-papier text-encre">
       <PageIntro
-        eyebrow="Line-up"
-        title="Les artistes"
+        eyebrow="Scènes & adoration"
+        title="Le line-up"
         lead="Adoration, louange et scènes fortes — le line-up 2026 se dévoile progressivement. Reste connecté, les annonces arrivent."
         cta={{ href: "/#inscription", label: "Inscris-toi — pass QR gratuit" }}
       />

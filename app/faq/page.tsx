@@ -40,7 +40,7 @@ export default function FaqPage() {
       />
       <PageIntro
         eyebrow="Infos pratiques"
-        title="Tout savoir"
+        title="FAQ"
         lead="Entrée, pass QR, horaires, accès et bénévolat — les réponses essentielles avant le 5 septembre."
         cta={{ href: "/#inscription", label: "Inscris-toi — pass QR gratuit" }}
       />

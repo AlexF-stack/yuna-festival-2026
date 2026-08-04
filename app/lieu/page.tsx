@@ -21,8 +21,8 @@ export default function LieuPage() {
   return (
     <main id="contenu" className="bg-papier text-encre">
       <PageIntro
-        eyebrow="Le lieu"
-        title="Terrain de Midombo"
+        eyebrow="Cotonou · Midombo"
+        title="Le lieu"
         lead="Un espace ouvert au cœur de Cotonou, accessible à tous — entrée libre, ouverture à 17h00 chaque soir."
         cta={{ href: "/#inscription", label: "Inscris-toi — pass QR gratuit" }}
       />
