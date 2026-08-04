@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type SoftImageProps = {
   src: string;
@@ -34,10 +34,24 @@ export function SoftImage({
   objectPosition,
 }: SoftImageProps) {
   const [loaded, setLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const markLoaded = useCallback(() => {
+    setLoaded(true);
+  }, []);
+
+  // Images en cache : onLoad peut partir avant l’hydratation → opacity bloquée à 0.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth > 0) {
+      markLoaded();
+    }
+  }, [src, markLoaded]);
 
   return (
     <div className={`relative overflow-hidden bg-ciel/30 ${wrapperClassName}`}>
       <Image
+        ref={imgRef}
         src={src}
         alt={alt}
         fill={fill}
@@ -46,7 +60,8 @@ export function SoftImage({
         sizes={sizes}
         priority={priority}
         quality={quality}
-        onLoad={() => setLoaded(true)}
+        onLoad={markLoaded}
+        onLoadingComplete={markLoaded}
         className={`object-cover transition-opacity duration-500 ease-out motion-reduce:transition-none ${
           loaded ? "opacity-100" : "opacity-0"
         } ${className}`}

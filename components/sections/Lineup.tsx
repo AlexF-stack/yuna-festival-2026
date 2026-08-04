@@ -4,7 +4,6 @@ import { EmberFieldDynamic } from "@/components/sections/EmberFieldDynamic";
 import { LineupTeaser } from "@/components/sections/LineupTeaser";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
-import { SectionTitleArt } from "@/components/ui/SectionTitleArt";
 import type { PublicArtist } from "@/types/artist";
 
 type LineupProps = {
@@ -27,7 +26,7 @@ export function Lineup({ artists }: LineupProps) {
       <SectionShell
         id="artistes"
         labelledBy="lineup-title"
-        tone="feu-soft"
+        tone="bleu"
         background="lineup"
         overlay={<EmberFieldDynamic />}
       >
@@ -38,17 +37,14 @@ export function Lineup({ artists }: LineupProps) {
               title="Les artistes"
               titleId="lineup-title"
               description="Adoration, louange et scènes fortes — le line-up se dévoile progressivement."
-            />
-            <SectionTitleArt
-              src="/media/title-lineup.jpg"
-              alt="Line-up — YUNA Festival 2026"
+              variant="light"
             />
           </div>
           <LineupTeaser totalCount={artists.length} className="shrink-0" />
         </div>
 
         {artists.length === 0 ? (
-          <p className="mt-14 text-charbon">Line-up à venir.</p>
+          <p className="mt-14 text-papier/80">Line-up à venir.</p>
         ) : (
           <div className="mt-12 space-y-6 min-[760px]:mt-16">
             {headliner ? <ArtistCard artist={headliner} index={0} /> : null}

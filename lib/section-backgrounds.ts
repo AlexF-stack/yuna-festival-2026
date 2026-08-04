@@ -35,11 +35,11 @@ export type SectionBgConfig = {
 /** Photos optionnelles — voile toujours en couleur logo exacte. */
 export const SECTION_BACKGROUNDS: Record<SectionBgKey, SectionBgConfig> = {
   mission: {
-    src: "/media/worship.jpg",
-    alt: "Adoration collective",
-    objectPosition: "center 30%",
-    overlay: "bleu",
-    photoOpacity: 0.28,
+    src: "/media/title-mission.jpg",
+    alt: "La mission — YUNA Festival 2026",
+    objectPosition: "center center",
+    overlay: "nuit",
+    photoOpacity: 0.88,
   },
   vision: {
     src: "/media/title-vision.jpg",
@@ -49,11 +49,11 @@ export const SECTION_BACKGROUNDS: Record<SectionBgKey, SectionBgConfig> = {
     photoOpacity: 0.88,
   },
   lineup: {
-    src: "/media/crowd.jpg",
-    alt: "Foule en liesse",
+    src: "/media/title-lineup.jpg",
+    alt: "Line-up — YUNA Festival 2026",
     objectPosition: "center center",
-    overlay: "feu",
-    photoOpacity: 0.26,
+    overlay: "nuit",
+    photoOpacity: 0.88,
   },
   programme: {
     src: "/media/concert.jpg",

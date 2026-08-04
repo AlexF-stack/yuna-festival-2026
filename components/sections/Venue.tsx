@@ -9,12 +9,7 @@ import { FESTIVAL } from "@/lib/festival";
 
 export function Venue() {
   return (
-    <SectionShell
-      id="lieu"
-      labelledBy="lieu-title"
-      tone="feu-soft"
-      background="venue"
-    >
+    <SectionShell id="lieu" labelledBy="lieu-title" tone="feu-soft">
       <div className="grid items-center gap-14 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-16">
         <Reveal>
           <SectionHeading
@@ -44,8 +39,9 @@ export function Venue() {
                 src="/media/stage.jpg"
                 alt="Vue du terrain de Midombo"
                 fill
+                priority
                 sizes="(min-width: 900px) 480px, 100vw"
-                quality={70}
+                quality={75}
                 wrapperClassName="absolute inset-0"
                 objectPosition="center 50%"
               />
