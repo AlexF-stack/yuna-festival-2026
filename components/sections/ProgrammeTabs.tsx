@@ -57,7 +57,7 @@ export function ProgrammeTabs({ items }: ProgrammeTabsProps) {
               {selected && reduce ? (
                 <span className="absolute inset-0 -z-10 rounded-full bg-bleu shadow-[0_8px_20px_rgba(0,90,140,0.25)]" />
               ) : null}
-              <span className="block font-display text-[1.05rem] font-extrabold uppercase leading-none tracking-wide min-[480px]:text-[1.2rem]">
+              <span className="block font-display text-[0.95rem] font-extrabold uppercase leading-none tracking-wide min-[380px]:text-[1.05rem] min-[480px]:text-[1.2rem]">
                 {tab.label}
               </span>
               <span

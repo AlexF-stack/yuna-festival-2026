@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const HERO_ASSETS = [
@@ -38,14 +39,17 @@ function loadImage(src: string): Promise<void> {
 /**
  * Écran de démarrage YUNA — suit le vrai chargement (fonts, images hero, window).
  * Se démonte du DOM après fondu Framer Motion (SEO / a11y).
+ * Désactivé sur /staff/* (outils terrain, accès immédiat).
  */
 export function Loader() {
+  const pathname = usePathname() || "/";
+  const isStaff = pathname.startsWith("/staff");
   const reduceMotion = useReducedMotion();
   const [progress, setProgress] = useState(0);
-  const [visible, setVisible] = useState(true);
-  const [mounted, setMounted] = useState(true);
+  const [visible, setVisible] = useState(!isStaff);
+  const [mounted, setMounted] = useState(!isStaff);
   const startedAt = useRef<number>(0);
-  const finishedRef = useRef(false);
+  const finishedRef = useRef(isStaff);
   const scoresRef = useRef<LoadScores>({ fonts: 0, images: 0, window: 0 });
 
   const finish = useCallback(() => {
@@ -77,6 +81,16 @@ export function Loader() {
   );
 
   useEffect(() => {
+    if (isStaff) {
+      finishedRef.current = true;
+      setVisible(false);
+      setMounted(false);
+      return;
+    }
+  }, [isStaff]);
+
+  useEffect(() => {
+    if (isStaff) return;
     startedAt.current = Date.now();
 
     if (reduceMotion) {
@@ -131,7 +145,7 @@ export function Loader() {
       window.clearTimeout(hardStop);
       window.removeEventListener("load", onWindowReady);
     };
-  }, [bump, finish, reduceMotion]);
+  }, [bump, finish, isStaff, reduceMotion]);
 
   useEffect(() => {
     if (!mounted) return;

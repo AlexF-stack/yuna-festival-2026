@@ -101,14 +101,18 @@ export function Hero({ eventStartIso }: HeroProps) {
 
           <motion.div
             variants={reduceMotion ? undefined : rise}
-            className="mt-8 flex flex-wrap gap-3"
+            className="mt-8 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap"
           >
-            <ButtonLink href={HERO_COPY.ctaPrimaryHref}>
+            <ButtonLink
+              href={HERO_COPY.ctaPrimaryHref}
+              className="min-h-12 w-full min-[420px]:w-auto"
+            >
               {HERO_COPY.ctaPrimary}
             </ButtonLink>
             <ButtonLink
               href={HERO_COPY.ctaSecondaryHref}
               variant="outline-light"
+              className="min-h-12 w-full min-[420px]:w-auto"
             >
               {HERO_COPY.ctaSecondary}
             </ButtonLink>

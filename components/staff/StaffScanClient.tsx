@@ -236,19 +236,22 @@ export function StaffScanClient() {
 
   if (!unlocked) {
     return (
-      <div className="mx-auto w-full max-w-md rounded-3xl border border-bleu/15 bg-papier p-6 shadow-[0_16px_40px_rgba(0,90,140,0.1)]">
+      <div className="mx-auto w-full max-w-md rounded-[1.5rem] border border-bleu/15 bg-papier p-5 shadow-[0_16px_40px_rgba(0,90,140,0.1)] sm:rounded-3xl sm:p-6">
         <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu">
           Staff · Midombo
         </p>
-        <h1 className="mt-2 font-display text-3xl font-extrabold uppercase text-bleu">
+        <h1 className="mt-2 font-display text-[clamp(1.85rem,8vw,2.25rem)] font-extrabold uppercase leading-none text-bleu">
           Scan entrée
         </h1>
-        <p className="mt-3 text-sm text-charbon">
-          Pas d’admin public — le listing est dans le{" "}
-          <Link href="/staff/crm" className="font-bold text-bleu underline-offset-2 hover:underline">
+        <p className="mt-3 text-sm leading-relaxed text-charbon">
+          Validation des passes à la porte. Listing dans le{" "}
+          <Link
+            href="/staff/crm"
+            className="font-bold text-bleu underline-offset-2 hover:underline"
+          >
             CRM inscriptions
           </Link>
-          . Ici : validation des passes à la porte uniquement.
+          .
         </p>
         <label className="mt-6 block text-sm font-semibold text-bleu">
           Secret staff
@@ -256,8 +259,9 @@ export function StaffScanClient() {
             type="password"
             value={secret}
             onChange={(e) => setSecret(e.target.value)}
-            className="mt-1.5 w-full rounded-xl border border-bleu/20 bg-papier px-3 py-3 text-encre outline-none focus:ring-2 focus:ring-feu"
-            autoComplete="off"
+            className="mt-1.5 min-h-12 w-full rounded-xl border border-bleu/20 bg-papier px-3 py-3 text-base text-encre outline-none focus:ring-2 focus:ring-feu"
+            autoComplete="current-password"
+            enterKeyHint="go"
           />
         </label>
         <label className="mt-4 block text-sm font-semibold text-bleu">
@@ -266,8 +270,9 @@ export function StaffScanClient() {
             type="text"
             value={staffLabel}
             onChange={(e) => setStaffLabel(e.target.value)}
-            className="mt-1.5 w-full rounded-xl border border-bleu/20 bg-papier px-3 py-3 text-encre outline-none focus:ring-2 focus:ring-feu"
+            className="mt-1.5 min-h-12 w-full rounded-xl border border-bleu/20 bg-papier px-3 py-3 text-base text-encre outline-none focus:ring-2 focus:ring-feu"
             placeholder="porte-1"
+            enterKeyHint="done"
           />
         </label>
         {error ? (
@@ -279,7 +284,7 @@ export function StaffScanClient() {
           type="button"
           onClick={() => void unlock()}
           disabled={busy}
-          className="mt-6 w-full rounded-full bg-feu px-4 py-3.5 font-bold text-papier hover:bg-braise disabled:opacity-60"
+          className="mt-6 flex min-h-12 w-full items-center justify-center rounded-full bg-feu px-4 py-3.5 text-base font-bold text-papier hover:bg-braise disabled:opacity-60"
         >
           {busy ? "Vérification…" : "Ouvrir le scan"}
         </button>
@@ -296,41 +301,49 @@ export function StaffScanClient() {
       : last?.registration.registrationType;
 
   return (
-    <div className="mx-auto w-full max-w-lg pb-[env(safe-area-inset-bottom)]">
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <div>
+    <div className="mx-auto w-full max-w-lg">
+      <div className="mb-4 flex items-start justify-between gap-3">
+        <div className="min-w-0">
           <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.18em] text-feu">
             {staffLabel}
           </p>
-          <h1 className="font-display text-2xl font-extrabold uppercase text-bleu">
+          <h1 className="font-display text-[clamp(1.5rem,6vw,1.75rem)] font-extrabold uppercase text-bleu">
             Scan QR
           </h1>
         </div>
-        <button
-          type="button"
-          className="text-sm font-semibold text-charbon underline"
-          onClick={() => {
-            void stopCamera();
-            sessionStorage.removeItem(STAFF_KEY);
-            setUnlocked(false);
-          }}
-        >
-          Quitter
-        </button>
+        <div className="flex shrink-0 flex-col items-end gap-2">
+          <Link
+            href="/staff/crm"
+            className="inline-flex min-h-10 items-center rounded-full border border-bleu/25 bg-papier px-3 py-2 text-xs font-bold text-bleu"
+          >
+            CRM
+          </Link>
+          <button
+            type="button"
+            className="min-h-10 px-1 text-sm font-semibold text-charbon underline"
+            onClick={() => {
+              void stopCamera();
+              sessionStorage.removeItem(STAFF_KEY);
+              setUnlocked(false);
+            }}
+          >
+            Quitter
+          </button>
+        </div>
       </div>
 
       <div
         id={readerId}
-        className="overflow-hidden rounded-2xl border border-bleu/15 bg-charbon/5"
+        className="aspect-[4/3] max-h-[min(52svh,420px)] overflow-hidden rounded-2xl border border-bleu/15 bg-charbon/5 [&_video]:h-full [&_video]:w-full [&_video]:object-cover"
       />
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
         {!scanning ? (
           <button
             type="button"
             onClick={() => void startCamera()}
             disabled={busy}
-            className="rounded-full bg-feu px-5 py-3 text-sm font-bold text-papier hover:bg-braise disabled:opacity-50"
+            className="flex min-h-12 flex-1 items-center justify-center rounded-full bg-feu px-5 py-3 text-base font-bold text-papier hover:bg-braise disabled:opacity-50"
           >
             Démarrer la caméra
           </button>
@@ -338,33 +351,34 @@ export function StaffScanClient() {
           <button
             type="button"
             onClick={() => void stopCamera()}
-            className="rounded-full border border-bleu/25 bg-papier px-5 py-3 text-sm font-bold text-bleu"
+            className="flex min-h-12 flex-1 items-center justify-center rounded-full border border-bleu/25 bg-papier px-5 py-3 text-base font-bold text-bleu"
           >
             Arrêter la caméra
           </button>
         )}
       </div>
 
-      <div className="mt-6 rounded-2xl border border-bleu/15 bg-papier p-4">
+      <div className="mt-5 rounded-2xl border border-bleu/15 bg-papier p-4">
         <label
           htmlFor="staff-manual-code"
           className="text-sm font-semibold text-bleu"
         >
           Saisie manuelle
         </label>
-        <div className="mt-2 flex gap-2">
+        <div className="mt-2 flex flex-col gap-2 sm:flex-row">
           <input
             id="staff-manual-code"
             value={manual}
             onChange={(e) => setManual(e.target.value)}
             placeholder="UUID ou URL confirmation"
-            className="min-w-0 flex-1 rounded-xl border border-bleu/20 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-feu"
+            enterKeyHint="go"
+            className="min-h-12 min-w-0 flex-1 rounded-xl border border-bleu/20 px-3 py-3 text-base outline-none focus:ring-2 focus:ring-feu"
           />
           <button
             type="button"
             disabled={busy || !manual.trim()}
             onClick={() => void checkIn(manual)}
-            className="min-h-11 shrink-0 rounded-full bg-bleu px-5 py-2.5 text-sm font-bold text-papier disabled:opacity-50"
+            className="flex min-h-12 shrink-0 items-center justify-center rounded-full bg-bleu px-5 py-3 text-base font-bold text-papier disabled:opacity-50 sm:w-auto"
           >
             Valider
           </button>
@@ -372,7 +386,10 @@ export function StaffScanClient() {
       </div>
 
       {error ? (
-        <p className="mt-4 rounded-xl bg-feu/10 px-4 py-3 text-sm font-semibold text-feu" role="alert">
+        <p
+          className="mt-4 rounded-xl bg-feu/10 px-4 py-3 text-sm font-semibold text-feu"
+          role="alert"
+        >
           {error}
         </p>
       ) : null}
@@ -386,11 +403,17 @@ export function StaffScanClient() {
           <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.16em] text-papier/80">
             {last.alreadyCheckedIn ? "Déjà scanné" : "Entrée OK"}
           </p>
-          <p className="mt-1 font-display text-2xl font-extrabold uppercase">
+          <p className="mt-1 break-words font-display text-[clamp(1.35rem,6vw,1.75rem)] font-extrabold uppercase leading-tight">
             {last.registration.name}
           </p>
           <p className="mt-1 text-sm text-papier/90">
-            {typeLabel} · {last.registration.phone}
+            {typeLabel} ·{" "}
+            <a
+              href={`tel:${last.registration.phone}`}
+              className="underline-offset-2 hover:underline"
+            >
+              {last.registration.phone}
+            </a>
           </p>
           <p className="mt-2 font-mono text-[0.7rem] text-papier/70">
             {new Date(last.registration.checkedInAt).toLocaleString("fr-FR")}

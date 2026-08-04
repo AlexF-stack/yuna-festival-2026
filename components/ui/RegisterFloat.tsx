@@ -25,7 +25,7 @@ export function RegisterFloat() {
     <Link
       href="/#inscription"
       aria-label="Aller au formulaire d'inscription — pass QR gratuit"
-      className="cta-float fixed bottom-5 right-5 z-[150] flex min-h-12 items-center gap-2 rounded-full bg-feu px-5 py-3 font-display text-[0.95rem] font-extrabold uppercase tracking-[0.04em] text-papier shadow-[0_10px_28px_color-mix(in_srgb,var(--feu)_45%,transparent)] transition-[transform,box-shadow] duration-[250ms] ease-yuna before:pointer-events-none before:absolute before:-inset-1 before:rounded-full before:border before:border-feu before:opacity-50 before:content-[''] hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu motion-reduce:transition-none motion-reduce:before:content-none motion-reduce:hover:scale-100"
+      className="cta-float fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-[max(1.25rem,env(safe-area-inset-right))] z-[150] flex min-h-12 items-center gap-2 rounded-full bg-feu px-5 py-3 font-display text-[0.95rem] font-extrabold uppercase tracking-[0.04em] text-papier shadow-[0_10px_28px_color-mix(in_srgb,var(--feu)_45%,transparent)] transition-[transform,box-shadow] duration-[250ms] ease-yuna before:pointer-events-none before:absolute before:-inset-1 before:rounded-full before:border before:border-feu before:opacity-50 before:content-[''] hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu motion-reduce:transition-none motion-reduce:before:content-none motion-reduce:hover:scale-100"
     >
       Inscris-toi
       <span aria-hidden>→</span>

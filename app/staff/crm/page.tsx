@@ -10,10 +10,7 @@ export const metadata: Metadata = {
 /** Listing staff — inscriptions site (sync CRM en arrière-plan). */
 export default function StaffCrmPage() {
   return (
-    <main
-      id="contenu"
-      className="min-h-dvh bg-logo-bleu-soft px-5 pb-16 pt-28 text-encre"
-    >
+    <main id="contenu" className="min-h-dvh bg-logo-bleu-soft text-encre">
       <StaffCrmClient />
     </main>
   );

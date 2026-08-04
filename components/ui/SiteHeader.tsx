@@ -119,7 +119,7 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-[120] transition-[background-color,box-shadow,border-color,color] duration-300 ease-yuna ${style.header}`}
+      className={`fixed inset-x-0 top-0 z-[120] pt-[env(safe-area-inset-top)] transition-[background-color,box-shadow,border-color,color] duration-300 ease-yuna ${style.header}`}
     >
       <div aria-hidden className="flex h-1 w-full">
         <span className="flex-1 bg-vert" />
@@ -198,7 +198,7 @@ export function SiteHeader() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className={`px-5 py-6 min-[900px]:hidden ${style.mobile}`}
+        className={`px-5 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] min-[900px]:hidden ${style.mobile}`}
       >
         <nav aria-label="Navigation mobile" className="flex flex-col gap-1">
           {NAV_LINKS.map((link) => (

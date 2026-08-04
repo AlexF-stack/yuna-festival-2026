@@ -2,9 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Baloo_2, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 
 import { Loader } from "@/components/Loader";
-import { RegisterFloat } from "@/components/ui/RegisterFloat";
-import { SiteFooter } from "@/components/ui/SiteFooter";
-import { SiteHeader } from "@/components/ui/SiteHeader";
+import { AppChrome } from "@/components/ui/AppChrome";
 
 import "./globals.css";
 
@@ -66,6 +64,8 @@ export const viewport: Viewport = {
   themeColor: "#0077BB",
   width: "device-width",
   initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -85,10 +85,7 @@ export default function RootLayout({
           Aller au contenu
         </a>
         <Loader />
-        <SiteHeader />
-        {children}
-        <SiteFooter />
-        <RegisterFloat />
+        <AppChrome>{children}</AppChrome>
       </body>
     </html>
   );
