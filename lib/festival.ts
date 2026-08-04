@@ -77,3 +77,6 @@ export const EVENT_STATS = [
   { value: "3", label: "Masterclass & actions" },
   { value: "1", label: "Génération qui se lève" },
 ] as const;
+
+/** Total annoncé du line-up (stats + page artistes), même si la DB n’a pas encore toutes les lignes. */
+export const LINEUP_TOTAL = 13;

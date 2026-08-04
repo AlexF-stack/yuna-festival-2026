@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { Lineup } from "@/components/sections/Lineup";
 import { MediaBand } from "@/components/sections/MediaBand";
-import { Programme } from "@/components/sections/Programme";
 import { Teaser } from "@/components/sections/Teaser";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { getArtists } from "@/lib/artists";
@@ -37,7 +36,6 @@ export default async function ArtistesPage() {
         cta={{ href: "/#inscription", label: "Inscris-toi — pass QR gratuit" }}
       />
       <Lineup artists={artists} />
-      <Programme />
       <Teaser />
       <MediaBand />
     </main>

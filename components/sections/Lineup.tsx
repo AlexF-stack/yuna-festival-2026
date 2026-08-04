@@ -5,6 +5,7 @@ import { LineupMystery } from "@/components/sections/LineupMystery";
 import { LineupTeaser } from "@/components/sections/LineupTeaser";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { LINEUP_TOTAL } from "@/lib/festival";
 import type { PublicArtist } from "@/types/artist";
 
 type LineupProps = {
@@ -13,7 +14,8 @@ type LineupProps = {
 
 export function Lineup({ artists }: LineupProps) {
   const revealed = artists.filter((a) => a.is_revealed);
-  const mysteryCount = artists.filter((a) => !a.is_revealed).length;
+  const totalCount = Math.max(artists.length, LINEUP_TOTAL);
+  const mysteryCount = Math.max(0, totalCount - revealed.length);
   const revealedNames = revealed
     .filter((a) => a.name)
     .map((a) => a.name as string);
@@ -41,10 +43,10 @@ export function Lineup({ artists }: LineupProps) {
               variant="light"
             />
           </div>
-          <LineupTeaser totalCount={artists.length} className="shrink-0" />
+          <LineupTeaser totalCount={totalCount} className="shrink-0" />
         </div>
 
-        {artists.length === 0 ? (
+        {totalCount === 0 ? (
           <p className="mt-14 text-papier/80">Line-up à venir.</p>
         ) : (
           <div className="mt-12 space-y-6 min-[760px]:mt-16">
