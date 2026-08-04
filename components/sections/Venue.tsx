@@ -36,14 +36,14 @@ export function Venue() {
             />
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] rounded-tr-[0.45rem] shadow-ombre-bleu-lg">
               <SoftImage
-                src="/media/stage.jpg"
-                alt="Vue du terrain de Midombo"
+                src="/media/venue-midombo-generated.png"
+                alt="Festival en plein air au terrain de Midombo"
                 fill
                 priority
                 sizes="(min-width: 900px) 480px, 100vw"
                 quality={75}
                 wrapperClassName="absolute inset-0"
-                objectPosition="center 50%"
+                objectPosition="center center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-encre/90 via-encre/20 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-8 text-papier">

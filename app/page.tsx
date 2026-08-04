@@ -12,7 +12,6 @@ import { Poles } from "@/components/sections/Poles";
 import { QuoteStrip } from "@/components/sections/QuoteStrip";
 import { Register } from "@/components/sections/Register";
 import { SaveTheDateStrip } from "@/components/sections/SaveTheDateStrip";
-import { Sponsors } from "@/components/sections/Sponsors";
 import { StatsBar } from "@/components/sections/StatsBar";
 import { Teaser } from "@/components/sections/Teaser";
 import { Venue } from "@/components/sections/Venue";
@@ -24,7 +23,7 @@ import { getRegistrationsCount } from "@/lib/registrations";
 /**
  * Accroche → stats → citation → media band → coming soon → vision → mission
  * → line-up → journée → lieu → save the date → inscription → boutique → teaser
- * → pôles → partenaires → don → participer → FAQ
+ * → pôles → don → participer → FAQ
  */
 export default async function HomePage() {
   const eventStartIso = getEventStartIso();
@@ -50,7 +49,6 @@ export default async function HomePage() {
       <Boutique />
       <Teaser />
       <Poles />
-      <Sponsors />
       <Donate />
       <Participate />
       <Faq />

@@ -65,8 +65,8 @@ export const FOOTER_LINKS = [
   { href: "/#artistes", label: "Artistes" },
   { href: "/#journee", label: "Journée" },
   { href: "/#lieu", label: "Lieu" },
+  { href: "/mon-pass", label: "Retrouver mon pass" },
   { href: "/don", label: "Faire un don" },
-  { href: "/#sponsors", label: "Partenaires" },
 ] as const;
 
 export const EVENT_STATS = [

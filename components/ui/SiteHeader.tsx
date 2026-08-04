@@ -155,7 +155,13 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden min-[900px]:block">
+        <div className="hidden items-center gap-2 min-[900px]:flex">
+          <a
+            href="/mon-pass"
+            className={`rounded-full px-3.5 py-2 text-[0.76rem] font-bold uppercase tracking-[0.08em] transition-colors ${style.link}`}
+          >
+            Mon pass
+          </a>
           <ButtonLink
             href="/#inscription"
             className={`!px-6 !py-2.5 text-[0.8rem] ${style.cta}`}
@@ -215,9 +221,20 @@ export function SiteHeader() {
           >
             {FESTIVAL.datesHero} · {FESTIVAL.city}
           </p>
+          <a
+            href="/mon-pass"
+            onClick={() => setOpen(false)}
+            className={`mt-4 rounded-xl border px-4 py-3 text-center font-bold uppercase tracking-[0.08em] ${
+              lightText
+                ? "border-papier/25 text-papier hover:bg-papier/10"
+                : "border-bleu/20 text-bleu hover:bg-logo-bleu-soft"
+            }`}
+          >
+            Pass perdu ? Retrouver mon pass
+          </a>
           <ButtonLink
             href="/#inscription"
-            className={`mt-4 w-full ${style.cta}`}
+            className={`mt-3 w-full ${style.cta}`}
             onClick={() => setOpen(false)}
           >
             Inscris-toi

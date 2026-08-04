@@ -22,6 +22,11 @@ export type YunaCrmSyncPayload = {
   scanResultat?: "ok" | "deja_scanne" | "inconnu" | "refuse";
 };
 
+export type YunaCrmNewsletterPayload = {
+  email: string;
+  source?: string;
+};
+
 /** @deprecated alias — préférer YunaCrmSyncPayload */
 export type CrmRegistrationPayload = {
   event: "registration.created" | "registration.checked_in";
@@ -139,6 +144,27 @@ export async function syncYunaCrm(payload: YunaCrmSyncPayload): Promise<void> {
     insertScanLog(payload),
     postWebhook(payload),
   ]);
+}
+
+/** Synchronise un abonnement newsletter vers le CRM sans exposer le service role. */
+export async function syncYunaCrmNewsletter({
+  email,
+  source = "site",
+}: YunaCrmNewsletterPayload): Promise<void> {
+  const crm = createYunaCrmClient();
+  if (!crm) return;
+
+  const { error } = await crm.from("newsletter").upsert(
+    {
+      email,
+      source,
+    },
+    { onConflict: "email", ignoreDuplicates: true },
+  );
+
+  if (error) {
+    console.error("[yuna-crm] newsletter upsert:", error.message);
+  }
 }
 
 /**

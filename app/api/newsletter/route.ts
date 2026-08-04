@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 
+import { syncYunaCrmNewsletter } from "@/lib/crm";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
@@ -59,6 +60,9 @@ export async function POST(request: Request) {
     if (error) {
       if (error.code === "23505") {
         // Already subscribed — treat as success (idempotent UX)
+        after(async () => {
+          await syncYunaCrmNewsletter({ email });
+        });
         return NextResponse.json({ ok: true, already: true });
       }
       console.error("[newsletter]", error);
@@ -67,6 +71,10 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
+
+    after(async () => {
+      await syncYunaCrmNewsletter({ email });
+    });
 
     return NextResponse.json({ ok: true });
   } catch (err) {

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 
 import { notifyCrmRegistration } from "@/lib/crm";
 import { extractRegistrationId } from "@/lib/registration-id";
@@ -73,16 +73,18 @@ export async function POST(request: Request) {
       );
     }
 
-    void notifyCrmRegistration({
-      event: "registration.checked_in",
-      id: result.registration.id,
-      name: result.registration.name,
-      phone: result.registration.phone,
-      email: result.registration.email,
-      registrationType: result.registration.registrationType,
-      checkedInAt: result.registration.checkedInAt,
-      checkedInBy: staffLabel,
-      alreadyCheckedIn: result.alreadyCheckedIn,
+    after(async () => {
+      await notifyCrmRegistration({
+        event: "registration.checked_in",
+        id: result.registration.id,
+        name: result.registration.name,
+        phone: result.registration.phone,
+        email: result.registration.email,
+        registrationType: result.registration.registrationType,
+        checkedInAt: result.registration.checkedInAt,
+        checkedInBy: staffLabel,
+        alreadyCheckedIn: result.alreadyCheckedIn,
+      });
     });
 
     return NextResponse.json({

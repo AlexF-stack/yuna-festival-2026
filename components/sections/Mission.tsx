@@ -14,12 +14,7 @@ export function Mission() {
   const reduce = useReducedMotion();
 
   return (
-    <SectionShell
-      id="mission"
-      labelledBy="mission-title"
-      tone="bleu"
-      background="mission"
-    >
+    <SectionShell id="mission" labelledBy="mission-title" tone="papier">
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 16 }}
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -27,7 +22,7 @@ export function Mission() {
         transition={{ duration: 0.55, ease: EASE_YUNA }}
         className="mb-10 min-[900px]:mb-14"
       >
-        <p className="inline-flex items-center gap-2 rounded-full border border-papier/20 bg-papier/10 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-papier">
+        <p className="inline-flex items-center gap-2 rounded-full border border-bleu/15 bg-papier px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-bleu">
           <span className="h-1.5 w-1.5 rounded-full bg-vert" aria-hidden />
           Thème {FESTIVAL.edition} · {FESTIVAL.theme}
         </p>
@@ -46,12 +41,11 @@ export function Mission() {
             title={MISSION.title}
             titleId="mission-title"
             description={MISSION.subtitle}
-            variant="light"
           />
-          <p className="mt-5 max-w-xl text-[1.08rem] leading-relaxed text-papier/90">
+          <p className="mt-5 max-w-xl text-[1.08rem] leading-relaxed text-charbon">
             {MISSION.lead}
           </p>
-          <p className="mt-4 max-w-xl text-[1.02rem] leading-relaxed text-papier/80">
+          <p className="mt-4 max-w-xl text-[1.02rem] leading-relaxed text-charbon/90">
             {MISSION.body}
           </p>
           <ButtonLink href={MISSION.ctaHref} className="mt-8">
@@ -62,7 +56,7 @@ export function Mission() {
         <div className="relative flex w-full justify-center min-[900px]:justify-end">
           <div
             aria-hidden
-            className="section-shape-slash pointer-events-none absolute -inset-4 -z-10 hidden rounded-[2rem] bg-feu/10 min-[900px]:block"
+            className="section-shape-slash pointer-events-none absolute -inset-4 -z-10 hidden rounded-[2rem] bg-bleu/5 min-[900px]:block"
           />
           <FlameQuote text={MISSION.highlight} />
         </div>

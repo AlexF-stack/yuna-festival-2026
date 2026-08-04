@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 
 import { notifyCrmRegistration, siteOrigin } from "@/lib/crm";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
@@ -136,15 +136,17 @@ export async function POST(request: Request) {
       );
     }
 
-    // CRM = listing admin externe (ne bloque pas l’inscription)
-    void notifyCrmRegistration({
-      id: data.id,
-      name: parsed.name,
-      phone: parsed.phone,
-      email: parsed.email,
-      registrationType: parsed.registrationType,
-      createdAt: data.created_at,
-      confirmationUrl: `${siteOrigin()}/confirmation/${data.id}`,
+    // CRM = listing admin externe, exécuté après la réponse sans être interrompu.
+    after(async () => {
+      await notifyCrmRegistration({
+        id: data.id,
+        name: parsed.name,
+        phone: parsed.phone,
+        email: parsed.email,
+        registrationType: parsed.registrationType,
+        createdAt: data.created_at,
+        confirmationUrl: `${siteOrigin()}/confirmation/${data.id}`,
+      });
     });
 
     return NextResponse.json({
