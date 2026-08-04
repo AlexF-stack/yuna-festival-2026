@@ -10,28 +10,25 @@ type HeroSlide = {
 };
 
 const HERO_IMAGES: HeroSlide[] = [
-  { src: "/media/crowd.jpg", position: "center center" },
-  { src: "/media/concert.jpg", position: "center 25%" },
-  { src: "/media/hero-plate-a.jpg", position: "center 40%" },
-  { src: "/media/festival.jpg", position: "center 35%" },
-  { src: "/media/hero-plate-b.jpg", position: "center 45%" },
-  { src: "/media/worship.jpg", position: "center 30%" },
+  { src: "/media/crowd.webp", position: "center center" },
+  { src: "/media/concert.webp", position: "center 25%" },
+  { src: "/media/hero-plate-a.webp", position: "center 40%" },
+  { src: "/media/festival.webp", position: "center 35%" },
+  { src: "/media/hero-plate-b.webp", position: "center 45%" },
+  { src: "/media/worship.webp", position: "center 30%" },
 ];
-
-/** Vidéo optionnelle — déposer `public/media/hero.mp4` pour l’activer. */
-const HERO_VIDEO = "/media/hero.mp4";
 
 const CYCLE_MS = 7000;
 
 /**
- * Fond hero style HERNA CinematicMedia — multi-images + vidéo optionnelle + léger Ken Burns desktop.
+ * Fond hero cinématique — slideshow desktop + léger Ken Burns.
+ * Seules la slide active et ses voisines (sortante / suivante) sont montées :
+ * le mobile ne télécharge qu'une image, le desktop trois au maximum.
  */
 export function HeroCinematicBackground() {
   const reduce = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [canCycle, setCanCycle] = useState(false);
-  const [videoOk, setVideoOk] = useState(false);
-  const [videoPlaying, setVideoPlaying] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 900px)");
@@ -50,28 +47,22 @@ export function HeroCinematicBackground() {
     return () => window.clearInterval(id);
   }, [canCycle]);
 
-  useEffect(() => {
-    if (reduce) return;
-    let cancelled = false;
-    void fetch(HERO_VIDEO, { method: "HEAD" })
-      .then((res) => {
-        if (!cancelled && res.ok) setVideoOk(true);
-      })
-      .catch(() => undefined);
-    return () => {
-      cancelled = true;
-    };
-  }, [reduce]);
+  const total = HERO_IMAGES.length;
+  const prev = (index - 1 + total) % total;
+  const next = (index + 1) % total;
 
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden">
       {HERO_IMAGES.map((img, i) => {
         const active = canCycle ? i === index : i === 0;
+        // Hors cycle (mobile / reduced motion) : uniquement la première image.
+        const mounted = canCycle ? i === index || i === prev || i === next : i === 0;
+        if (!mounted) return null;
         return (
           <div
             key={img.src}
             className={`absolute inset-0 transition-opacity duration-1000 ease-out ${
-              active && !videoPlaying ? "opacity-100" : "opacity-0"
+              active ? "opacity-100" : "opacity-0"
             }`}
           >
             <Image
@@ -79,35 +70,17 @@ export function HeroCinematicBackground() {
               alt=""
               fill
               priority={i === 0}
+              loading={i === 0 ? undefined : "lazy"}
               sizes="100vw"
               quality={70}
               className={`object-cover object-center ${
-                canCycle && active && !videoPlaying ? "hero-kenburns" : ""
+                canCycle && active ? "hero-kenburns" : ""
               }`}
               style={{ objectPosition: img.position }}
             />
           </div>
         );
       })}
-
-      {videoOk && !reduce ? (
-        <video
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
-            videoPlaying ? "opacity-100" : "opacity-0"
-          }`}
-          src={HERO_VIDEO}
-          muted
-          playsInline
-          loop
-          autoPlay
-          preload="metadata"
-          onPlaying={() => setVideoPlaying(true)}
-          onError={() => {
-            setVideoOk(false);
-            setVideoPlaying(false);
-          }}
-        />
-      ) : null}
 
       <div className="absolute inset-0 bg-gradient-to-br from-encre/90 via-bleu-fonce/72 to-encre/86" />
       <div className="absolute inset-0 bg-gradient-to-t from-encre via-transparent to-bleu/25" />

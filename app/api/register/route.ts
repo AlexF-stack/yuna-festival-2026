@@ -49,9 +49,13 @@ export async function POST(request: Request) {
     );
   }
 
-  // Bot honeypot — silent success without creating a real registration
+  // Bot honeypot — réponse indistinguable d'un succès (faux id), rien n'est créé.
   if (body.website && body.website.trim().length > 0) {
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({
+      id: randomUUID(),
+      name: typeof body.name === "string" ? body.name : "",
+      qrCode: "",
+    });
   }
 
   // RGPD : le consentement explicite est requis pour traiter les données

@@ -55,9 +55,10 @@ export function validateRegistrationInput(input: {
   const phone = normalizePhone(phoneRaw);
   const emailRaw =
     typeof input.email === "string" ? input.email.trim() : "";
-  const registrationType = isRegistrationType(input.registrationType)
-    ? input.registrationType
-    : "pass";
+  if (!isRegistrationType(input.registrationType)) {
+    return { error: "Type d'inscription inconnu." };
+  }
+  const registrationType = input.registrationType;
 
   if (name.length < 2) {
     return { error: "Indique ton nom complet (2 caractères minimum)." };

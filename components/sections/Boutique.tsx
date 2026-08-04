@@ -5,8 +5,6 @@ import { SectionShell } from "@/components/ui/SectionShell";
 import { getProducts } from "@/lib/products";
 import { getPreorderMailto } from "@/lib/site";
 
-export const dynamic = "force-dynamic";
-
 export async function Boutique() {
   const products = await getProducts();
   const preorderHref = getPreorderMailto();

@@ -1,114 +1,121 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useEffect, useMemo, useRef, useState } from "react";
-import * as THREE from "three";
+import { useEffect, useRef } from "react";
 
 const COUNT = 48;
 
-function Embers({ reducedMotion }: { reducedMotion: boolean }) {
-  const points = useRef<THREE.Points>(null);
-  const velocities = useMemo(() => {
-    const v = new Float32Array(COUNT);
-    for (let i = 0; i < COUNT; i++) v[i] = 0.004 + Math.random() * 0.01;
-    return v;
-  }, []);
+type Ember = {
+  x: number; // 0..1 (fraction de largeur)
+  y: number; // 0..1 (fraction de hauteur, 0 = haut)
+  speed: number; // fraction de hauteur / seconde
+  radius: number;
+  alpha: number;
+  phase: number;
+};
 
-  const positions = useMemo(() => {
-    const p = new Float32Array(COUNT * 3);
-    for (let i = 0; i < COUNT; i++) {
-      p[i * 3] = (Math.random() - 0.5) * 8;
-      p[i * 3 + 1] = (Math.random() - 0.5) * 5;
-      p[i * 3 + 2] = (Math.random() - 0.5) * 2;
-    }
-    return p;
-  }, []);
-
-  useFrame((_, dt) => {
-    const mesh = points.current;
-    if (!mesh || reducedMotion) return;
-    const attr = mesh.geometry.attributes.position as THREE.BufferAttribute;
-    const arr = attr.array as Float32Array;
-    for (let i = 0; i < COUNT; i++) {
-      arr[i * 3 + 1] += velocities[i] * (60 * dt);
-      arr[i * 3] += Math.sin(i + performance.now() * 0.001) * 0.002;
-      if (arr[i * 3 + 1] > 2.8) {
-        arr[i * 3 + 1] = -2.8;
-        arr[i * 3] = (Math.random() - 0.5) * 8;
-      }
-    }
-    attr.needsUpdate = true;
-  });
-
-  return (
-    <points ref={points}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-          count={COUNT}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.085}
-        color="#ff6600"
-        transparent
-        opacity={0.75}
-        depthWrite={false}
-        sizeAttenuation
-        toneMapped={false}
-      />
-    </points>
-  );
+function createEmber(random = Math.random): Ember {
+  return {
+    x: random(),
+    y: random(),
+    speed: 0.03 + random() * 0.07,
+    radius: 1.2 + random() * 2.2,
+    alpha: 0.35 + random() * 0.4,
+    phase: random() * Math.PI * 2,
+  };
 }
 
+/**
+ * Braises montantes — canvas 2D léger (remplace l'ancienne scène Three.js,
+ * seule dépendance qui gardait `three` dans le bundle client).
+ */
 export function EmberField() {
-  const [reducedMotion, setReducedMotion] = useState(false);
-  const [ready, setReady] = useState(false);
-  const [active, setActive] = useState(false);
-  const host = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReducedMotion(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    setReady(true);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
+    let reduce = mq.matches;
+    const syncReduce = () => {
+      reduce = mq.matches;
+    };
+    mq.addEventListener("change", syncReduce);
 
-  useEffect(() => {
-    const el = host.current;
-    if (!el) return;
+    const embers = Array.from({ length: COUNT }, () => createEmber());
+    let raf = 0;
+    let running = false;
+    let last = 0;
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const { clientWidth, clientHeight } = canvas;
+      canvas.width = Math.max(1, Math.round(clientWidth * dpr));
+      canvas.height = Math.max(1, Math.round(clientHeight * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+
+    const draw = (now: number) => {
+      const dt = last ? Math.min((now - last) / 1000, 0.1) : 0.016;
+      last = now;
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      for (const e of embers) {
+        if (!reduce) {
+          e.y -= e.speed * dt;
+          e.x += Math.sin(e.phase + now * 0.001) * 0.0004;
+          if (e.y < -0.05) {
+            Object.assign(e, createEmber(), { y: 1.05 });
+          }
+        }
+        const flicker = 0.75 + 0.25 * Math.sin(e.phase + now * 0.004);
+        ctx.beginPath();
+        ctx.arc(e.x * w, e.y * h, e.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 102, 0, ${(e.alpha * flicker).toFixed(3)})`;
+        ctx.fill();
+      }
+
+      if (running && !reduce) raf = requestAnimationFrame(draw);
+    };
+
+    const start = () => {
+      if (running) return;
+      running = true;
+      last = 0;
+      raf = requestAnimationFrame(draw);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
     const io = new IntersectionObserver(
-      ([entry]) => setActive(entry.isIntersecting),
+      ([entry]) => {
+        if (entry.isIntersecting) start();
+        else stop();
+      },
       { rootMargin: "120px", threshold: 0.05 },
     );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [ready]);
+    io.observe(canvas);
 
-  if (!ready) return null;
+    return () => {
+      stop();
+      io.disconnect();
+      ro.disconnect();
+      mq.removeEventListener("change", syncReduce);
+    };
+  }, []);
 
   return (
-    <div ref={host} className="pointer-events-none absolute inset-0 z-[1]" aria-hidden>
-      {active ? (
-        <Canvas
-          dpr={[1, 1.25]}
-          frameloop={reducedMotion || !active ? "demand" : "always"}
-          camera={{ position: [0, 0, 6], fov: 45 }}
-          gl={{
-            alpha: true,
-            antialias: false,
-            powerPreference: "low-power",
-            stencil: false,
-            depth: false,
-          }}
-          style={{ width: "100%", height: "100%", background: "transparent" }}
-        >
-          <Embers reducedMotion={reducedMotion} />
-        </Canvas>
-      ) : null}
+    <div className="pointer-events-none absolute inset-0 z-[1]" aria-hidden>
+      <canvas ref={canvasRef} className="h-full w-full" />
     </div>
   );
 }

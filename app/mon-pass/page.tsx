@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 export const metadata: Metadata = {
   title: "Retrouver mon pass",
   description:
-    "Récupère ton pass QR YUNA Festival 2026 avec le numéro WhatsApp de ton inscription.",
+    "Récupère ton pass QR YUNA Festival 2026 avec ton nom et le numéro WhatsApp de ton inscription.",
   robots: { index: false, follow: false },
   alternates: { canonical: "/mon-pass" },
   openGraph: {
@@ -18,7 +18,10 @@ export const metadata: Metadata = {
 
 export default function MonPassPage() {
   return (
-    <main className="flex min-h-dvh flex-col items-center bg-nuage px-5 pb-16 pt-28 text-encre">
+    <main
+      id="contenu"
+      className="flex min-h-dvh flex-col items-center bg-nuage px-5 pb-16 pt-28 text-encre"
+    >
       <p className="text-[0.72rem] font-bold uppercase tracking-[0.32em] text-feu">
         Pass perdu ?
       </p>

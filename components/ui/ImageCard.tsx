@@ -60,7 +60,8 @@ export function ImageCard({
         <h3 className="mt-1 font-display text-xl font-extrabold uppercase leading-tight">
           {title}
         </h3>
-        <p className="mt-2 max-w-[18rem] text-sm leading-relaxed text-papier/75 opacity-0 translate-y-3 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0">
+        {/* Reveal au hover uniquement là où le hover existe — toujours visible au tactile. */}
+        <p className="mt-2 max-w-[18rem] text-sm leading-relaxed text-papier/75 opacity-100 translate-y-0 min-[900px]:opacity-0 min-[900px]:translate-y-3 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0">
           {description}
         </p>
       </div>

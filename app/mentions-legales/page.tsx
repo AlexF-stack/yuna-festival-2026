@@ -15,7 +15,10 @@ export const metadata: Metadata = {
 
 export default function MentionsLegalesPage() {
   return (
-    <main className="flex min-h-dvh flex-col items-center bg-nuage px-5 pb-16 pt-28 text-encre">
+    <main
+      id="contenu"
+      className="flex min-h-dvh flex-col items-center bg-nuage px-5 pb-16 pt-28 text-encre"
+    >
       <h1 className="text-center font-display text-[clamp(2rem,6vw,3.2rem)] font-extrabold uppercase leading-[0.95] text-bleu">
         Mentions légales
       </h1>

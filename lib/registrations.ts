@@ -160,27 +160,33 @@ export async function listRegistrationsForCrm(limit = 200): Promise<
   }));
 }
 
-/** Dernière inscription pour un numéro (récupération de pass). */
-export async function findLatestRegistrationByPhone(
+/**
+ * Toutes les inscriptions d'un numéro (récupération de pass) : une personne
+ * peut cumuler festival + masterclass + bénévolat.
+ */
+export async function findRegistrationsByPhone(
   phoneRaw: string,
-): Promise<{ id: string; name: string } | null> {
+): Promise<Array<{ id: string; name: string; registrationType: string }>> {
   const phone = normalizePhone(phoneRaw);
-  if (phone.length < 8) return null;
+  if (phone.length < 8) return [];
 
   const supabase = createSupabaseAdminClient();
   const { data, error } = await supabase
     .from("registrations")
-    .select("id, name")
+    .select("id, name, registration_type")
     .eq("phone", phone)
     .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+    .limit(10);
 
   if (error) {
     throw new Error(`Recherche pass impossible: ${error.message}`);
   }
 
-  return data ?? null;
+  return (data ?? []).map((r) => ({
+    id: r.id,
+    name: r.name,
+    registrationType: r.registration_type,
+  }));
 }
 
 export async function getRegistrationsCount(): Promise<number> {

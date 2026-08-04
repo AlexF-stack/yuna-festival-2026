@@ -113,7 +113,7 @@ export function Vision() {
                   </div>
                   <div
                     aria-hidden
-                    className="h-1 origin-left scale-x-0 bg-gradient-to-r from-feu to-jaune transition-transform duration-400 group-hover:scale-x-100"
+                    className="h-1 origin-left scale-x-0 bg-gradient-to-r from-feu to-jaune transition-transform duration-500 group-hover:scale-x-100"
                   />
                 </article>
               </TiltCard>

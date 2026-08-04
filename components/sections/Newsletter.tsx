@@ -5,6 +5,7 @@ import { useState, type FormEvent } from "react";
 export function Newsletter() {
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
+  const [consent, setConsent] = useState(false);
   const [pending, setPending] = useState(false);
   const [ok, setOk] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,13 +19,17 @@ export function Newsletter() {
       setError("Indique une adresse e-mail valide.");
       return;
     }
+    if (!consent) {
+      setError("Coche la case de consentement pour t'abonner.");
+      return;
+    }
 
     setPending(true);
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: trimmed, website }),
+        body: JSON.stringify({ email: trimmed, website, consent }),
       });
       if (!res.ok) {
         let message = "Inscription impossible. Réessaie.";
@@ -89,6 +94,30 @@ export function Newsletter() {
             required
             className="w-full rounded-full border-0 bg-papier px-4 py-3 text-[0.95rem] text-encre outline-none placeholder:text-charbon/45 focus:ring-2 focus:ring-feu focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-papier"
           />
+          <label
+            htmlFor="newsletter-consent"
+            className="flex cursor-pointer items-start gap-2.5 py-1 text-[0.78rem] leading-relaxed text-papier/80"
+          >
+            <input
+              id="newsletter-consent"
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              required
+              className="mt-0.5 h-4 w-4 shrink-0 accent-feu"
+            />
+            <span>
+              J&apos;accepte de recevoir les annonces YUNA par e-mail.
+              Désinscription à tout moment —{" "}
+              <a
+                href="/confidentialite"
+                className="underline underline-offset-2 hover:text-papier"
+              >
+                politique de confidentialité
+              </a>
+              .
+            </span>
+          </label>
           <button
             type="submit"
             disabled={pending}
@@ -96,17 +125,6 @@ export function Newsletter() {
           >
             {pending ? "Envoi…" : "Je m'abonne"}
           </button>
-          <p className="text-[0.72rem] leading-relaxed text-papier/60">
-            En t&apos;abonnant, tu acceptes de recevoir nos annonces par
-            e-mail. Désinscription à tout moment —{" "}
-            <a
-              href="/confidentialite"
-              className="underline underline-offset-2 hover:text-papier"
-            >
-              politique de confidentialité
-            </a>
-            .
-          </p>
         </form>
       )}
 

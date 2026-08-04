@@ -14,15 +14,11 @@ export type SectionTone =
 export type SectionBgOverlay = "papier" | "bleu" | "feu" | "nuit";
 
 export type SectionBgKey =
-  | "mission"
   | "vision"
   | "lineup"
-  | "programme"
   | "journee"
-  | "venue"
   | "register"
-  | "boutique"
-  | "stats";
+  | "boutique";
 
 export type SectionBgConfig = {
   src: string;
@@ -34,13 +30,6 @@ export type SectionBgConfig = {
 
 /** Photos optionnelles — voile toujours en couleur logo exacte. */
 export const SECTION_BACKGROUNDS: Record<SectionBgKey, SectionBgConfig> = {
-  mission: {
-    src: "/media/title-mission.jpg",
-    alt: "La mission — YUNA Festival 2026",
-    objectPosition: "center center",
-    overlay: "nuit",
-    photoOpacity: 0.88,
-  },
   vision: {
     src: "/media/title-vision.jpg",
     alt: "La vision — YUNA Festival 2026",
@@ -55,13 +44,6 @@ export const SECTION_BACKGROUNDS: Record<SectionBgKey, SectionBgConfig> = {
     overlay: "nuit",
     photoOpacity: 0.88,
   },
-  programme: {
-    src: "/media/concert.jpg",
-    alt: "Scène de concert",
-    objectPosition: "center 20%",
-    overlay: "papier",
-    photoOpacity: 0.22,
-  },
   journee: {
     src: "/media/community.jpg",
     alt: "Actions communautaires",
@@ -69,15 +51,8 @@ export const SECTION_BACKGROUNDS: Record<SectionBgKey, SectionBgConfig> = {
     overlay: "bleu",
     photoOpacity: 0.24,
   },
-  venue: {
-    src: "/media/stage.jpg",
-    alt: "Terrain de Midombo",
-    objectPosition: "center 55%",
-    overlay: "feu",
-    photoOpacity: 0.24,
-  },
   register: {
-    src: "/media/festival.jpg",
+    src: "/media/festival.webp",
     alt: "Ambiance festival",
     objectPosition: "center 35%",
     overlay: "papier",
@@ -89,13 +64,6 @@ export const SECTION_BACKGROUNDS: Record<SectionBgKey, SectionBgConfig> = {
     objectPosition: "center 30%",
     overlay: "bleu",
     photoOpacity: 0.22,
-  },
-  stats: {
-    src: "/media/dawn.jpg",
-    alt: "",
-    objectPosition: "center top",
-    overlay: "bleu",
-    photoOpacity: 0.2,
   },
 };
 

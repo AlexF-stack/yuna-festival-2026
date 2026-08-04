@@ -249,110 +249,6 @@ body {
   animation-delay: 0.35s;
 }
 
-/* Citation Mission — feu qui brûle */
-@keyframes flame-quote-burn {
-  0%,
-  100% {
-    transform: scaleY(1) scaleX(1) rotate(0deg);
-  }
-  12% {
-    transform: scaleY(1.06) scaleX(0.94) rotate(-1.2deg);
-  }
-  28% {
-    transform: scaleY(0.96) scaleX(1.05) rotate(0.9deg);
-  }
-  45% {
-    transform: scaleY(1.05) scaleX(0.96) rotate(-0.7deg);
-  }
-  62% {
-    transform: scaleY(0.97) scaleX(1.04) rotate(1.1deg);
-  }
-  80% {
-    transform: scaleY(1.04) scaleX(0.97) rotate(-0.5deg);
-  }
-}
-
-.flame-quote-burn {
-  transform-origin: center bottom;
-  animation: flame-quote-burn 0.95s ease-in-out infinite;
-}
-
-@keyframes flame-quote-glow {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: scale(1);
-  }
-  35% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-  70% {
-    opacity: 0.7;
-    transform: scale(1.04);
-  }
-}
-
-.flame-quote-glow {
-  animation: flame-quote-glow 1.35s ease-in-out infinite;
-}
-
-@keyframes flame-tongue {
-  0%,
-  100% {
-    transform: translateY(0) scaleY(1) scaleX(1) skewX(0deg);
-    opacity: 0.65;
-  }
-  25% {
-    transform: translateY(-12%) scaleY(1.18) scaleX(0.88) skewX(4deg);
-    opacity: 1;
-  }
-  55% {
-    transform: translateY(-5%) scaleY(0.9) scaleX(1.12) skewX(-3deg);
-    opacity: 0.8;
-  }
-  80% {
-    transform: translateY(-14%) scaleY(1.14) scaleX(0.92) skewX(2deg);
-    opacity: 0.95;
-  }
-}
-
-.flame-tongue {
-  animation: flame-tongue 0.72s ease-in-out infinite;
-}
-
-.flame-tongue--delay {
-  animation-delay: 0.22s;
-  animation-duration: 0.88s;
-}
-
-.flame-tongue--fast {
-  animation-duration: 0.55s;
-  animation-delay: 0.08s;
-}
-
-@keyframes flame-core-pulse {
-  0%,
-  100% {
-    opacity: 0.8;
-    transform: scale(1);
-  }
-  40% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-  70% {
-    opacity: 0.9;
-    transform: scale(0.96);
-  }
-}
-
-.flame-core-pulse {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: flame-core-pulse 0.85s ease-in-out infinite;
-}
-
 @keyframes marquee-scroll {
   from {
     transform: translateX(0);
@@ -368,28 +264,6 @@ body {
 
 .marquee-track:hover {
   animation-play-state: paused;
-}
-
-.hero-sparks {
-  background-image:
-    radial-gradient(circle at 18% 42%, color-mix(in srgb, var(--feu) 55%, transparent) 0 1.5px, transparent 2.5px),
-    radial-gradient(circle at 72% 28%, color-mix(in srgb, var(--bleu) 50%, transparent) 0 1.5px, transparent 2.5px),
-    radial-gradient(circle at 48% 68%, color-mix(in srgb, var(--feu) 40%, transparent) 0 1px, transparent 2px),
-    radial-gradient(circle at 86% 62%, color-mix(in srgb, var(--bleu) 45%, transparent) 0 1px, transparent 2px),
-    radial-gradient(circle at 32% 78%, color-mix(in srgb, var(--feu) 35%, transparent) 0 1px, transparent 2px);
-  animation: hero-sparks-drift 9s ease-in-out infinite alternate;
-  opacity: 0.7;
-}
-
-@keyframes hero-sparks-drift {
-  from {
-    transform: translate3d(0, 0, 0);
-    opacity: 0.45;
-  }
-  to {
-    transform: translate3d(0, -18px, 0);
-    opacity: 0.85;
-  }
 }
 
 .section-dots {
@@ -411,13 +285,7 @@ body {
   .hero-horizon,
   .theme-debout,
   .theme-benin,
-  .flame-quote-burn,
-  .flame-quote-glow,
-  .flame-tongue,
-  .flame-core-pulse,
   .marquee-track,
-  .hero-sparks,
-  .media-kenburns,
   .hero-kenburns,
   .scroll-cue {
     animation: none !important;
@@ -432,10 +300,6 @@ body {
   to {
     transform: scale(1.06) translate3d(-0.6%, -0.4%, 0);
   }
-}
-
-.media-kenburns {
-  animation: none;
 }
 
 /* Ken Burns léger — desktop only via class appliquée si canCycle */

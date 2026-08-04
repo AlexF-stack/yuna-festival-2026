@@ -56,7 +56,7 @@ export function Venue() {
                 <p className="mt-1 text-sm text-papier/80">{FESTIVAL.freeEntry}</p>
               </div>
             </div>
-            <aside className="absolute -bottom-6 -right-4 rounded-2xl border border-papier/20 bg-bleu px-5 py-4 text-center text-papier shadow-ombre-bleu-lg min-[900px]:-right-8">
+            <aside className="absolute -bottom-6 right-0 rounded-2xl border border-papier/20 bg-bleu px-5 py-4 text-center text-papier shadow-ombre-bleu-lg min-[480px]:-right-4 min-[900px]:-right-8">
               <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-papier/65">
                 Ouverture
               </p>

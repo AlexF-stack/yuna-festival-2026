@@ -1,10 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 
 const fieldClass =
   "w-full rounded-xl border border-bleu/15 bg-papier px-4 py-3.5 text-base text-encre outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-charbon/45 focus:border-bleu focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--bleu)_18%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
+
+type RecoveredPass = { id: string; label: string };
 
 export function RecoverPassForm() {
   const router = useRouter();
@@ -13,6 +16,7 @@ export function RecoverPassForm() {
   const [website, setWebsite] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [passes, setPasses] = useState<RecoveredPass[]>([]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -38,11 +42,20 @@ export function RecoverPassForm() {
         return;
       }
 
-      const payload = (await res.json()) as { found?: boolean; id?: string };
+      const payload = (await res.json()) as {
+        found?: boolean;
+        id?: string;
+        passes?: RecoveredPass[];
+      };
       if (!payload.found || !payload.id) {
         setError(
           "Aucun pass ne correspond à ces informations. Vérifie le nom et le numéro utilisés à l'inscription.",
         );
+        return;
+      }
+
+      if (payload.passes && payload.passes.length > 1) {
+        setPasses(payload.passes);
         return;
       }
 
@@ -52,6 +65,32 @@ export function RecoverPassForm() {
     } finally {
       setPending(false);
     }
+  }
+
+  if (passes.length > 1) {
+    return (
+      <div className="w-full max-w-md rounded-3xl border border-bleu/12 bg-papier p-6 shadow-ombre-bleu min-[480px]:p-8">
+        <h2 className="font-display text-xl font-extrabold uppercase text-bleu">
+          Tes pass
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-charbon">
+          Plusieurs inscriptions correspondent — choisis le pass à afficher.
+        </p>
+        <ul className="mt-5 space-y-2.5">
+          {passes.map((p) => (
+            <li key={p.id}>
+              <Link
+                href={`/confirmation/${p.id}`}
+                className="flex min-h-11 items-center justify-between rounded-xl border border-bleu/15 px-4 py-3 font-bold text-bleu transition-colors duration-200 hover:bg-bleu hover:text-papier focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu"
+              >
+                {p.label}
+                <span aria-hidden>→</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   }
 
   return (

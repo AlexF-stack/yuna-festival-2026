@@ -9,6 +9,7 @@ export const runtime = "nodejs";
 type NewsletterBody = {
   email?: string;
   website?: string; // honeypot
+  consent?: boolean;
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,6 +42,14 @@ export async function POST(request: Request) {
   // Bot honeypot — silent success
   if (body.website && body.website.trim().length > 0) {
     return NextResponse.json({ ok: true });
+  }
+
+  // RGPD : consentement explicite requis
+  if (body.consent !== true) {
+    return NextResponse.json(
+      { error: "Coche la case de consentement pour t'abonner." },
+      { status: 400 },
+    );
   }
 
   const email = (body.email ?? "").trim().toLowerCase();

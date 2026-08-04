@@ -32,7 +32,10 @@ export default async function ConfirmationPage({
   const shortId = registration.id.slice(0, 8).toUpperCase();
 
   return (
-    <main className="flex min-h-dvh flex-col items-center bg-nuage px-5 pb-16 pt-28 text-encre">
+    <main
+      id="contenu"
+      className="flex min-h-dvh flex-col items-center bg-nuage px-5 pb-16 pt-28 text-encre"
+    >
       <p className="text-[0.72rem] font-bold uppercase tracking-[0.32em] text-feu">
         Inscription confirmée
       </p>

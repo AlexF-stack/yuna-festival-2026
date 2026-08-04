@@ -30,6 +30,23 @@ export function rateLimit(
   return { ok: true };
 }
 
+/** Vrai si la limite est déjà atteinte — sans consommer de tentative. */
+export function isRateLimited(key: string, limit: number): boolean {
+  const bucket = buckets.get(key);
+  return !!bucket && Date.now() < bucket.resetAt && bucket.count >= limit;
+}
+
+/** Consomme une tentative (pour ne compter que les échecs, par exemple). */
+export function recordAttempt(key: string, windowMs: number): void {
+  const now = Date.now();
+  const bucket = buckets.get(key);
+  if (!bucket || now >= bucket.resetAt) {
+    buckets.set(key, { count: 1, resetAt: now + windowMs });
+    return;
+  }
+  bucket.count += 1;
+}
+
 export function clientIp(request: Request): string {
   const fwd = request.headers.get("x-forwarded-for");
   if (fwd) return fwd.split(",")[0]?.trim() || "unknown";

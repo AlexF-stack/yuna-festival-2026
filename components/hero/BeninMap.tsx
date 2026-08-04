@@ -64,7 +64,9 @@ export function BeninMap({
             }
             quality={95}
             className="object-contain object-center drop-shadow-[0_16px_40px_rgba(0,0,0,0.45)]"
-            priority
+            // Priorité réservée à la variante visible dans le viewport mobile :
+            // le showcase desktop (masqué < 900px) ne vole plus la bande passante LCP.
+            priority={compact}
           />
 
           {/* Pin Cotonou — sud du pays */}
