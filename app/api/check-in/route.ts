@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Accès staff refusé." }, { status: 401 });
   }
 
-  const limited = rateLimit(`checkin:${clientIp(request)}`, {
+  const limited = await rateLimit(`checkin:${clientIp(request)}`, {
     limit: 60,
     windowMs: 60_000,
   });

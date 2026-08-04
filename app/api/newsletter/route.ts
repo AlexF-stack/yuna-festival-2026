@@ -15,7 +15,7 @@ type NewsletterBody = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
-  const limited = rateLimit(`newsletter:${clientIp(request)}`, {
+  const limited = await rateLimit(`newsletter:${clientIp(request)}`, {
     limit: 8,
     windowMs: 60_000,
   });

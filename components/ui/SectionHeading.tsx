@@ -22,14 +22,10 @@ export function SectionHeading({
   return (
     <header className={centered ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
       <p
-        className={`mb-3 inline-flex items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] ${
-          centered ? "justify-center" : ""
-        } ${light ? "text-papier/85" : "text-feu"}`}
+        className={`mb-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] ${
+          light ? "text-papier/85" : "text-feu"
+        }`}
       >
-        <span
-          aria-hidden
-          className={`h-0.5 w-8 shrink-0 ${light ? "bg-papier" : "bg-feu"}`}
-        />
         {eyebrow}
       </p>
       <h2

@@ -78,15 +78,9 @@ export function Hero({ eventStartIso }: HeroProps) {
             />
           </motion.div>
 
-          <motion.div
-            variants={reduceMotion ? undefined : rise}
-            className="hero-divider mt-7"
-            aria-hidden
-          />
-
           <motion.blockquote
             variants={reduceMotion ? undefined : rise}
-            className="mt-6 max-w-xl border-l-2 border-feu/70 pl-4"
+            className="mt-7 max-w-xl"
           >
             <p className="text-[1.02rem] italic leading-relaxed text-papier/88">
               {HERO_COPY.verse}

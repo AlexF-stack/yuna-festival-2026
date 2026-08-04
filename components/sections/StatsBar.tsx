@@ -27,18 +27,12 @@ export function StatsBar() {
         whileInView={reduce ? undefined : "show"}
         viewport={{ once: true, amount: 0.4 }}
       >
-        {EVENT_STATS.map((stat, i) => (
+        {EVENT_STATS.map((stat) => (
           <motion.div
             key={stat.label}
             variants={reduce ? undefined : rise(16)}
             transition={{ duration: 0.55, ease: EASE_YUNA }}
-            className={`group relative px-5 py-9 text-center text-papier ${
-              i < EVENT_STATS.length - 1
-                ? "border-b border-papier/15 min-[720px]:border-b-0 min-[720px]:border-r"
-                : ""
-            } ${i === 1 ? "max-[719px]:border-l max-[719px]:border-papier/15" : ""} ${
-              i === 2 ? "max-[719px]:border-r max-[719px]:border-papier/15" : ""
-            }`}
+            className="group relative px-5 py-9 text-center text-papier"
           >
             <p
               className="font-display text-[clamp(2rem,5vw,2.85rem)] font-extrabold leading-none text-papier transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"

@@ -55,7 +55,7 @@ export function Journee() {
               {item.description}
             </p>
             {"speakers" in item && item.speakers ? (
-              <ul className="mt-4 space-y-1.5 border-t border-bleu/10 pt-4 text-[0.9rem] text-charbon/90">
+              <ul className="mt-4 space-y-1.5 pt-4 text-[0.9rem] text-charbon/90">
                 {item.speakers.map((name) => (
                   <li key={name} className="flex gap-2">
                     <span className="text-feu" aria-hidden>

@@ -26,7 +26,7 @@ export function ArtistMarquee({ revealedNames, totalCount }: ArtistMarqueeProps)
       aria-label="Artistes à l'affiche"
       data-tone="papier"
       data-nav-tone="papier"
-      className="relative z-10 overflow-hidden border-y border-jaune/40 bg-gradient-to-r from-jaune via-[#f5c84a] to-jaune py-5"
+      className="relative z-10 overflow-hidden bg-gradient-to-r from-jaune via-[#f5c84a] to-jaune py-5"
     >
       <div
         className={`flex w-max gap-10 ${reduce ? "" : "marquee-track"} -rotate-[1.5deg] origin-center`}

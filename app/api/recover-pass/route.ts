@@ -55,7 +55,7 @@ function namesMatch(provided: string, stored: string): boolean {
  * « mauvais nom »), et limite dédiée par numéro en plus de la limite par IP.
  */
 export async function POST(request: Request) {
-  const limited = rateLimit(`recover-pass:${clientIp(request)}`, {
+  const limited = await rateLimit(`recover-pass:${clientIp(request)}`, {
     limit: 5,
     windowMs: 60_000,
   });
@@ -107,7 +107,7 @@ export async function POST(request: Request) {
   // Seuls les ÉCHECS comptent dans la limite par numéro : le propriétaire
   // légitime ne peut pas être bloqué par un tiers qui épuise le quota.
   const phoneKey = `recover-pass:phone-fail:${phone}`;
-  if (isRateLimited(phoneKey, 5)) {
+  if (await isRateLimited(phoneKey, 5, 3_600_000)) {
     // Réponse uniforme (pas de 429) pour ne rien signaler à l'attaquant.
     return NextResponse.json({ ok: true, found: false });
   }
@@ -118,7 +118,7 @@ export async function POST(request: Request) {
 
     // Réponse uniforme : ne révèle pas si le numéro est inscrit ou non.
     if (matches.length === 0) {
-      recordAttempt(phoneKey, 3_600_000);
+      await recordAttempt(phoneKey, 3_600_000);
       return NextResponse.json({ ok: true, found: false });
     }
 

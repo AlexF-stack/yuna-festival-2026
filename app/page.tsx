@@ -2,7 +2,6 @@ import { Donate } from "@/components/sections/Donate";
 import { ExploreSections } from "@/components/sections/ExploreSections";
 import { Hero } from "@/components/sections/Hero";
 import { Participate } from "@/components/sections/Participate";
-import { QuoteStrip } from "@/components/sections/QuoteStrip";
 import { Register } from "@/components/sections/Register";
 import { SaveTheDateStrip } from "@/components/sections/SaveTheDateStrip";
 import { StatsBar } from "@/components/sections/StatsBar";
@@ -61,8 +60,8 @@ const festivalJsonLd = {
 } as const;
 
 /**
- * Home courte, pensée conversion : accroche → stats → citation → sommaire
- * des pages de section → save the date → inscription → don → participer.
+ * Home courte, pensée conversion : accroche → stats → sommaire des pages
+ * → save the date (citation + date + CTA) → inscription → don → participer.
  * Le détail (vision, line-up, journée, lieu, boutique, FAQ) vit sur des
  * pages dédiées pour ne pas rallonger le scroll mobile.
  */
@@ -80,7 +79,6 @@ export default async function HomePage() {
       />
       <Hero eventStartIso={eventStartIso} />
       <StatsBar />
-      <QuoteStrip />
       <ExploreSections />
       <SaveTheDateStrip />
       <Register initialCount={registrationCount} />

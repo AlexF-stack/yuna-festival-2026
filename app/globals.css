@@ -266,14 +266,6 @@ body {
   animation-play-state: paused;
 }
 
-.section-dots {
-  background-image: radial-gradient(
-    color-mix(in srgb, var(--bleu) 28%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 18px 18px;
-}
-
 .section-grain {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -336,18 +328,6 @@ body {
     transparent 70%
   );
   pointer-events: none;
-}
-
-.hero-divider {
-  height: 2px;
-  width: min(420px, 100%);
-  border-radius: 999px;
-  background: linear-gradient(
-    to right,
-    var(--jaune),
-    color-mix(in srgb, var(--feu) 70%, var(--jaune)),
-    transparent
-  );
 }
 
 .scroll-cue {
@@ -445,14 +425,3 @@ body {
   background: color-mix(in srgb, var(--papier) 8%, transparent);
 }
 
-.quote-strip {
-  background: var(--bleu);
-}
-
-.quote-strip-glow {
-  background: radial-gradient(
-    ellipse 70% 80% at 85% 40%,
-    color-mix(in srgb, var(--feu) 28%, transparent),
-    transparent 55%
-  );
-}

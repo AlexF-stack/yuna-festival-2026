@@ -37,7 +37,7 @@ export function HeroShowcase({ eventStartIso }: HeroShowcaseProps) {
           <BeninMap />
         </div>
 
-        <div className="mt-7 w-full max-w-[380px] border-t border-papier/12 pt-5">
+        <div className="mt-7 w-full max-w-[380px] pt-5">
           <p className="mb-3 text-center font-mono text-[0.65rem] font-bold uppercase tracking-[0.18em] text-papier/55">
             Compte à rebours
           </p>

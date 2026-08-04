@@ -328,7 +328,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
               </a>
             </p>
 
-            <ul className="mt-6 space-y-2 border-t border-bleu/10 pt-5 text-xs text-charbon">
+            <ul className="mt-6 space-y-2 pt-5 text-xs text-charbon">
               {[
                 "Pass QR généré côté serveur (sécurisé)",
                 "Masterclass : places limitées, QR obligatoire",
