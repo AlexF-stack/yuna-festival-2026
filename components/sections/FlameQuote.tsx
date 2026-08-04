@@ -29,18 +29,6 @@ export function FlameQuote({ text }: FlameQuoteProps) {
       <motion.div
         className="relative aspect-[5/4] w-full overflow-hidden rounded-[2rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(245,249,252,0.96)_100%)] shadow-ombre-bleu-lg"
         style={{ transformOrigin: "50% 50%" }}
-        animate={
-          reduce
-            ? undefined
-            : {
-                scale: [1, 1.02, 1],
-              }
-        }
-        transition={{
-          duration: 9,
-          ease: "easeInOut",
-          repeat: reduce ? 0 : Infinity,
-        }}
       >
         <div
           aria-hidden

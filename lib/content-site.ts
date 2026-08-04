@@ -77,7 +77,11 @@ export const JOURNEE = {
       title: "Masterclass Entrepreneuriat",
       description:
         "Bâtir en jeune non ordinaire : vision, excellence et royaume dans les affaires.",
-      speakers: ["Prophète Johnny Doefia", "Prophète Dr Hervé Mama"],
+      speakers: [
+        "Prophète Joël Francis Tatu",
+        "Prophète Johnny Doefia",
+        "Prophète Dr Hervé Mama",
+      ],
     },
   ],
 } as const;
@@ -172,7 +176,7 @@ export const TEASER = {
 
 export const REGISTER_COPY = {
   intro:
-    "Inscris-toi gratuitement et reçois immédiatement ton pass personnel avec code QR — à présenter à l'entrée du festival ou des masterclass.",
+    "Inscris-toi gratuitement et génère immédiatement ton pass personnel avec code QR — à présenter à l'entrée. Enregistre le lien de confirmation : aucun e-mail n'est envoyé pour l'instant.",
   goalLabel: "inscrits",
   honorPlacesLabel: "places d'honneur restantes",
 } as const;

@@ -71,7 +71,7 @@ function getWebhookUrl(): string | null {
   const v =
     process.env.YUNA_CRM_WEBHOOK_URL?.trim() ||
     process.env.CRM_WEBHOOK_URL?.trim();
-  return v && /^https?:\/\//i.test(v) ? v : null;
+  return v && /^https:\/\//i.test(v) ? v : null;
 }
 
 /**

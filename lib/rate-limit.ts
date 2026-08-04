@@ -96,6 +96,16 @@ function getUpstashLimiter(limit: number, windowMs: number): Ratelimit {
 
 const FAIL_PREFIX = "yuna:rl:fail:";
 
+let warnedMemoryFallback = false;
+
+function warnMemoryFallbackOnce(reason: string) {
+  if (process.env.NODE_ENV !== "production" || warnedMemoryFallback) return;
+  warnedMemoryFallback = true;
+  console.warn(
+    `[rate-limit] Repli mémoire actif en production (${reason}). Poser KV_REST_API_* / UPSTASH_REDIS_REST_*.`,
+  );
+}
+
 /**
  * Consomme une tentative (IP / endpoint). À `await` côté routes API.
  */
@@ -104,6 +114,7 @@ export async function rateLimit(
   { limit = 8, windowMs = 60_000 }: { limit?: number; windowMs?: number } = {},
 ): Promise<LimitResult> {
   if (!hasUpstashEnv()) {
+    warnMemoryFallbackOnce("env absentes");
     return memoryRateLimit(key, limit, windowMs);
   }
 
@@ -118,6 +129,7 @@ export async function rateLimit(
     };
   } catch (err) {
     console.error("[rate-limit] Upstash indisponible — repli mémoire", err);
+    warnMemoryFallbackOnce("erreur Redis");
     return memoryRateLimit(key, limit, windowMs);
   }
 }

@@ -46,17 +46,36 @@ export function StaffScanClient() {
   };
 
   useEffect(() => {
+    let cancelled = false;
     try {
       const s = sessionStorage.getItem(STAFF_KEY);
       const l = sessionStorage.getItem(STAFF_LABEL_KEY);
-      if (s) {
-        setSecret(s);
-        setUnlocked(true);
-      }
       if (l) setStaffLabel(l);
+      if (!s) return;
+      setSecret(s);
+      void (async () => {
+        try {
+          const res = await fetch("/api/staff/unlock", {
+            method: "POST",
+            headers: { "x-yuna-staff": s },
+          });
+          if (cancelled) return;
+          if (res.ok) {
+            setUnlocked(true);
+          } else {
+            sessionStorage.removeItem(STAFF_KEY);
+            setSecret("");
+          }
+        } catch {
+          if (!cancelled) setUnlocked(false);
+        }
+      })();
     } catch {
       /* ignore */
     }
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -68,20 +87,42 @@ export function StaffScanClient() {
     };
   }, []);
 
-  const unlock = () => {
+  const unlock = async () => {
     const s = secret.trim();
     if (s.length < 8) {
       setError("Secret staff trop court.");
       return;
     }
-    try {
-      sessionStorage.setItem(STAFF_KEY, s);
-      sessionStorage.setItem(STAFF_LABEL_KEY, staffLabel.trim() || "porte-1");
-    } catch {
-      /* ignore */
-    }
-    setUnlocked(true);
+    setBusy(true);
     setError(null);
+    try {
+      const res = await fetch("/api/staff/unlock", {
+        method: "POST",
+        headers: { "x-yuna-staff": s },
+      });
+      if (!res.ok) {
+        let message = "Secret invalide.";
+        try {
+          const data = (await res.json()) as { error?: string };
+          if (data.error) message = data.error;
+        } catch {
+          /* ignore */
+        }
+        setError(message);
+        return;
+      }
+      try {
+        sessionStorage.setItem(STAFF_KEY, s);
+        sessionStorage.setItem(STAFF_LABEL_KEY, staffLabel.trim() || "porte-1");
+      } catch {
+        /* ignore */
+      }
+      setUnlocked(true);
+    } catch {
+      setError("Impossible de vérifier le secret. Réessaie.");
+    } finally {
+      setBusy(false);
+    }
   };
 
   const checkIn = async (code: string) => {
@@ -233,10 +274,11 @@ export function StaffScanClient() {
         ) : null}
         <button
           type="button"
-          onClick={unlock}
-          className="mt-6 w-full rounded-full bg-feu px-4 py-3.5 font-bold text-papier hover:bg-braise"
+          onClick={() => void unlock()}
+          disabled={busy}
+          className="mt-6 w-full rounded-full bg-feu px-4 py-3.5 font-bold text-papier hover:bg-braise disabled:opacity-60"
         >
-          Ouvrir le scan
+          {busy ? "Vérification…" : "Ouvrir le scan"}
         </button>
         <ButtonLink href="/" variant="ghost" className="mt-3 w-full !px-0">
           Retour site

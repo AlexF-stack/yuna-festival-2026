@@ -4,13 +4,11 @@ import { motion, useReducedMotion, type Variants } from "framer-motion";
 
 import { HeroCinematicBackground } from "@/components/hero/HeroCinematicBackground";
 import { HeroFireCanvas } from "@/components/hero/HeroFireCanvas";
-import { BeninMap } from "@/components/hero/BeninMap";
 import { HeroOrbs } from "@/components/hero/HeroOrbs";
 import { HeroShowcase } from "@/components/hero/HeroShowcase";
 import { YunaLogo } from "@/components/brand/YunaLogo";
 import { AnimatedThemeTitle } from "@/components/sections/AnimatedThemeTitle";
 import { HeroCountdown } from "@/components/sections/HeroCountdown";
-import { HeroTools } from "@/components/sections/HeroTools";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FESTIVAL, HERO_COPY } from "@/lib/festival";
 import { EASE_PREMIUM } from "@/lib/motion";
@@ -28,6 +26,10 @@ const rise: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE_PREMIUM } },
 };
 
+/**
+ * Hero mobile allégé : logo, eyebrow, dates, titre, support, CTA, countdown.
+ * Verset, carte Bénin et tools restent côté desktop (HeroShowcase).
+ */
 export function Hero({ eventStartIso }: HeroProps) {
   const reduceMotion = useReducedMotion();
 
@@ -80,7 +82,7 @@ export function Hero({ eventStartIso }: HeroProps) {
 
           <motion.blockquote
             variants={reduceMotion ? undefined : rise}
-            className="mt-7 max-w-xl"
+            className="mt-7 hidden max-w-xl min-[900px]:block"
           >
             <p className="text-[1.02rem] italic leading-relaxed text-papier/88">
               {HERO_COPY.verse}
@@ -92,17 +94,10 @@ export function Hero({ eventStartIso }: HeroProps) {
 
           <motion.p
             variants={reduceMotion ? undefined : rise}
-            className="mt-5 max-w-lg text-[0.98rem] leading-relaxed text-papier/72 min-[900px]:hidden"
+            className="mt-5 max-w-lg text-[0.98rem] leading-relaxed text-papier/72"
           >
             {HERO_COPY.support}
           </motion.p>
-
-          <motion.div
-            variants={reduceMotion ? undefined : rise}
-            className="mt-6 flex justify-center min-[900px]:hidden"
-          >
-            <BeninMap size="compact" />
-          </motion.div>
 
           <motion.div
             variants={reduceMotion ? undefined : rise}
@@ -124,10 +119,6 @@ export function Hero({ eventStartIso }: HeroProps) {
             className="min-[900px]:hidden"
           >
             <HeroCountdown eventStartIso={eventStartIso} variant="dark" />
-          </motion.div>
-
-          <motion.div variants={reduceMotion ? undefined : rise}>
-            <HeroTools variant="dark" />
           </motion.div>
         </motion.div>
 

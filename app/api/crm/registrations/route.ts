@@ -1,20 +1,35 @@
 import { NextResponse } from "next/server";
 
 import { listRegistrationsForCrm } from "@/lib/registrations";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { assertCrmApiKey, getCrmApiKey } from "@/lib/staff-auth";
 
 export const runtime = "nodejs";
 
 /**
  * GET /api/crm/registrations?limit=200
- * Header: x-crm-key: <CRM_API_KEY>  ou  Authorization: Bearer …
- * Pour synchroniser / lister dans ton CRM — pas d’UI admin sur le site.
+ * Header: x-yuna-crm / x-crm-key / Authorization: Bearer
  */
 export async function GET(request: Request) {
   if (!getCrmApiKey()) {
     return NextResponse.json(
       { error: "CRM API non configurée (CRM_API_KEY)." },
       { status: 503 },
+    );
+  }
+
+  const ip = clientIp(request);
+  const limited = await rateLimit(`crm-regs:${ip}`, {
+    limit: 30,
+    windowMs: 60_000,
+  });
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: "Trop de requêtes." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limited.retryAfterSec) },
+      },
     );
   }
 

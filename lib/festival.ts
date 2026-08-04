@@ -75,5 +75,5 @@ export const EVENT_STATS = [
   { value: "2", label: "Jours de festival" },
   { value: "13", label: "Artistes & orateurs" },
   { value: "3", label: "Masterclass & actions" },
-  { value: "0 F", label: "Entrée" },
+  { value: "1", label: "Génération qui se lève" },
 ] as const;

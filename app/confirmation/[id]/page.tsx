@@ -43,7 +43,9 @@ export default async function ConfirmationPage({
         Ton pass YUNA
       </h1>
       <p className="mt-4 max-w-md text-center text-[1.02rem] leading-relaxed text-charbon">
-        Présente ce QR à l&apos;entrée. Garde une capture sur ton téléphone.
+        Présente ce QR à l&apos;entrée. Enregistre cette page (favori) ou
+        télécharge le PNG — aucun e-mail de confirmation n&apos;est envoyé pour
+        l&apos;instant.
       </p>
 
       <div className="mt-10 w-full max-w-[420px]">

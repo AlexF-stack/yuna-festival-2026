@@ -1,7 +1,26 @@
-import Link from "next/link";
+"use client";
 
-/** CTA flottant global — remplace l'ancien bouton WhatsApp. */
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const HIDDEN_PREFIXES = [
+  "/confirmation",
+  "/mon-pass",
+  "/staff",
+  "/lab",
+  "/don",
+  "/confidentialite",
+  "/mentions-legales",
+] as const;
+
+/** CTA flottant — masqué sur pass, staff, don et pages légales. */
 export function RegisterFloat() {
+  const pathname = usePathname() || "/";
+  const hidden = HIDDEN_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+  if (hidden) return null;
+
   return (
     <Link
       href="/#inscription"

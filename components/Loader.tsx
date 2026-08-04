@@ -9,8 +9,8 @@ const HERO_ASSETS = [
   "/media/crowd.webp",
 ] as const;
 
-const MIN_DISPLAY_MS = 700;
-const MAX_WAIT_MS = 9000;
+const MIN_DISPLAY_MS = 400;
+const MAX_WAIT_MS = 4500;
 const EXIT_MS = 520;
 
 type LoadScores = {

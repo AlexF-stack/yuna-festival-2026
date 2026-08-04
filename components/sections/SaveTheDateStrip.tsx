@@ -62,7 +62,7 @@ export function SaveTheDateStrip() {
         >
           <div className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-ombre-bleu-lg">
             <Image
-              src="/media/save-the-date.jpg"
+              src="/media/save-the-date.webp"
               alt="Save the date YUNA — 5 et 6 septembre 2026"
               fill
               sizes="(min-width: 800px) 420px, 90vw"
