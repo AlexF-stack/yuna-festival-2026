@@ -43,3 +43,5 @@ next-env.d.ts
 
 # lighthouse local reports
 .lighthouse/
+
+.crm-api-key.local

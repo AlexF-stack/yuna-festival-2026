@@ -1,6 +1,7 @@
 "use client";
 
 import { Html5Qrcode } from "html5-qrcode";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -243,9 +244,11 @@ export function StaffScanClient() {
           Scan entrée
         </h1>
         <p className="mt-3 text-sm text-charbon">
-          Pas d’admin sur le site public — le listing est dans le{" "}
-          <strong>CRM YUNA</strong>. Ici : validation des passes à la porte
-          uniquement.
+          Pas d’admin public — le listing est dans le{" "}
+          <Link href="/staff/crm" className="font-bold text-bleu underline-offset-2 hover:underline">
+            CRM inscriptions
+          </Link>
+          . Ici : validation des passes à la porte uniquement.
         </p>
         <label className="mt-6 block text-sm font-semibold text-bleu">
           Secret staff
