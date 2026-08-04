@@ -51,7 +51,7 @@ export function LineupMystery({ count }: LineupMysteryProps) {
         Bientôt dévoilés
       </h3>
       <p className="mx-auto mt-4 max-w-md text-[1.02rem] leading-relaxed text-papier/75">
-        {count} présence{count > 1 ? "s" : ""} encore sous emballage — les noms
+        {count} artiste{count > 1 ? "s" : ""} encore sous emballage — les noms
         sortent progressivement. Reste connecté.
       </p>
     </motion.div>
