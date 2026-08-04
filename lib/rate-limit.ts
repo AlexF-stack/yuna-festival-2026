@@ -1,6 +1,7 @@
 /**
- * Rate-limit distribué (Upstash Redis) avec repli mémoire si les variables
- * UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN ne sont pas posées.
+ * Rate-limit distribué (Upstash Redis) avec repli mémoire si Redis n'est
+ * pas configuré. Accepte les noms Upstash classiques (`UPSTASH_REDIS_REST_*`)
+ * et ceux injectés par l'intégration Vercel (`KV_REST_API_*`).
  * Le repli mémoire reste utile en local ; en multi-instances Vercel, Upstash
  * est requis avant le jour J.
  */
@@ -53,14 +54,25 @@ function memoryRecordAttempt(key: string, windowMs: number): void {
   bucket.count += 1;
 }
 
+function redisRestUrl(): string | undefined {
+  return process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+}
+
+function redisRestToken(): string | undefined {
+  return process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+}
+
 function hasUpstashEnv(): boolean {
-  return Boolean(
-    process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN,
-  );
+  return Boolean(redisRestUrl() && redisRestToken());
 }
 
 function getRedis(): Redis {
-  return Redis.fromEnv();
+  const url = redisRestUrl();
+  const token = redisRestToken();
+  if (!url || !token) {
+    throw new Error("Upstash Redis env manquantes");
+  }
+  return new Redis({ url, token });
 }
 
 /** Cache des limiters Upstash par (limit, windowMs). */
