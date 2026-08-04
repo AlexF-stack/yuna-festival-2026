@@ -30,7 +30,7 @@ export const VISION = {
       title: "Joseph",
       ref: "Genèse 41",
       text: "De la fosse au palais. Le rêveur devient gouverneur. Une jeunesse qui porte des rêves plus grands que ses circonstances — et l'excellence pour les accomplir.",
-      image: "/media/vision-joseph-generated.png",
+      image: "/media/vision-joseph-generated.webp",
     },
     {
       id: "daniel",
@@ -38,7 +38,7 @@ export const VISION = {
       title: "Daniel",
       ref: "Daniel 6:3",
       text: "« Un esprit supérieur était en lui. » L'esprit extraordinaire. Une jeunesse intègre, excellente, qui influence les empires sans compromis.",
-      image: "/media/vision-daniel-generated.png",
+      image: "/media/vision-daniel-generated.webp",
     },
     {
       id: "david",
@@ -46,7 +46,7 @@ export const VISION = {
       title: "David",
       ref: "1 Samuel 16",
       text: "Oint au milieu de ses frères. Adorateur, guerrier, roi. Une jeunesse qui sert le dessein de Dieu dans sa génération — et qui règne.",
-      image: "/media/vision-david-generated.png",
+      image: "/media/vision-david-generated.webp",
     },
   ],
 } as const;
@@ -184,7 +184,7 @@ export const POLES = [
     description:
       "Louanges, concerts et temps d'adoration — la flamme au centre de chaque soirée.",
     accent: "feu" as const,
-    image: "/media/pole-gospel-adoration.png",
+    image: "/media/pole-gospel-adoration.webp",
     objectPosition: "center 35%",
   },
   {
@@ -193,7 +193,7 @@ export const POLES = [
     description:
       "Expositions, performances et rencontres pour faire rayonner les talents de la génération.",
     accent: "bleu" as const,
-    image: "/media/pole-art-creativite.png",
+    image: "/media/pole-art-creativite.webp",
     objectPosition: "center center",
   },
   {
@@ -202,7 +202,7 @@ export const POLES = [
     description:
       "Spectacles, énergie du corps et moments forts qui font vibrer Midombo.",
     accent: "feu" as const,
-    image: "/media/pole-danse-scene.png",
+    image: "/media/pole-danse-scene.webp",
     objectPosition: "center 25%",
   },
   {
@@ -211,7 +211,7 @@ export const POLES = [
     description:
       "VTeam (musiciens & chantres) et Entrepreneuriat — exceller sans quitter le Royaume.",
     accent: "bleu" as const,
-    image: "/media/pole-masterclass.png",
+    image: "/media/pole-masterclass.webp",
     objectPosition: "center 40%",
   },
 ] as const;

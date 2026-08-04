@@ -68,9 +68,54 @@ function getWebhookUrl(): string | null {
   return v && /^https?:\/\//i.test(v) ? v : null;
 }
 
+/**
+ * Réessaie une opération CRM avec backoff (1 s puis 3 s) : la sync tourne
+ * dans `after()` après la réponse HTTP, donc les retries ne coûtent rien à
+ * l'utilisateur. Une indisponibilité brève du CRM ne perd plus la donnée.
+ */
+async function withRetry(
+  label: string,
+  fn: () => Promise<void>,
+): Promise<void> {
+  const delaysMs = [0, 1000, 3000];
+  let lastError: unknown;
+  for (const delay of delaysMs) {
+    if (delay > 0) {
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+    try {
+      await fn();
+      return;
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  console.error(
+    `[yuna-crm] ${label} — échec après ${delaysMs.length} tentatives:`,
+    lastError,
+  );
+}
+
 async function upsertInscription(payload: YunaCrmSyncPayload): Promise<void> {
   const crm = createYunaCrmClient();
   if (!crm) return;
+
+  // Check-in : mise à jour ciblée pour ne jamais réécrire created_at.
+  if (payload.event === "inscription.checked_in") {
+    const { data, error } = await crm
+      .from("inscriptions")
+      .update({
+        checked_in_at: payload.checkedInAt ?? new Date().toISOString(),
+        checked_in_by: payload.checkedInBy ?? null,
+        synced_at: new Date().toISOString(),
+      })
+      .eq("id", payload.id)
+      .select("id");
+
+    if (error) throw new Error(`inscriptions update: ${error.message}`);
+    if (data && data.length > 0) return;
+    // Inscription jamais synchronisée : on retombe sur l'upsert complet.
+  }
 
   const { error } = await crm.from("inscriptions").upsert(
     {
@@ -89,9 +134,7 @@ async function upsertInscription(payload: YunaCrmSyncPayload): Promise<void> {
     { onConflict: "id" },
   );
 
-  if (error) {
-    console.error("[yuna-crm] inscriptions upsert:", error.message);
-  }
+  if (error) throw new Error(`inscriptions upsert: ${error.message}`);
 }
 
 async function insertScanLog(payload: YunaCrmSyncPayload): Promise<void> {
@@ -106,43 +149,37 @@ async function insertScanLog(payload: YunaCrmSyncPayload): Promise<void> {
     poste: payload.checkedInBy ?? "staff",
   });
 
-  if (error) {
-    console.error("[yuna-crm] scans insert:", error.message);
-  }
+  if (error) throw new Error(`scans insert: ${error.message}`);
 }
 
 async function postWebhook(payload: YunaCrmSyncPayload): Promise<void> {
   const url = getWebhookUrl();
   if (!url) return;
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(process.env.YUNA_CRM_API_KEY || process.env.CRM_API_KEY
-          ? {
-              Authorization: `Bearer ${process.env.YUNA_CRM_API_KEY || process.env.CRM_API_KEY}`,
-            }
-          : {}),
-      },
-      body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(8000),
-    });
-    if (!res.ok) {
-      console.error("[yuna-crm-webhook]", res.status);
-    }
-  } catch (err) {
-    console.error("[yuna-crm-webhook]", err);
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(process.env.YUNA_CRM_API_KEY || process.env.CRM_API_KEY
+        ? {
+            Authorization: `Bearer ${process.env.YUNA_CRM_API_KEY || process.env.CRM_API_KEY}`,
+          }
+        : {}),
+    },
+    body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(8000),
+  });
+  if (!res.ok) {
+    throw new Error(`webhook HTTP ${res.status}`);
   }
 }
 
-/** Sync CRM YUNA — ne bloque jamais l’API du site. */
+/** Sync CRM YUNA — ne bloque jamais l’API du site, réessaie en cas d'échec. */
 export async function syncYunaCrm(payload: YunaCrmSyncPayload): Promise<void> {
   await Promise.all([
-    upsertInscription(payload),
-    insertScanLog(payload),
-    postWebhook(payload),
+    withRetry("inscriptions", () => upsertInscription(payload)),
+    withRetry("scans", () => insertScanLog(payload)),
+    withRetry("webhook", () => postWebhook(payload)),
   ]);
 }
 
@@ -154,17 +191,17 @@ export async function syncYunaCrmNewsletter({
   const crm = createYunaCrmClient();
   if (!crm) return;
 
-  const { error } = await crm.from("newsletter").upsert(
-    {
-      email,
-      source,
-    },
-    { onConflict: "email", ignoreDuplicates: true },
-  );
+  await withRetry("newsletter", async () => {
+    const { error } = await crm.from("newsletter").upsert(
+      {
+        email,
+        source,
+      },
+      { onConflict: "email", ignoreDuplicates: true },
+    );
 
-  if (error) {
-    console.error("[yuna-crm] newsletter upsert:", error.message);
-  }
+    if (error) throw new Error(`newsletter upsert: ${error.message}`);
+  });
 }
 
 /**

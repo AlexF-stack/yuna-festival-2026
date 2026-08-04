@@ -157,16 +157,16 @@ export async function listRegistrationsForCrm(limit = 200): Promise<
 }
 
 /** Dernière inscription pour un numéro (récupération de pass). */
-export async function findLatestRegistrationIdByPhone(
+export async function findLatestRegistrationByPhone(
   phoneRaw: string,
-): Promise<string | null> {
+): Promise<{ id: string; name: string } | null> {
   const phone = normalizePhone(phoneRaw);
   if (phone.length < 8) return null;
 
   const supabase = createSupabaseAdminClient();
   const { data, error } = await supabase
     .from("registrations")
-    .select("id")
+    .select("id, name")
     .eq("phone", phone)
     .order("created_at", { ascending: false })
     .limit(1)
@@ -176,7 +176,7 @@ export async function findLatestRegistrationIdByPhone(
     throw new Error(`Recherche pass impossible: ${error.message}`);
   }
 
-  return data?.id ?? null;
+  return data ?? null;
 }
 
 export async function getRegistrationsCount(): Promise<number> {

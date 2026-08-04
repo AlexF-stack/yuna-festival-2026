@@ -26,8 +26,8 @@ export default function MonPassPage() {
         Retrouver mon pass
       </h1>
       <p className="mt-4 max-w-md text-center text-[1.02rem] leading-relaxed text-charbon">
-        Entre le numéro WhatsApp utilisé à l&apos;inscription. On te
-        réaffiche ton QR.
+        Entre ton nom et le numéro WhatsApp utilisés à l&apos;inscription. On
+        te réaffiche ton QR.
       </p>
 
       <div className="relative mt-10 w-full max-w-md">
@@ -40,7 +40,7 @@ export default function MonPassPage() {
           href="/#inscription"
           className="font-bold text-bleu underline-offset-4 hover:underline"
         >
-          Générer mon pass
+          Inscris-toi — pass QR gratuit
         </Link>
       </p>
 

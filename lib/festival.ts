@@ -67,6 +67,8 @@ export const FOOTER_LINKS = [
   { href: "/#lieu", label: "Lieu" },
   { href: "/mon-pass", label: "Retrouver mon pass" },
   { href: "/don", label: "Faire un don" },
+  { href: "/confidentialite", label: "Confidentialité" },
+  { href: "/mentions-legales", label: "Mentions légales" },
 ] as const;
 
 export const EVENT_STATS = [

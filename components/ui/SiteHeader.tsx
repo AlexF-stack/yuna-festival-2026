@@ -164,7 +164,7 @@ export function SiteHeader() {
           </a>
           <ButtonLink
             href="/#inscription"
-            className={`!px-6 !py-2.5 text-[0.8rem] ${style.cta}`}
+            className={`min-h-11 !px-6 !py-2.5 text-[0.8rem] ${style.cta}`}
           >
             Inscris-toi
           </ButtonLink>

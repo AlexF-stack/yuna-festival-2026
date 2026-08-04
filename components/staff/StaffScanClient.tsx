@@ -33,7 +33,17 @@ export function StaffScanClient() {
   const [error, setError] = useState<string | null>(null);
   const [last, setLast] = useState<ScanResult | null>(null);
   const scannerRef = useRef<Html5Qrcode | null>(null);
+  const busyRef = useRef(false);
+  const lastScanRef = useRef<{ code: string; at: number }>({ code: "", at: 0 });
   const readerId = "yuna-qr-reader";
+
+  /** Retour haptique terrain : succès court, déjà scanné double, refus long. */
+  const buzz = (kind: "ok" | "already" | "error") => {
+    if (typeof navigator === "undefined" || !("vibrate" in navigator)) return;
+    const pattern =
+      kind === "ok" ? [90] : kind === "already" ? [50, 70, 50] : [250];
+    navigator.vibrate(pattern);
+  };
 
   useEffect(() => {
     try {
@@ -75,6 +85,19 @@ export function StaffScanClient() {
   };
 
   const checkIn = async (code: string) => {
+    // Anti-rafale : la caméra décode ~8 fps — on ignore les scans pendant
+    // une requête en cours et les re-scans du même code sous 3 secondes.
+    if (busyRef.current) return;
+    const now = Date.now();
+    if (
+      code === lastScanRef.current.code &&
+      now - lastScanRef.current.at < 3000
+    ) {
+      return;
+    }
+    lastScanRef.current = { code, at: now };
+
+    busyRef.current = true;
     setBusy(true);
     setError(null);
     try {
@@ -99,6 +122,7 @@ export function StaffScanClient() {
         }
         setError(message);
         setLast(null);
+        buzz("error");
         return;
       }
       const data = (await res.json()) as {
@@ -109,16 +133,20 @@ export function StaffScanClient() {
       if (!data.registration) {
         setError(data.error ?? "Scan refusé.");
         setLast(null);
+        buzz("error");
         return;
       }
       setLast({
         alreadyCheckedIn: Boolean(data.alreadyCheckedIn),
         registration: data.registration,
       });
+      buzz(data.alreadyCheckedIn ? "already" : "ok");
     } catch {
       setError("Réseau indisponible.");
       setLast(null);
+      buzz("error");
     } finally {
+      busyRef.current = false;
       setBusy(false);
     }
   };
@@ -131,7 +159,17 @@ export function StaffScanClient() {
       setScanning(true);
       await sc.start(
         { facingMode: "environment" },
-        { fps: 8, qrbox: { width: 260, height: 260 } },
+        {
+          fps: 8,
+          // Adapté aux petits écrans : la zone de scan ne déborde jamais.
+          qrbox: (viewfinderWidth, viewfinderHeight) => {
+            const size = Math.max(
+              160,
+              Math.min(260, viewfinderWidth - 32, viewfinderHeight - 32),
+            );
+            return { width: size, height: size };
+          },
+        },
         (decoded) => {
           void checkIn(decoded);
         },
@@ -213,7 +251,7 @@ export function StaffScanClient() {
       : last?.registration.registrationType;
 
   return (
-    <div className="mx-auto w-full max-w-lg">
+    <div className="mx-auto w-full max-w-lg pb-[env(safe-area-inset-bottom)]">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
           <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.18em] text-feu">
@@ -281,7 +319,7 @@ export function StaffScanClient() {
             type="button"
             disabled={busy || !manual.trim()}
             onClick={() => void checkIn(manual)}
-            className="shrink-0 rounded-full bg-bleu px-4 py-2.5 text-sm font-bold text-papier disabled:opacity-50"
+            className="min-h-11 shrink-0 rounded-full bg-bleu px-5 py-2.5 text-sm font-bold text-papier disabled:opacity-50"
           >
             Valider
           </button>

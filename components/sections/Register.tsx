@@ -44,6 +44,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
   const [registrationType, setRegistrationType] =
     useState<RegistrationType>("pass");
   const [website, setWebsite] = useState("");
+  const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [pending, setPending] = useState(false);
 
@@ -54,6 +55,14 @@ export function Register({ initialCount = 0 }: RegisterProps) {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setErrors({});
+
+    if (!consent) {
+      setErrors({
+        form: "Coche la case de consentement pour générer ton pass.",
+      });
+      return;
+    }
+
     setPending(true);
 
     const key = idempotencyKey || createIdempotencyKey();
@@ -70,6 +79,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
           registrationType,
           idempotencyKey: key,
           website,
+          consent,
         }),
       });
 
@@ -124,7 +134,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
         <div className="max-w-2xl">
           <SectionHeading
             eyebrow="Inscription"
-            title="Réserve ton pass"
+            title="Inscris-toi — pass QR gratuit"
             titleId="register-title"
             description={REGISTER_COPY.intro}
           />
@@ -265,6 +275,30 @@ export function Register({ initialCount = 0 }: RegisterProps) {
               ) : null}
             </div>
 
+            <label className="mb-5 flex cursor-pointer gap-3 text-sm leading-relaxed text-charbon">
+              <input
+                type="checkbox"
+                name="consent"
+                required
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+                className="mt-0.5 h-5 w-5 shrink-0 accent-bleu"
+              />
+              <span>
+                J&apos;accepte que mes informations soient utilisées pour
+                générer mon pass et organiser le festival, comme décrit dans la{" "}
+                <a
+                  href="/confidentialite"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-bold text-bleu underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu"
+                >
+                  politique de confidentialité
+                </a>
+                . *
+              </span>
+            </label>
+
             {errors.form ? (
               <p role="alert" className="mb-4 text-sm text-feu">
                 {errors.form}
@@ -276,7 +310,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
               disabled={pending}
               className="w-full rounded-full bg-feu px-4 py-4 text-[1.02rem] font-bold tracking-[0.02em] text-papier transition-[background-color,transform] duration-[250ms] ease-yuna hover:-translate-y-0.5 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             >
-              {pending ? "Génération du pass…" : "Générer mon pass QR"}
+              {pending ? "Génération du pass…" : "Recevoir mon pass QR"}
             </button>
 
             <p className="mt-4 text-center text-sm text-charbon">

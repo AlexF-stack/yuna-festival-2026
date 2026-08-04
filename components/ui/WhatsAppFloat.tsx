@@ -2,6 +2,7 @@ import { getWhatsAppHref } from "@/lib/site";
 
 export function WhatsAppFloat() {
   const href = getWhatsAppHref();
+  if (!href) return null;
 
   return (
     <a

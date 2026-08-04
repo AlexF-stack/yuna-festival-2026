@@ -15,11 +15,21 @@ export type Registration = {
   checked_in_by?: string | null;
 };
 
-const PHONE_RE = /^[+0-9\s().-]{8,20}$/;
+const PHONE_RE = /^\+?[0-9]{8,15}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/**
+ * Canonicalise en quasi-E.164 : chiffres seuls, préfixe `+` conservé
+ * (`00` converti en `+`). « +229 01 23 45 67 » et « +2290123 4567 »
+ * donnent la même valeur — la contrainte d'unicité ne peut plus être
+ * contournée par un espacement différent.
+ */
 export function normalizePhone(raw: string): string {
-  return raw.trim().replace(/\s+/g, " ");
+  const trimmed = raw.trim();
+  const international = trimmed.startsWith("+") || trimmed.startsWith("00");
+  const digits = trimmed.replace(/\D/g, "").replace(/^00/, "");
+  if (!digits) return "";
+  return international ? `+${digits}` : digits;
 }
 
 export function validateRegistrationInput(input: {

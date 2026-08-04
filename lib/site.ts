@@ -2,12 +2,13 @@
 export const SITE_CONTACT = {
   email: "contact@yunafestival.org",
   preorderSubject: "Précommande tee-shirt LED YUNA 2026",
-  whatsappNumber:
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/\D/g, "") || "22900000000",
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/\D/g, "") ?? "",
   whatsappPrefill: "Bonjour YUNA 2026 !",
 } as const;
 
-export function getWhatsAppHref(): string {
+/** null si le numéro WhatsApp n'est pas configuré — évite de shipper un faux numéro. */
+export function getWhatsAppHref(): string | null {
+  if (!SITE_CONTACT.whatsappNumber) return null;
   const text = encodeURIComponent(SITE_CONTACT.whatsappPrefill);
   return `https://wa.me/${SITE_CONTACT.whatsappNumber}?text=${text}`;
 }

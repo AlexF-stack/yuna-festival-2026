@@ -8,6 +8,7 @@ const fieldClass =
 
 export function RecoverPassForm() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [website, setWebsite] = useState("");
   const [pending, setPending] = useState(false);
@@ -22,7 +23,7 @@ export function RecoverPassForm() {
       const res = await fetch("/api/recover-pass", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone, website }),
+        body: JSON.stringify({ name, phone, website }),
       });
 
       if (!res.ok) {
@@ -37,9 +38,11 @@ export function RecoverPassForm() {
         return;
       }
 
-      const payload = (await res.json()) as { id?: string };
-      if (!payload.id) {
-        setError("Pass introuvable pour ce numéro.");
+      const payload = (await res.json()) as { found?: boolean; id?: string };
+      if (!payload.found || !payload.id) {
+        setError(
+          "Aucun pass ne correspond à ces informations. Vérifie le nom et le numéro utilisés à l'inscription.",
+        );
         return;
       }
 
@@ -57,7 +60,25 @@ export function RecoverPassForm() {
       className="w-full max-w-md rounded-3xl border border-bleu/12 bg-papier p-6 shadow-ombre-bleu min-[480px]:p-8"
       noValidate
     >
-      <label htmlFor="recover-phone" className="mb-1.5 block text-sm font-medium text-encre">
+      <label htmlFor="recover-name" className="mb-1.5 block text-sm font-medium text-encre">
+        Nom complet
+      </label>
+      <input
+        id="recover-name"
+        name="name"
+        type="text"
+        autoComplete="name"
+        required
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Ex : Grâce Ahouansou"
+        className={fieldClass}
+      />
+
+      <label
+        htmlFor="recover-phone"
+        className="mb-1.5 mt-4 block text-sm font-medium text-encre"
+      >
         Numéro WhatsApp
       </label>
       <input

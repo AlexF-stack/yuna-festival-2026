@@ -96,6 +96,17 @@ export function Newsletter() {
           >
             {pending ? "Envoi…" : "Je m'abonne"}
           </button>
+          <p className="text-[0.72rem] leading-relaxed text-papier/60">
+            En t&apos;abonnant, tu acceptes de recevoir nos annonces par
+            e-mail. Désinscription à tout moment —{" "}
+            <a
+              href="/confidentialite"
+              className="underline underline-offset-2 hover:text-papier"
+            >
+              politique de confidentialité
+            </a>
+            .
+          </p>
         </form>
       )}
 

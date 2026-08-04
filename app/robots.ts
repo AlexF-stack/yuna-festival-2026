@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/lab/", "/api/", "/confirmation/", "/staff/"],
+        disallow: ["/lab/", "/api/", "/confirmation/", "/staff/", "/mon-pass"],
       },
     ],
     sitemap: "https://yunafestival.com/sitemap.xml",

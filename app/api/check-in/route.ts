@@ -4,7 +4,7 @@ import { notifyCrmRegistration } from "@/lib/crm";
 import { extractRegistrationId } from "@/lib/registration-id";
 import { checkInRegistration } from "@/lib/registrations";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
-import { assertStaffSecret, getStaffScanSecret } from "@/lib/staff-auth";
+import { assertStaffSecret, getStaffScanSecrets } from "@/lib/staff-auth";
 
 export const runtime = "nodejs";
 
@@ -19,9 +19,9 @@ type Body = {
  * Body: { code: "<uuid|url>", staffLabel?: "porte-1" }
  */
 export async function POST(request: Request) {
-  if (!getStaffScanSecret()) {
+  if (getStaffScanSecrets().length === 0) {
     return NextResponse.json(
-      { error: "Scan non configuré (YUNA_STAFF_SECRET manquant)." },
+      { error: "Scan non configuré (YUNA_STAFF_SECRET(S) manquant)." },
       { status: 503 },
     );
   }

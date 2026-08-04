@@ -18,6 +18,7 @@ type RegisterBody = {
   registrationType?: string;
   idempotencyKey?: string;
   website?: string; // honeypot
+  consent?: boolean;
 };
 
 const UUID_RE =
@@ -51,6 +52,14 @@ export async function POST(request: Request) {
   // Bot honeypot — silent success without creating a real registration
   if (body.website && body.website.trim().length > 0) {
     return NextResponse.json({ ok: true });
+  }
+
+  // RGPD : le consentement explicite est requis pour traiter les données
+  if (body.consent !== true) {
+    return NextResponse.json(
+      { error: "Le consentement au traitement des données est requis." },
+      { status: 400 },
+    );
   }
 
   const parsed = validateRegistrationInput(body);

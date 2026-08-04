@@ -43,7 +43,6 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   robots: { index: true, follow: true },
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "fr_FR",
@@ -69,41 +68,6 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-/** JSON-LD MusicEvent — sans noms d'artistes tant qu'ils ne sont pas révélés. */
-const musicEventJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "MusicEvent",
-  name: "YUNA Festival 2026 — Bénin Debout",
-  startDate: "2026-09-05T18:00:00+01:00",
-  endDate: "2026-09-06T22:30:00+01:00",
-  eventStatus: "https://schema.org/EventScheduled",
-  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  location: {
-    "@type": "Place",
-    name: "Terrain de Midombo",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Cotonou",
-      addressCountry: "BJ",
-    },
-  },
-  image: ["https://yunafestival.com/opengraph-image"],
-  description: SITE_DESCRIPTION,
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "XOF",
-    availability: "https://schema.org/InStock",
-    url: "https://yunafestival.com/",
-    validFrom: "2026-01-01T00:00:00+01:00",
-  },
-  organizer: {
-    "@type": "Organization",
-    name: "Global Impact Ministries",
-    url: "https://yunafestival.com/",
-  },
-} as const;
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -120,12 +84,6 @@ export default function RootLayout({
         >
           Aller au contenu
         </a>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(musicEventJsonLd).replace(/</g, "\\u003c"),
-          }}
-        />
         <Loader />
         <SiteHeader />
         {children}
