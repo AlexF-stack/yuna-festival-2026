@@ -3,22 +3,20 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 type ArtistMarqueeProps = {
-  /** Noms révélés uniquement — sinon placeholders. */
+  /** Noms révélés uniquement — sinon motif mystère. */
   revealedNames: string[];
-  totalCount: number;
 };
 
 /**
- * Bandeau : noms révélés, sinon « Artiste surprise » répété.
+ * Bandeau : noms révélés, sinon un motif court « ? · Bientôt dévoilé ».
  * Ne jamais passer de noms non révélés.
  */
-export function ArtistMarquee({ revealedNames, totalCount }: ArtistMarqueeProps) {
+export function ArtistMarquee({ revealedNames }: ArtistMarqueeProps) {
   const reduce = useReducedMotion();
-  const count = Math.max(totalCount, 5);
   const source =
     revealedNames.length > 0
       ? revealedNames
-      : Array.from({ length: count }, () => "Artiste surprise");
+      : ["?", "Bientôt dévoilé", "?", "Line-up YUNA"];
   const loop = [...source, ...source];
 
   return (
