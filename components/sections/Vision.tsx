@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { TiltCard } from "@/components/motion/TiltCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionShell } from "@/components/ui/SectionShell";
-import { SectionTitleArt } from "@/components/ui/SectionTitleArt";
 import { SoftImage } from "@/components/ui/SoftImage";
 import { VISION } from "@/lib/content-site";
 import { EASE_PREMIUM, cardRise, staggerContainer } from "@/lib/motion";
@@ -23,24 +22,20 @@ export function Vision() {
     <SectionShell
       id="vision"
       labelledBy="vision-title"
-      tone="papier"
+      tone="bleu"
       background="vision"
     >
       <Reveal>
         <header className="max-w-3xl">
-          <p className="section-eyebrow mb-3">
+          <p className="section-eyebrow mb-3 text-feu">
             <span aria-hidden className="h-0.5 w-8 shrink-0 bg-feu" />
             {VISION.eyebrow}
           </p>
-          <h2 id="vision-title" className="section-title text-bleu">
+          <h2 id="vision-title" className="section-title text-papier">
             <span className="block">{VISION.titleLine1}</span>
             <span className="mt-1 block text-feu">{VISION.titleLine2}</span>
           </h2>
-          <p className="section-lead max-w-2xl text-charbon">{VISION.intro}</p>
-          <SectionTitleArt
-            src="/media/title-vision.jpg"
-            alt="La vision — YUNA Festival 2026"
-          />
+          <p className="section-lead max-w-2xl text-papier/85">{VISION.intro}</p>
         </header>
       </Reveal>
 
@@ -68,7 +63,7 @@ export function Vision() {
             >
               <TiltCard className="group h-full" maxTilt={9}>
                 <article
-                  className={`surface-card h-full overflow-hidden border border-jaune/35 ${SHAPE[pillar.id] ?? "rounded-[1.75rem]"} ${
+                  className={`surface-card h-full overflow-hidden border border-jaune/35 bg-papier ${SHAPE[pillar.id] ?? "rounded-[1.75rem]"} ${
                     isDark ? "!bg-bleu !text-papier border-bleu" : ""
                   }`}
                 >
@@ -118,7 +113,7 @@ export function Vision() {
                   </div>
                   <div
                     aria-hidden
-                    className={`h-1 origin-left scale-x-0 bg-gradient-to-r from-feu to-jaune transition-transform duration-400 group-hover:scale-x-100`}
+                    className="h-1 origin-left scale-x-0 bg-gradient-to-r from-feu to-jaune transition-transform duration-400 group-hover:scale-x-100"
                   />
                 </article>
               </TiltCard>

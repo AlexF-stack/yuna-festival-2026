@@ -40,7 +40,11 @@ export function SectionPhotoBackground({ config }: SectionPhotoBackgroundProps) 
       {!reduce ? (
         <div className="media-grain absolute inset-0 opacity-[0.035]" />
       ) : null}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,color-mix(in_srgb,var(--papier)_42%,transparent)_100%)]" />
+      {config.overlay !== "nuit" ? (
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,color-mix(in_srgb,var(--papier)_42%,transparent)_100%)]" />
+      ) : (
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,color-mix(in_srgb,var(--encre)_55%,transparent)_100%)]" />
+      )}
     </div>
   );
 }

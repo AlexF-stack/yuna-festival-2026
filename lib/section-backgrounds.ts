@@ -11,7 +11,7 @@ export type SectionTone =
   | "charbon";
 
 /** Overlay photo teinté aux couleurs exactes du logo (si une photo est gardée). */
-export type SectionBgOverlay = "papier" | "bleu" | "feu";
+export type SectionBgOverlay = "papier" | "bleu" | "feu" | "nuit";
 
 export type SectionBgKey =
   | "mission"
@@ -42,11 +42,11 @@ export const SECTION_BACKGROUNDS: Record<SectionBgKey, SectionBgConfig> = {
     photoOpacity: 0.28,
   },
   vision: {
-    src: "/media/dawn.jpg",
-    alt: "Aube sur le festival",
-    objectPosition: "center 20%",
-    overlay: "papier",
-    photoOpacity: 0.22,
+    src: "/media/title-vision.jpg",
+    alt: "La vision — YUNA Festival 2026",
+    objectPosition: "center center",
+    overlay: "nuit",
+    photoOpacity: 0.88,
   },
   lineup: {
     src: "/media/crowd.jpg",
@@ -104,4 +104,5 @@ export const OVERLAY_CLASS: Record<SectionBgOverlay, string> = {
   papier: "bg-papier/94",
   bleu: "bg-[color-mix(in_srgb,var(--bleu)_14%,var(--papier))]",
   feu: "bg-[color-mix(in_srgb,var(--feu)_12%,var(--papier))]",
+  nuit: "bg-gradient-to-b from-encre/55 via-bleu-fonce/45 to-encre/70",
 };
