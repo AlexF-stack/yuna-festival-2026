@@ -48,8 +48,19 @@ export function SoftImage({
     }
   }, [src, markLoaded]);
 
+  // `relative` par défaut seulement : si le wrapper reçoit `absolute`/`fixed`,
+  // les deux classes de position coexistent et `relative` (plus tard dans la
+  // CSS générée) gagne — le conteneur s'effondre à hauteur 0 et l'image
+  // devient invisible. On n'ajoute donc `relative` qu'en l'absence d'une
+  // autre classe de position.
+  const hasPosition = /(?:^|\s)(absolute|fixed|sticky|static)(?:\s|$)/.test(
+    wrapperClassName,
+  );
+
   return (
-    <div className={`relative overflow-hidden bg-ciel/30 ${wrapperClassName}`}>
+    <div
+      className={`${hasPosition ? "" : "relative"} overflow-hidden bg-ciel/30 ${wrapperClassName}`}
+    >
       <Image
         ref={imgRef}
         src={src}
