@@ -45,3 +45,5 @@ next-env.d.ts
 .lighthouse/
 
 .crm-api-key.local
+
+.env.e2e.local

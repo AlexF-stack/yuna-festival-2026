@@ -1,4 +1,4 @@
-import { after, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 import { notifyCrmRegistration } from "@/lib/crm";
 import { extractRegistrationId } from "@/lib/registration-id";
@@ -73,11 +73,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // Généré avant les retries : clé primaire du journal `scans` côté CRM,
-    // pour qu'un retry après timeout ne crée jamais de doublon.
     const scanId = crypto.randomUUID();
 
-    after(async () => {
+    try {
       await notifyCrmRegistration({
         event: "registration.checked_in",
         id: result.registration.id,
@@ -91,7 +89,9 @@ export async function POST(request: Request) {
         alreadyCheckedIn: result.alreadyCheckedIn,
         scanId,
       });
-    });
+    } catch (crmErr) {
+      console.error("[check-in] CRM sync", crmErr);
+    }
 
     return NextResponse.json({
       ok: true,

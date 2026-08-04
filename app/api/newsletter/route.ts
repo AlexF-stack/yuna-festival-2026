@@ -1,4 +1,4 @@
-import { after, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 import { syncYunaCrmNewsletter } from "@/lib/crm";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
@@ -69,9 +69,11 @@ export async function POST(request: Request) {
     if (error) {
       if (error.code === "23505") {
         // Already subscribed — treat as success (idempotent UX)
-        after(async () => {
+        try {
           await syncYunaCrmNewsletter({ email });
-        });
+        } catch (crmErr) {
+          console.error("[newsletter] CRM sync", crmErr);
+        }
         return NextResponse.json({ ok: true, already: true });
       }
       console.error("[newsletter]", error);
@@ -81,9 +83,11 @@ export async function POST(request: Request) {
       );
     }
 
-    after(async () => {
+    try {
       await syncYunaCrmNewsletter({ email });
-    });
+    } catch (crmErr) {
+      console.error("[newsletter] CRM sync", crmErr);
+    }
 
     return NextResponse.json({ ok: true });
   } catch (err) {

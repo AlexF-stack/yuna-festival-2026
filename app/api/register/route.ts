@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 
-import { after, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 import { notifyCrmRegistration, siteOrigin } from "@/lib/crm";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
@@ -149,8 +149,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // CRM = listing admin externe, exécuté après la réponse sans être interrompu.
-    after(async () => {
+    // Sync CRM avant la réponse : upsert rapide (<1s). On ne fait pas échouer
+    // l'inscription utilisateur si le CRM est down — on log seulement.
+    try {
       await notifyCrmRegistration({
         id: data.id,
         name: parsed.name,
@@ -160,7 +161,9 @@ export async function POST(request: Request) {
         createdAt: data.created_at,
         confirmationUrl: `${siteOrigin()}/confirmation/${data.id}`,
       });
-    });
+    } catch (crmErr) {
+      console.error("[register] CRM sync", crmErr);
+    }
 
     return NextResponse.json({
       id: data.id,

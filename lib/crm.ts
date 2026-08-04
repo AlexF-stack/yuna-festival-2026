@@ -83,7 +83,9 @@ async function withRetry(
   label: string,
   fn: () => Promise<void>,
 ): Promise<void> {
-  const delaysMs = [0, 1000, 3000];
+  // Backoff court : 0 → 400ms → 1200ms (total <2s) pour rester dans la
+  // requête HTTP sans bloquer l'utilisateur trop longtemps.
+  const delaysMs = [0, 400, 1200];
   let lastError: unknown;
   for (const delay of delaysMs) {
     if (delay > 0) {
@@ -100,6 +102,9 @@ async function withRetry(
     `[yuna-crm] ${label} — échec après ${delaysMs.length} tentatives:`,
     lastError,
   );
+  throw lastError instanceof Error
+    ? lastError
+    : new Error(`[yuna-crm] ${label} failed`);
 }
 
 async function upsertInscription(payload: YunaCrmSyncPayload): Promise<void> {
