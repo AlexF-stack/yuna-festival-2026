@@ -2,6 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
+import { useMessages } from "@/components/i18n/LocaleProvider";
+import { fill } from "@/lib/i18n/index";
 import { EASE_YUNA } from "@/lib/motion";
 
 type LineupMysteryProps = {
@@ -15,6 +17,7 @@ type LineupMysteryProps = {
  */
 export function LineupMystery({ count }: LineupMysteryProps) {
   const reduce = useReducedMotion();
+  const t = useMessages();
 
   return (
     <motion.div
@@ -23,7 +26,7 @@ export function LineupMystery({ count }: LineupMysteryProps) {
       viewport={{ once: true, amount: 0.35 }}
       transition={{ duration: 0.65, ease: EASE_YUNA }}
       className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-bleu to-bleu-fonce px-6 py-12 text-center text-papier shadow-ombre-bleu-lg min-[640px]:px-10 min-[640px]:py-14"
-      aria-label={`${count} artistes encore à dévoiler`}
+      aria-label={fill(t.lineup.mysteryBody, { n: count })}
     >
       <div
         aria-hidden
@@ -45,13 +48,13 @@ export function LineupMystery({ count }: LineupMysteryProps) {
       </div>
 
       <p className="mt-8 font-mono text-[0.72rem] font-bold uppercase tracking-[0.28em] text-jaune">
-        Line-up en construction
+        {t.lineup.mysteryEyebrow}
       </p>
       <h3 className="mt-3 font-display text-[clamp(1.8rem,5vw,2.8rem)] font-extrabold uppercase leading-[0.95]">
-        Bientôt dévoilés
+        {t.lineup.mysteryTitle}
       </h3>
       <p className="mx-auto mt-4 max-w-md text-[1.02rem] leading-relaxed text-papier/75">
-        {`${count} artiste${count > 1 ? "s" : ""} encore sous emballage — les noms sortent progressivement. Reste connecté.`}
+        {fill(t.lineup.mysteryBody, { n: count })}
       </p>
     </motion.div>
   );

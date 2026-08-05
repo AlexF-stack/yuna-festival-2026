@@ -10,6 +10,7 @@ import { YunaLogo } from "@/components/brand/YunaLogo";
 import { AnimatedThemeTitle } from "@/components/sections/AnimatedThemeTitle";
 import { HeroCountdown } from "@/components/sections/HeroCountdown";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 import { FESTIVAL, HERO_COPY } from "@/lib/festival";
 import { EASE_PREMIUM } from "@/lib/motion";
 
@@ -32,6 +33,8 @@ const rise: Variants = {
  */
 export function Hero({ eventStartIso }: HeroProps) {
   const reduceMotion = useReducedMotion();
+  const t = useMessages();
+  const hero = t.hero;
 
   return (
     <section
@@ -62,20 +65,20 @@ export function Hero({ eventStartIso }: HeroProps) {
             variants={reduceMotion ? undefined : rise}
             className="mb-4 inline-flex items-center gap-2 rounded-full border border-jaune/35 bg-papier/10 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.18em] text-jaune backdrop-blur-md"
           >
-            {HERO_COPY.eyebrow}
+            {hero.eyebrow}
           </motion.p>
 
           <motion.p
             variants={reduceMotion ? undefined : rise}
             className="mb-3 font-mono text-[0.72rem] font-bold uppercase tracking-[0.2em] text-papier/75"
           >
-            {FESTIVAL.datesHero} · {FESTIVAL.city}
+            {hero.datesHero} · {FESTIVAL.city}
           </motion.p>
 
           <motion.div variants={reduceMotion ? undefined : rise}>
             <AnimatedThemeTitle
-              line1={HERO_COPY.titleLine1}
-              line2={HERO_COPY.titleLine2}
+              line1={hero.titleLine1}
+              line2={hero.titleLine2}
               variant="dark"
             />
           </motion.div>
@@ -85,10 +88,10 @@ export function Hero({ eventStartIso }: HeroProps) {
             className="mt-7 hidden max-w-xl min-[900px]:block"
           >
             <p className="text-[1.02rem] italic leading-relaxed text-papier/88">
-              {HERO_COPY.verse}
+              {hero.verse}
             </p>
             <footer className="mt-2 font-mono text-[0.72rem] font-bold uppercase tracking-[0.16em] text-feu">
-              {HERO_COPY.verseRef}
+              {hero.verseRef}
             </footer>
           </motion.blockquote>
 
@@ -96,7 +99,7 @@ export function Hero({ eventStartIso }: HeroProps) {
             variants={reduceMotion ? undefined : rise}
             className="mt-5 max-w-lg text-[0.98rem] leading-relaxed text-papier/72"
           >
-            {HERO_COPY.support}
+            {hero.support}
           </motion.p>
 
           <motion.div
@@ -107,14 +110,14 @@ export function Hero({ eventStartIso }: HeroProps) {
               href={HERO_COPY.ctaPrimaryHref}
               className="min-h-12 w-full min-[420px]:w-auto"
             >
-              {HERO_COPY.ctaPrimary}
+              {hero.ctaPrimary}
             </ButtonLink>
             <ButtonLink
               href={HERO_COPY.ctaSecondaryHref}
               variant="outline-light"
               className="min-h-12 w-full min-[420px]:w-auto"
             >
-              {HERO_COPY.ctaSecondary}
+              {hero.ctaSecondary}
             </ButtonLink>
           </motion.div>
 

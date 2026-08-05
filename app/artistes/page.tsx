@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Lineup } from "@/components/sections/Lineup";
 import { MediaBand } from "@/components/sections/MediaBand";
 import { Teaser } from "@/components/sections/Teaser";
-import { PageIntro } from "@/components/ui/PageIntro";
+import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
 import { getArtists } from "@/lib/artists";
 
 /** ISR — même stratégie que la home (données artistes Supabase). */
@@ -29,12 +29,7 @@ export default async function ArtistesPage() {
 
   return (
     <main id="contenu" className="bg-papier text-encre">
-      <PageIntro
-        eyebrow="Scènes & adoration"
-        title="Le line-up"
-        lead="Adoration, louange et scènes fortes — le line-up 2026 se dévoile progressivement. Reste connecté, les annonces arrivent."
-        cta={{ href: "/#inscription", label: "Inscris-toi — pass QR gratuit" }}
-      />
+      <LocalizedPageIntro page="artistes" />
       <Lineup artists={artists} />
       <Teaser />
       <MediaBand />

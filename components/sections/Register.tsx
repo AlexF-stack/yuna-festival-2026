@@ -6,9 +6,9 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { PassPreview } from "@/components/pass/PassPreview";
 import { RegistrationGauge } from "@/components/sections/RegistrationGauge";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
-import { REGISTER_COPY } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
 import { EASE_YUNA } from "@/lib/motion";
 import {
@@ -42,6 +42,7 @@ function createIdempotencyKey(): string {
 export function Register({ initialCount = 0 }: RegisterProps) {
   const router = useRouter();
   const reduce = useReducedMotion();
+  const t = useMessages();
   const [idempotencyKey, setIdempotencyKey] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -138,10 +139,10 @@ export function Register({ initialCount = 0 }: RegisterProps) {
       >
         <div className="max-w-2xl">
           <SectionHeading
-            eyebrow="Inscription"
-            title="Inscris-toi — pass QR gratuit"
+            eyebrow={t.register.eyebrow}
+            title={t.register.title}
             titleId="register-title"
-            description={REGISTER_COPY.intro}
+            description={t.register.lead}
           />
           <RegistrationGauge initialCount={initialCount} />
         </div>
@@ -158,7 +159,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
             className="relative rounded-3xl border border-bleu/10 bg-papier/95 p-6 shadow-ombre-bleu backdrop-blur-sm min-[480px]:p-8"
           >
             <h3 className="mb-5 font-display text-xl font-extrabold uppercase tracking-wide text-bleu">
-              Tes infos
+              {t.register.formTitle}
             </h3>
 
             <input
@@ -174,11 +175,12 @@ export function Register({ initialCount = 0 }: RegisterProps) {
 
             <fieldset className="mb-5">
               <legend className="mb-3 text-sm font-medium text-encre">
-                Type d&apos;inscription *
+                {t.register.eyebrow} *
               </legend>
               <div className="grid gap-2">
                 {REGISTRATION_TYPES.map((type) => {
                   const selected = registrationType === type.value;
+                  const localized = t.registerTypes[type.value] ?? type;
                   return (
                     <label
                       key={type.value}
@@ -198,10 +200,10 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                       />
                       <span>
                         <span className="block text-sm font-semibold text-encre">
-                          {type.label}
+                          {localized.label}
                         </span>
                         <span className="mt-0.5 block text-xs text-charbon">
-                          {type.hint}
+                          {localized.hint}
                         </span>
                       </span>
                     </label>
@@ -215,7 +217,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                 htmlFor="reg-name"
                 className="mb-1.5 block text-sm font-medium text-encre"
               >
-                Nom complet *
+                {t.register.name}
               </label>
               <input
                 id="reg-name"
@@ -225,7 +227,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Ex : Grâce Ahouansou"
+                placeholder={t.register.namePh}
                 className={fieldClass}
               />
             </div>
@@ -235,7 +237,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                 htmlFor="reg-phone"
                 className="mb-1.5 block text-sm font-medium text-encre"
               >
-                Téléphone (WhatsApp) *
+                {t.register.phone}
               </label>
               <input
                 id="reg-phone"
@@ -245,7 +247,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                 required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+229 01 XX XX XX XX"
+                placeholder={t.register.phonePh}
                 className={fieldClass}
               />
             </div>
@@ -255,12 +257,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                 htmlFor="reg-email"
                 className="mb-1.5 block text-sm font-medium text-encre"
               >
-                Email{" "}
-                {registrationType === "benevole" ? (
-                  <span className="text-charbon">*</span>
-                ) : (
-                  <span className="text-charbon/50">(optionnel)</span>
-                )}
+                {t.register.email}
               </label>
               <input
                 id="reg-email"
@@ -270,12 +267,12 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                 required={registrationType === "benevole"}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="ton@email.com"
+                placeholder={t.register.emailPh}
                 className={fieldClass}
               />
               {registrationType === "benevole" ? (
                 <p className="mt-1.5 text-xs text-charbon">
-                  Pour le suivi bénévole et WhatsApp.
+                  WhatsApp follow-up.
                 </p>
               ) : null}
             </div>
@@ -290,15 +287,14 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                 className="mt-0.5 h-5 w-5 shrink-0 accent-bleu"
               />
               <span>
-                J&apos;accepte que mes informations soient utilisées pour
-                générer mon pass et organiser le festival, comme décrit dans la{" "}
+                {t.register.consent}{" "}
                 <a
                   href="/confidentialite"
                   target="_blank"
                   rel="noreferrer"
                   className="font-bold text-bleu underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu"
                 >
-                  politique de confidentialité
+                  {t.register.privacy}
                 </a>
                 . *
               </span>
@@ -315,16 +311,16 @@ export function Register({ initialCount = 0 }: RegisterProps) {
               disabled={pending}
               className="w-full rounded-full bg-feu px-4 py-4 text-[1.02rem] font-bold tracking-[0.02em] text-papier transition-[background-color,transform] duration-[250ms] ease-yuna hover:-translate-y-0.5 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             >
-              {pending ? "Génération du pass…" : "Recevoir mon pass QR"}
+              {pending ? "…" : t.register.submit}
             </button>
 
             <p className="mt-4 text-center text-sm text-charbon">
-              Déjà inscrit ?{" "}
+              {t.register.already}{" "}
               <a
                 href="/mon-pass"
                 className="font-bold text-bleu underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu"
               >
-                Retrouver mon pass
+                {t.register.recoverLink}
               </a>
             </p>
 
@@ -350,12 +346,11 @@ export function Register({ initialCount = 0 }: RegisterProps) {
             transition={{ duration: 0.7, ease: EASE_YUNA, delay: 0.06 }}
           >
             <p className="mb-3 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-charbon">
-              Aperçu en direct
+              {t.register.previewLabel}
             </p>
             <PassPreview name={name} registrationType={registrationType} />
             <p className="mt-4 text-sm leading-relaxed text-charbon">
-              Le QR définitif est créé uniquement après validation — cet aperçu
-              te montre ton pass tel qu&apos;il apparaîtra à l&apos;entrée.
+              {t.register.previewHint}
             </p>
           </motion.div>
         </div>

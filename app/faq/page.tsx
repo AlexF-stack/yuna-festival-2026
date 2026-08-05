@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Faq } from "@/components/sections/Faq";
-import { PageIntro } from "@/components/ui/PageIntro";
+import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
 import { FAQ_ITEMS } from "@/lib/faq";
 
 const DESCRIPTION =
@@ -38,12 +38,7 @@ export default function FaqPage() {
           __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <PageIntro
-        eyebrow="Infos pratiques"
-        title="FAQ"
-        lead="Entrée, pass QR, horaires, accès et bénévolat — les réponses essentielles avant le 5 septembre."
-        cta={{ href: "/#inscription", label: "Inscris-toi — pass QR gratuit" }}
-      />
+      <LocalizedPageIntro page="faq" />
       <Faq />
     </main>
   );

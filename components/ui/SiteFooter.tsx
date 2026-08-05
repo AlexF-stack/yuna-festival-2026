@@ -1,9 +1,14 @@
+"use client";
+
 import { YunaLogo } from "@/components/brand/YunaLogo";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 import { ORGANIZER } from "@/lib/content-site";
-import { FESTIVAL, FOOTER_LINKS, HERO_COPY } from "@/lib/festival";
+import { FESTIVAL } from "@/lib/festival";
 import { SITE_CONTACT } from "@/lib/site";
 
 export function SiteFooter() {
+  const t = useMessages();
+
   return (
     <footer className="relative z-10 bg-bleu-fonce text-papier">
       <div aria-hidden className="flex h-1 w-full">
@@ -18,19 +23,19 @@ export function SiteFooter() {
           <p className="mt-5 font-mono text-xs font-bold uppercase tracking-[0.28em] text-feu">
             {FESTIVAL.theme} · {FESTIVAL.edition}
           </p>
-          <p className="mt-3 text-sm text-papier/75">{ORGANIZER.tagline}</p>
-          <p className="mt-2 text-sm text-papier/65">{ORGANIZER.hebrew}</p>
+          <p className="mt-3 text-sm text-papier/75">{t.footer.tagline}</p>
+          <p className="mt-2 text-sm text-papier/65">{t.footer.dove}</p>
           <p className="mt-4 max-w-sm text-[0.95rem] leading-relaxed text-papier/75">
-            {FESTIVAL.tagline} {HERO_COPY.verseRef} · {FESTIVAL.datesShort}
+            {t.footer.verseLine}
           </p>
         </div>
 
         <div>
           <p className="mb-4 text-[0.7rem] font-bold uppercase tracking-[0.28em] text-papier/45">
-            Festival
+            {t.footer.festival}
           </p>
           <ul className="space-y-2.5">
-            {FOOTER_LINKS.map((link) => (
+            {t.footerNav.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -45,7 +50,7 @@ export function SiteFooter() {
 
         <div>
           <p className="mb-4 text-[0.7rem] font-bold uppercase tracking-[0.28em] text-papier/45">
-            Contact
+            {t.footer.contact}
           </p>
           <a
             href={`mailto:${SITE_CONTACT.email}`}
@@ -60,19 +65,16 @@ export function SiteFooter() {
 
         <div>
           <p className="mb-4 text-[0.7rem] font-bold uppercase tracking-[0.28em] text-papier/45">
-            Organisation
+            {t.footer.organization}
           </p>
           <p className="text-papier/80">{ORGANIZER.name}</p>
-          <p className="mt-3 text-sm text-papier/55">{FESTIVAL.datesShort}</p>
-          <p className="mt-2 text-sm text-papier/55">
-            {FESTIVAL.freeEntry} · Ouverture {FESTIVAL.siteOpens}
-          </p>
+          <p className="mt-3 text-sm text-papier/55">{t.hero.meta.split(" · ")[0]}</p>
+          <p className="mt-2 text-sm text-papier/55">{t.footer.openNote}</p>
         </div>
       </div>
 
       <div className="border-t border-papier/10 px-5 py-5 text-center font-mono text-[0.68rem] uppercase tracking-[0.18em] text-papier/40 min-[760px]:px-6">
-        © {FESTIVAL.edition} {FESTIVAL.brandFull} · {ORGANIZER.name} · Tous
-        droits réservés
+        © {FESTIVAL.edition} {FESTIVAL.brandFull} · {ORGANIZER.name}
       </div>
     </footer>
   );

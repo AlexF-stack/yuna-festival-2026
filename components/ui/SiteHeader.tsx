@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { YunaLogo } from "@/components/brand/YunaLogo";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { FESTIVAL, NAV_LINKS } from "@/lib/festival";
+import { FESTIVAL } from "@/lib/festival";
 
 type NavSurface = "hero" | "bleu" | "feu" | "papier";
 
@@ -62,6 +64,7 @@ const SURFACE_STYLE: Record<
 const PROBE_Y = 88;
 
 export function SiteHeader() {
+  const messages = useMessages();
   const [surface, setSurface] = useState<NavSurface>("hero");
   const [open, setOpen] = useState(false);
 
@@ -145,7 +148,7 @@ export function SiteHeader() {
           aria-label="Navigation principale"
           className="hidden items-center gap-0.5 min-[900px]:flex"
         >
-          {NAV_LINKS.map((link) => (
+          {messages.nav.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -157,42 +160,46 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 min-[900px]:flex">
+          <LanguageSwitcher light={lightText} />
           <Link
             href="/mon-pass"
             className={`rounded-full px-3.5 py-2 text-[0.76rem] font-bold uppercase tracking-[0.08em] transition-colors ${style.link}`}
           >
-            Mon pass
+            {messages.common.myPass}
           </Link>
           <ButtonLink
             href="/#inscription"
             className={`min-h-11 !px-6 !py-2.5 text-[0.8rem] ${style.cta}`}
           >
-            Inscris-toi
+            {messages.common.register}
           </ButtonLink>
         </div>
 
-        <button
-          type="button"
-          className={`relative z-[130] flex h-11 w-11 items-center justify-center rounded-full border min-[900px]:hidden ${style.burger}`}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="sr-only">Menu</span>
-          <span
-            aria-hidden
-            className={`absolute h-0.5 w-5 bg-current transition-transform duration-[250ms] ease-yuna ${open ? "rotate-45" : "-translate-y-1.5"}`}
-          />
-          <span
-            aria-hidden
-            className={`absolute h-0.5 w-5 bg-current transition-opacity duration-200 ${open ? "opacity-0" : "opacity-100"}`}
-          />
-          <span
-            aria-hidden
-            className={`absolute h-0.5 w-5 bg-current transition-transform duration-[250ms] ease-yuna ${open ? "-rotate-45" : "translate-y-1.5"}`}
-          />
-        </button>
+        <div className="flex items-center gap-2 min-[900px]:hidden">
+          <LanguageSwitcher light={lightText} />
+          <button
+            type="button"
+            className={`relative z-[130] flex h-11 w-11 items-center justify-center rounded-full border ${style.burger}`}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="sr-only">Menu</span>
+            <span
+              aria-hidden
+              className={`absolute h-0.5 w-5 bg-current transition-transform duration-[250ms] ease-yuna ${open ? "rotate-45" : "-translate-y-1.5"}`}
+            />
+            <span
+              aria-hidden
+              className={`absolute h-0.5 w-5 bg-current transition-opacity duration-200 ${open ? "opacity-0" : "opacity-100"}`}
+            />
+            <span
+              aria-hidden
+              className={`absolute h-0.5 w-5 bg-current transition-transform duration-[250ms] ease-yuna ${open ? "-rotate-45" : "translate-y-1.5"}`}
+            />
+          </button>
+        </div>
       </div>
 
       <div
@@ -201,7 +208,7 @@ export function SiteHeader() {
         className={`px-5 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] min-[900px]:hidden ${style.mobile}`}
       >
         <nav aria-label="Navigation mobile" className="flex flex-col gap-1">
-          {NAV_LINKS.map((link) => (
+          {messages.nav.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -220,7 +227,7 @@ export function SiteHeader() {
               lightText ? "text-papier/70" : "text-charbon"
             }`}
           >
-            {FESTIVAL.datesHero} · {FESTIVAL.city}
+            {messages.hero.datesHero} · {FESTIVAL.city}
           </p>
           <Link
             href="/mon-pass"
@@ -231,14 +238,14 @@ export function SiteHeader() {
                 : "border-bleu/20 text-bleu hover:bg-logo-bleu-soft"
             }`}
           >
-            Pass perdu ? Retrouver mon pass
+            {messages.common.recoverPass}
           </Link>
           <ButtonLink
             href="/#inscription"
             className={`mt-3 w-full ${style.cta}`}
             onClick={() => setOpen(false)}
           >
-            Inscris-toi
+            {messages.common.register}
           </ButtonLink>
         </nav>
       </div>

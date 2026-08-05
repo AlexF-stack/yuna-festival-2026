@@ -1,8 +1,11 @@
+"use client";
+
 import { ArtistCard } from "@/components/sections/ArtistCard";
 import { ArtistMarquee } from "@/components/sections/ArtistMarquee";
 import { EmberFieldDynamic } from "@/components/sections/EmberFieldDynamic";
 import { LineupMystery } from "@/components/sections/LineupMystery";
 import { LineupTeaser } from "@/components/sections/LineupTeaser";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { LINEUP_TOTAL } from "@/lib/festival";
@@ -13,6 +16,7 @@ type LineupProps = {
 };
 
 export function Lineup({ artists }: LineupProps) {
+  const t = useMessages();
   const revealed = artists.filter((a) => a.is_revealed);
   const totalCount = Math.max(artists.length, LINEUP_TOTAL);
   const mysteryCount = Math.max(0, totalCount - revealed.length);
@@ -36,10 +40,10 @@ export function Lineup({ artists }: LineupProps) {
         <div className="flex flex-col gap-5 min-[760px]:flex-row min-[760px]:items-end min-[760px]:justify-between">
           <div>
             <SectionHeading
-              eyebrow="Line-up"
-              title="Les artistes"
+              eyebrow={t.lineup.eyebrow}
+              title={t.lineup.title}
               titleId="lineup-title"
-              description="Adoration, louange et scènes fortes — le line-up se dévoile progressivement."
+              description={t.lineup.description}
               variant="light"
             />
           </div>
@@ -47,7 +51,7 @@ export function Lineup({ artists }: LineupProps) {
         </div>
 
         {totalCount === 0 ? (
-          <p className="mt-14 text-papier/80">Line-up à venir.</p>
+          <p className="mt-14 text-papier/80">{t.lineup.coming}</p>
         ) : (
           <div className="mt-12 space-y-6 min-[760px]:mt-16">
             {headliner ? <ArtistCard artist={headliner} index={0} /> : null}

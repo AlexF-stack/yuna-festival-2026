@@ -3,20 +3,20 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
+import { useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { FESTIVAL, HERO_COPY } from "@/lib/festival";
 import { EASE_YUNA } from "@/lib/motion";
 
 /**
  * Un seul message « save the date » — citation + date + visuel ticket.
- * Remplace QuoteStrip + ComingSoon + l'ancien SaveTheDateStrip.
  */
 export function SaveTheDateStrip() {
   const reduce = useReducedMotion();
+  const t = useMessages();
 
   return (
     <section
-      aria-label="Save the date YUNA Festival"
+      aria-label={t.saveTheDate.eyebrow}
       data-tone="bleu"
       data-nav-tone="bleu"
       className="relative z-10 overflow-hidden bg-bleu py-14 text-papier min-[760px]:py-16"
@@ -33,23 +33,22 @@ export function SaveTheDateStrip() {
           transition={{ duration: 0.65, ease: EASE_YUNA }}
         >
           <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.28em] text-jaune">
-            Save the date · {FESTIVAL.edition}
+            {t.saveTheDate.eyebrow}
           </p>
           <p className="mt-3 font-display text-[clamp(1.9rem,5vw,2.8rem)] font-extrabold uppercase leading-[0.95]">
-            {FESTIVAL.datesShort}
+            {t.saveTheDate.title}
           </p>
           <p className="mt-4 max-w-md text-[1.05rem] leading-relaxed text-papier/88">
-            {HERO_COPY.support}
+            {t.saveTheDate.support}
           </p>
           <p className="mt-3 max-w-sm text-[0.95rem] leading-relaxed text-papier/70">
-            {FESTIVAL.venue}, {FESTIVAL.city} — {FESTIVAL.freeEntry}. Garde la
-            date, génère ton pass.
+            {t.saveTheDate.venue}
           </p>
           <ButtonLink
             href="/#inscription"
             className="mt-7 !bg-feu hover:!bg-braise"
           >
-            Inscris-toi — pass QR gratuit
+            {t.common.registerCta}
           </ButtonLink>
         </motion.div>
 
@@ -63,7 +62,7 @@ export function SaveTheDateStrip() {
           <div className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-ombre-bleu-lg">
             <Image
               src="/media/save-the-date.webp"
-              alt="Save the date YUNA — 5 et 6 septembre 2026"
+              alt={t.saveTheDate.title}
               fill
               sizes="(min-width: 800px) 420px, 90vw"
               quality={80}

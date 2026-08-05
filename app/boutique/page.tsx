@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Boutique } from "@/components/sections/Boutique";
-import { PageIntro } from "@/components/ui/PageIntro";
+import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
 
 /** ISR — même stratégie que la home (produits Supabase). */
 export const revalidate = 60;
@@ -24,11 +24,7 @@ export const metadata: Metadata = {
 export default function BoutiquePage() {
   return (
     <main id="contenu" className="bg-papier text-encre">
-      <PageIntro
-        eyebrow="Porte le feu"
-        title="La boutique"
-        lead="Tee-shirts LED YUNA — de la flamme toujours allumée à la matrice pilotée depuis ton téléphone. Pré-commande avant le jour J."
-      />
+      <LocalizedPageIntro page="boutique" showCta={false} />
       <Boutique />
     </main>
   );

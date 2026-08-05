@@ -2,15 +2,16 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-import { EVENT_STATS } from "@/lib/festival";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 import { EASE_YUNA, rise, staggerContainer } from "@/lib/motion";
 
 export function StatsBar() {
   const reduce = useReducedMotion();
+  const t = useMessages();
 
   return (
     <section
-      aria-label="Chiffres clés du festival"
+      aria-label={t.countdown.label}
       data-nav-tone="bleu"
       data-tone="bleu"
       className="relative z-10 overflow-hidden bg-bleu"
@@ -27,7 +28,7 @@ export function StatsBar() {
         whileInView={reduce ? undefined : "show"}
         viewport={{ once: true, amount: 0.4 }}
       >
-        {EVENT_STATS.map((stat) => (
+        {t.stats.map((stat) => (
           <motion.div
             key={stat.label}
             variants={reduce ? undefined : rise(16)}

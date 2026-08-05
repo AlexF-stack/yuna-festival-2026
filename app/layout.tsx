@@ -86,7 +86,7 @@ export default function RootLayout({
           href="#contenu"
           className="fixed left-4 top-4 z-[200] -translate-y-24 rounded-full bg-feu px-4 py-2 font-bold text-papier opacity-0 transition-none focus:translate-y-0 focus:opacity-100 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-bleu"
         >
-          Aller au contenu
+          Skip / Aller au contenu
         </a>
         <Loader />
         <AppChrome>{children}</AppChrome>

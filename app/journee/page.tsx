@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { Journee } from "@/components/sections/Journee";
 import { Poles } from "@/components/sections/Poles";
-import { PageIntro } from "@/components/ui/PageIntro";
+import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
 
 const DESCRIPTION =
   "Samedi en journée : action sociale et médicale gratuite, Masterclass VTeam et Entrepreneuriat, pôles gospel, art, danse — le réveil commence par le service.";
@@ -21,12 +21,7 @@ export const metadata: Metadata = {
 export default function JourneePage() {
   return (
     <main id="contenu" className="bg-papier text-encre">
-      <PageIntro
-        eyebrow="Samedi en journée"
-        title="La journée d'impact"
-        lead="Le réveil commence par le service : action médicale gratuite, masterclass et pôles d'activités — avant les projecteurs, YUNA touche la ville."
-        cta={{ href: "/#inscription", label: "Réserver ma place en masterclass" }}
-      />
+      <LocalizedPageIntro page="journee" />
       <Journee />
       <Poles />
     </main>
