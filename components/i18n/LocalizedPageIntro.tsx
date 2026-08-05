@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useMessages } from "@/components/i18n/LocaleProvider";
 import { PageIntro } from "@/components/ui/PageIntro";
@@ -47,12 +48,12 @@ export function LocalizedMonPassExtras() {
     <>
       <p className="mt-8 text-center text-sm text-charbon">
         {t.pages.monPass.notYet}{" "}
-        <a
+        <Link
           href="/#inscription"
           className="font-bold text-bleu underline-offset-4 hover:underline"
         >
           {t.common.registerCta}
-        </a>
+        </Link>
       </p>
       <ButtonLink href="/" variant="ghost" className="mt-6 !px-0">
         {t.common.backHome}
