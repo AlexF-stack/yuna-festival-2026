@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 
-import { Journee } from "@/components/sections/Journee";
-import { Poles } from "@/components/sections/Poles";
-import { SessionsCatalog } from "@/components/sections/SessionsCatalog";
-import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
+import { JourneePageContent } from "@/components/sections/JourneePageContent";
 
 const DESCRIPTION =
   "Samedi en journée : action sociale et médicale gratuite, Masterclass VTeam et Entrepreneuriat, pôles gospel, art, danse — le réveil commence par le service.";
@@ -22,10 +19,7 @@ export const metadata: Metadata = {
 export default function JourneePage() {
   return (
     <main id="contenu" className="bg-papier text-encre">
-      <LocalizedPageIntro page="journee" />
-      <SessionsCatalog />
-      <Journee />
-      <Poles />
+      <JourneePageContent />
     </main>
   );
 }
