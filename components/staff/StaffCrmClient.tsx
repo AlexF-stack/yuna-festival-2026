@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
   REGISTRATION_TYPE_LABELS,
@@ -92,6 +92,8 @@ function exportCsv(rows: Registration[]) {
   URL.revokeObjectURL(url);
 }
 
+const LIVE_POLL_MS = 6000;
+
 export function StaffCrmClient() {
   const [secret, setSecret] = useState("");
   const [unlocked, setUnlocked] = useState(false);
@@ -102,6 +104,10 @@ export function StaffCrmClient() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ApiOk | null>(null);
+  const [live, setLive] = useState(true);
+  const [lastSyncAt, setLastSyncAt] = useState<number | null>(null);
+  const [flashIds, setFlashIds] = useState<Set<string>>(new Set());
+  const prevCheckedRef = useRef<Map<string, boolean>>(new Map());
 
   const fetchPage = useCallback(
     async (
@@ -110,9 +116,13 @@ export function StaffCrmClient() {
       status: "all" | "yes" | "no",
       type: string,
       key = secret,
+      opts?: { silent?: boolean },
     ) => {
-      setLoading(true);
-      setError(null);
+      const silent = Boolean(opts?.silent);
+      if (!silent) {
+        setLoading(true);
+        setError(null);
+      }
       try {
         const params = new URLSearchParams({
           page: String(nextPage),
@@ -127,11 +137,14 @@ export function StaffCrmClient() {
             "x-api-key": key.trim(),
             "x-yuna-staff": key.trim(),
           },
+          cache: "no-store",
         });
         const json = (await res.json()) as ApiOk | ApiErr;
         if (!res.ok || !json.ok) {
-          setData(null);
-          setError(!json.ok ? json.error : `Erreur HTTP ${res.status}`);
+          if (!silent) {
+            setData(null);
+            setError(!json.ok ? json.error : `Erreur HTTP ${res.status}`);
+          }
           if (res.status === 401) {
             setUnlocked(false);
             try {
@@ -142,19 +155,46 @@ export function StaffCrmClient() {
           }
           return;
         }
+
+        const newlyIn = new Set<string>();
+        for (const row of json.registrations) {
+          const was = prevCheckedRef.current.get(row.id);
+          if (was === false && row.checked_in) {
+            newlyIn.add(row.id);
+          }
+          prevCheckedRef.current.set(row.id, row.checked_in);
+        }
+        if (newlyIn.size > 0) {
+          setFlashIds((prev) => {
+            const next = new Set(prev);
+            newlyIn.forEach((id) => next.add(id));
+            return next;
+          });
+          window.setTimeout(() => {
+            setFlashIds((prev) => {
+              const next = new Set(prev);
+              newlyIn.forEach((id) => next.delete(id));
+              return next;
+            });
+          }, 4500);
+        }
+
         setData(json);
         setPage(json.page);
         setUnlocked(true);
+        setLastSyncAt(Date.now());
         try {
           sessionStorage.setItem(CRM_KEY, key.trim());
         } catch {
           /* ignore */
         }
       } catch {
-        setError("Réseau indisponible.");
-        setData(null);
+        if (!silent) {
+          setError("Réseau indisponible.");
+          setData(null);
+        }
       } finally {
-        setLoading(false);
+        if (!silent) setLoading(false);
       }
     },
     [secret],
@@ -180,6 +220,17 @@ export function StaffCrmClient() {
     return () => window.clearTimeout(t);
   }, [q, checkedIn, typeFilter, unlocked, fetchPage]);
 
+  /** Temps réel soft — polling silencieux du statut scanné / non-scanné. */
+  useEffect(() => {
+    if (!unlocked || !live) return;
+    const tick = () => {
+      if (document.hidden) return;
+      void fetchPage(page, q, checkedIn, typeFilter, secret, { silent: true });
+    };
+    const id = window.setInterval(tick, LIVE_POLL_MS);
+    return () => window.clearInterval(id);
+  }, [unlocked, live, page, q, checkedIn, typeFilter, secret, fetchPage]);
+
   async function onUnlock(e: React.FormEvent) {
     e.preventDefault();
     await fetchPage(1, q, checkedIn, typeFilter);
@@ -200,16 +251,47 @@ export function StaffCrmClient() {
             CRM inscriptions
           </h1>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-charbon">
-            Lecture live site → sync CRM. Même secret que le{" "}
+            Statut entrée en temps réel (scan porte). Même secret que le{" "}
             <Link
               href="/staff/scan"
               className="font-bold text-bleu underline-offset-2 hover:underline"
             >
-              scan porte
+              scan
             </Link>
             .
           </p>
         </div>
+        {unlocked ? (
+          <div className="flex flex-col items-end gap-1">
+            <button
+              type="button"
+              onClick={() => setLive((v) => !v)}
+              className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-wide ${
+                live
+                  ? "bg-vert/15 text-vert"
+                  : "border border-bleu/20 bg-papier text-charbon"
+              }`}
+              aria-pressed={live}
+            >
+              <span
+                className={`size-2 rounded-full ${
+                  live ? "animate-pulse bg-vert" : "bg-charbon/40"
+                }`}
+                aria-hidden
+              />
+              {live ? "Live" : "Pause"}
+            </button>
+            <p className="text-[0.7rem] text-charbon">
+              {lastSyncAt
+                ? `Maj ${new Date(lastSyncAt).toLocaleTimeString("fr-FR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                  })}`
+                : "—"}
+            </p>
+          </div>
+        ) : null}
       </div>
 
       {!unlocked ? (
@@ -340,7 +422,11 @@ export function StaffCrmClient() {
             {(data?.registrations ?? []).map((r) => (
               <li
                 key={r.id}
-                className="rounded-2xl border border-sable/80 bg-papier p-4 shadow-sm"
+                className={`rounded-2xl border bg-papier p-4 shadow-sm transition-colors ${
+                  flashIds.has(r.id)
+                    ? "border-vert bg-vert/10"
+                    : "border-sable/80"
+                }`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
@@ -419,7 +505,9 @@ export function StaffCrmClient() {
                 {(data?.registrations ?? []).map((r) => (
                   <tr
                     key={r.id}
-                    className="border-b border-sable/60 last:border-0"
+                    className={`border-b border-sable/60 last:border-0 transition-colors ${
+                      flashIds.has(r.id) ? "bg-vert/10" : ""
+                    }`}
                   >
                     <td className="px-4 py-3 font-semibold text-encre">
                       {r.name}

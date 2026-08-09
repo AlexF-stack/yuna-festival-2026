@@ -1,6 +1,5 @@
 "use client";
 
-import { EffectFrame } from "@/components/ui/EffectFrame";
 import { FESTIVAL } from "@/lib/festival";
 import {
   REGISTRATION_TYPE_LABELS,
@@ -18,9 +17,8 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
   const typeLabel = REGISTRATION_TYPE_LABELS[registrationType];
 
   return (
-    <EffectFrame className="w-full rounded-[1.25rem] shadow-[0_20px_48px_rgba(0,90,140,0.12)]">
     <aside
-      className="pass-ticket relative w-full overflow-hidden bg-papier text-encre"
+      className="pass-ticket relative w-full overflow-hidden bg-papier text-encre shadow-[0_20px_48px_rgba(0,90,140,0.12)]"
       aria-live="polite"
       aria-label="Aperçu de ton pass YUNA"
     >
@@ -123,6 +121,5 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
         </span>
       </footer>
     </aside>
-    </EffectFrame>
   );
 }

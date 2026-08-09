@@ -8,6 +8,7 @@ import { YunaLogo } from "@/components/brand/YunaLogo";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { TransitionLink } from "@/components/ui/TransitionLink";
 import { FESTIVAL } from "@/lib/festival";
 
 type NavSurface = "hero" | "bleu" | "feu" | "papier";
@@ -24,12 +25,12 @@ function toneToSurface(tone: string | null, isHero: boolean): NavSurface {
   return "bleu";
 }
 
-const CTA_ON_DARK =
-  "!bg-feu !text-papier hover:!bg-braise shadow-[0_8px_22px_color-mix(in_srgb,var(--feu)_40%,transparent)]";
-const CTA_ON_FEU =
-  "!bg-papier !text-feu hover:!bg-papier/90 shadow-[0_8px_22px_rgba(0,0,0,0.12)]";
-const CTA_ON_PAPIER =
-  "!bg-feu !text-papier hover:!bg-braise shadow-[0_8px_22px_color-mix(in_srgb,var(--feu)_28%,transparent)]";
+/** CTA or drapeau — lisible sur hero sombre, bleu, feu et papier. */
+const CTA_GOLD =
+  "!bg-jaune !text-nuit-profonde hover:!bg-[var(--or-hover)] shadow-ombre-cta ring-2 ring-jaune/35";
+const CTA_ON_DARK = CTA_GOLD;
+const CTA_ON_FEU = CTA_GOLD;
+const CTA_ON_PAPIER = CTA_GOLD;
 
 const SURFACE_STYLE: Record<
   NavSurface,
@@ -37,17 +38,17 @@ const SURFACE_STYLE: Record<
 > = {
   hero: {
     header:
-      "border-b border-papier/15 bg-encre/35 shadow-[0_12px_40px_rgba(0,0,0,0.18)] backdrop-blur-xl backdrop-saturate-150",
+      "border-b border-papier/15 bg-encre/80 shadow-[0_12px_40px_rgba(0,0,0,0.18)]",
     link: "text-papier/85 hover:text-papier",
     linkActive: "text-jaune",
     burger: "border-papier/40 text-papier bg-papier/5",
-    mobile: "border-t border-papier/15 bg-encre/95 text-papier backdrop-blur-xl",
+    mobile: "border-t border-papier/15 bg-encre text-papier",
     cta: CTA_ON_DARK,
     chip: "border-papier/25 bg-papier/10 text-jaune",
   },
   bleu: {
     header:
-      "border-b border-papier/15 bg-bleu/95 shadow-[0_12px_40px_color-mix(in_srgb,var(--bleu)_40%,transparent)] backdrop-blur-md",
+      "border-b border-papier/15 bg-bleu shadow-[0_12px_40px_color-mix(in_srgb,var(--bleu)_40%,transparent)]",
     link: "text-papier/90 hover:text-papier",
     linkActive: "text-jaune",
     burger: "border-papier/40 text-papier",
@@ -57,7 +58,7 @@ const SURFACE_STYLE: Record<
   },
   feu: {
     header:
-      "border-b border-papier/15 bg-feu/95 shadow-[0_12px_40px_color-mix(in_srgb,var(--feu)_40%,transparent)] backdrop-blur-md",
+      "border-b border-papier/15 bg-feu shadow-[0_12px_40px_color-mix(in_srgb,var(--feu)_40%,transparent)]",
     link: "text-papier/90 hover:text-papier",
     linkActive: "text-papier",
     burger: "border-papier/40 text-papier",
@@ -67,7 +68,7 @@ const SURFACE_STYLE: Record<
   },
   papier: {
     header:
-      "border-b border-bleu/15 bg-papier/90 shadow-[0_10px_36px_rgba(0,90,140,0.1)] backdrop-blur-md",
+      "border-b border-bleu/15 bg-papier shadow-[0_10px_36px_rgba(0,90,140,0.1)]",
     link: "text-bleu/80 hover:text-bleu",
     linkActive: "text-feu",
     burger: "border-bleu/25 text-bleu",
@@ -96,11 +97,18 @@ export function SiteHeader() {
   const lastY = useRef(0);
 
   useEffect(() => {
-    const pickSurface = () => {
-      const nodes = document.querySelectorAll<HTMLElement>(
-        "section[data-nav-surface], section[data-tone], [data-nav-tone]",
-      );
+    let raf = 0;
+    let nodes: HTMLElement[] = [];
 
+    const refreshNodes = () => {
+      nodes = Array.from(
+        document.querySelectorAll<HTMLElement>(
+          "section[data-nav-surface], section[data-tone], [data-nav-tone]",
+        ),
+      );
+    };
+
+    const resolveSurface = (): NavSurface => {
       let match: HTMLElement | null = null;
       for (const node of nodes) {
         const rect = node.getBoundingClientRect();
@@ -110,44 +118,46 @@ export function SiteHeader() {
         }
       }
 
-      if (!match) {
-        setSurface(window.scrollY < 48 ? "hero" : "bleu");
-        return;
-      }
-
-      if (match.getAttribute("data-nav-surface") === "hero") {
-        setSurface("hero");
-        return;
-      }
-
+      if (!match) return window.scrollY < 48 ? "hero" : "bleu";
+      if (match.getAttribute("data-nav-surface") === "hero") return "hero";
       const tone =
         match.getAttribute("data-tone") ||
         match.getAttribute("data-nav-tone");
-      setSurface(toneToSurface(tone, false));
+      return toneToSurface(tone, false);
+    };
+
+    const applyScrollState = () => {
+      raf = 0;
+      const y = window.scrollY;
+      const nextScrolled = y > 24;
+      setScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled));
+
+      let nextHidden = false;
+      if (!open) {
+        const goingDown = y > lastY.current;
+        nextHidden = goingDown && y > 140;
+      }
+      setHidden((prev) => (prev === nextHidden ? prev : nextHidden));
+      lastY.current = y;
+
+      const nextSurface = resolveSurface();
+      setSurface((prev) => (prev === nextSurface ? prev : nextSurface));
     };
 
     const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 24);
-
-      if (!open) {
-        const goingDown = y > lastY.current;
-        if (goingDown && y > 140) setHidden(true);
-        else setHidden(false);
-      } else {
-        setHidden(false);
-      }
-      lastY.current = y;
-      pickSurface();
+      if (raf) return;
+      raf = requestAnimationFrame(applyScrollState);
     };
 
-    pickSurface();
+    refreshNodes();
+    applyScrollState();
     lastY.current = window.scrollY;
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", pickSurface, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     return () => {
+      cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", pickSurface);
+      window.removeEventListener("resize", onScroll);
     };
   }, [open]);
 
@@ -164,14 +174,14 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`relative z-[120] pt-[env(safe-area-inset-top)] transition-[transform,background-color,box-shadow,border-color,color] duration-300 ease-yuna ${
+      className={`relative z-[120] pt-[env(safe-area-inset-top)] transition-transform duration-300 ease-yuna ${
         hidden && !open ? "-translate-y-full" : "translate-y-0"
       } ${style.header}`}
     >
-      <div aria-hidden className="flex h-[3px] w-full">
-        <span className="flex-1 bg-vert" />
-        <span className="flex-1 bg-jaune" />
-        <span className="flex-1 bg-rouge" />
+      <div aria-hidden className="flag-stripe">
+        <span className="bg-vert" />
+        <span className="bg-jaune" />
+        <span className="bg-rouge" />
       </div>
 
       <div
@@ -199,15 +209,9 @@ export function SiteHeader() {
             />
           </Link>
           <span
-            className={`fx-frame fx-frame--soft hidden max-w-[14rem] rounded-full min-[1100px]:inline-flex ${
-              activeSurface === "papier" ? "" : "fx-frame--dark"
-            }`}
+            className={`hidden truncate rounded-full border px-2.5 py-1 font-mono text-[0.6rem] font-bold uppercase tracking-[0.12em] min-[1100px]:inline-flex ${style.chip}`}
           >
-            <span
-              className={`fx-frame__inner truncate rounded-full px-2.5 py-1 font-mono text-[0.6rem] font-bold uppercase tracking-[0.12em] ${style.chip}`}
-            >
-              {messages.hero.datesHero} · {FESTIVAL.city}
-            </span>
+            {messages.hero.datesHero} · {FESTIVAL.city}
           </span>
         </div>
 
@@ -218,7 +222,7 @@ export function SiteHeader() {
           {messages.nav.map((link) => {
             const active = navIsActive(pathname, link.href);
             return (
-              <Link
+              <TransitionLink
                 key={link.href}
                 href={link.href}
                 className={`group relative whitespace-nowrap rounded-full px-2.5 py-2 text-[0.72rem] font-bold uppercase tracking-[0.1em] transition-colors min-[1100px]:px-3.5 min-[1100px]:text-[0.78rem] ${
@@ -234,19 +238,19 @@ export function SiteHeader() {
                       : "scale-x-0 bg-current group-hover:scale-x-100"
                   }`}
                 />
-              </Link>
+              </TransitionLink>
             );
           })}
         </nav>
 
         <div className="hidden items-center justify-end gap-2 min-[900px]:flex">
           <LanguageSwitcher light={lightText} surface={activeSurface} />
-          <Link
+          <TransitionLink
             href="/mon-pass"
             className={`rounded-full px-2.5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.08em] transition-colors min-[1100px]:px-3 ${style.link}`}
           >
             {messages.common.myPass}
-          </Link>
+          </TransitionLink>
           <ButtonLink
             href="/#inscription"
             className={`min-h-11 !px-4 !py-2.5 text-[0.72rem] font-extrabold uppercase tracking-[0.06em] min-[1100px]:!px-5 min-[1100px]:text-[0.78rem] ${style.cta}`}
@@ -298,7 +302,7 @@ export function SiteHeader() {
           {messages.nav.map((link) => {
             const active = navIsActive(pathname, link.href);
             return (
-              <Link
+              <TransitionLink
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
@@ -313,10 +317,10 @@ export function SiteHeader() {
                 }`}
               >
                 {link.label}
-              </Link>
+              </TransitionLink>
             );
           })}
-          <Link
+          <TransitionLink
             href="/mon-pass"
             onClick={() => setOpen(false)}
             className={`mt-6 rounded-2xl border px-4 py-3.5 text-center text-sm font-bold uppercase tracking-[0.08em] ${
@@ -326,7 +330,7 @@ export function SiteHeader() {
             }`}
           >
             {messages.common.myPass}
-          </Link>
+          </TransitionLink>
           <ButtonLink
             href="/#inscription"
             className={`mt-3 w-full !py-4 font-extrabold uppercase tracking-[0.06em] ${style.cta}`}

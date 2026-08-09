@@ -1,18 +1,20 @@
 "use client";
 
-import { EffectFrame } from "@/components/ui/EffectFrame";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { SoftImage } from "@/components/ui/SoftImage";
 import { VENUE } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
 
+/**
+ * Lieu — sur mobile : photo Midombo d’abord (plein impact), puis texte.
+ */
 export function Venue() {
   return (
     <SectionShell id="lieu" labelledBy="lieu-title" tone="feu-soft">
-      <div className="grid items-center gap-14 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-16">
-        <Reveal>
+      <div className="grid items-center gap-10 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-16">
+        <Reveal variant="left" className="order-2 min-[900px]:order-1">
           <SectionHeading
             eyebrow={VENUE.eyebrow}
             title={VENUE.title}
@@ -20,51 +22,58 @@ export function Venue() {
             description={VENUE.intro}
             tone="feu"
           />
-          <ul className="mt-8 space-y-3.5">
+          <RevealGroup as="ul" className="mt-8 space-y-3.5" fast>
             {VENUE.amenities.map((line) => (
-              <li key={line} className="flex gap-3 text-[0.98rem] text-charbon">
-                <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-feu" aria-hidden />
+              <RevealItem
+                key={line}
+                as="li"
+                variant="rise"
+                className="flex gap-3 text-[0.98rem] text-charbon"
+              >
+                <span
+                  className="mt-2 h-2 w-2 shrink-0 rounded-full bg-vert"
+                  aria-hidden
+                />
                 {line}
-              </li>
+              </RevealItem>
             ))}
-          </ul>
+          </RevealGroup>
         </Reveal>
 
-        <Reveal delay={0.08} variant="open">
-          <div className="relative">
-            <EffectFrame
-              tone="media"
-              corners
-              className="aspect-[4/5] rounded-[2rem] rounded-tr-[0.45rem] shadow-ombre-bleu-lg"
-            >
+        <Reveal
+          delay={0.06}
+          variant="open"
+          className="order-1 -mx-5 min-[900px]:order-2 min-[900px]:mx-0"
+        >
+          <div className="relative px-5 min-[900px]:px-0">
+            <div className="relative aspect-[5/6] overflow-hidden rounded-[1.75rem] rounded-tr-[0.4rem] shadow-ombre-bleu-lg min-[560px]:aspect-[4/5] min-[900px]:rounded-[2rem] min-[900px]:rounded-tr-[0.45rem]">
               <SoftImage
-                src="/media/venue-midombo-generated.webp"
-                alt="Festival en plein air au terrain de Midombo"
+                src="/media/venue-midombo.webp"
+                alt="Festival en plein air au Terrain de Midombo, Cotonou"
                 fill
-                sizes="(min-width: 900px) 480px, 100vw"
-                quality={75}
+                sizes="(min-width: 900px) 520px, 100vw"
+                quality={90}
+                priority
                 wrapperClassName="absolute inset-0"
-                objectPosition="center center"
+                objectPosition="center 40%"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-encre/90 via-encre/20 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-8 text-papier">
-                <p className="font-display text-[clamp(2.2rem,6vw,3.5rem)] font-extrabold uppercase leading-none">
+              <div className="absolute inset-0 bg-gradient-to-t from-nuit-profonde/95 via-nuit-profonde/25 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-ivoire-froid min-[480px]:p-8">
+                <p className="font-display text-[clamp(2.6rem,12vw,3.5rem)] font-extrabold uppercase leading-none tracking-tight">
                   Midombo
                 </p>
-                <p className="mt-2 font-mono text-sm font-bold uppercase tracking-[0.18em] text-papier/75">
+                <p className="mt-2 font-mono text-sm font-bold uppercase tracking-[0.18em] text-ivoire-froid/75">
                   {FESTIVAL.city} · {FESTIVAL.country}
                 </p>
               </div>
-            </EffectFrame>
-            <aside className="fx-frame fx-frame--soft absolute -bottom-6 right-0 z-10 rounded-2xl min-[480px]:-right-4 min-[900px]:-right-8">
-              <div className="fx-frame__inner rounded-2xl bg-bleu px-5 py-4 text-center text-papier">
-                <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-papier/65">
-                  Ouverture
-                </p>
-                <p className="font-display text-2xl font-extrabold">
-                  {FESTIVAL.siteOpens}
-                </p>
-              </div>
+            </div>
+            <aside className="absolute -bottom-5 right-5 w-fit rounded-2xl border border-jaune/30 bg-bleu px-4 py-3.5 text-center text-papier shadow-ombre-bleu-lg min-[480px]:-bottom-6 min-[480px]:right-8 min-[480px]:px-5 min-[480px]:py-4 min-[900px]:-right-8">
+              <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-jaune">
+                Ouverture
+              </p>
+              <p className="font-display text-2xl font-extrabold">
+                {FESTIVAL.siteOpens}
+              </p>
             </aside>
           </div>
         </Reveal>

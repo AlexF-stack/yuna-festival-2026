@@ -20,7 +20,7 @@ type HeroProps = {
 
 const container: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.12 } },
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
 };
 const rise: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -28,8 +28,7 @@ const rise: Variants = {
 };
 
 /**
- * Hero mobile allégé : logo, eyebrow, dates, titre, support, CTA, countdown.
- * Verset, carte Bénin et tools restent côté desktop (HeroShowcase).
+ * Hero mobile cinématique : photo vivante, titre plein cadre, verse court, CTA or, countdown.
  */
 export function Hero({ eventStartIso }: HeroProps) {
   const reduceMotion = useReducedMotion();
@@ -47,30 +46,41 @@ export function Hero({ eventStartIso }: HeroProps) {
       {!reduceMotion ? <HeroOrbs /> : null}
       {!reduceMotion ? <HeroFireCanvas /> : null}
 
-      <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1240px] items-center gap-8 px-5 pb-14 pt-28 min-[900px]:grid-cols-[1.08fr_0.92fr] min-[900px]:gap-10 min-[900px]:px-6 min-[900px]:pb-20 min-[900px]:pt-40">
+      <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1240px] items-end gap-8 px-5 pb-16 pt-28 min-[900px]:items-center min-[900px]:gap-10 min-[900px]:px-6 min-[900px]:pb-20 min-[900px]:pt-40">
         <motion.div
           variants={reduceMotion ? undefined : container}
           initial={reduceMotion ? false : "hidden"}
           animate={reduceMotion ? undefined : "show"}
+          className="pb-2 min-[900px]:pb-0"
         >
           <motion.div variants={reduceMotion ? undefined : rise} className="mb-5">
             <YunaLogo
               size="hero"
               priority
-              className="drop-shadow-[0_8px_24px_rgba(0,0,0,0.35)] brightness-110"
+              className="drop-shadow-[0_8px_24px_rgba(0,0,0,0.45)] brightness-110"
             />
+          </motion.div>
+
+          <motion.div
+            variants={reduceMotion ? undefined : rise}
+            className="mb-4 flex flex-wrap items-center gap-3"
+          >
+            <p className="inline-flex items-center gap-2 rounded-full border border-jaune/40 bg-nuit-profonde/35 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.18em] text-jaune shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+              {hero.eyebrow}
+            </p>
+            <span
+              aria-hidden
+              className="flag-stripe h-[3px] w-14 overflow-hidden rounded-full min-[900px]:hidden"
+            >
+              <span className="bg-vert" />
+              <span className="bg-jaune" />
+              <span className="bg-rouge" />
+            </span>
           </motion.div>
 
           <motion.p
             variants={reduceMotion ? undefined : rise}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-jaune/35 bg-papier/10 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.18em] text-jaune backdrop-blur-md"
-          >
-            {hero.eyebrow}
-          </motion.p>
-
-          <motion.p
-            variants={reduceMotion ? undefined : rise}
-            className="mb-3 font-mono text-[0.72rem] font-bold uppercase tracking-[0.2em] text-papier/75"
+            className="mb-3 font-mono text-[0.72rem] font-bold uppercase tracking-[0.2em] text-ivoire-froid/80"
           >
             {hero.datesHero} · {FESTIVAL.city}
           </motion.p>
@@ -85,19 +95,19 @@ export function Hero({ eventStartIso }: HeroProps) {
 
           <motion.blockquote
             variants={reduceMotion ? undefined : rise}
-            className="mt-7 hidden max-w-xl min-[900px]:block"
+            className="mt-5 max-w-xl min-[900px]:mt-7"
           >
-            <p className="text-[1.02rem] italic leading-relaxed text-papier/88">
+            <p className="text-[0.95rem] italic leading-relaxed text-ivoire-froid/90 min-[900px]:text-[1.02rem] min-[900px]:text-papier/88">
               {hero.verse}
             </p>
-            <footer className="mt-2 font-mono text-[0.72rem] font-bold uppercase tracking-[0.16em] text-feu">
+            <footer className="mt-2 font-mono text-[0.68rem] font-bold uppercase tracking-[0.16em] text-jaune min-[900px]:text-[0.72rem]">
               {hero.verseRef}
             </footer>
           </motion.blockquote>
 
           <motion.p
             variants={reduceMotion ? undefined : rise}
-            className="mt-5 hidden max-w-lg text-[0.98rem] leading-relaxed text-papier/72 min-[900px]:block"
+            className="mt-4 max-w-lg text-[0.95rem] leading-relaxed text-ivoire-froid/75 min-[900px]:mt-5 min-[900px]:text-[0.98rem] min-[900px]:text-papier/72"
           >
             {hero.support}
           </motion.p>
@@ -108,14 +118,14 @@ export function Hero({ eventStartIso }: HeroProps) {
           >
             <ButtonLink
               href={HERO_COPY.ctaPrimaryHref}
-              className="min-h-12 w-full min-[420px]:w-auto !bg-feu !px-7 font-extrabold uppercase tracking-[0.04em] hover:!bg-braise"
+              className="min-h-[3.25rem] w-full !px-7 text-[1.02rem] font-extrabold uppercase tracking-[0.04em] min-[420px]:w-auto"
             >
               {hero.ctaPrimary}
             </ButtonLink>
             <ButtonLink
               href={HERO_COPY.ctaSecondaryHref}
               variant="outline-light"
-              className="min-h-12 w-full min-[420px]:w-auto"
+              className="min-h-[3.25rem] w-full min-[420px]:w-auto"
             >
               {hero.ctaSecondary}
             </ButtonLink>
@@ -123,7 +133,7 @@ export function Hero({ eventStartIso }: HeroProps) {
 
           <motion.div
             variants={reduceMotion ? undefined : rise}
-            className="mt-6 min-[900px]:hidden"
+            className="mt-7 min-[900px]:hidden"
           >
             <HeroCountdown eventStartIso={eventStartIso} variant="dark" />
           </motion.div>
@@ -132,7 +142,7 @@ export function Hero({ eventStartIso }: HeroProps) {
         <HeroShowcase eventStartIso={eventStartIso} />
       </div>
 
-      <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 min-[760px]:bottom-8 min-[760px]:block">
+      <div className="pointer-events-none absolute bottom-5 left-1/2 z-10 -translate-x-1/2 min-[760px]:bottom-8">
         <span className="scroll-cue" aria-hidden />
       </div>
     </section>

@@ -28,7 +28,7 @@ export function SoftImage({
   height,
   sizes,
   priority = false,
-  quality = 72,
+  quality = 82,
   className = "",
   wrapperClassName = "",
   objectPosition,

@@ -11,16 +11,16 @@ export function SiteFooter() {
 
   return (
     <footer className="relative z-10 bg-bleu-fonce text-papier">
-      <div aria-hidden className="flex h-1 w-full">
-        <span className="flex-1 bg-vert" />
-        <span className="flex-1 bg-jaune" />
-        <span className="flex-1 bg-rouge" />
+      <div aria-hidden className="flag-stripe">
+        <span className="bg-vert" />
+        <span className="bg-jaune" />
+        <span className="bg-rouge" />
       </div>
 
       <div className="mx-auto grid max-w-[1240px] gap-12 px-5 py-16 min-[760px]:grid-cols-2 min-[1000px]:grid-cols-4 min-[760px]:px-6">
         <div className="min-[1000px]:col-span-1">
           <YunaLogo size="footer" />
-          <p className="mt-5 font-mono text-xs font-bold uppercase tracking-[0.28em] text-feu">
+          <p className="mt-5 font-mono text-xs font-bold uppercase tracking-[0.28em] text-jaune">
             {FESTIVAL.theme} · {FESTIVAL.edition}
           </p>
           <p className="mt-3 text-sm text-papier/75">{t.footer.tagline}</p>
@@ -39,7 +39,7 @@ export function SiteFooter() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="text-papier/80 transition-colors hover:text-feu"
+                  className="text-papier/80 transition-colors hover:text-jaune"
                 >
                   {link.label}
                 </a>
@@ -54,7 +54,7 @@ export function SiteFooter() {
           </p>
           <a
             href={`mailto:${SITE_CONTACT.email}`}
-            className="block text-papier/80 transition-colors hover:text-feu"
+            className="block text-papier/80 transition-colors hover:text-jaune"
           >
             {SITE_CONTACT.email}
           </a>

@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { after, NextResponse } from "next/server";
 
 import { notifyCrmRegistration, siteOrigin } from "@/lib/crm";
+import { sendRegistrationConfirmation } from "@/lib/messaging";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { generateRegistrationQr } from "@/lib/registration-qr";
 import { validateRegistrationInput } from "@/lib/registration";
@@ -285,13 +286,27 @@ export async function POST(request: Request) {
 
     if (crmJobs.length > 0) {
       after(() => {
-        void Promise.all(
-          crmJobs.map((job) =>
+        void Promise.all([
+          ...crmJobs.map((job) =>
             notifyCrmRegistration(job).catch((crmErr) => {
               console.error("[register] CRM sync", crmErr);
             }),
           ),
-        );
+          // WhatsApp / SMS — jamais dans la requête HTTP (timeout / charge).
+          ...crmJobs.map((job) =>
+            sendRegistrationConfirmation({
+              id: job.id,
+              name: job.name,
+              phone: job.phone,
+              registrationType: job.registrationType,
+              confirmationUrl:
+                job.confirmationUrl ??
+                `${siteOrigin()}/confirmation/${job.id}`,
+            }).catch((msgErr) => {
+              console.error("[register] messaging", msgErr);
+            }),
+          ),
+        ]);
       });
     }
 

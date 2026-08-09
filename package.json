@@ -15,7 +15,9 @@
     "@upstash/redis": "^1.38.2",
     "framer-motion": "^12.42.2",
     "html5-qrcode": "^2.3.8",
+    "jose": "^6.2.8",
     "next": "15.5.22",
+    "passkit-generator": "^3.5.7",
     "qrcode": "^1.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0"

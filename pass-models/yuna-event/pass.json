@@ -1,0 +1,18 @@
+{
+  "formatVersion": 1,
+  "passTypeIdentifier": "pass.com.yunafestival.entry",
+  "serialNumber": "PLACEHOLDER",
+  "teamIdentifier": "TEAMID",
+  "organizationName": "YUNA Festival",
+  "description": "Pass YUNA Festival",
+  "logoText": "YUNA",
+  "foregroundColor": "rgb(255, 248, 241)",
+  "backgroundColor": "rgb(0, 119, 187)",
+  "labelColor": "rgb(255, 212, 0)",
+  "eventTicket": {
+    "primaryFields": [],
+    "secondaryFields": [],
+    "auxiliaryFields": [],
+    "backFields": []
+  }
+}

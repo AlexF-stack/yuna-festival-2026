@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { PassActions } from "@/components/pass/PassActions";
 import { PassTicket } from "@/components/pass/PassTicket";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { getMessagingCapabilities } from "@/lib/messaging";
 import { getRegistrationById } from "@/lib/registrations";
 
 type ConfirmationPageProps = {
@@ -37,6 +39,7 @@ export default async function ConfirmationPage({
     .split(",")
     .map((x) => x.trim())
     .filter((x) => x && x !== id);
+  const messaging = getMessagingCapabilities();
 
   return (
     <main
@@ -50,9 +53,10 @@ export default async function ConfirmationPage({
         Ton pass YUNA
       </h1>
       <p className="mt-4 max-w-md text-center text-[1.02rem] leading-relaxed text-charbon">
-        Présente ce QR à l&apos;entrée. Enregistre cette page (favori) ou
-        télécharge le PNG — aucun e-mail de confirmation n&apos;est envoyé pour
-        l&apos;instant.
+        Présente ce QR (ou ton Wallet) à l&apos;entrée.
+        {messaging.any
+          ? " Un message de confirmation part aussi automatiquement sur ton téléphone."
+          : " Ajoute-le à ton Wallet ou télécharge le PNG pour le retrouver facilement."}
       </p>
 
       {groupIds.length > 0 ? (
@@ -87,13 +91,11 @@ export default async function ConfirmationPage({
         />
       </div>
 
-      <a
-        href={registration.qr_code}
-        download={`yuna-pass-${shortId}.png`}
-        className="mt-5 inline-flex w-full max-w-[420px] items-center justify-center rounded-full border-2 border-bleu px-4 py-3.5 font-bold text-bleu transition-[background-color,color] duration-200 hover:bg-bleu hover:text-papier focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu"
-      >
-        Télécharger mon pass (PNG)
-      </a>
+      <PassActions
+        registrationId={registration.id}
+        qrCodeDataUrl={registration.qr_code}
+        shortId={shortId}
+      />
 
       <p className="mt-6 text-center text-sm text-charbon">
         Tu perds ce lien ?{" "}

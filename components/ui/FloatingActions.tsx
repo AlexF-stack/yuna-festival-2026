@@ -46,7 +46,7 @@ export function FloatingActions() {
     <Link
       href="/#inscription"
       aria-label={t.floatAria}
-      className="cta-float fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-[max(1.25rem,env(safe-area-inset-right))] z-[150] flex min-h-12 items-center gap-2 rounded-full bg-feu px-5 py-3.5 font-display text-[0.95rem] font-extrabold uppercase tracking-[0.06em] text-papier shadow-[0_12px_32px_color-mix(in_srgb,var(--feu)_55%,transparent)] ring-2 ring-feu/40 transition-[transform,box-shadow] duration-[250ms] ease-yuna hover:scale-105 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu motion-reduce:transition-none motion-reduce:hover:scale-100"
+      className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-[max(1.25rem,env(safe-area-inset-right))] z-[150] flex min-h-12 items-center gap-2 rounded-full bg-jaune px-5 py-3.5 font-display text-[0.95rem] font-extrabold uppercase tracking-[0.06em] text-nuit-profonde shadow-ombre-cta ring-2 ring-jaune/50 transition-[transform,box-shadow,background-color] duration-[250ms] ease-yuna hover:scale-105 hover:bg-[var(--or-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-jaune motion-reduce:transition-none motion-reduce:hover:scale-100"
     >
       {t.floatCta}
       <span aria-hidden>→</span>

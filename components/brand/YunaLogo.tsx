@@ -11,7 +11,8 @@ const SIZES = {
   hero: {
     width: 220,
     height: 319,
-    className: "h-[6.5rem] w-auto min-[480px]:h-28 min-[760px]:h-32",
+    className:
+      "h-[8rem] w-auto min-[480px]:h-[8.5rem] min-[760px]:h-36 min-[900px]:h-[7.5rem]",
   },
   footer: { width: 140, height: 203, className: "h-[4.5rem] w-auto" },
 } as const;

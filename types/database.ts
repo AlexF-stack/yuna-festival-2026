@@ -89,6 +89,11 @@ type RegistrationsTable = {
     qr_code: string;
     checked_in_at: string | null;
     checked_in_by: string | null;
+    party_id: string | null;
+    notify_status: string | null;
+    notify_channel: string | null;
+    notified_at: string | null;
+    notify_error: string | null;
   };
   Insert: {
     id?: string;
@@ -101,6 +106,11 @@ type RegistrationsTable = {
     qr_code: string;
     checked_in_at?: string | null;
     checked_in_by?: string | null;
+    party_id?: string | null;
+    notify_status?: string | null;
+    notify_channel?: string | null;
+    notified_at?: string | null;
+    notify_error?: string | null;
   };
   Update: {
     id?: string;
@@ -113,6 +123,11 @@ type RegistrationsTable = {
     qr_code?: string;
     checked_in_at?: string | null;
     checked_in_by?: string | null;
+    party_id?: string | null;
+    notify_status?: string | null;
+    notify_channel?: string | null;
+    notified_at?: string | null;
+    notify_error?: string | null;
   };
   Relationships: [];
 };

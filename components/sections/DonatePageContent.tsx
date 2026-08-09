@@ -87,7 +87,7 @@ export function DonatePageContent() {
               {DONATE.pageLead}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="#semer" className="!bg-feu hover:!bg-braise">
+              <ButtonLink href="#semer">
                 Soutenir maintenant →
               </ButtonLink>
               <ButtonLink href="#partenariat-grille" variant="outline-light">
@@ -136,10 +136,7 @@ export function DonatePageContent() {
                 <p className="mt-3 flex-1 text-[1.02rem] leading-relaxed text-charbon">
                   {path.text}
                 </p>
-                <ButtonLink
-                  href={path.href}
-                  className="mt-6 w-full !bg-feu hover:!bg-braise"
-                >
+                <ButtonLink href={path.href} className="mt-6 w-full">
                   {path.cta}
                 </ButtonLink>
               </motion.article>
@@ -188,7 +185,7 @@ export function DonatePageContent() {
                     }}
                     className={`min-h-11 rounded-full px-4 py-2 text-sm font-bold transition-colors ${
                       active
-                        ? "bg-feu text-papier"
+                        ? "bg-jaune text-nuit-profonde"
                         : "border border-bleu/20 bg-papier text-encre hover:border-feu/50"
                     }`}
                   >
@@ -213,7 +210,7 @@ export function DonatePageContent() {
 
             <a
               href={seedHref}
-              className="mt-6 flex min-h-12 w-full items-center justify-center rounded-full bg-feu px-4 py-3.5 text-[1.02rem] font-bold text-papier transition-[background-color] hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu"
+              className="mt-6 flex min-h-12 w-full items-center justify-center rounded-full bg-jaune px-4 py-3.5 text-[1.02rem] font-bold text-nuit-profonde shadow-ombre-cta ring-2 ring-jaune/40 transition-[background-color] hover:bg-[var(--or-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-jaune"
             >
               {DONATE.seedCta}
               {amount ? ` · ${formatFcfa(amount)}` : ""}

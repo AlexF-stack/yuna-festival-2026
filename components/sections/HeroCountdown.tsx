@@ -49,20 +49,20 @@ export function HeroCountdown({
           key={key}
           className={
             variant === "dark"
-              ? "rounded-2xl border border-papier/15 bg-papier/10 px-2 py-3 text-center shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md"
+              ? "rounded-2xl border border-rouge/35 bg-nuit-profonde/55 px-2 py-3 text-center shadow-[0_8px_32px_rgba(0,0,0,0.35)] ring-1 ring-jaune/15"
               : "rounded-2xl border border-bleu/15 bg-papier px-2 py-3 text-center shadow-[0_8px_24px_rgba(0,90,140,0.06)]"
           }
         >
           <div
             className={`font-mono text-[clamp(1.25rem,3vw,1.65rem)] font-bold leading-none ${
-              variant === "dark" ? "text-papier" : "text-bleu"
+              variant === "dark" ? "text-jaune" : "text-bleu"
             }`}
           >
             {parts ? padCountdown(parts[key]) : "--"}
           </div>
           <div
             className={`mt-1.5 text-[0.62rem] font-bold uppercase tracking-[0.14em] ${
-              variant === "dark" ? "text-papier/65" : "text-charbon"
+              variant === "dark" ? "text-ivoire-froid/70" : "text-gris-bleu"
             }`}
           >
             {label}

@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 
+import { getMessagingCapabilities } from "@/lib/messaging";
 import { getCrmApiKey, getStaffScanSecrets } from "@/lib/staff-auth";
 import { hasSupabaseEnv } from "@/lib/supabase/env";
+import { getWalletCapabilities } from "@/lib/wallet/config";
 
 export const runtime = "nodejs";
 
@@ -17,6 +19,9 @@ function redisConfigured(): boolean {
  */
 export async function GET() {
   const staffSecrets = getStaffScanSecrets().length;
+  const messaging = getMessagingCapabilities();
+  const wallet = getWalletCapabilities();
+
   const checks = {
     ok: true as boolean,
     siteDb: hasSupabaseEnv() && Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
@@ -31,6 +36,10 @@ export async function GET() {
     siteUrl: Boolean(
       process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL,
     ),
+    messagingWhatsapp: messaging.whatsapp,
+    messagingSms: messaging.sms,
+    walletApple: wallet.apple,
+    walletGoogle: wallet.google,
   };
 
   checks.ok =

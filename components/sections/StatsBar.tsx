@@ -18,7 +18,13 @@ export function StatsBar() {
     >
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-bleu" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--feu)_22%,transparent),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--jaune)_18%,transparent),transparent_65%)]" />
+      </div>
+
+      <div aria-hidden className="flag-stripe relative z-10">
+        <span className="bg-vert" />
+        <span className="bg-jaune" />
+        <span className="bg-rouge" />
       </div>
 
       <motion.div
@@ -26,28 +32,24 @@ export function StatsBar() {
         variants={reduce ? undefined : staggerContainer}
         initial={reduce ? false : "hidden"}
         whileInView={reduce ? undefined : "show"}
-        viewport={{ once: true, amount: 0.4 }}
+        viewport={{ once: true, amount: 0.35 }}
       >
         {t.stats.map((stat) => (
           <motion.div
             key={stat.label}
-            variants={reduce ? undefined : rise(16)}
-            transition={{ duration: 0.55, ease: EASE_YUNA }}
-            className="group relative px-4 py-8 text-center text-papier min-[720px]:px-5 min-[720px]:py-9"
+            variants={reduce ? undefined : rise(20)}
+            transition={{ duration: 0.7, ease: EASE_YUNA }}
+            className="group relative px-4 py-8 text-center text-papier min-[480px]:px-5 min-[480px]:py-9"
           >
-            <div className="fx-frame fx-frame--soft fx-frame--dark mx-auto max-w-[11rem] rounded-2xl">
-              <div className="fx-frame__inner rounded-2xl bg-bleu/40 px-3 py-5 backdrop-blur-sm">
-                <p
-                  className="font-display text-[clamp(2rem,5vw,2.85rem)] font-extrabold leading-none text-papier transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
-                  aria-label={`${stat.value} ${stat.label}`}
-                >
-                  {stat.value}
-                </p>
-                <p className="mt-2 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-papier/80">
-                  {stat.label}
-                </p>
-              </div>
-            </div>
+            <p
+              className="font-display text-[clamp(2.35rem,9vw,2.85rem)] font-extrabold leading-none text-jaune transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
+              aria-label={`${stat.value} ${stat.label}`}
+            >
+              {stat.value}
+            </p>
+            <p className="mt-2 text-[0.68rem] font-bold uppercase tracking-[0.18em] text-ivoire-froid/85 min-[480px]:text-[0.72rem] min-[480px]:tracking-[0.2em]">
+              {stat.label}
+            </p>
           </motion.div>
         ))}
       </motion.div>

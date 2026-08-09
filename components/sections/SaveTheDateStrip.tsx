@@ -44,10 +44,7 @@ export function SaveTheDateStrip() {
           <p className="mt-3 max-w-sm text-[0.95rem] leading-relaxed text-papier/70">
             {t.saveTheDate.venue}
           </p>
-          <ButtonLink
-            href="/#inscription"
-            className="mt-7 !bg-feu hover:!bg-braise"
-          >
+          <ButtonLink href="/#inscription" className="mt-7">
             {t.common.registerCta}
           </ButtonLink>
         </motion.div>

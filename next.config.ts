@@ -2,6 +2,9 @@
 const nextConfig = {
   poweredByHeader: false,
   compress: true,
+  experimental: {
+    viewTransition: true,
+  },
   images: {
     formats: ["image/avif", "image/webp"],
   },

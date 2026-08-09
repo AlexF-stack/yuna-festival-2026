@@ -27,15 +27,16 @@ const TITLE_TONE: Record<TitleTone, string> = {
 };
 
 const ACCENT_FOR: Record<TitleTone, string> = {
-  bleu: "text-feu",
-  feu: "text-bleu",
-  encre: "text-feu",
+  /** Sur papier clair : jaune pur trop faible → rouge / vert drapeau. */
+  bleu: "text-rouge",
+  feu: "text-vert",
+  encre: "text-vert",
 };
 
 const EYEBROW_FOR: Record<TitleTone, string> = {
-  bleu: "text-feu",
-  feu: "text-bleu",
-  encre: "text-feu",
+  bleu: "text-vert",
+  feu: "text-rouge",
+  encre: "text-jaune",
 };
 
 function splitLastWord(title: string): { head: string; last: string } | null {

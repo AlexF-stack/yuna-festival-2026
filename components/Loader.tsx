@@ -10,20 +10,18 @@ const HERO_ASSETS = [
   "/media/crowd.webp",
 ] as const;
 
-const MIN_DISPLAY_MS = 400;
-const MAX_WAIT_MS = 4500;
-const EXIT_MS = 520;
+const MIN_DISPLAY_MS = 280;
+const MAX_WAIT_MS = 2200;
+const EXIT_MS = 380;
 
 type LoadScores = {
   fonts: number;
   images: number;
-  window: number;
 };
 
 function computeProgress(scores: LoadScores): number {
-  // Pondération : images hero + logo (50), fonts (25), window load (25)
-  const raw =
-    scores.fonts * 25 + scores.images * 50 + scores.window * 25;
+  // Ne plus attendre window.load (bloquait sur assets non critiques).
+  const raw = scores.fonts * 35 + scores.images * 65;
   return Math.min(100, Math.round(raw));
 }
 
@@ -37,7 +35,7 @@ function loadImage(src: string): Promise<void> {
 }
 
 /**
- * Écran de démarrage YUNA — suit le vrai chargement (fonts, images hero, window).
+ * Écran de démarrage YUNA — fonts + images hero critiques uniquement.
  * Se démonte du DOM après fondu Framer Motion (SEO / a11y).
  * Désactivé sur /staff/* (outils terrain, accès immédiat).
  */
@@ -50,7 +48,7 @@ export function Loader() {
   const [mounted, setMounted] = useState(!isStaff);
   const startedAt = useRef<number>(0);
   const finishedRef = useRef(isStaff);
-  const scoresRef = useRef<LoadScores>({ fonts: 0, images: 0, window: 0 });
+  const scoresRef = useRef<LoadScores>({ fonts: 0, images: 0 });
 
   const finish = useCallback(() => {
     if (finishedRef.current) return;
@@ -73,7 +71,7 @@ export function Loader() {
       setProgress((prev) => Math.max(prev, next));
 
       const s = scoresRef.current;
-      if (s.fonts >= 1 && s.images >= 1 && s.window >= 1) {
+      if (s.fonts >= 1 && s.images >= 1) {
         finish();
       }
     },
@@ -126,16 +124,6 @@ export function Loader() {
       if (!cancelled) bump({ images: 1 });
     });
 
-    // window.onload / document complete
-    const onWindowReady = () => {
-      if (!cancelled) bump({ window: 1 });
-    };
-    if (document.readyState === "complete") {
-      onWindowReady();
-    } else {
-      window.addEventListener("load", onWindowReady, { once: true });
-    }
-
     const hardStop = window.setTimeout(() => {
       if (!cancelled) finish();
     }, MAX_WAIT_MS);
@@ -143,7 +131,6 @@ export function Loader() {
     return () => {
       cancelled = true;
       window.clearTimeout(hardStop);
-      window.removeEventListener("load", onWindowReady);
     };
   }, [bump, finish, isStaff, reduceMotion]);
 

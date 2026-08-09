@@ -1,64 +1,74 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
-/* ── Tokens — charte logo YUNA, énergie festival (réf. chaleur Effuzion) ─ */
+/* ── Tokens — bleu ancré + tricolore Bénin (CTA or / urgence rouge / succès vert) ─ */
 :root {
-  /* Marque logo — ancrage inchangé */
+  /* Ancrage marque */
   --bleu: #0077bb;
-  --bleu-fonce: #005a8c;
-  /* Feu plus saturé / CTA plus « live » */
+  --bleu-fonce: #004e7a;
+  /* Accent chaud drapeau — CTA principaux */
+  --jaune: #fcd116;
+  --or: #fcd116;
+  --or-hover: #e8c200;
+  /* Tricolore — touches (pas fonds pleins) */
+  --vert: #008751;
+  --rouge: #e8112d;
+  /* Flamme logo — accents secondaires uniquement (pas CTA) */
   --feu: #ff4d00;
   --braise: #d93f00;
-  /* Surfaces chaudes (évite le blanc clinique) */
-  --charbon: #4a3c34;
-  --encre: #17110e;
+  /* Neutres */
+  --nuit-profonde: #0a0e14;
+  --ivoire-froid: #f5f7fa;
+  --gris-bleu: #8b99a8;
+  --charbon: #4a5560;
+  --encre: #0a0e14;
   --papier: #fff8f1;
-  /* Lavages tièdes — bleu + feu sur papier chaud */
+  /* CTA = or drapeau sur encre (contraste max sur photo sombre) */
+  --cta: var(--jaune);
+  --cta-ink: var(--nuit-profonde);
+  --cta-hover: var(--or-hover);
+  /* Lavages */
   --logo-bleu-soft: color-mix(in srgb, var(--bleu) 10%, var(--papier));
-  --logo-feu-soft: color-mix(in srgb, var(--feu) 14%, var(--papier));
-  --nuage: color-mix(in srgb, var(--feu) 6%, var(--papier));
+  --logo-feu-soft: color-mix(in srgb, var(--jaune) 16%, var(--papier));
+  --nuage: color-mix(in srgb, var(--jaune) 7%, var(--papier));
   --ciel: color-mix(in srgb, var(--bleu) 9%, var(--papier));
-  /* Accents festival — jaune électrique + vert vif */
-  --vert: #00a35c;
-  --jaune: #ffd400;
-  --rouge: #e8112d;
 
-  /* Alias rétrocompat (composants historiques) */
-  --nuit: var(--encre);
+  /* Alias rétrocompat */
+  --nuit: var(--nuit-profonde);
   --nuit2: var(--nuage);
   --aube: var(--jaune);
-  --ivoire: var(--papier);
-  --sky-deep: #0f2433;
-  --sky-mid: #0077bb;
+  --ivoire: var(--ivoire-froid);
+  --sky-deep: var(--nuit-profonde);
+  --sky-mid: var(--bleu);
   --sky-horizon: #3a9ad4;
-  --sky-glow-bleu: rgb(0 119 187 / 0.2);
-  --sky-glow-feu: rgb(255 77 0 / 0.28);
-  --sky-glow-aube: rgb(255 212 0 / 0.16);
-  --sky-dawn-top: #ffe8cc;
-  --sky-dawn-mid: #ffd4a8;
-  --sky-dawn-bottom: #ffb87a;
+  --sky-glow-bleu: rgb(0 119 187 / 0.22);
+  --sky-glow-feu: rgb(252 209 22 / 0.22);
+  --sky-glow-aube: rgb(252 209 22 / 0.18);
+  --sky-dawn-top: #fff3c2;
+  --sky-dawn-mid: #ffe48a;
+  --sky-dawn-bottom: #fcd116;
 
   --wa: #25d366;
-  --tee-visual-mid: #ffe4cc;
-  --tee-visual-deep: #fff1e3;
-  --tee-visual-dark-mid: #1a3a52;
-  --tee-visual-dark-deep: #0f2433;
+  --tee-visual-mid: #fff3c2;
+  --tee-visual-deep: #fff8e0;
+  --tee-visual-dark-mid: #004e7a;
+  --tee-visual-dark-deep: #0a0e14;
 
-  /* Dérivés charte — éviter les hex en dur dans les composants */
   --peach: var(--logo-feu-soft);
-  --peach-light: color-mix(in srgb, var(--feu) 8%, var(--papier));
+  --peach-light: color-mix(in srgb, var(--jaune) 10%, var(--papier));
   --peach-wash: var(--logo-feu-soft);
   --peach-soft: var(--logo-feu-soft);
   --don-deep: var(--bleu-fonce);
-  --alert-soft: color-mix(in srgb, var(--feu) 32%, var(--papier));
-  --ombre-bleu: 0 20px 50px color-mix(in srgb, var(--bleu) 14%, transparent);
-  --ombre-bleu-lg: 0 28px 70px color-mix(in srgb, var(--feu) 22%, transparent);
+  --alert-soft: color-mix(in srgb, var(--rouge) 18%, var(--papier));
+  --ombre-bleu: 0 20px 50px color-mix(in srgb, var(--bleu) 16%, transparent);
+  --ombre-cta: 0 12px 32px color-mix(in srgb, var(--jaune) 45%, transparent);
+  --ombre-bleu-lg: 0 28px 70px color-mix(in srgb, var(--jaune) 28%, transparent);
 
   --hero-overlay: linear-gradient(
     180deg,
-    rgb(23 17 14 / 0.45) 0%,
-    rgb(23 17 14 / 0.72) 50%,
-    rgb(12 8 6 / 0.94) 100%
+    rgb(10 14 20 / 0.42) 0%,
+    rgb(0 78 122 / 0.55) 48%,
+    rgb(10 14 20 / 0.92) 100%
   );
 }
 
@@ -74,7 +84,13 @@
   --color-ciel: var(--ciel);
   --color-vert: var(--vert);
   --color-jaune: var(--jaune);
+  --color-or: var(--or);
   --color-rouge: var(--rouge);
+  --color-nuit-profonde: var(--nuit-profonde);
+  --color-ivoire-froid: var(--ivoire-froid);
+  --color-gris-bleu: var(--gris-bleu);
+  --color-cta: var(--cta);
+  --color-cta-ink: var(--cta-ink);
   --color-logo-bleu-soft: var(--logo-bleu-soft);
   --color-logo-feu-soft: var(--logo-feu-soft);
 
@@ -93,8 +109,9 @@
   --color-don-deep: var(--don-deep);
   --color-alert-soft: var(--alert-soft);
 
-  --shadow-ombre-bleu: 0 20px 50px rgb(255 77 0 / 0.1);
-  --shadow-ombre-bleu-lg: 0 28px 70px rgb(255 77 0 / 0.2);
+  --shadow-ombre-bleu: 0 20px 50px rgb(0 119 187 / 0.14);
+  --shadow-ombre-bleu-lg: 0 28px 70px rgb(252 209 22 / 0.22);
+  --shadow-ombre-cta: 0 12px 32px rgb(252 209 22 / 0.45);
 
   --font-display: var(--font-baloo-2), system-ui, sans-serif;
   --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
@@ -140,8 +157,18 @@ body {
 }
 
 ::selection {
-  background: var(--feu);
-  color: var(--papier);
+  background: var(--jaune);
+  color: var(--nuit-profonde);
+}
+
+/* CTA or drapeau — lisible sur photo sombre (crowd / hero) */
+@utility btn-cta {
+  background-color: var(--cta);
+  color: var(--cta-ink);
+  box-shadow: var(--ombre-cta);
+}
+@utility btn-cta-hover {
+  background-color: var(--cta-hover);
 }
 
 :focus-visible {
@@ -236,10 +263,6 @@ body {
   animation: tee-pulse 0.9s ease-in-out infinite;
 }
 
-.cta-float::before {
-  animation: wa-ping 2s infinite;
-}
-
 .hero-horizon {
   animation: hero-horizon-pulse 4.5s ease-in-out infinite;
 }
@@ -274,200 +297,16 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ── Cadres à effets (bleu → feu → jaune) ───────────────────────────── */
-@property --fx-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes fx-spin {
-  to {
-    --fx-angle: 360deg;
-  }
-}
-
-@keyframes fx-glow-pulse {
-  0%,
-  100% {
-    opacity: 0.45;
-  }
-  50% {
-    opacity: 0.85;
-  }
-}
-
-.fx-frame {
-  position: relative;
-  isolation: isolate;
-  border-radius: 1.5rem;
-}
-
-.fx-frame::before {
-  content: "";
-  position: absolute;
-  inset: -1.5px;
-  z-index: 0;
-  border-radius: inherit;
-  padding: 1.5px;
-  background: conic-gradient(
-    from var(--fx-angle),
-    var(--bleu),
-    var(--feu),
-    var(--jaune),
-    var(--bleu)
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: fx-spin 5.5s linear infinite;
-  pointer-events: none;
-}
-
-.fx-frame::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  z-index: -1;
-  border-radius: inherit;
-  background: radial-gradient(
-    ellipse at 30% 20%,
-    color-mix(in srgb, var(--feu) 28%, transparent),
-    transparent 55%
-  );
-  filter: blur(12px);
-  animation: fx-glow-pulse 3.2s ease-in-out infinite;
-  pointer-events: none;
-  opacity: 0.55;
-}
-
-.fx-frame__inner {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  overflow: hidden;
-  border-radius: inherit;
-  background: var(--papier);
-}
-
-.fx-frame--dark .fx-frame__inner {
-  background: var(--encre);
-}
-
-.fx-frame--media .fx-frame__inner {
-  background: transparent;
-}
-
-.fx-frame--soft::before {
-  opacity: 0.7;
-}
-
-.fx-frame--soft::after {
-  opacity: 0.35;
-}
-
-/* Coins cinéma — crochets feu / bleu */
-.fx-corners {
-  position: relative;
-}
-
-.fx-corners::before,
-.fx-corners::after {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  width: 1.35rem;
-  height: 1.35rem;
-  pointer-events: none;
-  border-color: var(--feu);
-  border-style: solid;
-  transition:
-    width 280ms var(--ease-yuna),
-    height 280ms var(--ease-yuna),
-    border-color 280ms var(--ease-yuna);
-}
-
-.fx-corners::before {
-  top: 0.55rem;
-  left: 0.55rem;
-  border-width: 2.5px 0 0 2.5px;
-}
-
-.fx-corners::after {
-  right: 0.55rem;
-  bottom: 0.55rem;
-  border-color: var(--bleu);
-  border-width: 0 2.5px 2.5px 0;
-}
-
-.group:hover .fx-corners::before,
-.group:hover .fx-corners::after,
-.fx-corners:hover::before,
-.fx-corners:hover::after {
-  width: 1.75rem;
-  height: 1.75rem;
-}
-
-.fx-corners__br,
-.fx-corners__tl {
-  position: absolute;
-  z-index: 2;
-  width: 1.35rem;
-  height: 1.35rem;
-  pointer-events: none;
-  border-style: solid;
-  transition:
-    width 280ms var(--ease-yuna),
-    height 280ms var(--ease-yuna);
-}
-
-.fx-corners__tl {
-  top: 0.55rem;
-  right: 0.55rem;
-  border-color: var(--jaune);
-  border-width: 2.5px 2.5px 0 0;
-}
-
-.fx-corners__br {
-  bottom: 0.55rem;
-  left: 0.55rem;
-  border-color: var(--vert);
-  border-width: 0 0 2.5px 2.5px;
-}
-
-.group:hover .fx-corners__tl,
-.group:hover .fx-corners__br {
-  width: 1.75rem;
-  height: 1.75rem;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .tee-flame,
   .tee-pulse,
-  .cta-float::before,
   .hero-horizon,
   .theme-debout,
   .theme-benin,
   .marquee-track,
   .hero-kenburns,
-  .scroll-cue,
-  .fx-frame::before,
-  .fx-frame::after {
+  .scroll-cue {
     animation: none !important;
-  }
-
-  .fx-frame::before {
-    background: linear-gradient(
-      135deg,
-      var(--bleu),
-      var(--feu),
-      var(--jaune)
-    );
   }
 }
 
@@ -477,15 +316,31 @@ body {
     transform: scale(1) translate3d(0, 0, 0);
   }
   to {
-    transform: scale(1.06) translate3d(-0.6%, -0.4%, 0);
+    transform: scale(1.08) translate3d(-0.8%, -0.5%, 0);
   }
 }
 
-/* Ken Burns léger — desktop only via class appliquée si canCycle */
+@media (min-width: 900px) {
+  @keyframes media-kenburns {
+    from {
+      transform: scale(1) translate3d(0, 0, 0);
+    }
+    to {
+      transform: scale(1.06) translate3d(-0.6%, -0.4%, 0);
+    }
+  }
+}
+
+/* Ken Burns — un peu plus ample sur mobile pour le punch cinématique */
 .hero-kenburns {
-  animation: media-kenburns 8s ease-out forwards;
+  animation: media-kenburns 6.5s ease-out forwards;
   transform-origin: center center;
-  will-change: transform;
+}
+
+@media (min-width: 900px) {
+  .hero-kenburns {
+    animation-duration: 8s;
+  }
 }
 
 .section-shape-slash {
@@ -511,10 +366,20 @@ body {
 .hero-cinematic-glow {
   background: radial-gradient(
     ellipse 80% 60% at 50% 100%,
-    color-mix(in srgb, var(--feu) 28%, transparent),
+    color-mix(in srgb, var(--jaune) 22%, transparent),
     transparent 70%
   );
   pointer-events: none;
+}
+
+/* Liseré tricolore — un peu plus présent (Bénin Debout) */
+.flag-stripe {
+  display: flex;
+  height: 4px;
+  width: 100%;
+}
+.flag-stripe > span {
+  flex: 1;
 }
 
 .scroll-cue {
@@ -610,5 +475,40 @@ body {
 
 .hero-glass-panel {
   background: color-mix(in srgb, var(--papier) 8%, transparent);
+}
+
+/* ── View Transitions — navigation type prototype HTML ─────────────── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+::view-transition-old(root) {
+  animation-name: yuna-vt-fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: yuna-vt-fade-in;
+}
+
+@keyframes yuna-vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes yuna-vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 

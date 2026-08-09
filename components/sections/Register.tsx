@@ -2,14 +2,12 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-
 import { PassPreview } from "@/components/pass/PassPreview";
 import { useMessages } from "@/components/i18n/LocaleProvider";
+import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { FESTIVAL } from "@/lib/festival";
-import { EASE_YUNA } from "@/lib/motion";
 import {
   isRegistrationType,
   REGISTRATION_TYPES,
@@ -41,7 +39,6 @@ function createIdempotencyKey(): string {
 export function Register() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const reduce = useReducedMotion();
   const t = useMessages();
   const [idempotencyKey, setIdempotencyKey] = useState("");
   const [name, setName] = useState("");
@@ -182,14 +179,8 @@ export function Register() {
       tone="papier"
       background="register"
     >
-      <motion.div
-        initial={reduce ? false : { opacity: 0, y: 20 }}
-        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.65, ease: EASE_YUNA }}
-        className="relative z-10"
-      >
-        <div className="max-w-2xl">
+      <div className="relative z-10">
+        <Reveal className="max-w-2xl">
           <SectionHeading
             eyebrow={t.register.eyebrow}
             title={t.register.title}
@@ -198,19 +189,15 @@ export function Register() {
             tone="encre"
             accentLast
           />
-        </div>
+        </Reveal>
 
         <div className="mt-12 grid items-start gap-10 min-[960px]:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] min-[960px]:gap-12">
-          <motion.form
+          <Reveal variant="left">
+          <form
             onSubmit={onSubmit}
             noValidate
-            initial={reduce ? false : { opacity: 0, y: 24 }}
-            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.65, ease: EASE_YUNA }}
-            className="fx-frame fx-frame--soft relative rounded-3xl shadow-ombre-bleu"
+            className="relative rounded-3xl border border-bleu/10 bg-papier/95 p-6 shadow-ombre-bleu min-[480px]:p-8"
           >
-            <div className="fx-frame__inner rounded-3xl bg-papier/95 p-6 backdrop-blur-sm min-[480px]:p-8">
             <h3 className="mb-5 font-display text-xl font-extrabold uppercase tracking-wide text-bleu">
               {t.register.formTitle}
             </h3>
@@ -444,7 +431,7 @@ export function Register() {
             <button
               type="submit"
               disabled={pending}
-              className="w-full rounded-full bg-feu px-4 py-4 text-[1.02rem] font-bold tracking-[0.02em] text-papier transition-[background-color,transform] duration-[250ms] ease-yuna hover:-translate-y-0.5 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              className="w-full rounded-full bg-jaune px-4 py-4 text-[1.02rem] font-bold tracking-[0.02em] text-nuit-profonde shadow-ombre-cta ring-2 ring-jaune/40 transition-[background-color,transform] duration-[250ms] ease-yuna hover:-translate-y-0.5 hover:bg-[var(--or-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-jaune disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             >
               {pending ? "…" : submitLabel}
             </button>
@@ -471,16 +458,10 @@ export function Register() {
                 </li>
               ))}
             </ul>
-            </div>
-          </motion.form>
+          </form>
+          </Reveal>
 
-          <motion.div
-            className="min-[960px]:sticky min-[960px]:top-28"
-            initial={reduce ? false : { opacity: 0, x: 20 }}
-            whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: EASE_YUNA, delay: 0.06 }}
-          >
+          <Reveal variant="right" delay={0.08} className="min-[960px]:sticky min-[960px]:top-28">
             <p className="mb-3 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-charbon">
               {t.register.previewLabel}
             </p>
@@ -488,9 +469,9 @@ export function Register() {
             <p className="mt-4 text-sm leading-relaxed text-charbon">
               {t.register.previewHint}
             </p>
-          </motion.div>
+          </Reveal>
         </div>
-      </motion.div>
+      </div>
     </SectionShell>
   );
 }
