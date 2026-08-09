@@ -52,7 +52,7 @@ export const fr: Messages = {
       "« Lève-toi, sois éclairée, car ta lumière arrive, et la gloire de l'Éternel se lève sur toi. »",
     verseRef: "Ésaïe 60:1",
     ctaPrimary: "C’est gratuit, je prends ma place",
-    ctaSecondary: "Voir le programme du week-end",
+    ctaSecondary: "Voir la journée",
     meta: "5–6 septembre 2026 · Terrain de Midombo, Cotonou",
     datesHero: "5–6 SEP · 2026",
     venueLine: "Terrain de Midombo, Cotonou — Entrée libre",

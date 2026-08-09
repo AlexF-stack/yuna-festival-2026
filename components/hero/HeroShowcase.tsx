@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { BeninMap } from "@/components/hero/BeninMap";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 import { HeroCountdown } from "@/components/sections/HeroCountdown";
 import { FESTIVAL } from "@/lib/festival";
 import { EASE_PREMIUM } from "@/lib/motion";
@@ -12,10 +13,11 @@ type HeroShowcaseProps = {
 };
 
 /**
- * Hero droite — grande carte Bénin (drapeau) + compte à rebours.
+ * Hero droite — carte Bénin + compte à rebours (desktop).
  */
 export function HeroShowcase({ eventStartIso }: HeroShowcaseProps) {
   const reduce = useReducedMotion();
+  const t = useMessages();
 
   return (
     <motion.aside
@@ -23,14 +25,14 @@ export function HeroShowcase({ eventStartIso }: HeroShowcaseProps) {
       animate={reduce ? undefined : { opacity: 1, x: 0 }}
       transition={{ duration: 0.7, ease: EASE_PREMIUM, delay: 0.3 }}
       className="hidden min-[900px]:block"
-      aria-label="Carte du Bénin — lieu du festival"
+      aria-label={`${FESTIVAL.theme} — ${FESTIVAL.venue}`}
     >
       <div className="relative flex flex-col items-center px-1 min-[1100px]:px-2">
-        <p className="text-center font-mono text-[0.68rem] font-bold uppercase tracking-[0.22em] text-feu">
-          Bénin Debout · {FESTIVAL.edition}
+        <p className="text-center font-mono text-[0.68rem] font-bold uppercase tracking-[0.22em] text-jaune">
+          {FESTIVAL.theme} · {FESTIVAL.edition}
         </p>
         <p className="mt-2 max-w-[22rem] text-center text-sm leading-relaxed text-papier/75">
-          {FESTIVAL.venue}, {FESTIVAL.city} — {FESTIVAL.freeEntry}
+          {t.hero.venueLine}
         </p>
 
         <div className="mt-5 w-full">
@@ -39,7 +41,7 @@ export function HeroShowcase({ eventStartIso }: HeroShowcaseProps) {
 
         <div className="mt-7 w-full max-w-[380px] pt-5">
           <p className="mb-3 text-center font-mono text-[0.65rem] font-bold uppercase tracking-[0.18em] text-papier/55">
-            Compte à rebours
+            {t.countdown.label}
           </p>
           <HeroCountdown
             eventStartIso={eventStartIso}

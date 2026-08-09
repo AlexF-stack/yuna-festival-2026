@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { useMessages } from "@/components/i18n/LocaleProvider";
 import {
   getCountdownParts,
   padCountdown,
@@ -15,20 +16,21 @@ type HeroCountdownProps = {
   className?: string;
 };
 
-const LABELS = [
-  { key: "days", label: "Jours" },
-  { key: "hours", label: "Heures" },
-  { key: "minutes", label: "Min" },
-  { key: "seconds", label: "Sec" },
-] as const;
-
 export function HeroCountdown({
   eventStartIso,
   variant = "default",
   className = "",
 }: HeroCountdownProps) {
+  const t = useMessages();
   const targetMs = parseEventStartMs(eventStartIso);
   const [parts, setParts] = useState<CountdownParts | null>(null);
+
+  const labels = [
+    { key: "days" as const, label: t.countdown.days },
+    { key: "hours" as const, label: t.countdown.hours },
+    { key: "minutes" as const, label: t.countdown.minutes },
+    { key: "seconds" as const, label: t.countdown.seconds },
+  ];
 
   useEffect(() => {
     const tick = () => setParts(getCountdownParts(targetMs));
@@ -42,14 +44,14 @@ export function HeroCountdown({
       className={`mt-10 grid max-w-md grid-cols-4 gap-2 ${className}`}
       aria-live="polite"
       aria-atomic="true"
-      aria-label="Compte à rebours jusqu'au festival"
+      aria-label={t.countdown.label}
     >
-      {LABELS.map(({ key, label }) => (
+      {labels.map(({ key, label }) => (
         <div
           key={key}
           className={
             variant === "dark"
-              ? "rounded-2xl border border-rouge/35 bg-nuit-profonde/55 px-2 py-3 text-center shadow-[0_8px_32px_rgba(0,0,0,0.35)] ring-1 ring-jaune/15"
+              ? "rounded-2xl border border-jaune/25 bg-nuit-profonde/55 px-2 py-3 text-center shadow-[0_8px_32px_rgba(0,0,0,0.35)] ring-1 ring-jaune/15"
               : "rounded-2xl border border-bleu/15 bg-papier px-2 py-3 text-center shadow-[0_8px_24px_rgba(0,90,140,0.06)]"
           }
         >

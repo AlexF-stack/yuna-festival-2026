@@ -52,7 +52,7 @@ export const en: Messages = {
       "“Arise, shine, for your light has come, and the glory of the Lord rises upon you.”",
     verseRef: "Isaiah 60:1",
     ctaPrimary: "It’s free — I’m taking my spot",
-    ctaSecondary: "See the weekend programme",
+    ctaSecondary: "See the daytime programme",
     meta: "5–6 September 2026 · Midombo Grounds, Cotonou",
     datesHero: "5–6 SEP · 2026",
     venueLine: "Midombo Grounds, Cotonou — Free entry",

@@ -11,7 +11,7 @@ import { AnimatedThemeTitle } from "@/components/sections/AnimatedThemeTitle";
 import { HeroCountdown } from "@/components/sections/HeroCountdown";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useMessages } from "@/components/i18n/LocaleProvider";
-import { FESTIVAL, HERO_COPY } from "@/lib/festival";
+import { HERO_COPY } from "@/lib/festival";
 import { EASE_PREMIUM } from "@/lib/motion";
 
 type HeroProps = {
@@ -28,7 +28,7 @@ const rise: Variants = {
 };
 
 /**
- * Hero mobile cinématique : photo vivante, titre plein cadre, verse court, CTA or, countdown.
+ * Hero — mobile plein cadre ; desktop texte + carte Bénin côte à côte.
  */
 export function Hero({ eventStartIso }: HeroProps) {
   const reduceMotion = useReducedMotion();
@@ -46,7 +46,7 @@ export function Hero({ eventStartIso }: HeroProps) {
       {!reduceMotion ? <HeroOrbs /> : null}
       {!reduceMotion ? <HeroFireCanvas /> : null}
 
-      <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1240px] items-end gap-8 px-5 pb-16 pt-28 min-[900px]:items-center min-[900px]:gap-10 min-[900px]:px-6 min-[900px]:pb-20 min-[900px]:pt-40">
+      <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1240px] items-end gap-8 px-5 pb-16 pt-28 min-[900px]:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] min-[900px]:items-center min-[900px]:gap-12 min-[900px]:px-6 min-[900px]:pb-20 min-[900px]:pt-40">
         <motion.div
           variants={reduceMotion ? undefined : container}
           initial={reduceMotion ? false : "hidden"}
@@ -82,7 +82,7 @@ export function Hero({ eventStartIso }: HeroProps) {
             variants={reduceMotion ? undefined : rise}
             className="mb-3 font-mono text-[0.72rem] font-bold uppercase tracking-[0.2em] text-ivoire-froid/80"
           >
-            {hero.datesHero} · {FESTIVAL.city}
+            {hero.venueLine}
           </motion.p>
 
           <motion.div variants={reduceMotion ? undefined : rise}>
@@ -142,7 +142,7 @@ export function Hero({ eventStartIso }: HeroProps) {
         <HeroShowcase eventStartIso={eventStartIso} />
       </div>
 
-      <div className="pointer-events-none absolute bottom-5 left-1/2 z-10 -translate-x-1/2 min-[760px]:bottom-8">
+      <div className="pointer-events-none absolute bottom-5 left-1/2 z-10 -translate-x-1/2 min-[900px]:bottom-8">
         <span className="scroll-cue" aria-hidden />
       </div>
     </section>

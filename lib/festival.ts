@@ -43,8 +43,7 @@ export const HERO_COPY = {
   verse:
     "« Lève-toi, sois éclairée, car ta lumière arrive, et la gloire de l'Éternel se lève sur toi. »",
   verseRef: "Ésaïe 60:1",
-  ctaPrimary: "Inscris-toi",
-  ctaSecondary: "Voir la journée",
+  /** Libellés CTA : source i18n (`messages.hero`). Ici = href uniquement. */
   ctaPrimaryHref: "/#inscription",
   ctaSecondaryHref: "/journee",
 } as const;
