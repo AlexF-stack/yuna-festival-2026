@@ -219,7 +219,36 @@ export const POLES = [
   },
 ] as const;
 
-/** Montants suggérés — page Soutenir. */
+/** Montants suggérés — page Soutenir (niveaux de flamme). */
+export const SUPPORT_FLAMES = [
+  {
+    amount: 1_000,
+    label: "Étincelle",
+    hint: "Une main tendue",
+  },
+  {
+    amount: 2_500,
+    label: "Braises",
+    hint: "Chaleur du terrain",
+  },
+  {
+    amount: 5_000,
+    label: "Flamme",
+    hint: "Sono & lumière",
+  },
+  {
+    amount: 10_000,
+    label: "Torche",
+    hint: "Masterclass & scène",
+  },
+  {
+    amount: 25_000,
+    label: "Brasier",
+    hint: "Toute une soirée",
+  },
+] as const;
+
+/** @deprecated — préférer SUPPORT_FLAMES */
 export const SUPPORT_AMOUNTS_FCFA = [
   1_000, 2_500, 5_000, 10_000, 25_000,
 ] as const;
@@ -233,16 +262,18 @@ export const DONATE = {
   pageTitle: "Soutenir YUNA",
   pageLead:
     "Ton soutien garde le festival gratuit et ouvert à tous. Le montant est libre — aucun minimum. Allume une flamme avec ce que tu peux.",
+  seedEyebrow: "Semer · Midombo",
   seedTitle: "Allume une flamme",
-  seedLead: "Aucun montant minimum. Chaque flamme compte.",
-  seedCta: "Soutenir maintenant",
-  customAmountPh: "Ou saisis ton montant",
+  seedLead:
+    "Choisis l’intensité — ou écris ton montant. Aucun minimum. Chaque franc va sur le terrain.",
+  seedCta: "Allumer ma flamme",
+  customAmountPh: "Ton montant libre (FCFA)",
   paths: [
     {
       id: "ponctuel",
       title: "Soutien ponctuel",
       text: "Mobile Money ou virement, une seule fois. Ex. 5 000 FCFA = contribution directe à la sono / l’action médicale du samedi.",
-      cta: "Choisir un montant →",
+      cta: "Allumer une flamme →",
       href: "#semer",
     },
     {
