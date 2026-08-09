@@ -13,9 +13,11 @@
   /* Tricolore — touches (pas fonds pleins) */
   --vert: #008751;
   --rouge: #e8112d;
-  /* Flamme logo — accents secondaires uniquement (pas CTA) */
-  --feu: #ff4d00;
-  --braise: #d93f00;
+  /* Flamme logo — orange plus chaud / flamboyant */
+  --feu: #ff3b00;
+  --braise: #c92e00;
+  --feu-glow: #ff8a1a;
+  --feu-core: #ffc14d;
   /* Neutres */
   --nuit-profonde: #0a0e14;
   --ivoire-froid: #f5f7fa;
@@ -29,8 +31,8 @@
   --cta-hover: var(--or-hover);
   /* Lavages */
   --logo-bleu-soft: color-mix(in srgb, var(--bleu) 10%, var(--papier));
-  --logo-feu-soft: color-mix(in srgb, var(--jaune) 16%, var(--papier));
-  --nuage: color-mix(in srgb, var(--jaune) 7%, var(--papier));
+  --logo-feu-soft: color-mix(in srgb, var(--feu) 12%, var(--papier));
+  --nuage: color-mix(in srgb, var(--feu) 5%, var(--papier));
   --ciel: color-mix(in srgb, var(--bleu) 9%, var(--papier));
 
   /* Alias rétrocompat */
@@ -42,8 +44,8 @@
   --sky-mid: var(--bleu);
   --sky-horizon: #3a9ad4;
   --sky-glow-bleu: rgb(0 119 187 / 0.22);
-  --sky-glow-feu: rgb(252 209 22 / 0.22);
-  --sky-glow-aube: rgb(252 209 22 / 0.18);
+  --sky-glow-feu: rgb(255 59 0 / 0.28);
+  --sky-glow-aube: rgb(255 138 26 / 0.2);
   --sky-dawn-top: #fff3c2;
   --sky-dawn-mid: #ffe48a;
   --sky-dawn-bottom: #fcd116;
@@ -55,7 +57,7 @@
   --tee-visual-dark-deep: #0a0e14;
 
   --peach: var(--logo-feu-soft);
-  --peach-light: color-mix(in srgb, var(--jaune) 10%, var(--papier));
+  --peach-light: color-mix(in srgb, var(--feu) 8%, var(--papier));
   --peach-wash: var(--logo-feu-soft);
   --peach-soft: var(--logo-feu-soft);
   --don-deep: var(--bleu-fonce);
@@ -77,6 +79,8 @@
   --color-bleu-fonce: var(--bleu-fonce);
   --color-feu: var(--feu);
   --color-braise: var(--braise);
+  --color-feu-glow: var(--feu-glow);
+  --color-feu-core: var(--feu-core);
   --color-charbon: var(--charbon);
   --color-encre: var(--encre);
   --color-papier: var(--papier);
@@ -305,7 +309,8 @@ body {
   .theme-benin,
   .marquee-track,
   .hero-kenburns,
-  .scroll-cue {
+  .scroll-cue,
+  .logo-flame--hero {
     animation: none !important;
   }
 }
@@ -401,6 +406,37 @@ body {
   100% {
     opacity: 0;
     transform: scaleY(1);
+  }
+}
+
+/* Logo YUNA — orange plus flamboyant (saturate + halo feu) */
+.logo-flame {
+  filter: saturate(1.45) contrast(1.1) brightness(1.06)
+    drop-shadow(0 0 10px color-mix(in srgb, var(--feu) 55%, transparent))
+    drop-shadow(0 0 22px color-mix(in srgb, var(--feu-glow) 40%, transparent));
+}
+
+.logo-flame--hero {
+  filter: saturate(1.55) contrast(1.14) brightness(1.08)
+    drop-shadow(0 0 14px color-mix(in srgb, var(--feu) 65%, transparent))
+    drop-shadow(0 0 36px color-mix(in srgb, var(--feu-glow) 45%, transparent))
+    drop-shadow(0 0 56px color-mix(in srgb, var(--feu-core) 28%, transparent));
+  animation: logo-flame-pulse 3.6s var(--ease-yuna) infinite;
+}
+
+@keyframes logo-flame-pulse {
+  0%,
+  100% {
+    filter: saturate(1.55) contrast(1.14) brightness(1.08)
+      drop-shadow(0 0 14px color-mix(in srgb, var(--feu) 65%, transparent))
+      drop-shadow(0 0 36px color-mix(in srgb, var(--feu-glow) 45%, transparent))
+      drop-shadow(0 0 56px color-mix(in srgb, var(--feu-core) 28%, transparent));
+  }
+  50% {
+    filter: saturate(1.7) contrast(1.16) brightness(1.12)
+      drop-shadow(0 0 20px color-mix(in srgb, var(--feu) 75%, transparent))
+      drop-shadow(0 0 48px color-mix(in srgb, var(--feu-glow) 55%, transparent))
+      drop-shadow(0 0 72px color-mix(in srgb, var(--feu-core) 38%, transparent));
   }
 }
 

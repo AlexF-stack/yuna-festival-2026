@@ -18,7 +18,7 @@ Toute couleur / police dans un composant passe par ces tokens, jamais en dur.
 | `ivoire-froid` | `#F5F7FA` | Texte sur fond sombre |
 | `gris-bleu` | `#8B99A8` | Texte secondaire |
 | `papier` | `#FFF8F1` | Fond pages claires (chaleur festival) |
-| `feu` | `#FF4D00` | Flamme logo — accents secondaires seulement |
+| `feu` | `#FF3B00` | Flamme logo — orange flamboyant (+ halo CSS) |
 
 ### CTA principal
 

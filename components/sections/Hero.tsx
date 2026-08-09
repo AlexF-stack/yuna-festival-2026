@@ -54,11 +54,7 @@ export function Hero({ eventStartIso }: HeroProps) {
           className="pb-2 min-[900px]:pb-0"
         >
           <motion.div variants={reduceMotion ? undefined : rise} className="mb-5">
-            <YunaLogo
-              size="hero"
-              priority
-              className="drop-shadow-[0_8px_24px_rgba(0,0,0,0.45)] brightness-110"
-            />
+            <YunaLogo size="hero" priority />
           </motion.div>
 
           <motion.div

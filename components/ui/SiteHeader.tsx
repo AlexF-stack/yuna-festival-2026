@@ -198,15 +198,7 @@ export function SiteHeader() {
             onClick={() => setOpen(false)}
             aria-label="YUNA Festival — retour à l'accueil"
           >
-            <YunaLogo
-              size="nav"
-              priority
-              className={
-                activeSurface !== "papier"
-                  ? "brightness-110 drop-shadow-sm"
-                  : ""
-              }
-            />
+            <YunaLogo size="nav" priority />
           </Link>
           <span
             className={`hidden truncate rounded-full border px-2.5 py-1 font-mono text-[0.6rem] font-bold uppercase tracking-[0.12em] min-[1100px]:inline-flex ${style.chip}`}

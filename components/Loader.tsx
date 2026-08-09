@@ -188,7 +188,7 @@ export function Loader() {
               width={220}
               height={220}
               priority
-              className="h-[7.5rem] w-auto object-contain min-[480px]:h-36"
+              className="logo-flame logo-flame--hero h-[7.5rem] w-auto object-contain min-[480px]:h-36"
             />
 
             <p className="mt-6 font-mono text-[0.7rem] font-bold uppercase tracking-[0.32em] text-bleu">

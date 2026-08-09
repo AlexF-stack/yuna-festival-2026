@@ -2,6 +2,8 @@ import Image from "next/image";
 
 type YunaLogoProps = {
   size?: "nav" | "hero" | "footer";
+  /** flame = halo orange (défaut) ; muted = plat sur fonds clairs très chargés */
+  glow?: "flame" | "muted";
   className?: string;
   priority?: boolean;
 };
@@ -17,13 +19,22 @@ const SIZES = {
   footer: { width: 140, height: 203, className: "h-[4.5rem] w-auto" },
 } as const;
 
-/** Logo officiel sans fond (PNG transparent). */
+/**
+ * Logo officiel — orange flamme poussé (saturate + halo feu).
+ */
 export function YunaLogo({
   size = "nav",
+  glow = "flame",
   className = "",
   priority = false,
 }: YunaLogoProps) {
   const s = SIZES[size];
+  const flameClass =
+    glow === "flame"
+      ? size === "hero"
+        ? "logo-flame logo-flame--hero"
+        : "logo-flame"
+      : "";
 
   return (
     <Image
@@ -32,7 +43,7 @@ export function YunaLogo({
       width={s.width}
       height={s.height}
       priority={priority}
-      className={`${s.className} object-contain object-left ${className}`}
+      className={`${s.className} object-contain object-left ${flameClass} ${className}`}
     />
   );
 }
