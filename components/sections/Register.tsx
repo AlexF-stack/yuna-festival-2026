@@ -431,7 +431,7 @@ export function Register() {
             <button
               type="submit"
               disabled={pending}
-              className="w-full rounded-full bg-jaune px-4 py-4 text-[1.02rem] font-bold tracking-[0.02em] text-nuit-profonde shadow-ombre-cta ring-2 ring-jaune/40 transition-[background-color,transform] duration-[250ms] ease-yuna hover:-translate-y-0.5 hover:bg-[var(--or-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-jaune disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              className="btn-cta-flame w-full rounded-full px-4 py-4 text-[1.02rem] font-bold tracking-[0.02em] text-papier ring-2 ring-[color-mix(in_srgb,var(--feu-glow)_50%,transparent)] transition-[transform,filter] duration-[250ms] ease-yuna hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-feu disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             >
               {pending ? "…" : submitLabel}
             </button>

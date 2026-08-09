@@ -11,19 +11,19 @@ Toute couleur / police dans un composant passe par ces tokens, jamais en dur.
 | --- | --- | --- |
 | `bleu` | `#0077BB` | Ancrage — nav, liens, marque, structure |
 | `bleu-fonce` | `#004E7A` | Fonds section sombres, dégradé hero |
-| `jaune` / `or` | `#FCD116` | **CTA principaux**, highlights, countdown |
+| `jaune` / `or` | `#FCD116` | Tricolore, highlights, countdown |
 | `rouge` | `#E8112D` | Urgence, badges, accents eyebrow |
 | `vert` | `#008751` | Succès, confirmation, « gratuit » / validé |
-| `nuit-profonde` | `#0A0E14` | Fond sombre hero, encre CTA |
+| `nuit-profonde` | `#0A0E14` | Fond sombre hero, encre |
 | `ivoire-froid` | `#F5F7FA` | Texte sur fond sombre |
 | `gris-bleu` | `#8B99A8` | Texte secondaire |
 | `papier` | `#FFF8F1` | Fond pages claires (chaleur festival) |
-| `feu` | `#FF3B00` | Flamme logo — orange flamboyant (+ halo CSS) |
+| `feu` | `#FF3B00` | **CTA principaux** + flamme logo (orange flamboyant) |
 
 ### CTA principal
 
-`#FCD116` (fond) + `#0A0E14` (texte) + ombre or — contraste fort sur photo
-`crowd.webp` / hero. Ne plus utiliser l’orange `feu` pour « Réserve ton pass ».
+Dégradé flamme `feu-glow → feu → braise` + texte `--papier` + halo orange.
+Sur header fond feu : CTA inversé papier / texte feu.
 
 ### Hero sombre
 

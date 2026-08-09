@@ -185,7 +185,7 @@ export function DonatePageContent() {
                     }}
                     className={`min-h-11 rounded-full px-4 py-2 text-sm font-bold transition-colors ${
                       active
-                        ? "bg-jaune text-nuit-profonde"
+                        ? "btn-cta-flame text-papier"
                         : "border border-bleu/20 bg-papier text-encre hover:border-feu/50"
                     }`}
                   >
@@ -210,7 +210,7 @@ export function DonatePageContent() {
 
             <a
               href={seedHref}
-              className="mt-6 flex min-h-12 w-full items-center justify-center rounded-full bg-jaune px-4 py-3.5 text-[1.02rem] font-bold text-nuit-profonde shadow-ombre-cta ring-2 ring-jaune/40 transition-[background-color] hover:bg-[var(--or-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-jaune"
+              className="btn-cta-flame mt-6 flex min-h-12 w-full items-center justify-center rounded-full px-4 py-3.5 text-[1.02rem] font-bold text-papier ring-2 ring-[color-mix(in_srgb,var(--feu-glow)_50%,transparent)] transition-[filter] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-feu"
             >
               {DONATE.seedCta}
               {amount ? ` · ${formatFcfa(amount)}` : ""}

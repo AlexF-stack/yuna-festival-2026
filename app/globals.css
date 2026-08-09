@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
-/* ── Tokens — bleu ancré + tricolore Bénin (CTA or / urgence rouge / succès vert) ─ */
+/* ── Tokens — bleu ancré + CTA flamme + tricolore Bénin ─ */
 :root {
   /* Ancrage marque */
   --bleu: #0077bb;
@@ -25,10 +25,10 @@
   --charbon: #4a5560;
   --encre: #0a0e14;
   --papier: #fff8f1;
-  /* CTA = or drapeau sur encre (contraste max sur photo sombre) */
-  --cta: var(--jaune);
-  --cta-ink: var(--nuit-profonde);
-  --cta-hover: var(--or-hover);
+  /* CTA = orange flamme (pas l’or drapeau) */
+  --cta: var(--feu);
+  --cta-ink: var(--papier);
+  --cta-hover: var(--braise);
   /* Lavages */
   --logo-bleu-soft: color-mix(in srgb, var(--bleu) 10%, var(--papier));
   --logo-feu-soft: color-mix(in srgb, var(--feu) 12%, var(--papier));
@@ -63,8 +63,8 @@
   --don-deep: var(--bleu-fonce);
   --alert-soft: color-mix(in srgb, var(--rouge) 18%, var(--papier));
   --ombre-bleu: 0 20px 50px color-mix(in srgb, var(--bleu) 16%, transparent);
-  --ombre-cta: 0 12px 32px color-mix(in srgb, var(--jaune) 45%, transparent);
-  --ombre-bleu-lg: 0 28px 70px color-mix(in srgb, var(--jaune) 28%, transparent);
+  --ombre-cta: 0 12px 36px color-mix(in srgb, var(--feu) 55%, transparent);
+  --ombre-bleu-lg: 0 28px 70px color-mix(in srgb, var(--bleu) 22%, transparent);
 
   --hero-overlay: linear-gradient(
     180deg,
@@ -165,7 +165,7 @@ body {
   color: var(--nuit-profonde);
 }
 
-/* CTA or drapeau — lisible sur photo sombre (crowd / hero) */
+/* CTA orange flamme — dégradé chaud + halo */
 @utility btn-cta {
   background-color: var(--cta);
   color: var(--cta-ink);
@@ -173,6 +173,19 @@ body {
 }
 @utility btn-cta-hover {
   background-color: var(--cta-hover);
+}
+@utility btn-cta-flame {
+  background: linear-gradient(
+    145deg,
+    var(--feu-glow) 0%,
+    var(--feu) 42%,
+    var(--braise) 100%
+  );
+  color: var(--papier);
+  box-shadow:
+    var(--ombre-cta),
+    0 0 0 1px color-mix(in srgb, var(--feu-core) 35%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 28%, transparent);
 }
 
 :focus-visible {

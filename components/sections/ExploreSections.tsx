@@ -94,7 +94,7 @@ export function ExploreSections() {
                     </h3>
                     <span
                       aria-hidden
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-jaune text-nuit-profonde transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-feu text-papier transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
                     >
                       →
                     </span>

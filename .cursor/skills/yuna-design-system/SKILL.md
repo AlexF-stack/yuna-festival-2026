@@ -14,9 +14,9 @@ placeholder explicite plutôt qu'une fausse valeur, et signaler à l'utilisateur
 ## Identité visuelle
 
 **Palette active du site** : tokens dans `DESIGN.md` / `app/globals.css` —
-`--bleu` `#0077BB` (ancrage), CTA or `--jaune` `#FCD116` sur `--nuit-profonde`
-`#0A0E14`, accents drapeau `--vert` `#008751` / `--rouge` `#E8112D`, fond clair
-`--papier` `#FFF8F1`. Le `--feu` orange reste un accent flamme logo, pas les CTA.
+`--bleu` `#0077BB` (ancrage), CTA flamme `--feu` `#FF3B00` sur texte `--papier`,
+accents drapeau `--jaune` `#FCD116` / `--vert` `#008751` / `--rouge` `#E8112D`,
+fond clair `--papier` `#FFF8F1`.
 
 Palette historique "crépuscule → nuit de festival" (draft) :
 

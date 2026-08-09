@@ -25,12 +25,13 @@ function toneToSurface(tone: string | null, isHero: boolean): NavSurface {
   return "bleu";
 }
 
-/** CTA or drapeau — lisible sur hero sombre, bleu, feu et papier. */
-const CTA_GOLD =
-  "!bg-jaune !text-nuit-profonde hover:!bg-[var(--or-hover)] shadow-ombre-cta ring-2 ring-jaune/35";
-const CTA_ON_DARK = CTA_GOLD;
-const CTA_ON_FEU = CTA_GOLD;
-const CTA_ON_PAPIER = CTA_GOLD;
+/** CTA flamme — contraste : papier sur header feu (évite orange sur orange). */
+const CTA_FLAME =
+  "!btn-cta-flame !text-papier hover:!brightness-110 shadow-ombre-cta ring-2 ring-[color-mix(in_srgb,var(--feu-glow)_50%,transparent)]";
+const CTA_ON_DARK = CTA_FLAME;
+const CTA_ON_FEU =
+  "!bg-papier !text-feu hover:!bg-ivoire-froid shadow-[0_12px_32px_rgba(0,0,0,0.2)] ring-2 ring-papier/40";
+const CTA_ON_PAPIER = CTA_FLAME;
 
 const SURFACE_STYLE: Record<
   NavSurface,
