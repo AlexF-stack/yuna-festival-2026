@@ -14,15 +14,16 @@ import { FESTIVAL } from "@/lib/festival";
 type NavSurface = "hero" | "bleu" | "feu" | "papier";
 
 /**
- * Header = inverse vif de la section :
- * sections bleues → header feu | sections orange → header bleu | papier → bleu
+ * Header suit la section (lisibilité) — plus d’inversion bleu→feu
+ * qui peignait tout le header en orange après chargement.
  */
 function toneToSurface(tone: string | null, isHero: boolean): NavSurface {
   if (isHero) return "hero";
-  if (tone === "bleu" || tone === "bleu-soft") return "feu";
+  if (tone === "papier" || tone === "nuage") return "papier";
+  if (tone === "charbon") return "hero";
   if (tone === "feu" || tone === "feu-soft") return "bleu";
-  if (tone === "charbon") return "feu";
-  return "bleu";
+  if (tone === "bleu" || tone === "bleu-soft") return "bleu";
+  return "papier";
 }
 
 /** CTA flamme — contraste : papier sur header feu (évite orange sur orange). */
@@ -91,7 +92,9 @@ function navIsActive(pathname: string, href: string) {
 export function SiteHeader() {
   const messages = useMessages();
   const pathname = usePathname() || "/";
-  const [surface, setSurface] = useState<NavSurface>("hero");
+  const [surface, setSurface] = useState<NavSurface>(() =>
+    pathname === "/" ? "hero" : "bleu",
+  );
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -104,7 +107,7 @@ export function SiteHeader() {
     const refreshNodes = () => {
       nodes = Array.from(
         document.querySelectorAll<HTMLElement>(
-          "section[data-nav-surface], section[data-tone], [data-nav-tone]",
+          "section[data-nav-surface], section[data-tone], section[data-nav-tone]",
         ),
       );
     };

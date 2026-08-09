@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
-import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
-import { MouvementContent } from "@/components/sections/MouvementContent";
+import { MouvementPageContent } from "@/components/sections/MouvementPageContent";
 
 const DESCRIPTION =
   "YUNA est un mouvement : foi vivante, masterclass, action médicale à Midombo, et une génération non ordinaire qui se lève — Bénin Debout 2026.";
@@ -20,8 +19,7 @@ export const metadata: Metadata = {
 export default function MouvementPage() {
   return (
     <main id="contenu" className="bg-papier text-encre">
-      <LocalizedPageIntro page="mouvement" />
-      <MouvementContent />
+      <MouvementPageContent />
     </main>
   );
 }

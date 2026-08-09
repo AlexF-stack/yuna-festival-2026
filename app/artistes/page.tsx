@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 
-import { Lineup } from "@/components/sections/Lineup";
+import { ArtistesPageContent } from "@/components/sections/ArtistesPageContent";
 import { MediaBand } from "@/components/sections/MediaBand";
-import { ProgrammeSoirees } from "@/components/sections/ProgrammeSoirees";
 import { Teaser } from "@/components/sections/Teaser";
-import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
 import { getArtists } from "@/lib/artists";
 
-/** ISR — même stratégie que la home (données artistes Supabase). */
 export const revalidate = 60;
 export const dynamic = "force-static";
 
@@ -30,9 +27,7 @@ export default async function ArtistesPage() {
 
   return (
     <main id="contenu" className="bg-papier text-encre">
-      <LocalizedPageIntro page="artistes" />
-      <Lineup artists={artists} />
-      <ProgrammeSoirees />
+      <ArtistesPageContent artists={artists} />
       <Teaser />
       <MediaBand />
     </main>
