@@ -96,7 +96,7 @@ export const en: Messages = {
     eyebrow: "Explore",
     title: "The whole festival",
     description:
-      "Vision, line-up, daytime impact, venue, shop and practical info — each world has its own page.",
+      "Movement, line-up, daytime, shop and FAQ — details live on each page.",
     cards: [
       {
         href: "/mouvement",
@@ -115,12 +115,6 @@ export const en: Messages = {
         title: "Daytime",
         description: "Medical outreach, masterclasses and activity hubs.",
         imageAlt: "Community daytime actions",
-      },
-      {
-        href: "/#lieu",
-        title: "The venue",
-        description: "Midombo Grounds, Cotonou — free entry.",
-        imageAlt: "Midombo Grounds",
       },
       {
         href: "/boutique",

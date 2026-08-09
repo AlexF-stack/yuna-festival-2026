@@ -96,7 +96,7 @@ export const fr: Messages = {
     eyebrow: "Explorer",
     title: "Tout le festival",
     description:
-      "Vision, line-up, journée d'impact, lieu, boutique et infos pratiques — chaque univers a sa page.",
+      "Mouvement, line-up, journée, boutique et infos — le détail vit sur chaque page.",
     cards: [
       {
         href: "/mouvement",
@@ -115,12 +115,6 @@ export const fr: Messages = {
         title: "La journée",
         description: "Action médicale, masterclass et pôles d'activités.",
         imageAlt: "Actions communautaires en journée",
-      },
-      {
-        href: "/#lieu",
-        title: "Le lieu",
-        description: "Terrain de Midombo, Cotonou — entrée libre.",
-        imageAlt: "Terrain de Midombo",
       },
       {
         href: "/boutique",

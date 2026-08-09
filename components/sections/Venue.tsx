@@ -53,8 +53,6 @@ export function Venue() {
                 <p className="mt-2 font-mono text-sm font-bold uppercase tracking-[0.18em] text-papier/75">
                   {FESTIVAL.city} · {FESTIVAL.country}
                 </p>
-                <p className="mt-4 text-lg font-bold text-feu">{FESTIVAL.datesShort}</p>
-                <p className="mt-1 text-sm text-papier/80">{FESTIVAL.freeEntry}</p>
               </div>
             </div>
             <aside className="absolute -bottom-6 right-0 rounded-2xl border border-papier/20 bg-bleu px-5 py-4 text-center text-papier shadow-ombre-bleu-lg min-[480px]:-right-4 min-[900px]:-right-8">

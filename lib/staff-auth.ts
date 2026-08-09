@@ -77,5 +77,20 @@ export function assertCrmApiKey(request: Request): boolean {
   if (provided && secureEquals(provided, key)) return true;
   // compat ancien header
   const legacy = extractBearerOrHeader(request, "x-crm-key");
-  return Boolean(legacy && secureEquals(legacy, key));
+  if (legacy && secureEquals(legacy, key)) return true;
+  // UI staff CRM envoie souvent x-api-key
+  const apiKey = extractBearerOrHeader(request, "x-api-key");
+  return Boolean(apiKey && secureEquals(apiKey, key));
+}
+
+/**
+ * Accès lecture CRM : clé CRM **ou** secret staff (porte).
+ * Accepte aussi `x-api-key` = secret staff (UI `/staff/crm`).
+ */
+export function assertCrmOrStaffAccess(request: Request): boolean {
+  if (assertCrmApiKey(request)) return true;
+  if (assertStaffSecret(request)) return true;
+  const apiKey = extractBearerOrHeader(request, "x-api-key");
+  if (!apiKey) return false;
+  return getStaffScanSecrets().some((secret) => secureEquals(apiKey, secret));
 }

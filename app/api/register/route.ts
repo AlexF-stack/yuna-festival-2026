@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 
 import { notifyCrmRegistration, siteOrigin } from "@/lib/crm";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
@@ -49,7 +49,7 @@ function deriveGuestIdempotencyKey(parent: string, index: number): string {
 
 async function insertOne(
   supabase: ReturnType<typeof createSupabaseAdminClient>,
-  input: ParsedPerson & { idempotencyKey: string },
+  input: ParsedPerson & { idempotencyKey: string; partyId: string | null },
 ) {
   const { data: existingByKey } = await supabase
     .from("registrations")
@@ -64,19 +64,35 @@ async function insertOne(
   const id = randomUUID();
   const qr_code = await generateRegistrationQr(id);
 
-  const { data, error } = await supabase
+  const baseRow = {
+    id,
+    name: input.name,
+    phone: input.phone,
+    email: input.email,
+    registration_type: input.registrationType,
+    idempotency_key: input.idempotencyKey,
+    qr_code,
+  };
+
+  // party_id ajouté en migration — cast jusqu’à regen des types Supabase.
+  const withParty = {
+    ...baseRow,
+    ...(input.partyId ? { party_id: input.partyId } : {}),
+  };
+  let { data, error } = await supabase
     .from("registrations")
-    .insert({
-      id,
-      name: input.name,
-      phone: input.phone,
-      email: input.email,
-      registration_type: input.registrationType,
-      idempotency_key: input.idempotencyKey,
-      qr_code,
-    })
+    .insert(withParty as typeof baseRow)
     .select("id, name, qr_code, created_at")
     .single();
+
+  // Migration party_id pas encore appliquée : retry sans la colonne.
+  if (error?.message?.includes("party_id") && input.partyId) {
+    ({ data, error } = await supabase
+      .from("registrations")
+      .insert(baseRow)
+      .select("id, name, qr_code, created_at")
+      .single());
+  }
 
   if (error) {
     if (error.code === "23505") {
@@ -210,12 +226,14 @@ export async function POST(request: Request) {
 
   try {
     const supabase = createSupabaseAdminClient();
+    const partyId = party.length > 1 ? randomUUID() : null;
     const created: {
       id: string;
       name: string;
       qr_code: string;
       created_at: string;
     }[] = [];
+    const crmJobs: Parameters<typeof notifyCrmRegistration>[0][] = [];
 
     for (let i = 0; i < party.length; i++) {
       const person = party[i];
@@ -224,6 +242,7 @@ export async function POST(request: Request) {
       const result = await insertOne(supabase, {
         ...person,
         idempotencyKey: key,
+        partyId,
       });
 
       if (!result.ok) {
@@ -243,21 +262,37 @@ export async function POST(request: Request) {
         );
       }
 
-      created.push(result.data);
-
-      try {
-        await notifyCrmRegistration({
-          id: result.data.id,
+      const row = result.data;
+      if (!row) {
+        return NextResponse.json(
+          { error: "Inscription impossible pour le moment. Réessaie." },
+          { status: 500 },
+        );
+      }
+      created.push(row);
+      if (!result.replayed) {
+        crmJobs.push({
+          id: row.id,
           name: person.name,
           phone: person.phone,
           email: person.email,
           registrationType: person.registrationType,
-          createdAt: result.data.created_at,
-          confirmationUrl: `${siteOrigin()}/confirmation/${result.data.id}`,
+          createdAt: row.created_at,
+          confirmationUrl: `${siteOrigin()}/confirmation/${row.id}`,
         });
-      } catch (crmErr) {
-        console.error("[register] CRM sync", crmErr);
       }
+    }
+
+    if (crmJobs.length > 0) {
+      after(() => {
+        void Promise.all(
+          crmJobs.map((job) =>
+            notifyCrmRegistration(job).catch((crmErr) => {
+              console.error("[register] CRM sync", crmErr);
+            }),
+          ),
+        );
+      });
     }
 
     return NextResponse.json({
@@ -266,6 +301,7 @@ export async function POST(request: Request) {
       qrCode: created[0].qr_code,
       ids: created.map((r) => r.id),
       count: created.length,
+      partyId,
     });
   } catch (err) {
     console.error("[register]", err);

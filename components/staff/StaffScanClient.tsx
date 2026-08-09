@@ -33,10 +33,12 @@ export function StaffScanClient() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [last, setLast] = useState<ScanResult | null>(null);
+  const [entriesOk, setEntriesOk] = useState(0);
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const busyRef = useRef(false);
   const lastScanRef = useRef<{ code: string; at: number }>({ code: "", at: 0 });
   const readerId = "yuna-qr-reader";
+  const cameraAutoStarted = useRef(false);
 
   /** Retour haptique terrain : succès court, déjà scanné double, refus long. */
   const buzz = (kind: "ok" | "already" | "error") => {
@@ -119,12 +121,24 @@ export function StaffScanClient() {
         /* ignore */
       }
       setUnlocked(true);
+      cameraAutoStarted.current = false;
     } catch {
       setError("Impossible de vérifier le secret. Réessaie.");
     } finally {
       setBusy(false);
     }
   };
+
+  useEffect(() => {
+    if (!unlocked || cameraAutoStarted.current || scanning) return;
+    cameraAutoStarted.current = true;
+    const t = window.setTimeout(() => {
+      void startCamera();
+    }, 350);
+    return () => window.clearTimeout(t);
+    // startCamera is stable enough for door UX; avoid re-deps loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [unlocked]);
 
   const checkIn = async (code: string) => {
     // Anti-rafale : la caméra décode ~8 fps — on ignore les scans pendant
@@ -182,6 +196,7 @@ export function StaffScanClient() {
         alreadyCheckedIn: Boolean(data.alreadyCheckedIn),
         registration: data.registration,
       });
+      if (!data.alreadyCheckedIn) setEntriesOk((n) => n + 1);
       buzz(data.alreadyCheckedIn ? "already" : "ok");
     } catch {
       setError("Réseau indisponible.");
@@ -305,23 +320,32 @@ export function StaffScanClient() {
       <div className="mb-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.18em] text-feu">
-            {staffLabel}
+            {staffLabel} · {entriesOk} entrée{entriesOk > 1 ? "s" : ""} OK
           </p>
           <h1 className="font-display text-[clamp(1.5rem,6vw,1.75rem)] font-extrabold uppercase text-bleu">
             Scan QR
           </h1>
         </div>
-        <button
-          type="button"
-          className="min-h-10 shrink-0 px-1 text-sm font-semibold text-charbon underline"
-          onClick={() => {
-            void stopCamera();
-            sessionStorage.removeItem(STAFF_KEY);
-            setUnlocked(false);
-          }}
-        >
-          Quitter
-        </button>
+        <div className="flex shrink-0 flex-col items-end gap-1">
+          <Link
+            href="/staff/crm"
+            className="min-h-10 px-1 text-sm font-bold text-bleu underline-offset-2 hover:underline"
+          >
+            CRM →
+          </Link>
+          <button
+            type="button"
+            className="min-h-10 px-1 text-sm font-semibold text-charbon underline"
+            onClick={() => {
+              void stopCamera();
+              sessionStorage.removeItem(STAFF_KEY);
+              setUnlocked(false);
+              cameraAutoStarted.current = false;
+            }}
+          >
+            Quitter
+          </button>
+        </div>
       </div>
 
       <div
@@ -398,8 +422,10 @@ export function StaffScanClient() {
           <p className="mt-1 break-words font-display text-[clamp(1.35rem,6vw,1.75rem)] font-extrabold uppercase leading-tight">
             {last.registration.name}
           </p>
+          <p className="mt-2 inline-flex rounded-full bg-papier/20 px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-wide">
+            {typeLabel}
+          </p>
           <p className="mt-1 text-sm text-papier/90">
-            {typeLabel} ·{" "}
             <a
               href={`tel:${last.registration.phone}`}
               className="underline-offset-2 hover:underline"

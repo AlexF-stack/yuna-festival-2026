@@ -47,7 +47,7 @@ export function Hero({ eventStartIso }: HeroProps) {
       {!reduceMotion ? <HeroOrbs /> : null}
       {!reduceMotion ? <HeroFireCanvas /> : null}
 
-      <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1240px] items-center gap-12 px-5 pb-16 pt-36 min-[900px]:grid-cols-[1.08fr_0.92fr] min-[900px]:gap-10 min-[900px]:px-6 min-[900px]:pb-20 min-[900px]:pt-40">
+      <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1240px] items-center gap-8 px-5 pb-14 pt-28 min-[900px]:grid-cols-[1.08fr_0.92fr] min-[900px]:gap-10 min-[900px]:px-6 min-[900px]:pb-20 min-[900px]:pt-40">
         <motion.div
           variants={reduceMotion ? undefined : container}
           initial={reduceMotion ? false : "hidden"}
@@ -97,14 +97,14 @@ export function Hero({ eventStartIso }: HeroProps) {
 
           <motion.p
             variants={reduceMotion ? undefined : rise}
-            className="mt-5 max-w-lg text-[0.98rem] leading-relaxed text-papier/72"
+            className="mt-5 hidden max-w-lg text-[0.98rem] leading-relaxed text-papier/72 min-[900px]:block"
           >
             {hero.support}
           </motion.p>
 
           <motion.div
             variants={reduceMotion ? undefined : rise}
-            className="mt-8 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap"
+            className="mt-7 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap"
           >
             <ButtonLink
               href={HERO_COPY.ctaPrimaryHref}
@@ -123,7 +123,7 @@ export function Hero({ eventStartIso }: HeroProps) {
 
           <motion.div
             variants={reduceMotion ? undefined : rise}
-            className="min-[900px]:hidden"
+            className="mt-6 min-[900px]:hidden"
           >
             <HeroCountdown eventStartIso={eventStartIso} variant="dark" />
           </motion.div>

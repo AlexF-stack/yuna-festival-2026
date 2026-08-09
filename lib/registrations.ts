@@ -127,37 +127,120 @@ export async function checkInRegistration(
   };
 }
 
-export async function listRegistrationsForCrm(limit = 200): Promise<
-  Array<{
-    id: string;
-    name: string;
-    phone: string;
-    email: string | null;
-    registrationType: string;
-    createdAt: string;
-    checkedInAt: string | null;
-  }>
-> {
+export type CrmListOptions = {
+  page?: number;
+  pageSize?: number;
+  q?: string;
+  /** all | yes | no */
+  checkedIn?: "all" | "yes" | "no";
+  registrationType?: string;
+};
+
+export type CrmRegistrationRow = {
+  id: string;
+  name: string;
+  phone: string;
+  email: string | null;
+  registrationType: string;
+  createdAt: string;
+  checkedInAt: string | null;
+  checkedInBy: string | null;
+  partyId: string | null;
+  /** Alias snake_case pour l’UI staff historique */
+  pass_type: string;
+  qr_token: string;
+  checked_in: boolean;
+  checked_in_at: string | null;
+  created_at: string;
+};
+
+export async function listRegistrationsForCrm(
+  options: CrmListOptions | number = {},
+): Promise<{ total: number; page: number; pageSize: number; registrations: CrmRegistrationRow[] }> {
+  const opts: CrmListOptions =
+    typeof options === "number" ? { pageSize: options } : options;
+  const page = Math.max(1, opts.page ?? 1);
+  const pageSize = Math.min(Math.max(opts.pageSize ?? 25, 1), 100);
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
   const supabase = createSupabaseAdminClient();
-  const { data, error } = await supabase
-    .from("registrations")
-    .select(
-      "id, name, phone, email, registration_type, created_at, checked_in_at",
-    )
-    .order("created_at", { ascending: false })
-    .limit(Math.min(Math.max(limit, 1), 1000));
+  const selectCols =
+    "id, name, phone, email, registration_type, created_at, checked_in_at, checked_in_by, party_id";
+  const selectFallback =
+    "id, name, phone, email, registration_type, created_at, checked_in_at, checked_in_by";
+
+  const buildQuery = (cols: string) => {
+    let query = supabase
+      .from("registrations")
+      .select(cols, { count: "exact" })
+      .order("created_at", { ascending: false });
+
+    const q = opts.q?.trim();
+    if (q) {
+      const safe = q.replace(/[%_,]/g, " ").slice(0, 80);
+      query = query.or(
+        `name.ilike.%${safe}%,phone.ilike.%${safe}%,email.ilike.%${safe}%`,
+      );
+    }
+
+    if (opts.checkedIn === "yes") {
+      query = query.not("checked_in_at", "is", null);
+    } else if (opts.checkedIn === "no") {
+      query = query.is("checked_in_at", null);
+    }
+
+    if (opts.registrationType?.trim()) {
+      query = query.eq("registration_type", opts.registrationType.trim());
+    }
+
+    return query.range(from, to);
+  };
+
+  let { data, error, count } = await buildQuery(selectCols);
+  if (error?.message?.includes("party_id")) {
+    ({ data, error, count } = await buildQuery(selectFallback));
+  }
 
   if (error) throw new Error(error.message);
 
-  return (data ?? []).map((r) => ({
-    id: r.id,
-    name: r.name,
-    phone: r.phone,
-    email: r.email,
-    registrationType: r.registration_type,
-    createdAt: r.created_at,
-    checkedInAt: r.checked_in_at,
-  }));
+  const registrations = (data ?? []).map((r) => {
+    const row = r as unknown as {
+      id: string;
+      name: string;
+      phone: string;
+      email: string | null;
+      registration_type: string;
+      created_at: string;
+      checked_in_at: string | null;
+      checked_in_by?: string | null;
+      party_id?: string | null;
+    };
+    const checkedIn = Boolean(row.checked_in_at);
+    return {
+      id: row.id,
+      name: row.name,
+      phone: row.phone,
+      email: row.email,
+      registrationType: row.registration_type,
+      createdAt: row.created_at,
+      checkedInAt: row.checked_in_at,
+      checkedInBy: row.checked_in_by ?? null,
+      partyId: row.party_id ?? null,
+      pass_type: row.registration_type,
+      qr_token: row.id,
+      checked_in: checkedIn,
+      checked_in_at: row.checked_in_at,
+      created_at: row.created_at,
+    };
+  });
+
+  return {
+    total: count ?? registrations.length,
+    page,
+    pageSize,
+    registrations,
+  };
 }
 
 /**

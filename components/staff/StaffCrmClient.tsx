@@ -1,6 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+
+import {
+  REGISTRATION_TYPE_LABELS,
+  REGISTRATION_TYPES,
+  isRegistrationType,
+} from "@/lib/registration-types";
 
 type Registration = {
   id: string;
@@ -12,6 +19,8 @@ type Registration = {
   checked_in: boolean;
   checked_in_at: string | null;
   created_at: string;
+  checkedInBy?: string | null;
+  partyId?: string | null;
 };
 
 type ApiOk = {
@@ -23,6 +32,8 @@ type ApiOk = {
 };
 
 type ApiErr = { ok: false; error: string };
+
+const CRM_KEY = "yuna-staff-secret";
 
 function formatWhen(iso: string | null) {
   if (!iso) return "—";
@@ -36,43 +47,109 @@ function formatWhen(iso: string | null) {
   }
 }
 
+function typeLabel(type: string) {
+  return isRegistrationType(type)
+    ? REGISTRATION_TYPE_LABELS[type]
+    : type;
+}
+
+function exportCsv(rows: Registration[]) {
+  const header = [
+    "id",
+    "name",
+    "phone",
+    "email",
+    "type",
+    "checked_in",
+    "checked_in_at",
+    "created_at",
+    "party_id",
+  ];
+  const lines = [
+    header.join(","),
+    ...rows.map((r) =>
+      [
+        r.id,
+        JSON.stringify(r.name),
+        JSON.stringify(r.phone),
+        JSON.stringify(r.email ?? ""),
+        r.pass_type,
+        r.checked_in ? "1" : "0",
+        r.checked_in_at ?? "",
+        r.created_at,
+        r.partyId ?? "",
+      ].join(","),
+    ),
+  ];
+  const blob = new Blob([lines.join("\n")], {
+    type: "text/csv;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `yuna-crm-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export function StaffCrmClient() {
   const [secret, setSecret] = useState("");
   const [unlocked, setUnlocked] = useState(false);
   const [q, setQ] = useState("");
+  const [checkedIn, setCheckedIn] = useState<"all" | "yes" | "no">("all");
+  const [typeFilter, setTypeFilter] = useState("");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ApiOk | null>(null);
 
   const fetchPage = useCallback(
-    async (nextPage: number, query: string) => {
+    async (
+      nextPage: number,
+      query: string,
+      status: "all" | "yes" | "no",
+      type: string,
+      key = secret,
+    ) => {
       setLoading(true);
       setError(null);
       try {
         const params = new URLSearchParams({
           page: String(nextPage),
           pageSize: "25",
+          checkedIn: status,
         });
         if (query.trim()) params.set("q", query.trim());
+        if (type.trim()) params.set("type", type.trim());
 
         const res = await fetch(`/api/crm/registrations?${params}`, {
-          headers: { "x-api-key": secret.trim() },
+          headers: {
+            "x-api-key": key.trim(),
+            "x-yuna-staff": key.trim(),
+          },
         });
         const json = (await res.json()) as ApiOk | ApiErr;
         if (!res.ok || !json.ok) {
           setData(null);
-          setError(
-            !json.ok
-              ? json.error
-              : `Erreur HTTP ${res.status}`,
-          );
-          if (res.status === 401) setUnlocked(false);
+          setError(!json.ok ? json.error : `Erreur HTTP ${res.status}`);
+          if (res.status === 401) {
+            setUnlocked(false);
+            try {
+              sessionStorage.removeItem(CRM_KEY);
+            } catch {
+              /* ignore */
+            }
+          }
           return;
         }
         setData(json);
         setPage(json.page);
         setUnlocked(true);
+        try {
+          sessionStorage.setItem(CRM_KEY, key.trim());
+        } catch {
+          /* ignore */
+        }
       } catch {
         setError("Réseau indisponible.");
         setData(null);
@@ -84,16 +161,28 @@ export function StaffCrmClient() {
   );
 
   useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(CRM_KEY);
+      if (!saved) return;
+      setSecret(saved);
+      void fetchPage(1, "", "all", "", saved);
+    } catch {
+      /* ignore */
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- unlock once on mount
+  }, []);
+
+  useEffect(() => {
     if (!unlocked) return;
     const t = window.setTimeout(() => {
-      void fetchPage(1, q);
+      void fetchPage(1, q, checkedIn, typeFilter);
     }, 280);
     return () => window.clearTimeout(t);
-  }, [q, unlocked, fetchPage]);
+  }, [q, checkedIn, typeFilter, unlocked, fetchPage]);
 
   async function onUnlock(e: React.FormEvent) {
     e.preventDefault();
-    await fetchPage(1, q);
+    await fetchPage(1, q, checkedIn, typeFilter);
   }
 
   const totalPages = data
@@ -102,16 +191,25 @@ export function StaffCrmClient() {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 sm:px-6 sm:pt-6">
-      <div className="mb-6">
-        <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-feu">
-          Staff
-        </p>
-        <h1 className="mt-1 font-display text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-none text-bleu">
-          CRM inscriptions
-        </h1>
-        <p className="mt-2 max-w-xl text-sm leading-relaxed text-charbon">
-          Lecture live des inscriptions site. Même secret que le scan QR.
-        </p>
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-feu">
+            Staff
+          </p>
+          <h1 className="mt-1 font-display text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-none text-bleu">
+            CRM inscriptions
+          </h1>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-charbon">
+            Lecture live site → sync CRM. Même secret que le{" "}
+            <Link
+              href="/staff/scan"
+              className="font-bold text-bleu underline-offset-2 hover:underline"
+            >
+              scan porte
+            </Link>
+            .
+          </p>
+        </div>
       </div>
 
       {!unlocked ? (
@@ -151,7 +249,7 @@ export function StaffCrmClient() {
         </form>
       ) : (
         <>
-          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center">
             <label className="sr-only" htmlFor="crm-q">
               Recherche
             </label>
@@ -166,12 +264,56 @@ export function StaffCrmClient() {
             />
             <button
               type="button"
-              onClick={() => void fetchPage(page, q)}
+              onClick={() => void fetchPage(page, q, checkedIn, typeFilter)}
               disabled={loading}
               className="min-h-12 shrink-0 rounded-full border-2 border-bleu/30 bg-papier px-5 py-3 text-sm font-bold text-bleu disabled:opacity-50 sm:w-auto"
             >
               {loading ? "…" : "Actualiser"}
             </button>
+            <button
+              type="button"
+              onClick={() => data && exportCsv(data.registrations)}
+              disabled={!data?.registrations.length}
+              className="min-h-12 shrink-0 rounded-full bg-feu px-5 py-3 text-sm font-bold text-papier disabled:opacity-50"
+            >
+              CSV page
+            </button>
+          </div>
+
+          <div className="mb-4 flex flex-wrap gap-2">
+            {(
+              [
+                ["all", "Tous"],
+                ["no", "En attente"],
+                ["yes", "Entrés"],
+              ] as const
+            ).map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setCheckedIn(value)}
+                className={`min-h-10 rounded-full px-3.5 py-2 text-xs font-bold uppercase tracking-wide ${
+                  checkedIn === value
+                    ? "bg-bleu text-papier"
+                    : "border border-bleu/20 bg-papier text-bleu"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+            <select
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value)}
+              className="min-h-10 rounded-full border border-bleu/20 bg-papier px-3 text-xs font-bold uppercase text-bleu"
+              aria-label="Type de pass"
+            >
+              <option value="">Tous types</option>
+              {REGISTRATION_TYPES.map((t) => (
+                <option key={t.value} value={t.value}>
+                  {t.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           {error ? (
@@ -185,14 +327,15 @@ export function StaffCrmClient() {
               <>
                 <span className="font-bold text-encre">{data.total}</span>{" "}
                 inscription{data.total > 1 ? "s" : ""}
-                {q.trim() ? " (filtre)" : ""}
+                {q.trim() || checkedIn !== "all" || typeFilter
+                  ? " (filtre)"
+                  : ""}
               </>
             ) : (
               "Chargement…"
             )}
           </p>
 
-          {/* Mobile : cartes */}
           <ul className="flex flex-col gap-3 md:hidden">
             {(data?.registrations ?? []).map((r) => (
               <li
@@ -230,7 +373,7 @@ export function StaffCrmClient() {
                 <dl className="mt-3 grid grid-cols-2 gap-2 text-xs text-charbon">
                   <div>
                     <dt className="font-semibold text-encre/70">Pass</dt>
-                    <dd className="mt-0.5 capitalize">{r.pass_type}</dd>
+                    <dd className="mt-0.5">{typeLabel(r.pass_type)}</dd>
                   </div>
                   <div>
                     <dt className="font-semibold text-encre/70">Inscrit</dt>
@@ -238,9 +381,18 @@ export function StaffCrmClient() {
                   </div>
                   <div className="col-span-2">
                     <dt className="font-semibold text-encre/70">Check-in</dt>
-                    <dd className="mt-0.5">{formatWhen(r.checked_in_at)}</dd>
+                    <dd className="mt-0.5">
+                      {formatWhen(r.checked_in_at)}
+                      {r.checkedInBy ? ` · ${r.checkedInBy}` : ""}
+                    </dd>
                   </div>
                 </dl>
+                <Link
+                  href={`/confirmation/${r.id}`}
+                  className="mt-3 inline-block text-xs font-bold text-feu underline-offset-2 hover:underline"
+                >
+                  Voir le pass →
+                </Link>
               </li>
             ))}
             {data && data.registrations.length === 0 ? (
@@ -250,9 +402,8 @@ export function StaffCrmClient() {
             ) : null}
           </ul>
 
-          {/* Desktop : table */}
           <div className="hidden overflow-x-auto rounded-2xl border border-sable/80 bg-papier shadow-sm md:block">
-            <table className="w-full min-w-[640px] border-collapse text-left text-sm">
+            <table className="w-full min-w-[720px] border-collapse text-left text-sm">
               <thead>
                 <tr className="border-b border-sable bg-nuage/80 text-[0.7rem] font-bold uppercase tracking-wider text-charbon">
                   <th className="px-4 py-3">Nom</th>
@@ -261,6 +412,7 @@ export function StaffCrmClient() {
                   <th className="px-4 py-3">Statut</th>
                   <th className="px-4 py-3">Inscrit</th>
                   <th className="px-4 py-3">Check-in</th>
+                  <th className="px-4 py-3">Pass</th>
                 </tr>
               </thead>
               <tbody>
@@ -276,9 +428,14 @@ export function StaffCrmClient() {
                           {r.email}
                         </span>
                       ) : null}
+                      {r.partyId ? (
+                        <span className="mt-0.5 block font-mono text-[0.65rem] text-feu">
+                          Groupe {r.partyId.slice(0, 8)}
+                        </span>
+                      ) : null}
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">{r.phone}</td>
-                    <td className="px-4 py-3 capitalize">{r.pass_type}</td>
+                    <td className="px-4 py-3">{typeLabel(r.pass_type)}</td>
                     <td className="px-4 py-3">
                       {r.checked_in ? (
                         <span className="font-bold text-vert">Entré</span>
@@ -291,13 +448,26 @@ export function StaffCrmClient() {
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap text-charbon">
                       {formatWhen(r.checked_in_at)}
+                      {r.checkedInBy ? (
+                        <span className="mt-0.5 block text-xs">
+                          {r.checkedInBy}
+                        </span>
+                      ) : null}
+                    </td>
+                    <td className="px-4 py-3">
+                      <Link
+                        href={`/confirmation/${r.id}`}
+                        className="font-bold text-feu underline-offset-2 hover:underline"
+                      >
+                        QR
+                      </Link>
                     </td>
                   </tr>
                 ))}
                 {data && data.registrations.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={6}
+                      colSpan={7}
                       className="px-4 py-10 text-center text-charbon"
                     >
                       Aucun résultat.
@@ -313,7 +483,9 @@ export function StaffCrmClient() {
               <button
                 type="button"
                 disabled={loading || page <= 1}
-                onClick={() => void fetchPage(page - 1, q)}
+                onClick={() =>
+                  void fetchPage(page - 1, q, checkedIn, typeFilter)
+                }
                 className="min-h-11 flex-1 rounded-full border-2 border-bleu/25 bg-papier px-4 py-2.5 text-sm font-bold text-bleu disabled:opacity-40 sm:flex-none"
               >
                 Précédent
@@ -324,7 +496,9 @@ export function StaffCrmClient() {
               <button
                 type="button"
                 disabled={loading || page >= totalPages}
-                onClick={() => void fetchPage(page + 1, q)}
+                onClick={() =>
+                  void fetchPage(page + 1, q, checkedIn, typeFilter)
+                }
                 className="min-h-11 flex-1 rounded-full border-2 border-bleu/25 bg-papier px-4 py-2.5 text-sm font-bold text-bleu disabled:opacity-40 sm:flex-none"
               >
                 Suivant
