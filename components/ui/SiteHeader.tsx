@@ -163,7 +163,7 @@ export function SiteHeader() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [open]);
+  }, [open, pathname]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
