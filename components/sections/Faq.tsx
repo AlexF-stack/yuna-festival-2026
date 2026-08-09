@@ -17,6 +17,7 @@ export function Faq() {
               title="Tout savoir"
               titleId="faq-title"
               description="Entrée, pass QR, lieu et infos pratiques — les réponses essentielles."
+              tone="feu"
             />
             <div className="mt-10">
               <Newsletter />

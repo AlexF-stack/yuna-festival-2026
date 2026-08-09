@@ -5,8 +5,8 @@ export const en: Messages = {
   langName: "English",
   langSwitch: "Language",
   common: {
-    register: "Register",
-    registerCta: "Register — free QR pass",
+    register: "Get your pass",
+    registerCta: "It’s free — I’m in",
     myPass: "My pass",
     recoverPass: "Lost your pass? Recover it",
     freeEntry: "Free entry",
@@ -14,22 +14,21 @@ export const en: Messages = {
     backHome: "← Back to site",
   },
   nav: [
-    { href: "/vision", label: "Vision" },
+    { href: "/mouvement", label: "Movement" },
     { href: "/artistes", label: "Line-up" },
     { href: "/journee", label: "Daytime" },
-    { href: "/lieu", label: "Venue" },
-    { href: "/#inscription", label: "Register" },
     { href: "/boutique", label: "Shop" },
-    { href: "/don", label: "Give" },
-    { href: "/faq", label: "FAQ" },
+    { href: "/soutenir", label: "Support" },
   ],
   footerNav: [
+    { href: "/mouvement", label: "Movement" },
     { href: "/vision", label: "Vision" },
     { href: "/artistes", label: "Artists" },
     { href: "/journee", label: "Daytime" },
-    { href: "/lieu", label: "Venue" },
+    { href: "/#lieu", label: "Venue" },
     { href: "/mon-pass", label: "Recover my pass" },
-    { href: "/don", label: "Give" },
+    { href: "/soutenir", label: "Support" },
+    { href: "/faq", label: "FAQ" },
     { href: "/confidentialite", label: "Privacy" },
     { href: "/mentions-legales", label: "Legal notice" },
   ],
@@ -52,11 +51,40 @@ export const en: Messages = {
     verse:
       "“Arise, shine, for your light has come, and the glory of the Lord rises upon you.”",
     verseRef: "Isaiah 60:1",
-    ctaPrimary: "Register",
-    ctaSecondary: "See the daytime",
+    ctaPrimary: "It’s free — I’m taking my spot",
+    ctaSecondary: "See the weekend programme",
     meta: "5–6 September 2026 · Midombo Grounds, Cotonou",
     datesHero: "5–6 SEP · 2026",
     venueLine: "Midombo Grounds, Cotonou — Free entry",
+  },
+  registerExtras: {
+    addGuest: "+ Add a pass for someone else",
+    removeGuest: "Remove",
+    guestLabel: "Pass #{n}",
+    guestName: "Full name *",
+    guestPhone: "Phone (WhatsApp) *",
+    guestsHint:
+      "Book up to 5 passes at once (you + friends/family). Each person gets their own QR — save the confirmation links (no email is sent yet).",
+    maxGuests: "Maximum 5 passes per registration.",
+    submitMulti: "Get the QR passes",
+  },
+  sessions: {
+    eyebrow: "Saturday sessions",
+    title: "Workshops & actions",
+    lead: "Medical outreach, VTeam and Entrepreneurship masterclasses — free registration, limited seats for masterclasses.",
+    register: "Register →",
+    capacity: "Up to {n} seats",
+    free: "Free",
+    speakers: "Speakers",
+  },
+  mouvement: {
+    eyebrow: "The movement",
+    title: "More than a festival",
+    lead: "YUNA is a movement: living faith, excellence, and impact on the ground in Midombo.",
+  },
+  whatsapp: {
+    label: "WhatsApp",
+    aria: "Message YUNA on WhatsApp",
   },
   stats: [
     { value: "2", label: "Festival days" },
@@ -71,10 +99,10 @@ export const en: Messages = {
       "Vision, line-up, daytime impact, venue, shop and practical info — each world has its own page.",
     cards: [
       {
-        href: "/vision",
-        title: "The vision",
-        description: "Joseph, Daniel, David — an extraordinary generation.",
-        imageAlt: "YUNA Festival vision",
+        href: "/mouvement",
+        title: "The movement",
+        description: "More than a festival — Midombo, faith and generation.",
+        imageAlt: "YUNA movement",
       },
       {
         href: "/artistes",
@@ -89,7 +117,7 @@ export const en: Messages = {
         imageAlt: "Community daytime actions",
       },
       {
-        href: "/lieu",
+        href: "/#lieu",
         title: "The venue",
         description: "Midombo Grounds, Cotonou — free entry.",
         imageAlt: "Midombo Grounds",
@@ -156,8 +184,8 @@ export const en: Messages = {
       hint: "Welcome, security, tech, protocol…",
     },
   },
-  floatCta: "Register",
-  floatAria: "Go to registration form — free QR pass",
+  floatCta: "My pass",
+  floatAria: "Get my free QR pass",
   lineup: {
     eyebrow: "Line-up",
     title: "The artists",
@@ -202,8 +230,9 @@ export const en: Messages = {
     },
     don: {
       eyebrow: "Support",
-      title: "Light one more flame",
-      lead: "Support the movement — every gift lights one more flame.",
+      title: "Support YUNA",
+      lead:
+        "We’re not selling anything here. Your support keeps the festival free and open to all.",
     },
     faq: {
       eyebrow: "Info",
@@ -216,6 +245,12 @@ export const en: Messages = {
       lead:
         "Enter the name and WhatsApp number used at registration. We’ll show your QR again.",
       notYet: "Not registered yet?",
+    },
+    mouvement: {
+      eyebrow: "The movement",
+      title: "More than a festival",
+      lead:
+        "Faith, gifts and ground impact — a generation rising in Midombo and beyond.",
     },
   },
   countdown: {

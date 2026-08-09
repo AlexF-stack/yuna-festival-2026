@@ -11,12 +11,14 @@ const CARD_MEDIA: Record<
   string,
   { image: string; objectPosition?: string }
 > = {
+  "/mouvement": { image: "/media/title-vision.webp" },
   "/vision": { image: "/media/title-vision.webp" },
   "/artistes": { image: "/media/title-lineup.webp" },
   "/journee": {
     image: "/media/community.webp",
     objectPosition: "center 40%",
   },
+  "/#lieu": { image: "/media/venue-midombo-generated.webp" },
   "/lieu": { image: "/media/venue-midombo-generated.webp" },
   "/boutique": {
     image: "/media/lights.webp",
@@ -39,6 +41,8 @@ export function ExploreSections() {
         title={t.explore.title}
         titleId="explorer-title"
         description={t.explore.description}
+        tone="bleu"
+        accentLast
       />
       <div className="mt-10 grid grid-cols-1 gap-4 min-[560px]:grid-cols-2 min-[1000px]:grid-cols-3">
         {t.explore.cards.map((card) => {

@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { TiltCard } from "@/components/motion/TiltCard";
 import { ProductVisual } from "@/components/sections/ProductVisual";
+import { getBoutiqueCheckoutHref } from "@/lib/site";
 import { EASE_YUNA } from "@/lib/motion";
 import type { Product } from "@/types/product";
 import { formatPriceFcfa } from "@/types/product";
@@ -78,6 +79,12 @@ export function ProductCard({ product }: ProductCardProps) {
         >
           {product.tag_label}
         </p>
+        <a
+          href={getBoutiqueCheckoutHref(product.name)}
+          className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-feu px-4 py-2.5 text-sm font-bold text-papier transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu motion-reduce:hover:translate-y-0"
+        >
+          Commander — {formatPriceFcfa(product.price_fcfa)}
+        </a>
       </div>
     </motion.article>
     </TiltCard>

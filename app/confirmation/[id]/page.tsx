@@ -8,6 +8,7 @@ import { getRegistrationById } from "@/lib/registrations";
 
 type ConfirmationPageProps = {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ groupe?: string }>;
 };
 
 export const metadata: Metadata = {
@@ -17,8 +18,10 @@ export const metadata: Metadata = {
 
 export default async function ConfirmationPage({
   params,
+  searchParams,
 }: ConfirmationPageProps) {
   const { id } = await params;
+  const { groupe } = await searchParams;
 
   let registration;
   try {
@@ -30,6 +33,10 @@ export default async function ConfirmationPage({
   if (!registration) notFound();
 
   const shortId = registration.id.slice(0, 8).toUpperCase();
+  const groupIds = (groupe ?? "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter((x) => x && x !== id);
 
   return (
     <main
@@ -47,6 +54,29 @@ export default async function ConfirmationPage({
         télécharge le PNG — aucun e-mail de confirmation n&apos;est envoyé pour
         l&apos;instant.
       </p>
+
+      {groupIds.length > 0 ? (
+        <div className="mt-6 w-full max-w-[420px] rounded-2xl border border-bleu/15 bg-papier p-4 text-sm text-charbon">
+          <p className="font-semibold text-encre">
+            Groupe : {groupIds.length + 1} pass créés
+          </p>
+          <p className="mt-2">
+            Voici ton pass. Les autres pass du groupe :
+          </p>
+          <ul className="mt-2 space-y-1">
+            {groupIds.map((gid, i) => (
+              <li key={gid}>
+                <Link
+                  href={`/confirmation/${gid}`}
+                  className="font-bold text-bleu underline-offset-4 hover:underline"
+                >
+                  Pass n°{i + 2} →
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       <div className="mt-10 w-full max-w-[420px]">
         <PassTicket

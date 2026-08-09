@@ -7,24 +7,27 @@ historique est **remplacée** par les tokens logo ci-dessous.
 
 Toute couleur / police dans un composant passe par ces tokens, jamais en dur.
 
-## Palette (extraite du logo)
+## Palette (logo + énergie festival)
+
+Ancrage logo (`bleu` / flamme) + chaleur type festival gospel AO (jaune
+électrique, orange saturé, papier tiède) — sans copier Effuzion pixel pour pixel.
 
 | Token | Hex | Usage |
 | --- | --- | --- |
-| `bleu` | `#0077BB` | Marque principale — figure, « festival », titres, liens |
+| `bleu` | `#0077BB` | Marque — titres, liens, sections bleues |
 | `bleu-fonce` | `#005A8C` | Hover / sections fortes |
-| `feu` | `#FF6600` | Accent flamme / « YUNA » — CTA primaires |
-| `braise` | `#E55A00` | Hover CTA |
-| `charbon` | `#444444` | Texte secondaire, torch |
-| `encre` | `#1A1A1A` | Texte principal |
-| `papier` | `#FFFFFF` | Fond principal |
-| `nuage` | `#F3F8FC` | Fond sections alternées |
-| `ciel` | `#E8F4FB` | Dégradés hero / highlights |
-| `vert` | `#008751` | Tricolore Bénin (liseré) |
-| `jaune` | `#FCD116` | Tricolore Bénin (liseré) |
+| `feu` | `#FF4D00` | CTA primaires, urgence, flamme |
+| `braise` | `#D93F00` | Hover CTA |
+| `charbon` | `#4A3C34` | Texte secondaire (brun chaud) |
+| `encre` | `#17110E` | Texte principal (noir chaud) |
+| `papier` | `#FFF8F1` | Fond principal tiède |
+| `nuage` | lavage feu sur papier | Sections alternées chaudes |
+| `ciel` | lavage bleu sur papier | Highlights bleus doux |
+| `vert` | `#00A35C` | Accents positifs + liseré Bénin |
+| `jaune` | `#FFD400` | CTA secondaires, barre urgence, liseré |
 | `rouge` | `#E8112D` | Tricolore Bénin (liseré) |
 
-Le tricolore reste un liseré discret (nav, footer), jamais palette dominante.
+Le tricolore reste un liseré discret (nav, footer) ; le jaune sert aussi d’accent festival.
 
 ## Typographie
 
@@ -33,6 +36,11 @@ Le tricolore reste un liseré discret (nav, footer), jamais palette dominante.
 | Display (YUNA, titres) | **Baloo 2** | 700 / 800 | `font-display` |
 | Corps | **Space Grotesk** | 400 / 500 / 700 | `font-sans` |
 | Technique | **JetBrains Mono** | 700 | `font-mono` |
+
+### Tons des grands titres (`SectionHeading`)
+
+Alterner `tone` : `bleu` (marque) · `feu` (énergie) · `encre` (gravité).  
+Option `accentLast` : dernier mot en couleur opposée. Sur fond coloré (`variant="light"`), rester en `papier`.
 
 ## Direction visuelle
 

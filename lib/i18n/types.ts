@@ -37,6 +37,34 @@ export type Messages = {
     datesHero: string;
     venueLine: string;
   };
+  registerExtras: {
+    addGuest: string;
+    removeGuest: string;
+    guestLabel: string;
+    guestName: string;
+    guestPhone: string;
+    guestsHint: string;
+    maxGuests: string;
+    submitMulti: string;
+  };
+  sessions: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    register: string;
+    capacity: string;
+    free: string;
+    speakers: string;
+  };
+  mouvement: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+  };
+  whatsapp: {
+    label: string;
+    aria: string;
+  };
   stats: { value: string; label: string }[];
   explore: {
     eyebrow: string;
@@ -103,6 +131,11 @@ export type Messages = {
       title: string;
       lead: string;
       notYet: string;
+    };
+    mouvement: {
+      eyebrow: string;
+      title: string;
+      lead: string;
     };
   };
   countdown: {

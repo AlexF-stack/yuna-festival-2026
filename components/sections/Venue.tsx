@@ -17,6 +17,7 @@ export function Venue() {
             title={VENUE.title}
             titleId="lieu-title"
             description={VENUE.intro}
+            tone="feu"
           />
           <ul className="mt-8 space-y-3.5">
             {VENUE.amenities.map((line) => (

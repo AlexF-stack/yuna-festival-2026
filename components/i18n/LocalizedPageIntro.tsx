@@ -13,7 +13,8 @@ type PageKey =
   | "boutique"
   | "don"
   | "faq"
-  | "monPass";
+  | "monPass"
+  | "mouvement";
 
 type LocalizedPageIntroProps = {
   page: PageKey;

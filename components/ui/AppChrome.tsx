@@ -7,6 +7,7 @@ import { StaffNav } from "@/components/staff/StaffNav";
 import { RegisterFloat } from "@/components/ui/RegisterFloat";
 import { SiteFooter } from "@/components/ui/SiteFooter";
 import { SiteHeader } from "@/components/ui/SiteHeader";
+import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 
 /**
  * Chrome public (header / footer / CTA flottant) hors outils staff.
@@ -28,9 +29,12 @@ export function AppChrome({ children }: { children: React.ReactNode }) {
 
   return (
     <LocaleProvider>
-      <SiteHeader />
+      <div className="fixed inset-x-0 top-0 z-[160]">
+        <SiteHeader />
+      </div>
       {children}
       <SiteFooter />
+      <WhatsAppFloat />
       <RegisterFloat />
     </LocaleProvider>
   );

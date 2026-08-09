@@ -1,28 +1,28 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { PassPreview } from "@/components/pass/PassPreview";
-import { RegistrationGauge } from "@/components/sections/RegistrationGauge";
 import { useMessages } from "@/components/i18n/LocaleProvider";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { FESTIVAL } from "@/lib/festival";
 import { EASE_YUNA } from "@/lib/motion";
 import {
+  isRegistrationType,
   REGISTRATION_TYPES,
   type RegistrationType,
 } from "@/lib/registration-types";
 
-type RegisterProps = {
-  initialCount?: number;
-};
-
 type FieldErrors = {
   form?: string;
 };
+
+type Guest = { name: string; phone: string };
+
+const MAX_GUESTS = 4; // + primary = 5
 
 const fieldClass =
   "w-full rounded-xl border border-bleu/15 bg-papier px-4 py-3.5 text-base text-encre outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-charbon/45 focus:border-bleu focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--bleu)_18%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
@@ -31,7 +31,6 @@ function createIdempotencyKey(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
     return crypto.randomUUID();
   }
-  // UUID v4 manuel — le serveur exige un UUID valide.
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0;
     const v = c === "x" ? r : (r & 0x3) | 0x8;
@@ -39,8 +38,9 @@ function createIdempotencyKey(): string {
   });
 }
 
-export function Register({ initialCount = 0 }: RegisterProps) {
+export function Register() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const reduce = useReducedMotion();
   const t = useMessages();
   const [idempotencyKey, setIdempotencyKey] = useState("");
@@ -49,6 +49,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
   const [email, setEmail] = useState("");
   const [registrationType, setRegistrationType] =
     useState<RegistrationType>("pass");
+  const [guests, setGuests] = useState<Guest[]>([]);
   const [website, setWebsite] = useState("");
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -57,6 +58,13 @@ export function Register({ initialCount = 0 }: RegisterProps) {
   useEffect(() => {
     setIdempotencyKey(createIdempotencyKey());
   }, []);
+
+  useEffect(() => {
+    const type = searchParams.get("type");
+    if (type && isRegistrationType(type)) {
+      setRegistrationType(type);
+    }
+  }, [searchParams]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -67,6 +75,15 @@ export function Register({ initialCount = 0 }: RegisterProps) {
         form: "Coche la case de consentement pour générer ton pass.",
       });
       return;
+    }
+
+    for (let i = 0; i < guests.length; i++) {
+      if (guests[i].name.trim().length < 2 || guests[i].phone.trim().length < 8) {
+        setErrors({
+          form: `Complète le nom et le téléphone du pass n°${i + 2}.`,
+        });
+        return;
+      }
     }
 
     setPending(true);
@@ -86,16 +103,39 @@ export function Register({ initialCount = 0 }: RegisterProps) {
           idempotencyKey: key,
           website,
           consent,
+          guests: guests.map((g) => ({
+            name: g.name.trim(),
+            phone: g.phone.trim(),
+          })),
         }),
       });
 
       if (!res.ok) {
         let message = "Inscription impossible. Réessaie.";
+        let partialId: string | undefined;
+        let partialIds: string[] | undefined;
         try {
-          const payload = (await res.json()) as { error?: string };
+          const payload = (await res.json()) as {
+            error?: string;
+            id?: string;
+            ids?: string[];
+          };
           if (payload.error) message = payload.error;
+          partialId = payload.id;
+          partialIds = payload.ids;
         } catch {
           /* ignore */
+        }
+        // Échec partiel : au moins un pass existe — on oriente vers la confirmation.
+        if (partialId) {
+          if (partialIds && partialIds.length > 1) {
+            router.push(
+              `/confirmation/${partialId}?groupe=${partialIds.join(",")}`,
+            );
+          } else {
+            router.push(`/confirmation/${partialId}`);
+          }
+          return;
         }
         setErrors({ form: message });
         return;
@@ -103,6 +143,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
 
       const payload = (await res.json()) as {
         id?: string;
+        ids?: string[];
         error?: string;
       };
 
@@ -113,7 +154,13 @@ export function Register({ initialCount = 0 }: RegisterProps) {
         return;
       }
 
-      router.push(`/confirmation/${payload.id}`);
+      if (payload.ids && payload.ids.length > 1) {
+        router.push(
+          `/confirmation/${payload.id}?groupe=${payload.ids.join(",")}`,
+        );
+      } else {
+        router.push(`/confirmation/${payload.id}`);
+      }
     } catch {
       setErrors({
         form: "Réseau indisponible. Vérifie ta connexion et réessaie.",
@@ -122,6 +169,11 @@ export function Register({ initialCount = 0 }: RegisterProps) {
       setPending(false);
     }
   }
+
+  const canAddGuest =
+    registrationType === "pass" && guests.length < MAX_GUESTS;
+  const submitLabel =
+    guests.length > 0 ? t.registerExtras.submitMulti : t.register.submit;
 
   return (
     <SectionShell
@@ -143,11 +195,11 @@ export function Register({ initialCount = 0 }: RegisterProps) {
             title={t.register.title}
             titleId="register-title"
             description={t.register.lead}
+            tone="encre"
+            accentLast
           />
-          <RegistrationGauge initialCount={initialCount} />
         </div>
 
-        {/* Skill design-system : formulaire gauche + aperçu pass droite */}
         <div className="mt-12 grid items-start gap-10 min-[960px]:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] min-[960px]:gap-12">
           <motion.form
             onSubmit={onSubmit}
@@ -195,7 +247,10 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                         name="registrationType"
                         value={type.value}
                         checked={selected}
-                        onChange={() => setRegistrationType(type.value)}
+                        onChange={() => {
+                          setRegistrationType(type.value);
+                          if (type.value !== "pass") setGuests([]);
+                        }}
                         className="mt-1 shrink-0 accent-bleu"
                       />
                       <span>
@@ -252,7 +307,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
               />
             </div>
 
-            <div className="mb-6">
+            <div className="mb-5">
               <label
                 htmlFor="reg-email"
                 className="mb-1.5 block text-sm font-medium text-encre"
@@ -270,12 +325,91 @@ export function Register({ initialCount = 0 }: RegisterProps) {
                 placeholder={t.register.emailPh}
                 className={fieldClass}
               />
-              {registrationType === "benevole" ? (
-                <p className="mt-1.5 text-xs text-charbon">
-                  WhatsApp follow-up.
-                </p>
-              ) : null}
             </div>
+
+            {registrationType === "pass" ? (
+              <div className="mb-6 rounded-2xl border border-bleu/10 bg-ciel/30 p-4">
+                <p className="text-xs leading-relaxed text-charbon">
+                  {t.registerExtras.guestsHint}
+                </p>
+                {guests.map((guest, index) => (
+                  <div
+                    key={index}
+                    className="mt-4 border-t border-bleu/10 pt-4 first:mt-3"
+                  >
+                    <div className="mb-2 flex items-center justify-between">
+                      <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.12em] text-bleu">
+                        {t.registerExtras.guestLabel.replace(
+                          "{n}",
+                          String(index + 2),
+                        )}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setGuests((prev) => prev.filter((_, i) => i !== index))
+                        }
+                        className="text-xs font-bold text-feu underline-offset-2 hover:underline"
+                      >
+                        {t.registerExtras.removeGuest}
+                      </button>
+                    </div>
+                    <div className="mb-3">
+                      <label className="mb-1.5 block text-sm font-medium text-encre">
+                        {t.registerExtras.guestName}
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={guest.name}
+                        onChange={(e) =>
+                          setGuests((prev) =>
+                            prev.map((g, i) =>
+                              i === index ? { ...g, name: e.target.value } : g,
+                            ),
+                          )
+                        }
+                        className={fieldClass}
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-1.5 block text-sm font-medium text-encre">
+                        {t.registerExtras.guestPhone}
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={guest.phone}
+                        onChange={(e) =>
+                          setGuests((prev) =>
+                            prev.map((g, i) =>
+                              i === index ? { ...g, phone: e.target.value } : g,
+                            ),
+                          )
+                        }
+                        placeholder={t.register.phonePh}
+                        className={fieldClass}
+                      />
+                    </div>
+                  </div>
+                ))}
+                {canAddGuest ? (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setGuests((prev) => [...prev, { name: "", phone: "" }])
+                    }
+                    className="mt-4 w-full rounded-xl border border-dashed border-bleu/35 bg-papier px-3 py-3 text-sm font-bold text-bleu transition-colors hover:border-bleu hover:bg-ciel/50"
+                  >
+                    {t.registerExtras.addGuest}
+                  </button>
+                ) : guests.length >= MAX_GUESTS ? (
+                  <p className="mt-3 text-xs text-charbon">
+                    {t.registerExtras.maxGuests}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
 
             <label className="mb-5 flex cursor-pointer gap-3 text-sm leading-relaxed text-charbon">
               <input
@@ -311,7 +445,7 @@ export function Register({ initialCount = 0 }: RegisterProps) {
               disabled={pending}
               className="w-full rounded-full bg-feu px-4 py-4 text-[1.02rem] font-bold tracking-[0.02em] text-papier transition-[background-color,transform] duration-[250ms] ease-yuna hover:-translate-y-0.5 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             >
-              {pending ? "…" : t.register.submit}
+              {pending ? "…" : submitLabel}
             </button>
 
             <p className="mt-4 text-center text-sm text-charbon">

@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: "https://yunafestival.com/mouvement",
+      lastModified: LAST_DEPLOY,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
       url: "https://yunafestival.com/vision",
       lastModified: LAST_DEPLOY,
       changeFrequency: "monthly",
@@ -47,7 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: "https://yunafestival.com/don",
+      url: "https://yunafestival.com/soutenir",
       lastModified: LAST_DEPLOY,
       changeFrequency: "monthly",
       priority: 0.8,

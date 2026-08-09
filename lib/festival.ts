@@ -50,23 +50,22 @@ export const HERO_COPY = {
 } as const;
 
 export const NAV_LINKS = [
-  { href: "/vision", label: "Vision" },
+  { href: "/mouvement", label: "Mouvement" },
   { href: "/artistes", label: "Line-up" },
   { href: "/journee", label: "Journée" },
-  { href: "/lieu", label: "Lieu" },
-  { href: "/#inscription", label: "Inscription" },
   { href: "/boutique", label: "Boutique" },
-  { href: "/don", label: "Don" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/soutenir", label: "Soutenir" },
 ] as const;
 
 export const FOOTER_LINKS = [
+  { href: "/mouvement", label: "Mouvement" },
   { href: "/vision", label: "Vision" },
   { href: "/artistes", label: "Artistes" },
   { href: "/journee", label: "Journée" },
-  { href: "/lieu", label: "Lieu" },
+  { href: "/#lieu", label: "Lieu" },
   { href: "/mon-pass", label: "Retrouver mon pass" },
-  { href: "/don", label: "Faire un don" },
+  { href: "/soutenir", label: "Soutenir" },
+  { href: "/faq", label: "FAQ" },
   { href: "/confidentialite", label: "Confidentialité" },
   { href: "/mentions-legales", label: "Mentions légales" },
 ] as const;

@@ -17,6 +17,8 @@ export function Teaser() {
           title={TEASER.title}
           titleId="teaser-title"
           description={TEASER.intro}
+          tone="bleu"
+          accentLast
         />
       </Reveal>
 

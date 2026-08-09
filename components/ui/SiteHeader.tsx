@@ -23,6 +23,14 @@ function toneToSurface(tone: string | null, isHero: boolean): NavSurface {
   return "bleu";
 }
 
+/** CTA = couleur opposée au fond header (visibilité). */
+const CTA_ON_DARK =
+  "!bg-feu !text-papier hover:!bg-braise shadow-[0_8px_22px_color-mix(in_srgb,var(--feu)_40%,transparent)]";
+const CTA_ON_FEU =
+  "!bg-papier !text-feu hover:!bg-papier/90 shadow-[0_8px_22px_rgba(0,0,0,0.12)]";
+const CTA_ON_PAPIER =
+  "!bg-feu !text-papier hover:!bg-braise shadow-[0_8px_22px_color-mix(in_srgb,var(--feu)_28%,transparent)]";
+
 const SURFACE_STYLE: Record<
   NavSurface,
   { header: string; link: string; burger: string; mobile: string; cta: string }
@@ -32,7 +40,7 @@ const SURFACE_STYLE: Record<
     link: "text-papier/90 hover:bg-papier/10 hover:text-papier",
     burger: "border-papier/35 text-papier",
     mobile: "border-t border-papier/15 bg-encre text-papier",
-    cta: "",
+    cta: CTA_ON_DARK,
   },
   bleu: {
     header:
@@ -40,7 +48,7 @@ const SURFACE_STYLE: Record<
     link: "text-papier hover:bg-papier/15",
     burger: "border-papier/40 text-papier",
     mobile: "border-t border-papier/20 bg-bleu text-papier",
-    cta: "!bg-feu !text-papier hover:!bg-braise",
+    cta: CTA_ON_DARK,
   },
   feu: {
     header:
@@ -48,7 +56,7 @@ const SURFACE_STYLE: Record<
     link: "text-papier hover:bg-papier/15",
     burger: "border-papier/40 text-papier",
     mobile: "border-t border-papier/20 bg-feu text-papier",
-    cta: "!bg-papier !text-feu hover:!bg-papier/90",
+    cta: CTA_ON_FEU,
   },
   papier: {
     header:
@@ -56,7 +64,7 @@ const SURFACE_STYLE: Record<
     link: "text-bleu hover:bg-logo-bleu-soft",
     burger: "border-bleu/25 text-bleu",
     mobile: "border-t border-bleu/10 bg-papier text-bleu",
-    cta: "",
+    cta: CTA_ON_PAPIER,
   },
 };
 
@@ -122,7 +130,7 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-[120] pt-[env(safe-area-inset-top)] transition-[background-color,box-shadow,border-color,color] duration-300 ease-yuna ${style.header}`}
+      className={`relative z-[120] pt-[env(safe-area-inset-top)] transition-[background-color,box-shadow,border-color,color] duration-300 ease-yuna ${style.header}`}
     >
       <div aria-hidden className="flex h-1 w-full">
         <span className="flex-1 bg-vert" />
@@ -160,7 +168,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 min-[900px]:flex">
-          <LanguageSwitcher light={lightText} />
+          <LanguageSwitcher light={lightText} surface={activeSurface} />
           <Link
             href="/mon-pass"
             className={`rounded-full px-3.5 py-2 text-[0.76rem] font-bold uppercase tracking-[0.08em] transition-colors ${style.link}`}
@@ -169,14 +177,14 @@ export function SiteHeader() {
           </Link>
           <ButtonLink
             href="/#inscription"
-            className={`min-h-11 !px-6 !py-2.5 text-[0.8rem] ${style.cta}`}
+            className={`min-h-11 !px-6 !py-2.5 text-[0.8rem] font-extrabold uppercase tracking-[0.06em] ${style.cta}`}
           >
             {messages.common.register}
           </ButtonLink>
         </div>
 
         <div className="flex items-center gap-2 min-[900px]:hidden">
-          <LanguageSwitcher light={lightText} />
+          <LanguageSwitcher light={lightText} surface={activeSurface} />
           <button
             type="button"
             className={`relative z-[130] flex h-11 w-11 items-center justify-center rounded-full border ${style.burger}`}
@@ -242,7 +250,7 @@ export function SiteHeader() {
           </Link>
           <ButtonLink
             href="/#inscription"
-            className={`mt-3 w-full ${style.cta}`}
+            className={`mt-3 w-full font-extrabold uppercase tracking-[0.06em] ${style.cta}`}
             onClick={() => setOpen(false)}
           >
             {messages.common.register}

@@ -1,0 +1,27 @@
+import type { Metadata } from "next";
+
+import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
+import { MouvementContent } from "@/components/sections/MouvementContent";
+
+const DESCRIPTION =
+  "YUNA est un mouvement : foi vivante, masterclass, action médicale à Midombo, et une génération non ordinaire qui se lève — Bénin Debout 2026.";
+
+export const metadata: Metadata = {
+  title: "Le mouvement",
+  description: DESCRIPTION,
+  alternates: { canonical: "/mouvement" },
+  openGraph: {
+    title: "Le mouvement | YUNA Festival 2026",
+    description: DESCRIPTION,
+    url: "https://yunafestival.com/mouvement",
+  },
+};
+
+export default function MouvementPage() {
+  return (
+    <main id="contenu" className="bg-papier text-encre">
+      <LocalizedPageIntro page="mouvement" />
+      <MouvementContent />
+    </main>
+  );
+}

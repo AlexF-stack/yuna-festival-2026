@@ -153,7 +153,6 @@ export const SPONSORS = {
       featured: false,
     },
   ],
-  logosTitle: "Ils soutiennent YUNA 2026",
 } as const;
 
 export const PARTICIPATE = {
@@ -220,29 +219,62 @@ export const POLES = [
   },
 ] as const;
 
+/** Montants suggérés — page Soutenir. */
+export const SUPPORT_AMOUNTS_FCFA = [
+  1_000, 2_500, 5_000, 10_000, 25_000,
+] as const;
+
 export const DONATE = {
-  label: "Faire un don",
-  pageHref: "/don",
-  href: "mailto:contact@yunafestival.org?subject=Don%20YUNA%20Festival%202026",
-  blurb: "Soutiens le mouvement — chaque contribution allume une flamme de plus.",
-  pageTitle: "Allume une flamme de plus",
+  label: "Soutenir YUNA",
+  pageHref: "/soutenir",
+  href: "mailto:contact@yunafestival.org?subject=Soutenir%20YUNA%20Festival%202026",
+  blurb:
+    "On ne vend rien ici. Ton soutien garde le festival gratuit et ouvert à tous.",
+  pageTitle: "Soutenir YUNA",
   pageLead:
-    "YUNA Festival est gratuit pour toute une génération. Ton don finance la scène, la logistique, les masterclass et les actions de solidarité à Midombo.",
-  pillars: [
+    "Ton soutien garde le festival gratuit et ouvert à tous. Le montant est libre — aucun minimum. Allume une flamme avec ce que tu peux.",
+  seedTitle: "Allume une flamme",
+  seedLead: "Aucun montant minimum. Chaque flamme compte.",
+  seedCta: "Soutenir maintenant",
+  customAmountPh: "Ou saisis ton montant",
+  paths: [
     {
-      title: "La scène & la prod",
-      text: "Sono, lumières, sécurité et équipe technique pour deux soirées dignes d'une génération qui se lève.",
+      id: "ponctuel",
+      title: "Soutien ponctuel",
+      text: "Mobile Money ou virement, une seule fois. Ex. 5 000 FCFA = contribution directe à la sono / l’action médicale du samedi.",
+      cta: "Choisir un montant →",
+      href: "#semer",
     },
     {
-      title: "Masterclass & formation",
-      text: "Ateliers VTeam et entrepreneuriat — exceller sans quitter le Royaume, avec des formateurs engagés.",
+      id: "engager",
+      title: "S'engager bénévole",
+      text: "Créneaux concrets : accueil, sécurité, technique, protocole. Inscription avec pass QR obligatoire pour le staff jour J.",
+      cta: "S'inscrire bénévole →",
+      href: "/#inscription?type=benevole",
     },
     {
-      title: "Solidarité Midombo",
-      text: "Consultations, dépistages et assistance aux familles du quartier — la foi en actes, sur le terrain.",
+      id: "partenariat",
+      title: "Partenariat",
+      text: "Paliers Bronze 500 000 · Argent 1 500 000 · Or 3 000 000 FCFA — logo, scène, stand. Détail des contreparties plus bas.",
+      cta: "Voir les paliers →",
+      href: "#partenariat-grille",
     },
   ],
-  ctaEmail: "Écrire pour donner",
+  pillars: [
+    {
+      title: "Scène Midombo · 5–6 sept",
+      text: "Location sono & lumières, groupe électrogène, sécurité du terrain, eau et sanitaires — pour 2 soirées (sam. 17h–23h / dim. 17h–22h30), entrée libre pour tout le public.",
+    },
+    {
+      title: "2 masterclass samedi",
+      text: "VTeam 10h–13h (musiciens & chantres) + Entrepreneuriat 15h–17h avec Joël Francis Tatu, Johnny Doefia et Dr Hervé Mama — salles, matériel et places limitées sur inscription QR.",
+    },
+    {
+      title: "Action médicale 08h–13h",
+      text: "Consultations gratuites, dépistages et dons pour les familles du quartier Midombo le samedi matin — avant même l’ouverture des concerts.",
+    },
+  ],
+  ctaEmail: "Écrire pour soutenir",
   ctaHome: "Retour à l'accueil",
 } as const;
 

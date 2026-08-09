@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Journee } from "@/components/sections/Journee";
 import { Poles } from "@/components/sections/Poles";
+import { SessionsCatalog } from "@/components/sections/SessionsCatalog";
 import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
 
 const DESCRIPTION =
@@ -22,6 +23,7 @@ export default function JourneePage() {
   return (
     <main id="contenu" className="bg-papier text-encre">
       <LocalizedPageIntro page="journee" />
+      <SessionsCatalog />
       <Journee />
       <Poles />
     </main>

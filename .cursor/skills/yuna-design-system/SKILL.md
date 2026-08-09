@@ -13,9 +13,10 @@ placeholder explicite plutôt qu'une fausse valeur, et signaler à l'utilisateur
 
 ## Identité visuelle
 
-**Palette active du site** : tokens logo dans `DESIGN.md` (`--bleu` `#0077BB`, `--feu` `#FF6600`,
-fonds clairs). Ne pas réintroduire la palette « nuit » ci-dessous sans validation explicite —
-elle est conservée comme référence historique du draft.
+**Palette active du site** : tokens dans `DESIGN.md` / `app/globals.css` —
+`--bleu` `#0077BB`, `--feu` `#FF4D00`, `--jaune` `#FFD400`, fond `--papier` `#FFF8F1`
+(chaleur festival, pas blanc clinique). Ne pas réintroduire la palette « nuit »
+ci-dessous sans validation explicite — référence historique du draft.
 
 Palette historique "crépuscule → nuit de festival" (draft) :
 
@@ -31,10 +32,12 @@ Palette historique "crépuscule → nuit de festival" (draft) :
 }
 ```
 
-Typographie :
-- **Display** (titres, hero, chiffres du countdown) : `Anton` — condensé, impact, majuscules.
-- **Corps de texte** : `Space Grotesk` (400/500/700).
-- **Chiffres techniques** (countdown, ID de pass) : `JetBrains Mono` 700.
+Typographie (source de vérité : `DESIGN.md`) :
+- **Display** (titres, hero) : `Baloo 2` 700/800 — `font-display`.
+- **Corps** : `Space Grotesk` 400/500/700 — `font-sans`.
+- **Technique** (countdown, ID pass) : `JetBrains Mono` 700 — `font-mono`.
+
+Grands titres : alterner `tone` bleu / feu / encre via `SectionHeading` ; option `accentLast`.
 
 Ne pas remplacer ces trois polices par des choix génériques (Poppins, Montserrat, Roboto) — elles
 font partie de l'identité déjà validée avec le contenu réel du festival.

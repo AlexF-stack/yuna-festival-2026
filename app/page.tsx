@@ -5,10 +5,11 @@ import { Participate } from "@/components/sections/Participate";
 import { Register } from "@/components/sections/Register";
 import { SaveTheDateStrip } from "@/components/sections/SaveTheDateStrip";
 import { StatsBar } from "@/components/sections/StatsBar";
+import { Venue } from "@/components/sections/Venue";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { getEventStartIso } from "@/lib/festival";
-import { getRegistrationsCount } from "@/lib/registrations";
 
 /**
  * ISR : la home est régénérée au plus toutes les 60 s au lieu d'un rendu
@@ -67,7 +68,6 @@ const festivalJsonLd = {
  */
 export default async function HomePage() {
   const eventStartIso = getEventStartIso();
-  const registrationCount = await getRegistrationsCount();
 
   return (
     <main id="contenu" className="bg-papier text-encre">
@@ -80,8 +80,11 @@ export default async function HomePage() {
       <Hero eventStartIso={eventStartIso} />
       <StatsBar />
       <ExploreSections />
+      <Venue />
       <SaveTheDateStrip />
-      <Register initialCount={registrationCount} />
+      <Suspense fallback={null}>
+        <Register />
+      </Suspense>
       <Donate />
       <Participate />
     </main>

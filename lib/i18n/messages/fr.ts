@@ -5,8 +5,8 @@ export const fr: Messages = {
   langName: "Français",
   langSwitch: "Langue",
   common: {
-    register: "Inscris-toi",
-    registerCta: "Inscris-toi — pass QR gratuit",
+    register: "Réserve ton pass",
+    registerCta: "C’est gratuit — je prends ma place",
     myPass: "Mon pass",
     recoverPass: "Pass perdu ? Retrouver mon pass",
     freeEntry: "Entrée libre",
@@ -14,22 +14,21 @@ export const fr: Messages = {
     backHome: "← Retour au site",
   },
   nav: [
-    { href: "/vision", label: "Vision" },
+    { href: "/mouvement", label: "Mouvement" },
     { href: "/artistes", label: "Line-up" },
     { href: "/journee", label: "Journée" },
-    { href: "/lieu", label: "Lieu" },
-    { href: "/#inscription", label: "Inscription" },
     { href: "/boutique", label: "Boutique" },
-    { href: "/don", label: "Don" },
-    { href: "/faq", label: "FAQ" },
+    { href: "/soutenir", label: "Soutenir" },
   ],
   footerNav: [
+    { href: "/mouvement", label: "Mouvement" },
     { href: "/vision", label: "Vision" },
     { href: "/artistes", label: "Artistes" },
     { href: "/journee", label: "Journée" },
-    { href: "/lieu", label: "Lieu" },
+    { href: "/#lieu", label: "Lieu" },
     { href: "/mon-pass", label: "Retrouver mon pass" },
-    { href: "/don", label: "Faire un don" },
+    { href: "/soutenir", label: "Soutenir" },
+    { href: "/faq", label: "FAQ" },
     { href: "/confidentialite", label: "Confidentialité" },
     { href: "/mentions-legales", label: "Mentions légales" },
   ],
@@ -52,11 +51,40 @@ export const fr: Messages = {
     verse:
       "« Lève-toi, sois éclairée, car ta lumière arrive, et la gloire de l'Éternel se lève sur toi. »",
     verseRef: "Ésaïe 60:1",
-    ctaPrimary: "Inscris-toi",
-    ctaSecondary: "Voir la journée",
+    ctaPrimary: "C’est gratuit, je prends ma place",
+    ctaSecondary: "Voir le programme du week-end",
     meta: "5–6 septembre 2026 · Terrain de Midombo, Cotonou",
     datesHero: "5–6 SEP · 2026",
     venueLine: "Terrain de Midombo, Cotonou — Entrée libre",
+  },
+  registerExtras: {
+    addGuest: "+ Ajouter un pass pour quelqu’un d’autre",
+    removeGuest: "Retirer",
+    guestLabel: "Pass n°{n}",
+    guestName: "Nom complet *",
+    guestPhone: "Téléphone (WhatsApp) *",
+    guestsHint:
+      "Tu peux réserver jusqu’à 5 pass en une fois (toi + proches). Chaque personne a son propre QR — enregistre les liens de confirmation (aucun e-mail envoyé pour l’instant).",
+    maxGuests: "Maximum 5 pass par inscription.",
+    submitMulti: "Recevoir les pass QR",
+  },
+  sessions: {
+    eyebrow: "Sessions du samedi",
+    title: "Ateliers & actions",
+    lead: "Action médicale, masterclass VTeam et Entrepreneuriat — inscription gratuite, places limitées pour les masterclass.",
+    register: "S’inscrire →",
+    capacity: "Jusqu’à {n} places",
+    free: "Gratuit",
+    speakers: "Intervenants",
+  },
+  mouvement: {
+    eyebrow: "Le mouvement",
+    title: "Plus qu’un festival",
+    lead: "YUNA est un mouvement : foi vivante, excellence, et impact sur le terrain à Midombo.",
+  },
+  whatsapp: {
+    label: "WhatsApp",
+    aria: "Écrire à YUNA sur WhatsApp",
   },
   stats: [
     { value: "2", label: "Jours de festival" },
@@ -71,10 +99,10 @@ export const fr: Messages = {
       "Vision, line-up, journée d'impact, lieu, boutique et infos pratiques — chaque univers a sa page.",
     cards: [
       {
-        href: "/vision",
-        title: "La vision",
-        description: "Joseph, Daniel, David — une génération non ordinaire.",
-        imageAlt: "La vision du YUNA Festival",
+        href: "/mouvement",
+        title: "Le mouvement",
+        description: "Plus qu’un festival — Midombo, foi et génération.",
+        imageAlt: "Le mouvement YUNA",
       },
       {
         href: "/artistes",
@@ -89,7 +117,7 @@ export const fr: Messages = {
         imageAlt: "Actions communautaires en journée",
       },
       {
-        href: "/lieu",
+        href: "/#lieu",
         title: "Le lieu",
         description: "Terrain de Midombo, Cotonou — entrée libre.",
         imageAlt: "Terrain de Midombo",
@@ -156,8 +184,8 @@ export const fr: Messages = {
       hint: "Accueil, sécurité, technique, protocole…",
     },
   },
-  floatCta: "Inscris-toi",
-  floatAria: "Aller au formulaire d'inscription — pass QR gratuit",
+  floatCta: "Ma place",
+  floatAria: "Réserver mon pass QR gratuit",
   lineup: {
     eyebrow: "Line-up",
     title: "Les artistes",
@@ -202,9 +230,9 @@ export const fr: Messages = {
     },
     don: {
       eyebrow: "Soutenir",
-      title: "Allume une flamme de plus",
+      title: "Soutenir YUNA",
       lead:
-        "Soutiens le mouvement — chaque contribution allume une flamme de plus.",
+        "On ne vend rien ici. Ton soutien garde le festival gratuit et ouvert à tous.",
     },
     faq: {
       eyebrow: "Infos",
@@ -217,6 +245,12 @@ export const fr: Messages = {
       lead:
         "Entre ton nom et le numéro WhatsApp utilisés à l'inscription. On te réaffiche ton QR.",
       notYet: "Pas encore inscrit ?",
+    },
+    mouvement: {
+      eyebrow: "Le mouvement",
+      title: "Plus qu’un festival",
+      lead:
+        "Foi, talents et impact terrain — une génération qui se lève à Midombo et au-delà.",
     },
   },
   countdown: {

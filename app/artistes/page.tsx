@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Lineup } from "@/components/sections/Lineup";
 import { MediaBand } from "@/components/sections/MediaBand";
+import { ProgrammeSoirees } from "@/components/sections/ProgrammeSoirees";
 import { Teaser } from "@/components/sections/Teaser";
 import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
 import { getArtists } from "@/lib/artists";
@@ -31,6 +32,7 @@ export default async function ArtistesPage() {
     <main id="contenu" className="bg-papier text-encre">
       <LocalizedPageIntro page="artistes" />
       <Lineup artists={artists} />
+      <ProgrammeSoirees />
       <Teaser />
       <MediaBand />
     </main>

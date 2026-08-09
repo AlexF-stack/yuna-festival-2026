@@ -13,6 +13,8 @@ export async function Programme() {
         title="Deux soirées de feu"
         titleId="programme-title"
         description="Samedi 5 et dimanche 6 septembre 2026 — minute par minute sur le Terrain de Midombo."
+        tone="feu"
+        accentLast
       />
       <ProgrammeTabs items={items} />
     </SectionShell>

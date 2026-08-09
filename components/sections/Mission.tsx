@@ -41,6 +41,8 @@ export function Mission() {
             title={MISSION.title}
             titleId="mission-title"
             description={MISSION.subtitle}
+            tone="bleu"
+            accentLast
           />
           <p className="mt-5 max-w-xl text-[1.08rem] leading-relaxed text-charbon">
             {MISSION.lead}

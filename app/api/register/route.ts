@@ -6,10 +6,15 @@ import { notifyCrmRegistration, siteOrigin } from "@/lib/crm";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { generateRegistrationQr } from "@/lib/registration-qr";
 import { validateRegistrationInput } from "@/lib/registration";
-import { REGISTRATION_TYPE_LABELS } from "@/lib/registration-types";
+import {
+  REGISTRATION_TYPE_LABELS,
+  type RegistrationType,
+} from "@/lib/registration-types";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
+
+type GuestBody = { name?: string; phone?: string };
 
 type RegisterBody = {
   name?: string;
@@ -17,16 +22,94 @@ type RegisterBody = {
   email?: string;
   registrationType?: string;
   idempotencyKey?: string;
-  website?: string; // honeypot
+  website?: string;
   consent?: boolean;
+  guests?: GuestBody[];
+};
+
+type ParsedPerson = {
+  name: string;
+  phone: string;
+  email: string | null;
+  registrationType: RegistrationType;
 };
 
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+const MAX_PARTY = 5;
+
+/** Dérive une clé UUID déterministe par invité (parent + index). */
+function deriveGuestIdempotencyKey(parent: string, index: number): string {
+  const hex = parent.replace(/-/g, "").toLowerCase();
+  const suffix = (index + 1).toString(16).padStart(4, "0");
+  const next = `${hex.slice(0, 28)}${suffix}`;
+  return `${next.slice(0, 8)}-${next.slice(8, 12)}-${next.slice(12, 16)}-${next.slice(16, 20)}-${next.slice(20, 32)}`;
+}
+
+async function insertOne(
+  supabase: ReturnType<typeof createSupabaseAdminClient>,
+  input: ParsedPerson & { idempotencyKey: string },
+) {
+  const { data: existingByKey } = await supabase
+    .from("registrations")
+    .select("id, name, qr_code, created_at")
+    .eq("idempotency_key", input.idempotencyKey)
+    .maybeSingle();
+
+  if (existingByKey) {
+    return { ok: true as const, data: existingByKey, replayed: true };
+  }
+
+  const id = randomUUID();
+  const qr_code = await generateRegistrationQr(id);
+
+  const { data, error } = await supabase
+    .from("registrations")
+    .insert({
+      id,
+      name: input.name,
+      phone: input.phone,
+      email: input.email,
+      registration_type: input.registrationType,
+      idempotency_key: input.idempotencyKey,
+      qr_code,
+    })
+    .select("id, name, qr_code, created_at")
+    .single();
+
+  if (error) {
+    if (error.code === "23505") {
+      const { data: raced } = await supabase
+        .from("registrations")
+        .select("id, name, qr_code, created_at")
+        .eq("idempotency_key", input.idempotencyKey)
+        .maybeSingle();
+      if (raced) {
+        return { ok: true as const, data: raced, replayed: true };
+      }
+      const typeLabel =
+        REGISTRATION_TYPE_LABELS[input.registrationType] ?? "cette catégorie";
+      return {
+        ok: false as const,
+        status: 409 as const,
+        error: `Tu es déjà inscrit·e à « ${typeLabel} ». Retrouve ton pass via « Retrouver mon pass ».`,
+      };
+    }
+    console.error("[register]", error);
+    return {
+      ok: false as const,
+      status: 500 as const,
+      error: "Inscription impossible pour le moment. Réessaie.",
+    };
+  }
+
+  return { ok: true as const, data, replayed: false };
+}
+
 export async function POST(request: Request) {
   const limited = await rateLimit(`register:${clientIp(request)}`, {
-    limit: 5,
+    limit: 8,
     windowMs: 60_000,
   });
   if (!limited.ok) {
@@ -49,7 +132,6 @@ export async function POST(request: Request) {
     );
   }
 
-  // Bot honeypot — réponse indistinguable d'un succès (faux id), rien n'est créé.
   if (body.website && body.website.trim().length > 0) {
     return NextResponse.json({
       id: randomUUID(),
@@ -58,7 +140,6 @@ export async function POST(request: Request) {
     });
   }
 
-  // RGPD : le consentement explicite est requis pour traiter les données
   if (body.consent !== true) {
     return NextResponse.json(
       { error: "Le consentement au traitement des données est requis." },
@@ -80,95 +161,111 @@ export async function POST(request: Request) {
     );
   }
 
-  try {
-    const supabase = createSupabaseAdminClient();
+  const rawGuests = Array.isArray(body.guests) ? body.guests : [];
+  if (rawGuests.length > MAX_PARTY - 1) {
+    return NextResponse.json(
+      { error: "Maximum 5 pass par inscription (toi + 4 proches)." },
+      { status: 400 },
+    );
+  }
 
-    // Idempotence : même clé = même inscription (double clic / retry)
-    const { data: existingByKey } = await supabase
-      .from("registrations")
-      .select("id, name, qr_code, created_at")
-      .eq("idempotency_key", idempotencyKey)
-      .maybeSingle();
+  if (rawGuests.length > 0 && parsed.registrationType !== "pass") {
+    return NextResponse.json(
+      {
+        error:
+          "L'inscription groupe n'est disponible que pour le Pass Festival.",
+      },
+      { status: 400 },
+    );
+  }
 
-    if (existingByKey) {
-      return NextResponse.json({
-        id: existingByKey.id,
-        name: existingByKey.name,
-        qrCode: existingByKey.qr_code,
-        replayed: true,
-      });
-    }
+  const party: ParsedPerson[] = [parsed];
 
-    const id = randomUUID();
-    const qr_code = await generateRegistrationQr(id);
-
-    const { data, error } = await supabase
-      .from("registrations")
-      .insert({
-        id,
-        name: parsed.name,
-        phone: parsed.phone,
-        email: parsed.email,
-        registration_type: parsed.registrationType,
-        idempotency_key: idempotencyKey,
-        qr_code,
-      })
-      .select("id, name, qr_code, created_at")
-      .single();
-
-    if (error) {
-      if (error.code === "23505") {
-        // Course sur idempotency_key
-        const { data: raced } = await supabase
-          .from("registrations")
-          .select("id, name, qr_code")
-          .eq("idempotency_key", idempotencyKey)
-          .maybeSingle();
-        if (raced) {
-          return NextResponse.json({
-            id: raced.id,
-            name: raced.name,
-            qrCode: raced.qr_code,
-            replayed: true,
-          });
-        }
-
-        const typeLabel =
-          REGISTRATION_TYPE_LABELS[parsed.registrationType] ?? "cette catégorie";
-        return NextResponse.json(
-          {
-            error: `Tu es déjà inscrit·e à « ${typeLabel} ». Retrouve ton pass via « Retrouver mon pass ».`,
-          },
-          { status: 409 },
-        );
-      }
-      console.error("[register]", error);
+  for (let i = 0; i < rawGuests.length; i++) {
+    const g = validateRegistrationInput({
+      name: rawGuests[i]?.name,
+      phone: rawGuests[i]?.phone,
+      email: undefined,
+      registrationType: parsed.registrationType,
+    });
+    if ("error" in g) {
       return NextResponse.json(
-        { error: "Inscription impossible pour le moment. Réessaie." },
-        { status: 500 },
+        { error: `Pass n°${i + 2} : ${g.error}` },
+        { status: 400 },
       );
     }
+    party.push(g);
+  }
 
-    // Sync CRM avant la réponse : upsert rapide (<1s). On ne fait pas échouer
-    // l'inscription utilisateur si le CRM est down — on log seulement.
-    try {
-      await notifyCrmRegistration({
-        id: data.id,
-        name: parsed.name,
-        phone: parsed.phone,
-        email: parsed.email,
-        registrationType: parsed.registrationType,
-        createdAt: data.created_at,
-        confirmationUrl: `${siteOrigin()}/confirmation/${data.id}`,
+  const phones = party.map((p) => p.phone);
+  if (new Set(phones).size !== phones.length) {
+    return NextResponse.json(
+      {
+        error:
+          "Chaque pass doit avoir un numéro WhatsApp distinct (y compris le tien).",
+      },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const supabase = createSupabaseAdminClient();
+    const created: {
+      id: string;
+      name: string;
+      qr_code: string;
+      created_at: string;
+    }[] = [];
+
+    for (let i = 0; i < party.length; i++) {
+      const person = party[i];
+      const key =
+        i === 0 ? idempotencyKey : deriveGuestIdempotencyKey(idempotencyKey, i);
+      const result = await insertOne(supabase, {
+        ...person,
+        idempotencyKey: key,
       });
-    } catch (crmErr) {
-      console.error("[register] CRM sync", crmErr);
+
+      if (!result.ok) {
+        if (created.length === 0) {
+          return NextResponse.json(
+            { error: result.error },
+            { status: result.status },
+          );
+        }
+        return NextResponse.json(
+          {
+            error: `Pass principal créé, mais le pass n°${i + 1} a échoué : ${result.error}`,
+            id: created[0].id,
+            ids: created.map((r) => r.id),
+          },
+          { status: result.status },
+        );
+      }
+
+      created.push(result.data);
+
+      try {
+        await notifyCrmRegistration({
+          id: result.data.id,
+          name: person.name,
+          phone: person.phone,
+          email: person.email,
+          registrationType: person.registrationType,
+          createdAt: result.data.created_at,
+          confirmationUrl: `${siteOrigin()}/confirmation/${result.data.id}`,
+        });
+      } catch (crmErr) {
+        console.error("[register] CRM sync", crmErr);
+      }
     }
 
     return NextResponse.json({
-      id: data.id,
-      name: data.name,
-      qrCode: data.qr_code,
+      id: created[0].id,
+      name: created[0].name,
+      qrCode: created[0].qr_code,
+      ids: created.map((r) => r.id),
+      count: created.length,
     });
   } catch (err) {
     console.error("[register]", err);

@@ -47,7 +47,7 @@ export function Hero({ eventStartIso }: HeroProps) {
       {!reduceMotion ? <HeroOrbs /> : null}
       {!reduceMotion ? <HeroFireCanvas /> : null}
 
-      <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1240px] items-center gap-12 px-5 pb-16 pt-28 min-[900px]:grid-cols-[1.08fr_0.92fr] min-[900px]:gap-10 min-[900px]:px-6 min-[900px]:pb-20 min-[900px]:pt-32">
+      <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1240px] items-center gap-12 px-5 pb-16 pt-36 min-[900px]:grid-cols-[1.08fr_0.92fr] min-[900px]:gap-10 min-[900px]:px-6 min-[900px]:pb-20 min-[900px]:pt-40">
         <motion.div
           variants={reduceMotion ? undefined : container}
           initial={reduceMotion ? false : "hidden"}
@@ -108,7 +108,7 @@ export function Hero({ eventStartIso }: HeroProps) {
           >
             <ButtonLink
               href={HERO_COPY.ctaPrimaryHref}
-              className="min-h-12 w-full min-[420px]:w-auto"
+              className="min-h-12 w-full min-[420px]:w-auto !bg-feu !px-7 font-extrabold uppercase tracking-[0.04em] hover:!bg-braise"
             >
               {hero.ctaPrimary}
             </ButtonLink>

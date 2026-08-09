@@ -17,3 +17,15 @@ export function getPreorderMailto(): string {
   const subject = encodeURIComponent(SITE_CONTACT.preorderSubject);
   return `mailto:${SITE_CONTACT.email}?subject=${subject}`;
 }
+
+/** Checkout boutique — FedaPay si configuré, sinon mailto précommande. */
+export function getBoutiqueCheckoutHref(productName?: string): string {
+  const fedapay = process.env.NEXT_PUBLIC_FEDAPAY_BOUTIQUE_URL?.trim();
+  if (fedapay) return fedapay;
+  const subject = encodeURIComponent(
+    productName
+      ? `Précommande ${productName} — YUNA 2026`
+      : SITE_CONTACT.preorderSubject,
+  );
+  return `mailto:${SITE_CONTACT.email}?subject=${subject}`;
+}

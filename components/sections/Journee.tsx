@@ -24,6 +24,8 @@ export function Journee() {
           title={JOURNEE.title}
           titleId="journee-title"
           description={JOURNEE.intro}
+          tone="bleu"
+          accentLast
         />
       </Reveal>
 

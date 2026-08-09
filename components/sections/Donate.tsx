@@ -8,13 +8,13 @@ import { SectionShell } from "@/components/ui/SectionShell";
 import { DONATE } from "@/lib/content-site";
 import { EASE_YUNA } from "@/lib/motion";
 
-/** Teaser accueil — renvoie vers la page dédiée /don */
+/** Teaser accueil — renvoie vers /soutenir */
 export function Donate() {
   const reduce = useReducedMotion();
 
   return (
     <SectionShell
-      id="don"
+      id="soutenir"
       labelledBy="donate-title"
       tone="bleu"
       className="py-20 min-[760px]:py-24"
@@ -29,7 +29,7 @@ export function Donate() {
         <div className="max-w-xl">
           <SectionHeading
             eyebrow="Soutenir"
-            title="Allume une flamme de plus"
+            title="Allume une flamme"
             titleId="donate-title"
             description={DONATE.blurb}
             variant="light"

@@ -25,6 +25,8 @@ export function Sponsors() {
           title={SPONSORS.title}
           titleId="sponsors-title"
           description={SPONSORS.intro}
+          tone="encre"
+          accentLast
         />
       </Reveal>
 
@@ -75,20 +77,6 @@ export function Sponsors() {
           </motion.article>
         ))}
       </div>
-
-      <Reveal className="mt-16 text-center">
-        <p className="section-eyebrow justify-center">{SPONSORS.logosTitle}</p>
-        <div className="mx-auto mt-6 grid max-w-3xl grid-cols-2 gap-3 min-[640px]:grid-cols-4">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div
-              key={i}
-              className="flex h-16 items-center justify-center rounded-xl border border-dashed border-bleu/20 bg-papier text-xs font-semibold uppercase tracking-wider text-charbon/45"
-            >
-              Votre logo ici
-            </div>
-          ))}
-        </div>
-      </Reveal>
     </SectionShell>
   );
 }
