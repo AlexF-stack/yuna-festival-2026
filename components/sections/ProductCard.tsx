@@ -81,7 +81,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </p>
         <a
           href={getBoutiqueCheckoutHref(product.name)}
-          className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-feu px-4 py-2.5 text-sm font-bold text-papier transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-braise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu motion-reduce:hover:translate-y-0"
+          className="btn-cta-flame mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-bold text-papier transition-[transform,filter] duration-200 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-feu motion-reduce:hover:translate-y-0"
         >
           Commander — {formatPriceFcfa(product.price_fcfa)}
         </a>
