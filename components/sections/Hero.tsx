@@ -85,7 +85,6 @@ export function Hero({ eventStartIso }: HeroProps) {
             <AnimatedThemeTitle
               line1={hero.titleLine1}
               line2={hero.titleLine2}
-              variant="dark"
             />
           </motion.div>
 
