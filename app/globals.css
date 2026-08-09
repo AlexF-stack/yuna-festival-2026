@@ -274,6 +274,178 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ── Cadres à effets (bleu → feu → jaune) ───────────────────────────── */
+@property --fx-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes fx-spin {
+  to {
+    --fx-angle: 360deg;
+  }
+}
+
+@keyframes fx-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.fx-frame {
+  position: relative;
+  isolation: isolate;
+  border-radius: 1.5rem;
+}
+
+.fx-frame::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  z-index: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--fx-angle),
+    var(--bleu),
+    var(--feu),
+    var(--jaune),
+    var(--bleu)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: fx-spin 5.5s linear infinite;
+  pointer-events: none;
+}
+
+.fx-frame::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at 30% 20%,
+    color-mix(in srgb, var(--feu) 28%, transparent),
+    transparent 55%
+  );
+  filter: blur(12px);
+  animation: fx-glow-pulse 3.2s ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.fx-frame__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  background: var(--papier);
+}
+
+.fx-frame--dark .fx-frame__inner {
+  background: var(--encre);
+}
+
+.fx-frame--media .fx-frame__inner {
+  background: transparent;
+}
+
+.fx-frame--soft::before {
+  opacity: 0.7;
+}
+
+.fx-frame--soft::after {
+  opacity: 0.35;
+}
+
+/* Coins cinéma — crochets feu / bleu */
+.fx-corners {
+  position: relative;
+}
+
+.fx-corners::before,
+.fx-corners::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 1.35rem;
+  height: 1.35rem;
+  pointer-events: none;
+  border-color: var(--feu);
+  border-style: solid;
+  transition:
+    width 280ms var(--ease-yuna),
+    height 280ms var(--ease-yuna),
+    border-color 280ms var(--ease-yuna);
+}
+
+.fx-corners::before {
+  top: 0.55rem;
+  left: 0.55rem;
+  border-width: 2.5px 0 0 2.5px;
+}
+
+.fx-corners::after {
+  right: 0.55rem;
+  bottom: 0.55rem;
+  border-color: var(--bleu);
+  border-width: 0 2.5px 2.5px 0;
+}
+
+.group:hover .fx-corners::before,
+.group:hover .fx-corners::after,
+.fx-corners:hover::before,
+.fx-corners:hover::after {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.fx-corners__br,
+.fx-corners__tl {
+  position: absolute;
+  z-index: 2;
+  width: 1.35rem;
+  height: 1.35rem;
+  pointer-events: none;
+  border-style: solid;
+  transition:
+    width 280ms var(--ease-yuna),
+    height 280ms var(--ease-yuna);
+}
+
+.fx-corners__tl {
+  top: 0.55rem;
+  right: 0.55rem;
+  border-color: var(--jaune);
+  border-width: 2.5px 2.5px 0 0;
+}
+
+.fx-corners__br {
+  bottom: 0.55rem;
+  left: 0.55rem;
+  border-color: var(--vert);
+  border-width: 0 0 2.5px 2.5px;
+}
+
+.group:hover .fx-corners__tl,
+.group:hover .fx-corners__br {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tee-flame,
   .tee-pulse,
@@ -283,8 +455,19 @@ body {
   .theme-benin,
   .marquee-track,
   .hero-kenburns,
-  .scroll-cue {
+  .scroll-cue,
+  .fx-frame::before,
+  .fx-frame::after {
     animation: none !important;
+  }
+
+  .fx-frame::before {
+    background: linear-gradient(
+      135deg,
+      var(--bleu),
+      var(--feu),
+      var(--jaune)
+    );
   }
 }
 

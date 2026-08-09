@@ -208,8 +208,9 @@ export function Register() {
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.65, ease: EASE_YUNA }}
-            className="relative rounded-3xl border border-bleu/10 bg-papier/95 p-6 shadow-ombre-bleu backdrop-blur-sm min-[480px]:p-8"
+            className="fx-frame fx-frame--soft relative rounded-3xl shadow-ombre-bleu"
           >
+            <div className="fx-frame__inner rounded-3xl bg-papier/95 p-6 backdrop-blur-sm min-[480px]:p-8">
             <h3 className="mb-5 font-display text-xl font-extrabold uppercase tracking-wide text-bleu">
               {t.register.formTitle}
             </h3>
@@ -470,6 +471,7 @@ export function Register() {
                 </li>
               ))}
             </ul>
+            </div>
           </motion.form>
 
           <motion.div

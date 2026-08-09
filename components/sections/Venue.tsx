@@ -1,5 +1,6 @@
 "use client";
 
+import { EffectFrame } from "@/components/ui/EffectFrame";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
@@ -31,11 +32,11 @@ export function Venue() {
 
         <Reveal delay={0.08} variant="open">
           <div className="relative">
-            <div
-              aria-hidden
-              className="absolute -left-4 -top-4 h-full w-full rounded-[2rem] rounded-bl-[0.4rem] border-2 border-jaune/40"
-            />
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] rounded-tr-[0.45rem] shadow-ombre-bleu-lg">
+            <EffectFrame
+              tone="media"
+              corners
+              className="aspect-[4/5] rounded-[2rem] rounded-tr-[0.45rem] shadow-ombre-bleu-lg"
+            >
               <SoftImage
                 src="/media/venue-midombo-generated.webp"
                 alt="Festival en plein air au terrain de Midombo"
@@ -54,12 +55,16 @@ export function Venue() {
                   {FESTIVAL.city} · {FESTIVAL.country}
                 </p>
               </div>
-            </div>
-            <aside className="absolute -bottom-6 right-0 rounded-2xl border border-papier/20 bg-bleu px-5 py-4 text-center text-papier shadow-ombre-bleu-lg min-[480px]:-right-4 min-[900px]:-right-8">
-              <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-papier/65">
-                Ouverture
-              </p>
-              <p className="font-display text-2xl font-extrabold">{FESTIVAL.siteOpens}</p>
+            </EffectFrame>
+            <aside className="fx-frame fx-frame--soft absolute -bottom-6 right-0 z-10 rounded-2xl min-[480px]:-right-4 min-[900px]:-right-8">
+              <div className="fx-frame__inner rounded-2xl bg-bleu px-5 py-4 text-center text-papier">
+                <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-papier/65">
+                  Ouverture
+                </p>
+                <p className="font-display text-2xl font-extrabold">
+                  {FESTIVAL.siteOpens}
+                </p>
+              </div>
             </aside>
           </div>
         </Reveal>

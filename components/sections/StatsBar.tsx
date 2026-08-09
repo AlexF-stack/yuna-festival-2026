@@ -33,17 +33,21 @@ export function StatsBar() {
             key={stat.label}
             variants={reduce ? undefined : rise(16)}
             transition={{ duration: 0.55, ease: EASE_YUNA }}
-            className="group relative px-5 py-9 text-center text-papier"
+            className="group relative px-4 py-8 text-center text-papier min-[720px]:px-5 min-[720px]:py-9"
           >
-            <p
-              className="font-display text-[clamp(2rem,5vw,2.85rem)] font-extrabold leading-none text-papier transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
-              aria-label={`${stat.value} ${stat.label}`}
-            >
-              {stat.value}
-            </p>
-            <p className="mt-2 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-papier/80">
-              {stat.label}
-            </p>
+            <div className="fx-frame fx-frame--soft fx-frame--dark mx-auto max-w-[11rem] rounded-2xl">
+              <div className="fx-frame__inner rounded-2xl bg-bleu/40 px-3 py-5 backdrop-blur-sm">
+                <p
+                  className="font-display text-[clamp(2rem,5vw,2.85rem)] font-extrabold leading-none text-papier transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
+                  aria-label={`${stat.value} ${stat.label}`}
+                >
+                  {stat.value}
+                </p>
+                <p className="mt-2 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-papier/80">
+                  {stat.label}
+                </p>
+              </div>
+            </div>
           </motion.div>
         ))}
       </motion.div>

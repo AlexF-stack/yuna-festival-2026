@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { useMessages } from "@/components/i18n/LocaleProvider";
+import { EffectFrame } from "@/components/ui/EffectFrame";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { SoftImage } from "@/components/ui/SoftImage";
@@ -50,38 +51,44 @@ export function ExploreSections() {
             image: "/media/crowd.webp",
           };
           return (
-            <Link
+            <EffectFrame
               key={card.href}
-              href={card.href}
-              className="group relative block h-44 overflow-hidden rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu min-[900px]:h-52"
+              tone="media"
+              corners
+              className="h-44 rounded-3xl min-[900px]:h-52"
             >
-              <SoftImage
-                src={media.image}
-                alt={card.imageAlt}
-                fill
-                sizes="(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 33vw"
-                wrapperClassName="absolute inset-0"
-                className="transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transition-none"
-                objectPosition={media.objectPosition ?? "center"}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-encre/92 via-encre/35 to-encre/10" />
-              <div className="absolute inset-0 flex flex-col justify-end p-5 text-papier">
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-display text-xl font-extrabold uppercase leading-tight">
-                    {card.title}
-                  </h3>
-                  <span
-                    aria-hidden
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-feu text-papier transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
-                  >
-                    →
-                  </span>
+              <Link
+                href={card.href}
+                className="group relative block h-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu"
+              >
+                <SoftImage
+                  src={media.image}
+                  alt={card.imageAlt}
+                  fill
+                  sizes="(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 33vw"
+                  wrapperClassName="absolute inset-0"
+                  className="transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transition-none"
+                  objectPosition={media.objectPosition ?? "center"}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-encre/92 via-encre/35 to-encre/10" />
+                <div className="absolute inset-0 flex flex-col justify-end p-5 text-papier">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="font-display text-xl font-extrabold uppercase leading-tight">
+                      {card.title}
+                    </h3>
+                    <span
+                      aria-hidden
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-feu text-papier transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+                    >
+                      →
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm leading-relaxed text-papier/80">
+                    {card.description}
+                  </p>
                 </div>
-                <p className="mt-1 text-sm leading-relaxed text-papier/80">
-                  {card.description}
-                </p>
-              </div>
-            </Link>
+              </Link>
+            </EffectFrame>
           );
         })}
       </div>
