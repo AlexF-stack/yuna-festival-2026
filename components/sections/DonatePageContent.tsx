@@ -60,6 +60,7 @@ export function DonatePageContent() {
   );
 
   const seedHref = buildSupportMailto(amount);
+  const isMailtoSeed = seedHref.startsWith("mailto:");
   const flameIndex = activeFlame
     ? SUPPORT_FLAMES.findIndex((f) => f.amount === activeFlame.amount)
     : custom
@@ -341,7 +342,15 @@ export function DonatePageContent() {
               </a>
 
               <p className="mt-5 text-center text-sm leading-relaxed text-ivoire-froid/60">
-                Mobile Money / virement —{" "}
+                {isMailtoSeed ? (
+                  <>
+                    Pas de paiement en ligne pour l’instant — tu ouvres un e-mail
+                    prérempli (ou WhatsApp). L’équipe te guide pour Mobile Money /
+                    virement.{" "}
+                  </>
+                ) : (
+                  <>Checkout sécurisé — confirmation par l’équipe. </>
+                )}
                 <a
                   href={DONATE.href}
                   className="font-semibold text-feu-core underline decoration-feu/40 underline-offset-4 hover:decoration-feu"
@@ -351,7 +360,7 @@ export function DonatePageContent() {
                 {whatsapp ? (
                   <>
                     {" "}
-                    ou{" "}
+                    ·{" "}
                     <a
                       href={whatsapp}
                       target="_blank"
@@ -362,7 +371,7 @@ export function DonatePageContent() {
                     </a>
                   </>
                 ) : null}
-                . {ORGANIZER.name} te guide.
+                . {ORGANIZER.name}.
               </p>
             </motion.div>
           </div>

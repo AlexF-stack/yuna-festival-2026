@@ -247,6 +247,30 @@ export const en: Messages = {
         "Faith, gifts and ground impact — a generation rising in Midombo and beyond.",
     },
   },
+  confirmation: {
+    eyebrow: "Registration confirmed",
+    title: "Your YUNA pass",
+    leadMessaging:
+      "Show this QR at the gate. A confirmation message is also sent automatically to your phone.",
+    leadSave:
+      "Show this QR at the gate. Save the PNG or this link — you can recover it via My pass.",
+    groupTitle: "Group: {n} passes created",
+    groupBody: "Here’s your pass. The other passes in the group:",
+    passN: "Pass #{n} →",
+    lostLink: "Lost this link?",
+    recover: "Recover your pass",
+  },
+  passActions: {
+    confirmed: "Confirmed",
+    messageSent: "message sent via {channel}. Keep this pass below too.",
+    savePass:
+      "Save this pass (PNG or bookmark). You can also recover it via My pass.",
+    downloadPng: "Download PNG",
+    share: "Share / copy link",
+    linkCopied: "Link copied",
+    shareTitle: "YUNA Festival 2026 pass",
+    shareText: "My YUNA QR pass",
+  },
   countdown: {
     days: "Days",
     hours: "Hours",

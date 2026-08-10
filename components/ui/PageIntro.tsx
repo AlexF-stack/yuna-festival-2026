@@ -20,7 +20,7 @@ function accentLastWord(title: string) {
   return (
     <>
       {trimmed.slice(0, i)}{" "}
-      <span className="text-jaune">{trimmed.slice(i + 1)}</span>
+      <span className="text-feu">{trimmed.slice(i + 1)}</span>
     </>
   );
 }
@@ -39,7 +39,11 @@ export function PageIntro({ eyebrow, title, lead, cta }: PageIntroProps) {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,color-mix(in_srgb,var(--feu)_35%,transparent),transparent_55%),radial-gradient(ellipse_at_90%_80%,color-mix(in_srgb,var(--jaune)_18%,transparent),transparent_50%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_18%_0%,color-mix(in_srgb,var(--feu)_42%,transparent),transparent_52%),radial-gradient(ellipse_at_88%_70%,color-mix(in_srgb,var(--bleu)_28%,transparent),transparent_48%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,var(--vert)_0%,var(--jaune)_50%,var(--rouge)_100%)]"
       />
       <motion.div
         className="section-container relative z-10 px-5 min-[760px]:px-6"
@@ -51,7 +55,7 @@ export function PageIntro({ eyebrow, title, lead, cta }: PageIntroProps) {
           <motion.p
             variants={reduce ? undefined : rise(18)}
             transition={{ duration: 0.65, ease: EASE_PREMIUM }}
-            className="font-mono text-[0.72rem] font-bold uppercase tracking-[0.22em] text-jaune"
+            className="font-mono text-[0.72rem] font-bold uppercase tracking-[0.22em] text-feu"
           >
             {eyebrow} · {FESTIVAL.brandFull} {FESTIVAL.edition}
           </motion.p>

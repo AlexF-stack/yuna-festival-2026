@@ -31,7 +31,7 @@ Never commit `.env*`, `.staff-secret.local`, `.crm-api-key.local`.
 |---------|-----|------|
 | Public site / Site public | `/` (+ pages) | none |
 | Door scan / Scan porte | `/staff/scan` | header `x-yuna-staff` = `YUNA_STAFF_SECRET` |
-| CRM listing | `/staff/crm` | `x-api-key` = `YUNA_CRM_API_KEY` **or** same staff secret |
+| CRM listing | `/staff/crm` | `x-yuna-crm` / `x-api-key` = `YUNA_CRM_API_KEY` **only** (scan secret ≠ CRM dump) |
 
 **Supabase:** site `yargdalaivcqmnwppcmi` · CRM `rroyxwiyyaexrvqijwnu`  
 **Host:** Vercel `yuna-festival-2026` · `https://yuna-festival-2026.vercel.app`
@@ -62,8 +62,8 @@ Health → GET  /api/health
 
 | Variable | Role / Rôle |
 |----------|-------------|
-| `YUNA_STAFF_SECRET` | unlock + check-in (+ CRM fallback) |
-| `YUNA_CRM_API_KEY` | CRM API |
+| `YUNA_STAFF_SECRET` | unlock + check-in **only** (door tablet) |
+| `YUNA_CRM_API_KEY` | CRM listing / dump PII — **never** share with door scan |
 | `YUNA_CRM_SUPABASE_URL` + `YUNA_CRM_SERVICE_ROLE_KEY` | CRM sync |
 | `KV_REST_API_*` or `UPSTASH_*` | Redis rate-limit |
 | `NEXT_PUBLIC_SITE_URL` | absolute URLs |

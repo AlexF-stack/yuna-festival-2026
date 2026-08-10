@@ -26,11 +26,9 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!assertStaffSecret(request)) {
-    return NextResponse.json({ error: "Accès staff refusé." }, { status: 401 });
-  }
-
-  const limited = await rateLimit(`checkin:${clientIp(request)}`, {
+  const ip = clientIp(request);
+  // Rate-limit avant auth : les 401 consomment aussi le quota (anti brute-force).
+  const limited = await rateLimit(`checkin:${ip}`, {
     limit: 60,
     windowMs: 60_000,
   });
@@ -42,6 +40,10 @@ export async function POST(request: Request) {
         headers: { "Retry-After": String(limited.retryAfterSec) },
       },
     );
+  }
+
+  if (!assertStaffSecret(request)) {
+    return NextResponse.json({ error: "Accès staff refusé." }, { status: 401 });
   }
 
   let body: Body;

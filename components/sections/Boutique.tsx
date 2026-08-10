@@ -42,6 +42,18 @@ export async function Boutique() {
       <p className="mt-6 max-w-2xl rounded-2xl border border-feu/25 bg-papier/80 px-4 py-3 text-sm text-charbon">
         Précommande ouverte jusqu’au <strong>{deadline}</strong>. Retrait sur le
         site à Midombo — livraison Cotonou sur demande après confirmation.
+        {checkoutHref.startsWith("mailto:") ? (
+          <>
+            {" "}
+            <span className="font-semibold text-encre">
+              Paiement non instantané :
+            </span>{" "}
+            le bouton ouvre un e-mail de précommande ; l’équipe confirme stock et
+            Mobile Money / virement.
+          </>
+        ) : (
+          <> Checkout sécurisé FedaPay.</>
+        )}
       </p>
 
       {products.length === 0 ? (

@@ -33,7 +33,7 @@ type ApiOk = {
 
 type ApiErr = { ok: false; error: string };
 
-const CRM_KEY = "yuna-staff-secret";
+const CRM_KEY = "yuna-crm-api-key";
 
 function formatWhen(iso: string | null) {
   if (!iso) return "—";
@@ -135,7 +135,7 @@ export function StaffCrmClient() {
         const res = await fetch(`/api/crm/registrations?${params}`, {
           headers: {
             "x-api-key": key.trim(),
-            "x-yuna-staff": key.trim(),
+            "x-yuna-crm": key.trim(),
           },
           cache: "no-store",
         });
@@ -303,7 +303,7 @@ export function StaffCrmClient() {
             htmlFor="crm-secret"
             className="mb-2 block text-sm font-medium text-encre"
           >
-            Secret staff
+            Clé CRM
           </label>
           <input
             id="crm-secret"
@@ -313,7 +313,7 @@ export function StaffCrmClient() {
             value={secret}
             onChange={(e) => setSecret(e.target.value)}
             className="mb-4 w-full rounded-2xl border border-sable bg-nuage px-4 py-3.5 text-base text-encre outline-none focus:border-bleu"
-            placeholder="Coller le secret…"
+            placeholder="YUNA_CRM_API_KEY…"
             required
           />
           <button
@@ -323,6 +323,10 @@ export function StaffCrmClient() {
           >
             {loading ? "Connexion…" : "Ouvrir le CRM"}
           </button>
+          <p className="mt-3 text-xs leading-relaxed text-charbon">
+            Distinct du secret scan porte — la tablette d’entrée n’ouvre plus le
+            listing complet.
+          </p>
           {error ? (
             <p className="mt-3 text-sm font-medium text-feu" role="alert">
               {error}

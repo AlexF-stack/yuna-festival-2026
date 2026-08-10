@@ -2,30 +2,49 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-import { useMessages } from "@/components/i18n/LocaleProvider";
+import { useLocale, useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SoftImage } from "@/components/ui/SoftImage";
 import { MISSION, SPONSORS, VISION } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
 import { EASE_PREMIUM, EASE_YUNA } from "@/lib/motion";
 
-const PREUVES = [
-  {
-    n: "01",
-    title: "Action médicale",
-    body: "Consultations et dépistages gratuits pour les familles du quartier — la foi en actes avant les concerts.",
-  },
-  {
-    n: "02",
-    title: "Pass QR moderne",
-    body: "Inscription en ligne, pass nominatif sécurisé, scan staff le jour J — une ops digne d’un festival international.",
-  },
-  {
-    n: "03",
-    title: "Bénin Debout",
-    body: `${FESTIVAL.theme} · ${FESTIVAL.datesShort} · ${FESTIVAL.venue}. Entrée libre, génération non ordinaire.`,
-  },
-] as const;
+const PREUVES = {
+  fr: [
+    {
+      n: "01",
+      title: "Action médicale",
+      body: "Consultations et dépistages gratuits pour les familles du quartier — la foi en actes avant les concerts.",
+    },
+    {
+      n: "02",
+      title: "Pass QR moderne",
+      body: "Inscription en ligne, pass nominatif sécurisé, scan staff le jour J — une ops digne d’un festival international.",
+    },
+    {
+      n: "03",
+      title: "Bénin Debout",
+      body: `${FESTIVAL.theme} · ${FESTIVAL.datesShort} · ${FESTIVAL.venue}. Entrée libre, génération non ordinaire.`,
+    },
+  ],
+  en: [
+    {
+      n: "01",
+      title: "Medical outreach",
+      body: "Free consultations and screenings for neighbourhood families — faith in action before the concerts.",
+    },
+    {
+      n: "02",
+      title: "Modern QR pass",
+      body: "Online registration, named secure pass, staff scan on the day — ops worthy of an international festival.",
+    },
+    {
+      n: "03",
+      title: "Bénin Debout",
+      body: `${FESTIVAL.theme} · ${FESTIVAL.datesShort} · ${FESTIVAL.venue}. Free entry, an extraordinary generation.`,
+    },
+  ],
+} as const;
 
 /**
  * Page Mouvement — manifeste éditorial (pas 3×3 cartes génériques).
@@ -33,7 +52,10 @@ const PREUVES = [
 export function MouvementPageContent() {
   const reduce = useReducedMotion();
   const t = useMessages();
+  const { locale } = useLocale();
+  const isEn = locale === "en";
   const intro = t.pages.mouvement;
+  const preuves = PREUVES[isEn ? "en" : "fr"];
 
   return (
     <>
@@ -62,10 +84,18 @@ export function MouvementPageContent() {
               {intro.eyebrow} · {FESTIVAL.edition}
             </p>
             <h1 className="mt-4 font-display text-[clamp(2.6rem,8vw,4.6rem)] font-extrabold uppercase leading-[0.92]">
-              <span className="text-papier">Plus qu’un</span>{" "}
-              <span className="bg-gradient-to-r from-feu-glow via-feu-core to-feu bg-clip-text text-transparent">
-                festival
-              </span>
+              {(() => {
+                const parts = intro.title.trim().split(/\s+/);
+                const last = parts.pop() ?? "";
+                return (
+                  <>
+                    <span className="text-papier">{parts.join(" ")} </span>
+                    <span className="bg-gradient-to-r from-feu-glow via-feu-core to-feu bg-clip-text text-transparent">
+                      {last}
+                    </span>
+                  </>
+                );
+              })()}
             </h1>
             <p className="mt-6 max-w-xl text-[1.12rem] leading-relaxed text-papier/88">
               {intro.lead}
@@ -73,7 +103,7 @@ export function MouvementPageContent() {
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="/#inscription">{MISSION.ctaLabel}</ButtonLink>
               <ButtonLink href="#vision" variant="outline-light">
-                La vision →
+                {t.pages.vision.title} →
               </ButtonLink>
             </div>
           </motion.div>
@@ -127,14 +157,23 @@ export function MouvementPageContent() {
         />
         <div className="section-container relative z-10 px-5 min-[760px]:px-6">
           <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu-glow">
-            Sur le terrain
+            {isEn ? "On the ground" : "Sur le terrain"}
           </p>
           <h2 className="mt-3 max-w-xl font-display text-[clamp(1.9rem,4vw,2.8rem)] font-extrabold uppercase leading-[1.02]">
-            Ce qui rend YUNA{" "}
-            <span className="text-feu-core">unique</span>
+            {isEn ? (
+              <>
+                What makes YUNA{" "}
+                <span className="text-feu-core">unique</span>
+              </>
+            ) : (
+              <>
+                Ce qui rend YUNA{" "}
+                <span className="text-feu-core">unique</span>
+              </>
+            )}
           </h2>
           <ul className="mt-12 divide-y divide-ivoire-froid/10 border-y border-ivoire-froid/10">
-            {PREUVES.map((item, i) => (
+            {preuves.map((item, i) => (
               <motion.li
                 key={item.title}
                 initial={reduce ? false : { opacity: 0, x: -14 }}

@@ -2,25 +2,19 @@ import { NextResponse } from "next/server";
 
 import { listRegistrationsForCrm } from "@/lib/registrations";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
-import {
-  assertCrmOrStaffAccess,
-  getCrmApiKey,
-  getStaffScanSecrets,
-} from "@/lib/staff-auth";
+import { assertCrmApiKey, getCrmApiKey } from "@/lib/staff-auth";
 
 export const runtime = "nodejs";
 
 /**
  * GET /api/crm/registrations?page=1&pageSize=25&q=&checkedIn=all|yes|no&type=
- * Auth : clé CRM (`x-yuna-crm` / `x-api-key`) OU secret staff (`x-yuna-staff` / `x-api-key`).
+ * Auth : clé CRM uniquement (`x-yuna-crm` / `x-api-key` / Bearer).
+ * Le secret scan porte n’accorde plus l’accès au dump PII.
  */
 export async function GET(request: Request) {
-  const hasCrmKey = Boolean(getCrmApiKey());
-  const hasStaff = getStaffScanSecrets().length > 0;
-
-  if (!hasCrmKey && !hasStaff) {
+  if (!getCrmApiKey()) {
     return NextResponse.json(
-      { ok: false, error: "CRM API non configurée (clé CRM ou secret staff)." },
+      { ok: false, error: "CRM API non configurée (YUNA_CRM_API_KEY manquant)." },
       { status: 503 },
     );
   }
@@ -40,9 +34,9 @@ export async function GET(request: Request) {
     );
   }
 
-  if (!assertCrmOrStaffAccess(request)) {
+  if (!assertCrmApiKey(request)) {
     return NextResponse.json(
-      { ok: false, error: "Clé CRM ou secret staff invalide." },
+      { ok: false, error: "Clé CRM invalide." },
       { status: 401 },
     );
   }

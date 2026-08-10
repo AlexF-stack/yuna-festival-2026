@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { ArtistMarquee } from "@/components/sections/ArtistMarquee";
 import { LineupMystery } from "@/components/sections/LineupMystery";
-import { useMessages } from "@/components/i18n/LocaleProvider";
+import { useLocale, useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { fill } from "@/lib/i18n";
 import { FESTIVAL, LINEUP_TOTAL } from "@/lib/festival";
@@ -15,32 +15,64 @@ type ArtistesPageContentProps = {
   artists: PublicArtist[];
 };
 
-const SOIREES = [
-  {
-    day: "Samedi 5 septembre",
-    short: "Sam. 5",
-    slots: [
-      { time: "18:00", label: "Ouverture & prière" },
-      { time: "18:15–20:05", label: "Louange & scènes (artistes à dévoiler)" },
-      { time: "20:05", label: "Parole prophétique · 45 min" },
-      { time: "20:50", label: "Adoration · 1 h" },
-      { time: "21:50–23:00", label: "Scènes & clôture" },
-    ],
-  },
-  {
-    day: "Dimanche 6 septembre",
-    short: "Dim. 6",
-    slots: [
-      { time: "18:00", label: "Ouverture & prière" },
-      { time: "18:10–18:50", label: "Louange (artistes à dévoiler)" },
-      { time: "18:50", label: "Exhortation · 30 min" },
-      { time: "19:20", label: "Adoration · 1 h" },
-      { time: "20:20", label: "Parole · 1 h" },
-      { time: "21:20", label: "Tête d’affiche internationale · 1 h" },
-      { time: "22:20", label: "Clôture & envoi" },
-    ],
-  },
-] as const;
+const SOIREES = {
+  fr: [
+    {
+      day: "Samedi 5 septembre",
+      short: "Sam. 5",
+      meta: "ouverture 17h · scène 18h",
+      slots: [
+        { time: "18:00", label: "Ouverture & prière" },
+        { time: "18:15–20:05", label: "Louange & scènes (artistes à dévoiler)" },
+        { time: "20:05", label: "Parole prophétique · 45 min" },
+        { time: "20:50", label: "Adoration · 1 h" },
+        { time: "21:50–23:00", label: "Scènes & clôture" },
+      ],
+    },
+    {
+      day: "Dimanche 6 septembre",
+      short: "Dim. 6",
+      meta: "ouverture 17h · scène 18h",
+      slots: [
+        { time: "18:00", label: "Ouverture & prière" },
+        { time: "18:10–18:50", label: "Louange (artistes à dévoiler)" },
+        { time: "18:50", label: "Exhortation · 30 min" },
+        { time: "19:20", label: "Adoration · 1 h" },
+        { time: "20:20", label: "Parole · 1 h" },
+        { time: "21:20", label: "Tête d’affiche internationale · 1 h" },
+        { time: "22:20", label: "Clôture & envoi" },
+      ],
+    },
+  ],
+  en: [
+    {
+      day: "Saturday 5 September",
+      short: "Sat. 5",
+      meta: "gates 5pm · stage 6pm",
+      slots: [
+        { time: "18:00", label: "Opening & prayer" },
+        { time: "18:15–20:05", label: "Worship & stages (artists TBA)" },
+        { time: "20:05", label: "Prophetic word · 45 min" },
+        { time: "20:50", label: "Adoration · 1 h" },
+        { time: "21:50–23:00", label: "Stages & close" },
+      ],
+    },
+    {
+      day: "Sunday 6 September",
+      short: "Sun. 6",
+      meta: "gates 5pm · stage 6pm",
+      slots: [
+        { time: "18:00", label: "Opening & prayer" },
+        { time: "18:10–18:50", label: "Worship (artists TBA)" },
+        { time: "18:50", label: "Exhortation · 30 min" },
+        { time: "19:20", label: "Adoration · 1 h" },
+        { time: "20:20", label: "Word · 1 h" },
+        { time: "21:20", label: "International headliner · 1 h" },
+        { time: "22:20", label: "Close & send-out" },
+      ],
+    },
+  ],
+} as const;
 
 /**
  * Page Line-up — affiche éditoriale + soirées en chronologie (pas une grille de tiles).
@@ -48,7 +80,10 @@ const SOIREES = [
 export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
   const reduce = useReducedMotion();
   const t = useMessages();
+  const { locale } = useLocale();
+  const isEn = locale === "en";
   const intro = t.pages.artistes;
+  const soirees = SOIREES[isEn ? "en" : "fr"];
 
   const revealed = artists.filter((a) => a.is_revealed && a.name);
   const totalCount = Math.max(artists.length, LINEUP_TOTAL);
@@ -84,10 +119,18 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
               {intro.eyebrow} · {FESTIVAL.edition}
             </p>
             <h1 className="mt-4 font-display text-[clamp(2.6rem,8vw,4.6rem)] font-extrabold uppercase leading-[0.92]">
-              <span className="text-papier">Le</span>{" "}
-              <span className="bg-gradient-to-r from-feu-glow via-feu-core to-feu bg-clip-text text-transparent">
-                line-up
-              </span>
+              {(() => {
+                const parts = intro.title.trim().split(/\s+/);
+                const last = parts.pop() ?? "";
+                return (
+                  <>
+                    <span className="text-papier">{parts.join(" ")} </span>
+                    <span className="bg-gradient-to-r from-feu-glow via-feu-core to-feu bg-clip-text text-transparent">
+                      {last}
+                    </span>
+                  </>
+                );
+              })()}
             </h1>
             <p className="mt-6 max-w-xl text-[1.12rem] leading-relaxed text-papier/88">
               {intro.lead}
@@ -96,9 +139,11 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
               {fill(t.lineup.teaser, { n: String(totalCount) })}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="#artistes">Voir les noms →</ButtonLink>
+              <ButtonLink href="#artistes">
+                {isEn ? "See the names →" : "Voir les noms →"}
+              </ButtonLink>
               <ButtonLink href="#programme" variant="outline-light">
-                Soirées →
+                {isEn ? "Evenings →" : "Soirées →"}
               </ButtonLink>
             </div>
           </motion.div>
@@ -144,7 +189,7 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
                   className="border-b border-ivoire-froid/10 pb-12"
                 >
                   <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu-core">
-                    ★ Tête d&apos;affiche · {headliner.role}
+                    ★ {isEn ? "Headliner" : "Tête d'affiche"} · {headliner.role}
                   </p>
                   <h3 className="mt-3 font-display text-[clamp(2.8rem,10vw,5.5rem)] font-extrabold uppercase leading-[0.9] tracking-tight text-papier">
                     {headliner.name}
@@ -208,18 +253,29 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
       >
         <div className="section-container px-5 min-[760px]:px-6">
           <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu">
-            Les soirées
+            {isEn ? "The evenings" : "Les soirées"}
           </p>
           <h2 className="mt-3 max-w-xl font-display text-[clamp(1.9rem,4vw,2.8rem)] font-extrabold uppercase leading-[1.02] text-bleu">
-            Structure des{" "}
-            <span className="text-feu">deux soirs</span>
+            {isEn ? (
+              <>
+                Shape of the{" "}
+                <span className="text-feu">two nights</span>
+              </>
+            ) : (
+              <>
+                Structure des{" "}
+                <span className="text-feu">deux soirs</span>
+              </>
+            )}
           </h2>
           <p className="mt-4 max-w-lg text-[1.05rem] text-charbon">
-            Les noms sortent progressivement — le déroulé est déjà là.
+            {isEn
+              ? "Names drop progressively — the rundown is already set."
+              : "Les noms sortent progressivement — le déroulé est déjà là."}
           </p>
 
           <div className="mt-14 space-y-16">
-            {SOIREES.map((soir, dayIndex) => (
+            {soirees.map((soir, dayIndex) => (
               <motion.div
                 key={soir.day}
                 initial={reduce ? false : { opacity: 0, y: 16 }}
@@ -236,7 +292,7 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
                     {soir.day}
                   </h3>
                   <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.16em] text-feu">
-                    {soir.short} · ouverture 17h · scène 18h
+                    {soir.short} · {soir.meta}
                   </p>
                 </div>
                 <ol className="relative mt-6 border-l-2 border-bleu/15 pl-6 min-[480px]:pl-8">

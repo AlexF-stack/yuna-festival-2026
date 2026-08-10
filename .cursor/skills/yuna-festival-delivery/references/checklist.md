@@ -7,7 +7,7 @@
 - [ ] `GET /api/health` → all checks `true`
 - [ ] Staff unlock `200 {"ok":true}`
 - [ ] Test registration → QR confirmation page
-- [ ] Row visible in `/staff/crm` (same secret)
+- [ ] Row visible in `/staff/crm` (**clé CRM**, pas le secret scan)
 - [ ] Check-in OK then re-scan = already checked in / « déjà entré »
 - [ ] Recover pass `/mon-pass`
 - [ ] `/artistes`: **13** artists & speakers, **no** Programme section
@@ -20,8 +20,8 @@
 ## Secrets to share (never git) / Secrets à communiquer (hors git)
 
 ```
-YUNA_STAFF_SECRET  → scan + CRM (même valeur)
-YUNA_CRM_API_KEY   → intégrations API only (optionnel si secret staff)
+YUNA_STAFF_SECRET  → scan porte UNIQUEMENT (/staff/scan)
+YUNA_CRM_API_KEY   → dump CRM (/staff/crm) — secret distinct obligatoire
 ```
 
 Fichiers locaux : `.staff-secret.local`, `.crm-api-key.local`

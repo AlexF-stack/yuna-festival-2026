@@ -285,15 +285,18 @@ export async function POST(request: Request) {
     }
 
     if (crmJobs.length > 0) {
+      // CRM : await (skill delivery) — ne pas perdre la sync sous cold start.
+      await Promise.all(
+        crmJobs.map((job) =>
+          notifyCrmRegistration(job).catch((crmErr) => {
+            console.error("[register] CRM sync", crmErr);
+          }),
+        ),
+      );
+      // Messaging : async (skill backend) — ne jamais bloquer la réponse HTTP.
       after(() => {
-        void Promise.all([
-          ...crmJobs.map((job) =>
-            notifyCrmRegistration(job).catch((crmErr) => {
-              console.error("[register] CRM sync", crmErr);
-            }),
-          ),
-          // WhatsApp / SMS — jamais dans la requête HTTP (timeout / charge).
-          ...crmJobs.map((job) =>
+        void Promise.all(
+          crmJobs.map((job) =>
             sendRegistrationConfirmation({
               id: job.id,
               name: job.name,
@@ -306,7 +309,7 @@ export async function POST(request: Request) {
               console.error("[register] messaging", msgErr);
             }),
           ),
-        ]);
+        );
       });
     }
 

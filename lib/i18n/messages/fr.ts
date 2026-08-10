@@ -247,6 +247,31 @@ export const fr: Messages = {
         "Foi, talents et impact terrain — une génération qui se lève à Midombo et au-delà.",
     },
   },
+  confirmation: {
+    eyebrow: "Inscription confirmée",
+    title: "Ton pass YUNA",
+    leadMessaging:
+      "Présente ce QR à l’entrée. Un message de confirmation part aussi automatiquement sur ton téléphone.",
+    leadSave:
+      "Présente ce QR à l’entrée. Enregistre le PNG ou le lien — tu pourras le retrouver via Mon pass.",
+    groupTitle: "Groupe : {n} pass créés",
+    groupBody: "Voici ton pass. Les autres pass du groupe :",
+    passN: "Pass n°{n} →",
+    lostLink: "Tu perds ce lien ?",
+    recover: "Retrouve ton pass",
+  },
+  passActions: {
+    confirmed: "Confirmé",
+    messageSent:
+      "message envoyé par {channel}. Garde aussi ce pass ci-dessous.",
+    savePass:
+      "Enregistre ce pass (PNG ou favori). Tu pourras aussi le retrouver via Mon pass.",
+    downloadPng: "Télécharger le PNG",
+    share: "Partager / copier le lien",
+    linkCopied: "Lien copié",
+    shareTitle: "Pass YUNA Festival 2026",
+    shareText: "Mon pass QR YUNA",
+  },
   countdown: {
     days: "Jours",
     hours: "Heures",

@@ -138,6 +138,27 @@ export type Messages = {
       lead: string;
     };
   };
+  confirmation: {
+    eyebrow: string;
+    title: string;
+    leadMessaging: string;
+    leadSave: string;
+    groupTitle: string;
+    groupBody: string;
+    passN: string;
+    lostLink: string;
+    recover: string;
+  };
+  passActions: {
+    confirmed: string;
+    messageSent: string;
+    savePass: string;
+    downloadPng: string;
+    share: string;
+    linkCopied: string;
+    shareTitle: string;
+    shareText: string;
+  };
   countdown: {
     days: string;
     hours: string;

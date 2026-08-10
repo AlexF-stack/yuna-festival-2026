@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 
+import { useMessages } from "@/components/i18n/LocaleProvider";
+import { fill } from "@/lib/i18n";
+
 type Caps = {
   wallet: { apple: boolean; google: boolean };
   messaging: { whatsapp: boolean; sms: boolean };
@@ -14,13 +17,15 @@ type PassActionsProps = {
 };
 
 /**
- * Actions post-inscription : PNG, Apple/Google Wallet, partage natif.
+ * Actions post-inscription : PNG, Apple/Google Wallet (si configurés), partage.
  */
 export function PassActions({
   registrationId,
   qrCodeDataUrl,
   shortId,
 }: PassActionsProps) {
+  const t = useMessages();
+  const a = t.passActions;
   const [caps, setCaps] = useState<Caps | null>(null);
   const [shareHint, setShareHint] = useState<string | null>(null);
 
@@ -54,14 +59,14 @@ export function PassActions({
     try {
       if (navigator.share) {
         await navigator.share({
-          title: "Pass YUNA Festival 2026",
-          text: "Mon pass QR YUNA",
+          title: a.shareTitle,
+          text: a.shareText,
           url,
         });
         return;
       }
       await navigator.clipboard.writeText(url);
-      setShareHint("Lien copié");
+      setShareHint(a.linkCopied);
       window.setTimeout(() => setShareHint(null), 2200);
     } catch {
       /* annulé */
@@ -71,24 +76,19 @@ export function PassActions({
   const messagingOn = Boolean(
     caps?.messaging.whatsapp || caps?.messaging.sms,
   );
+  const channel = caps?.messaging.whatsapp ? "WhatsApp" : "SMS";
 
   return (
     <div className="mt-5 flex w-full max-w-[420px] flex-col gap-3">
       {messagingOn ? (
         <p className="rounded-2xl border border-vert/30 bg-vert/12 px-4 py-3 text-center text-sm leading-relaxed text-encre">
-          <span className="font-bold text-vert">Confirmé</span>
+          <span className="font-bold text-vert">{a.confirmed}</span>
           {" — "}
-          message envoyé par{" "}
-          <strong>
-            {caps?.messaging.whatsapp ? "WhatsApp" : "SMS"}
-          </strong>
-          . Garde aussi ce pass ci-dessous.
+          {fill(a.messageSent, { channel })}
         </p>
       ) : (
         <p className="text-center text-sm leading-relaxed text-charbon">
-          Enregistre ce pass (Wallet, PNG ou favori). Tu pourras aussi le
-          retrouver via{" "}
-          <span className="font-semibold text-encre">Mon pass</span>.
+          {a.savePass}
         </p>
       )}
 
@@ -114,23 +114,16 @@ export function PassActions({
           download={`yuna-pass-${shortId}.png`}
           className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-bleu px-4 py-3 text-center text-sm font-bold text-bleu transition-[background-color,color] hover:bg-bleu hover:text-papier focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu min-[420px]:col-span-2"
         >
-          Télécharger le PNG
+          {a.downloadPng}
         </a>
         <button
           type="button"
           onClick={() => void onShare()}
           className="inline-flex min-h-12 items-center justify-center rounded-full border border-bleu/25 bg-papier px-4 py-3 text-sm font-bold text-bleu min-[420px]:col-span-2"
         >
-          {shareHint ?? "Partager / copier le lien"}
+          {shareHint ?? a.share}
         </button>
       </div>
-
-      {caps && !caps.wallet.apple && !caps.wallet.google ? (
-        <p className="text-center text-xs text-charbon/80">
-          Wallet Apple/Google : active les certificats côté serveur (voir
-          .env.example) pour les boutons « ajouter au wallet ».
-        </p>
-      ) : null}
     </div>
   );
 }
