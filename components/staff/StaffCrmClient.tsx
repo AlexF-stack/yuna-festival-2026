@@ -23,17 +23,25 @@ type Registration = {
   partyId?: string | null;
 };
 
+type CrmStats = {
+  all: number;
+  checkedIn: number;
+  pending: number;
+};
+
 type ApiOk = {
   ok: true;
   page: number;
   pageSize: number;
   total: number;
   registrations: Registration[];
+  stats?: CrmStats;
 };
 
 type ApiErr = { ok: false; error: string };
 
 const CRM_KEY = "yuna-crm-api-key";
+const LIVE_POLL_MS = 6000;
 
 function formatWhen(iso: string | null) {
   if (!iso) return "—";
@@ -48,13 +56,16 @@ function formatWhen(iso: string | null) {
 }
 
 function typeLabel(type: string) {
-  return isRegistrationType(type)
-    ? REGISTRATION_TYPE_LABELS[type]
-    : type;
+  return isRegistrationType(type) ? REGISTRATION_TYPE_LABELS[type] : type;
+}
+
+function ticketCode(id: string) {
+  return `YUNA-${id.slice(0, 8).toUpperCase()}`;
 }
 
 function exportCsv(rows: Registration[]) {
   const header = [
+    "ticket",
     "id",
     "name",
     "phone",
@@ -69,6 +80,7 @@ function exportCsv(rows: Registration[]) {
     header.join(","),
     ...rows.map((r) =>
       [
+        ticketCode(r.id),
         r.id,
         JSON.stringify(r.name),
         JSON.stringify(r.phone),
@@ -87,13 +99,14 @@ function exportCsv(rows: Registration[]) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `yuna-crm-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.download = `yuna-tickets-${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
   URL.revokeObjectURL(url);
 }
 
-const LIVE_POLL_MS = 6000;
-
+/**
+ * CRM tickets — listing ops (clé CRM). Scan porte = outil séparé.
+ */
 export function StaffCrmClient() {
   const [secret, setSecret] = useState("");
   const [unlocked, setUnlocked] = useState(false);
@@ -159,9 +172,7 @@ export function StaffCrmClient() {
         const newlyIn = new Set<string>();
         for (const row of json.registrations) {
           const was = prevCheckedRef.current.get(row.id);
-          if (was === false && row.checked_in) {
-            newlyIn.add(row.id);
-          }
+          if (was === false && row.checked_in) newlyIn.add(row.id);
           prevCheckedRef.current.set(row.id, row.checked_in);
         }
         if (newlyIn.size > 0) {
@@ -220,7 +231,6 @@ export function StaffCrmClient() {
     return () => window.clearTimeout(t);
   }, [q, checkedIn, typeFilter, unlocked, fetchPage]);
 
-  /** Temps réel soft — polling silencieux du statut scanné / non-scanné. */
   useEffect(() => {
     if (!unlocked || !live) return;
     const tick = () => {
@@ -239,26 +249,27 @@ export function StaffCrmClient() {
   const totalPages = data
     ? Math.max(1, Math.ceil(data.total / data.pageSize))
     : 1;
+  const stats = data?.stats;
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 sm:px-6 sm:pt-6">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-feu">
-            Staff
+            Ops · Tickets
           </p>
           <h1 className="mt-1 font-display text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-none text-bleu">
-            CRM inscriptions
+            CRM tickets
           </h1>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-charbon">
-            Statut entrée en temps réel (scan porte). Même secret que le{" "}
+            Inscriptions &amp; tickets QR. L’entrée se gère sur le{" "}
             <Link
               href="/staff/scan"
               className="font-bold text-bleu underline-offset-2 hover:underline"
             >
-              scan
-            </Link>
-            .
+              scan porte
+            </Link>{" "}
+            (secret distinct).
           </p>
         </div>
         {unlocked ? (
@@ -324,8 +335,8 @@ export function StaffCrmClient() {
             {loading ? "Connexion…" : "Ouvrir le CRM"}
           </button>
           <p className="mt-3 text-xs leading-relaxed text-charbon">
-            Distinct du secret scan porte — la tablette d’entrée n’ouvre plus le
-            listing complet.
+            Distinct du secret scan — la tablette d’entrée n’ouvre pas ce
+            listing.
           </p>
           {error ? (
             <p className="mt-3 text-sm font-medium text-feu" role="alert">
@@ -335,6 +346,52 @@ export function StaffCrmClient() {
         </form>
       ) : (
         <>
+          {/* KPIs */}
+          <div className="mb-5 grid grid-cols-3 gap-2 sm:gap-3">
+            {(
+              [
+                {
+                  key: "all" as const,
+                  label: "Tickets",
+                  value: stats?.all ?? data?.total ?? "—",
+                  tone: "text-bleu",
+                },
+                {
+                  key: "no" as const,
+                  label: "En attente",
+                  value: stats?.pending ?? "—",
+                  tone: "text-feu",
+                },
+                {
+                  key: "yes" as const,
+                  label: "Entrés",
+                  value: stats?.checkedIn ?? "—",
+                  tone: "text-vert",
+                },
+              ] as const
+            ).map((kpi) => (
+              <button
+                key={kpi.key}
+                type="button"
+                onClick={() => setCheckedIn(kpi.key)}
+                className={`rounded-2xl border px-3 py-3 text-left transition-colors sm:px-4 sm:py-4 ${
+                  checkedIn === kpi.key
+                    ? "border-bleu bg-papier shadow-sm ring-2 ring-bleu/20"
+                    : "border-sable/70 bg-papier/80 hover:border-bleu/30"
+                }`}
+              >
+                <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.14em] text-charbon">
+                  {kpi.label}
+                </p>
+                <p
+                  className={`mt-1 font-display text-[clamp(1.5rem,5vw,2rem)] font-extrabold leading-none ${kpi.tone}`}
+                >
+                  {kpi.value}
+                </p>
+              </button>
+            ))}
+          </div>
+
           <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center">
             <label className="sr-only" htmlFor="crm-q">
               Recherche
@@ -348,11 +405,24 @@ export function StaffCrmClient() {
               placeholder="Nom, téléphone, e-mail…"
               className="min-h-12 w-full flex-1 rounded-2xl border border-sable bg-papier px-4 py-3 text-base text-encre outline-none focus:border-bleu"
             />
+            <select
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value)}
+              className="min-h-12 rounded-2xl border border-sable bg-papier px-4 text-sm font-bold text-bleu sm:max-w-[14rem]"
+              aria-label="Type de ticket"
+            >
+              <option value="">Tous types</option>
+              {REGISTRATION_TYPES.map((t) => (
+                <option key={t.value} value={t.value}>
+                  {t.label}
+                </option>
+              ))}
+            </select>
             <button
               type="button"
               onClick={() => void fetchPage(page, q, checkedIn, typeFilter)}
               disabled={loading}
-              className="min-h-12 shrink-0 rounded-full border-2 border-bleu/30 bg-papier px-5 py-3 text-sm font-bold text-bleu disabled:opacity-50 sm:w-auto"
+              className="min-h-12 shrink-0 rounded-full border-2 border-bleu/30 bg-papier px-5 py-3 text-sm font-bold text-bleu disabled:opacity-50"
             >
               {loading ? "…" : "Actualiser"}
             </button>
@@ -362,44 +432,8 @@ export function StaffCrmClient() {
               disabled={!data?.registrations.length}
               className="min-h-12 shrink-0 rounded-full bg-feu px-5 py-3 text-sm font-bold text-papier disabled:opacity-50"
             >
-              CSV page
+              CSV
             </button>
-          </div>
-
-          <div className="mb-4 flex flex-wrap gap-2">
-            {(
-              [
-                ["all", "Tous"],
-                ["no", "En attente"],
-                ["yes", "Entrés"],
-              ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setCheckedIn(value)}
-                className={`min-h-10 rounded-full px-3.5 py-2 text-xs font-bold uppercase tracking-wide ${
-                  checkedIn === value
-                    ? "bg-bleu text-papier"
-                    : "border border-bleu/20 bg-papier text-bleu"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-            <select
-              value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value)}
-              className="min-h-10 rounded-full border border-bleu/20 bg-papier px-3 text-xs font-bold uppercase text-bleu"
-              aria-label="Type de pass"
-            >
-              <option value="">Tous types</option>
-              {REGISTRATION_TYPES.map((t) => (
-                <option key={t.value} value={t.value}>
-                  {t.label}
-                </option>
-              ))}
-            </select>
           </div>
 
           {error ? (
@@ -412,9 +446,9 @@ export function StaffCrmClient() {
             {data ? (
               <>
                 <span className="font-bold text-encre">{data.total}</span>{" "}
-                inscription{data.total > 1 ? "s" : ""}
-                {q.trim() || checkedIn !== "all" || typeFilter
-                  ? " (filtre)"
+                résultat{data.total > 1 ? "s" : ""}
+                {checkedIn !== "all" || typeFilter || q.trim()
+                  ? " (filtre actif)"
                   : ""}
               </>
             ) : (
@@ -422,6 +456,7 @@ export function StaffCrmClient() {
             )}
           </p>
 
+          {/* Mobile cards */}
           <ul className="flex flex-col gap-3 md:hidden">
             {(data?.registrations ?? []).map((r) => (
               <li
@@ -434,7 +469,12 @@ export function StaffCrmClient() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="truncate font-bold text-encre">{r.name}</p>
+                    <p className="font-mono text-[0.65rem] font-bold tracking-wider text-feu">
+                      {ticketCode(r.id)}
+                    </p>
+                    <p className="mt-1 truncate font-bold text-encre">
+                      {r.name}
+                    </p>
                     <a
                       href={`tel:${r.phone}`}
                       className="mt-0.5 block text-sm font-semibold text-bleu"
@@ -462,7 +502,7 @@ export function StaffCrmClient() {
                 </div>
                 <dl className="mt-3 grid grid-cols-2 gap-2 text-xs text-charbon">
                   <div>
-                    <dt className="font-semibold text-encre/70">Pass</dt>
+                    <dt className="font-semibold text-encre/70">Type</dt>
                     <dd className="mt-0.5">{typeLabel(r.pass_type)}</dd>
                   </div>
                   <div>
@@ -470,7 +510,7 @@ export function StaffCrmClient() {
                     <dd className="mt-0.5">{formatWhen(r.created_at)}</dd>
                   </div>
                   <div className="col-span-2">
-                    <dt className="font-semibold text-encre/70">Check-in</dt>
+                    <dt className="font-semibold text-encre/70">Entrée</dt>
                     <dd className="mt-0.5">
                       {formatWhen(r.checked_in_at)}
                       {r.checkedInBy ? ` · ${r.checkedInBy}` : ""}
@@ -481,28 +521,30 @@ export function StaffCrmClient() {
                   href={`/confirmation/${r.id}`}
                   className="mt-3 inline-block text-xs font-bold text-feu underline-offset-2 hover:underline"
                 >
-                  Voir le pass →
+                  Voir le ticket →
                 </Link>
               </li>
             ))}
             {data && data.registrations.length === 0 ? (
               <li className="rounded-2xl border border-dashed border-sable bg-papier/60 px-4 py-10 text-center text-sm text-charbon">
-                Aucun résultat.
+                Aucun ticket.
               </li>
             ) : null}
           </ul>
 
+          {/* Desktop table */}
           <div className="hidden overflow-x-auto rounded-2xl border border-sable/80 bg-papier shadow-sm md:block">
-            <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+            <table className="w-full min-w-[800px] border-collapse text-left text-sm">
               <thead>
                 <tr className="border-b border-sable bg-nuage/80 text-[0.7rem] font-bold uppercase tracking-wider text-charbon">
+                  <th className="px-4 py-3">Ticket</th>
                   <th className="px-4 py-3">Nom</th>
                   <th className="px-4 py-3">Téléphone</th>
-                  <th className="px-4 py-3">Pass</th>
+                  <th className="px-4 py-3">Type</th>
                   <th className="px-4 py-3">Statut</th>
                   <th className="px-4 py-3">Inscrit</th>
-                  <th className="px-4 py-3">Check-in</th>
-                  <th className="px-4 py-3">Pass</th>
+                  <th className="px-4 py-3">Entrée</th>
+                  <th className="px-4 py-3">Lien</th>
                 </tr>
               </thead>
               <tbody>
@@ -513,6 +555,9 @@ export function StaffCrmClient() {
                       flashIds.has(r.id) ? "bg-vert/10" : ""
                     }`}
                   >
+                    <td className="px-4 py-3 font-mono text-xs font-bold tracking-wide text-feu">
+                      {ticketCode(r.id)}
+                    </td>
                     <td className="px-4 py-3 font-semibold text-encre">
                       {r.name}
                       {r.email ? (
@@ -551,7 +596,7 @@ export function StaffCrmClient() {
                         href={`/confirmation/${r.id}`}
                         className="font-bold text-feu underline-offset-2 hover:underline"
                       >
-                        QR
+                        Ticket
                       </Link>
                     </td>
                   </tr>
@@ -559,10 +604,10 @@ export function StaffCrmClient() {
                 {data && data.registrations.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={7}
+                      colSpan={8}
                       className="px-4 py-10 text-center text-charbon"
                     >
-                      Aucun résultat.
+                      Aucun ticket.
                     </td>
                   </tr>
                 ) : null}

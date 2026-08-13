@@ -198,10 +198,10 @@ export const POLES = [
     id: "danse",
     title: "Danse & scène",
     description:
-      "Spectacles, énergie du corps et moments forts qui font vibrer Midombo.",
+      "Danse de louange, chorégraphies et scènes qui font vibrer une génération jeune pour Christ.",
     accent: "feu" as const,
     image: "/media/pole-danse-scene.webp",
-    objectPosition: "center 25%",
+    objectPosition: "center 30%",
   },
   {
     id: "formation",

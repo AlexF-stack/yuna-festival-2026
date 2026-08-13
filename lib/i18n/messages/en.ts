@@ -132,9 +132,9 @@ export const en: Messages = {
   },
   register: {
     eyebrow: "Registration",
-    title: "Register — free QR pass",
+    title: "Register — free ticket",
     lead:
-      "Register for free and instantly generate your personal QR pass — show it at the gate. Save your confirmation link: no email is sent yet.",
+      "Register for free and instantly get your official ticket with QR — show it at the gate. Save your confirmation link: no email is sent yet.",
     formTitle: "Your details",
     name: "Full name *",
     namePh: "e.g. Grace Ahouansou",
@@ -143,19 +143,19 @@ export const en: Messages = {
     email: "Email (optional)",
     emailPh: "you@email.com",
     consent:
-      "I agree that my information may be used to generate my pass and organize the festival, as described in the",
+      "I agree that my information may be used to generate my ticket and organize the festival, as described in the",
     privacy: "privacy policy",
-    submit: "Get my QR pass",
+    submit: "Get my ticket",
     already: "Already registered?",
     recoverLink: "Recover my pass",
-    previewLabel: "Live preview",
+    previewLabel: "Ticket preview",
     previewHint:
-      "The final QR is created only after validation — this preview shows how your pass will look at the gate.",
+      "The final ticket (with QR) is created after validation — this preview shows how it will look at the gate.",
   },
   registerTypes: {
     pass: {
       label: "Festival — 2 evenings",
-      hint: "Free entry · QR for priority access",
+      hint: "Free entry · QR ticket for priority access",
     },
     masterclass_vteam: {
       label: "VTeam masterclass",
@@ -241,27 +241,27 @@ export const en: Messages = {
   },
   confirmation: {
     eyebrow: "Registration confirmed",
-    title: "Your YUNA pass",
+    title: "Your YUNA ticket",
     leadMessaging:
-      "Show this QR at the gate. A confirmation message is also sent automatically to your phone.",
+      "Here’s your official ticket with QR. Show it at the gate. A confirmation message is also sent automatically to your phone.",
     leadSave:
-      "Show this QR at the gate. Save the PNG or this link — you can recover it via My pass.",
-    groupTitle: "Group: {n} passes created",
-    groupBody: "Here’s your pass. The other passes in the group:",
-    passN: "Pass #{n} →",
+      "Here’s your official ticket with QR. Download it or save this link — you can recover it via My pass.",
+    groupTitle: "Group: {n} tickets created",
+    groupBody: "Here’s your ticket. The others in the group:",
+    passN: "Ticket #{n} →",
     lostLink: "Lost this link?",
     recover: "Recover your pass",
   },
   passActions: {
     confirmed: "Confirmed",
-    messageSent: "message sent via {channel}. Keep this pass below too.",
+    messageSent: "message sent via {channel}. Keep your ticket below too.",
     savePass:
-      "Save this pass (PNG or bookmark). You can also recover it via My pass.",
-    downloadPng: "Download PNG",
+      "Download your ticket (PNG) or save the link. You can also recover it via My pass.",
+    downloadPng: "Download ticket",
     share: "Share / copy link",
     linkCopied: "Link copied",
-    shareTitle: "YUNA Festival 2026 pass",
-    shareText: "My YUNA QR pass",
+    shareTitle: "YUNA Festival 2026 ticket",
+    shareText: "My YUNA QR ticket",
   },
   countdown: {
     days: "Days",

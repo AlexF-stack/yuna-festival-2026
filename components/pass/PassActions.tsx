@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { toPng } from "html-to-image";
 
 import { useMessages } from "@/components/i18n/LocaleProvider";
 import { fill } from "@/lib/i18n";
@@ -12,22 +13,24 @@ type Caps = {
 
 type PassActionsProps = {
   registrationId: string;
-  qrCodeDataUrl: string;
   shortId: string;
+  /** Sélecteur CSS du ticket à exporter (défaut #yuna-pass-ticket). */
+  ticketSelector?: string;
 };
 
 /**
- * Actions post-inscription : PNG, Apple/Google Wallet (si configurés), partage.
+ * Actions post-inscription : télécharger le ticket, Wallet, partage.
  */
 export function PassActions({
   registrationId,
-  qrCodeDataUrl,
   shortId,
+  ticketSelector = "#yuna-pass-ticket",
 }: PassActionsProps) {
   const t = useMessages();
   const a = t.passActions;
   const [caps, setCaps] = useState<Caps | null>(null);
   const [shareHint, setShareHint] = useState<string | null>(null);
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -54,6 +57,28 @@ export function PassActions({
     };
   }, []);
 
+  async function onDownloadTicket() {
+    const node = document.querySelector(ticketSelector);
+    if (!(node instanceof HTMLElement)) return;
+
+    setDownloading(true);
+    try {
+      const dataUrl = await toPng(node, {
+        cacheBust: true,
+        pixelRatio: 2,
+        backgroundColor: "#FFF8F1",
+      });
+      const link = document.createElement("a");
+      link.download = `yuna-ticket-${shortId}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error("[pass] ticket export", err);
+    } finally {
+      setDownloading(false);
+    }
+  }
+
   async function onShare() {
     const url = `${window.location.origin}/confirmation/${registrationId}`;
     try {
@@ -79,7 +104,7 @@ export function PassActions({
   const channel = caps?.messaging.whatsapp ? "WhatsApp" : "SMS";
 
   return (
-    <div className="mt-5 flex w-full max-w-[420px] flex-col gap-3">
+    <div className="mt-5 flex w-full max-w-[400px] flex-col gap-3">
       {messagingOn ? (
         <p className="rounded-2xl border border-vert/30 bg-vert/12 px-4 py-3 text-center text-sm leading-relaxed text-encre">
           <span className="font-bold text-vert">{a.confirmed}</span>
@@ -109,13 +134,14 @@ export function PassActions({
             Google Wallet
           </a>
         ) : null}
-        <a
-          href={qrCodeDataUrl}
-          download={`yuna-pass-${shortId}.png`}
-          className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-bleu px-4 py-3 text-center text-sm font-bold text-bleu transition-[background-color,color] hover:bg-bleu hover:text-papier focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-bleu min-[420px]:col-span-2"
+        <button
+          type="button"
+          onClick={() => void onDownloadTicket()}
+          disabled={downloading}
+          className="btn-cta-flame inline-flex min-h-12 items-center justify-center rounded-full px-4 py-3 text-center text-sm font-bold text-papier disabled:opacity-60 min-[420px]:col-span-2"
         >
-          {a.downloadPng}
-        </a>
+          {downloading ? "…" : a.downloadPng}
+        </button>
         <button
           type="button"
           onClick={() => void onShare()}

@@ -13,6 +13,10 @@ type PassTicketProps = {
   registrationType: RegistrationType;
 };
 
+/**
+ * Ticket officiel YUNA — généré à l’inscription (QR + identité festival).
+ * `id="yuna-pass-ticket"` sert à l’export PNG.
+ */
 export function PassTicket({
   name,
   qrCode,
@@ -24,68 +28,131 @@ export function PassTicket({
 
   return (
     <article
-      className="pass-ticket relative w-full max-w-[420px] overflow-hidden bg-papier text-encre shadow-[0_24px_60px_rgba(0,90,140,0.14)]"
-      aria-label={`Pass YUNA de ${name}`}
+      id="yuna-pass-ticket"
+      className="pass-ticket relative w-full max-w-[400px] overflow-hidden rounded-[1.35rem] bg-papier text-encre shadow-[0_28px_70px_rgba(0,70,120,0.22)] ring-1 ring-bleu/10"
+      aria-label={`Ticket YUNA de ${name}`}
     >
-      {/* Bandeau type « Save the Date » */}
-      <header className="relative bg-papier px-6 pb-4 pt-6">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.28em] text-feu">
-              Pass officiel
-            </p>
-            <h2 className="mt-1 font-display text-[clamp(1.85rem,7vw,2.45rem)] font-extrabold uppercase leading-[0.9] text-bleu">
-              YUNA {FESTIVAL.edition}
-            </h2>
+      {/* En-tête marque */}
+      <header className="relative overflow-hidden bg-gradient-to-br from-nuit-profonde via-bleu-fonce to-bleu px-5 pb-5 pt-5 text-papier">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full bg-feu/30 blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-16 left-0 h-32 w-32 rounded-full bg-jaune/20 blur-3xl"
+        />
+
+        <div className="relative z-10 flex items-start justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-papier/10 ring-2 ring-feu/50">
+              <Image
+                src="/brand/yuna-mark.png"
+                alt=""
+                width={40}
+                height={40}
+                className="h-9 w-9 object-contain"
+                unoptimized
+              />
+            </span>
+            <div>
+              <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.28em] text-feu-glow">
+                Ticket officiel
+              </p>
+              <h2 className="mt-0.5 font-display text-[1.85rem] font-extrabold uppercase leading-[0.9] tracking-tight">
+                YUNA{" "}
+                <span className="bg-gradient-to-r from-feu-glow via-feu-core to-feu bg-clip-text text-transparent">
+                  {FESTIVAL.edition}
+                </span>
+              </h2>
+            </div>
           </div>
-          <p className="shrink-0 text-right font-mono text-[0.68rem] font-bold uppercase leading-tight tracking-wider text-charbon">
-            05 &amp; 06
-            <br />
-            <span className="text-feu">sept</span>
-          </p>
+          <div className="shrink-0 rounded-xl border border-papier/20 bg-papier/10 px-2.5 py-2 text-center backdrop-blur-sm">
+            <p className="font-mono text-[0.7rem] font-bold tabular-nums leading-none">
+              05–06
+            </p>
+            <p className="mt-1 font-mono text-[0.58rem] font-bold uppercase tracking-[0.14em] text-feu-glow">
+              Sept
+            </p>
+          </div>
         </div>
-        <p className="mt-3 text-sm font-medium text-charbon">
-          {FESTIVAL.theme} · {FESTIVAL.venue}, {FESTIVAL.city}
+
+        <p className="relative z-10 mt-4 font-display text-[1.05rem] font-extrabold uppercase leading-none tracking-wide text-papier">
+          {FESTIVAL.theme}
+        </p>
+        <p className="relative z-10 mt-1.5 text-sm text-papier/75">
+          {FESTIVAL.venue}, {FESTIVAL.city} · Ouverture {FESTIVAL.siteOpens}
         </p>
       </header>
 
-      {/* Perforation */}
       <div
-        className="relative h-4 bg-papier"
         aria-hidden
+        className="flag-stripe flex h-1.5 w-full"
       >
-        <div className="absolute inset-x-0 top-1/2 border-t border-dashed border-bleu/25" />
+        <span className="flex-1 bg-vert" />
+        <span className="flex-1 bg-jaune" />
+        <span className="flex-1 bg-rouge" />
+      </div>
+
+      {/* Perforation */}
+      <div className="relative h-5 bg-papier" aria-hidden>
+        <div className="absolute inset-x-4 top-1/2 border-t border-dashed border-bleu/30" />
         <span className="absolute left-0 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-nuage" />
         <span className="absolute right-0 top-1/2 size-5 translate-x-1/2 -translate-y-1/2 rounded-full bg-nuage" />
       </div>
 
-      <div className="flex flex-col items-center px-6 pb-6 pt-2">
-        <div className="rounded-xl border border-bleu/12 bg-nuage/60 p-3">
-          <Image
-            src={qrCode}
-            alt={`QR code pass ${name}`}
-            width={260}
-            height={260}
-            unoptimized
-            className="h-auto w-[min(68vw,260px)]"
-            priority
-          />
-        </div>
-
-        <p className="mt-5 text-center font-display text-[1.35rem] font-extrabold uppercase leading-tight text-bleu">
+      <div className="px-5 pb-2 pt-1">
+        <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.2em] text-charbon/70">
+          Titulaire
+        </p>
+        <p className="mt-1 font-display text-[clamp(1.55rem,6vw,2.05rem)] font-extrabold uppercase leading-[0.95] text-bleu">
           {name}
         </p>
-        <p className="mt-2 rounded-full bg-feu/10 px-3 py-1 font-mono text-[0.7rem] font-bold uppercase tracking-[0.16em] text-feu">
+        <p className="mt-3 inline-flex rounded-full bg-gradient-to-r from-feu/15 to-feu/5 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.14em] text-feu">
           {typeLabel}
-        </p>
-        <p className="mt-3 font-mono text-sm tracking-wide text-charbon">
-          YUNA-{shortId}
         </p>
       </div>
 
-      <footer className="flex items-center justify-between bg-bleu px-6 py-4 text-sm text-papier">
-        <span>
-          Entrée <strong className="tracking-wide">{FESTIVAL.freeEntry.toUpperCase()}</strong>
+      {/* QR intégré */}
+      <div className="mx-5 mt-4 mb-2 rounded-2xl border border-bleu/12 bg-gradient-to-b from-nuage to-papier p-4">
+        <div className="mx-auto w-fit rounded-xl bg-papier p-2.5 shadow-[0_8px_24px_rgba(0,90,140,0.1)] ring-1 ring-bleu/8">
+          <Image
+            src={qrCode}
+            alt={`QR code ticket ${name}`}
+            width={220}
+            height={220}
+            unoptimized
+            className="h-auto w-[min(58vw,220px)]"
+            priority
+          />
+        </div>
+        <p className="mt-3 text-center font-mono text-[0.65rem] font-bold uppercase tracking-[0.18em] text-bleu">
+          À scanner à l&apos;entrée
+        </p>
+      </div>
+
+      <div className="flex items-center justify-between px-5 py-3">
+        <div>
+          <p className="font-mono text-[0.58rem] font-bold uppercase tracking-[0.16em] text-charbon/60">
+            N° ticket
+          </p>
+          <p className="mt-0.5 font-mono text-sm font-bold tracking-wider text-encre">
+            YUNA-{shortId}
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="font-mono text-[0.58rem] font-bold uppercase tracking-[0.16em] text-charbon/60">
+            Accès
+          </p>
+          <p className="mt-0.5 font-mono text-sm font-bold uppercase tracking-wide text-vert">
+            {FESTIVAL.freeEntry}
+          </p>
+        </div>
+      </div>
+
+      <footer className="flex items-center justify-between bg-gradient-to-r from-bleu to-bleu-fonce px-5 py-3.5 text-sm text-papier">
+        <span className="font-bold tracking-wide">
+          Présente ce ticket · QR
         </span>
         <span className="font-mono text-xs tracking-wider text-papier/80">
           Ésaïe 60:1

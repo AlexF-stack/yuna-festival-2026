@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { listRegistrationsForCrm } from "@/lib/registrations";
+import { listRegistrationsForCrm, getCrmStats } from "@/lib/registrations";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { assertCrmApiKey, getCrmApiKey } from "@/lib/staff-auth";
 
@@ -53,17 +53,21 @@ export async function GET(request: Request) {
   const registrationType = searchParams.get("type") ?? undefined;
 
   try {
-    const result = await listRegistrationsForCrm({
-      page: Number.isFinite(page) ? page : 1,
-      pageSize: Number.isFinite(pageSize) ? pageSize : 25,
-      q,
-      checkedIn,
-      registrationType,
-    });
+    const [result, stats] = await Promise.all([
+      listRegistrationsForCrm({
+        page: Number.isFinite(page) ? page : 1,
+        pageSize: Number.isFinite(pageSize) ? pageSize : 25,
+        q,
+        checkedIn,
+        registrationType,
+      }),
+      getCrmStats({ q, registrationType }),
+    ]);
 
     return NextResponse.json({
       ok: true,
       ...result,
+      stats,
       /** Compat anciens clients */
       count: result.total,
     });

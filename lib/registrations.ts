@@ -243,6 +243,64 @@ export async function listRegistrationsForCrm(
   };
 }
 
+export type CrmStats = {
+  all: number;
+  checkedIn: number;
+  pending: number;
+};
+
+/** Compteurs CRM (respecte q + type, ignore le filtre statut entrée). */
+export async function getCrmStats(opts: {
+  q?: string;
+  registrationType?: string;
+}): Promise<CrmStats> {
+  const supabase = createSupabaseAdminClient();
+  const search = opts.q?.trim();
+  const safe = search
+    ? search.replace(/[%_,]/g, " ").slice(0, 80)
+    : "";
+  const type = opts.registrationType?.trim() || "";
+
+  function decorate(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    query: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): any {
+    let q = query;
+    if (safe) {
+      q = q.or(
+        `name.ilike.%${safe}%,phone.ilike.%${safe}%,email.ilike.%${safe}%`,
+      );
+    }
+    if (type) q = q.eq("registration_type", type);
+    return q;
+  }
+
+  const [allRes, inRes, pendingRes] = await Promise.all([
+    decorate(
+      supabase.from("registrations").select("id", { count: "exact", head: true }),
+    ),
+    decorate(
+      supabase
+        .from("registrations")
+        .select("id", { count: "exact", head: true })
+        .not("checked_in_at", "is", null),
+    ),
+    decorate(
+      supabase
+        .from("registrations")
+        .select("id", { count: "exact", head: true })
+        .is("checked_in_at", null),
+    ),
+  ]);
+
+  return {
+    all: allRes.count ?? 0,
+    checkedIn: inRes.count ?? 0,
+    pending: pendingRes.count ?? 0,
+  };
+}
+
 /**
  * Toutes les inscriptions d'un numéro (récupération de pass) : une personne
  * peut cumuler festival + masterclass + bénévolat.

@@ -132,9 +132,9 @@ export const fr: Messages = {
   },
   register: {
     eyebrow: "Inscription",
-    title: "Inscris-toi — pass QR gratuit",
+    title: "Inscris-toi — ticket gratuit",
     lead:
-      "Inscris-toi gratuitement et génère immédiatement ton pass personnel avec code QR — à présenter à l'entrée. Enregistre le lien de confirmation : aucun e-mail n'est envoyé pour l'instant.",
+      "Inscris-toi gratuitement et reçois immédiatement ton ticket officiel avec QR — à présenter à l'entrée. Enregistre le lien de confirmation : aucun e-mail n'est envoyé pour l'instant.",
     formTitle: "Tes infos",
     name: "Nom complet *",
     namePh: "Ex : Grâce Ahouansou",
@@ -143,19 +143,19 @@ export const fr: Messages = {
     email: "Email (optionnel)",
     emailPh: "ton@email.com",
     consent:
-      "J'accepte que mes informations soient utilisées pour générer mon pass et organiser le festival, comme décrit dans la",
+      "J'accepte que mes informations soient utilisées pour générer mon ticket et organiser le festival, comme décrit dans la",
     privacy: "politique de confidentialité",
-    submit: "Recevoir mon pass QR",
+    submit: "Recevoir mon ticket",
     already: "Déjà inscrit ?",
     recoverLink: "Retrouver mon pass",
-    previewLabel: "Aperçu en direct",
+    previewLabel: "Aperçu du ticket",
     previewHint:
-      "Le QR définitif est créé uniquement après validation — cet aperçu te montre ton pass tel qu'il apparaîtra à l'entrée.",
+      "Le ticket définitif (avec QR) est créé après validation — cet aperçu te montre à quoi il ressemblera à l'entrée.",
   },
   registerTypes: {
     pass: {
       label: "Festival — 2 soirées",
-      hint: "Entrée libre · QR pour accès prioritaire",
+      hint: "Entrée libre · ticket QR pour accès prioritaire",
     },
     masterclass_vteam: {
       label: "Masterclass VTeam",
@@ -241,28 +241,28 @@ export const fr: Messages = {
   },
   confirmation: {
     eyebrow: "Inscription confirmée",
-    title: "Ton pass YUNA",
+    title: "Ton ticket YUNA",
     leadMessaging:
-      "Présente ce QR à l’entrée. Un message de confirmation part aussi automatiquement sur ton téléphone.",
+      "Voici ton ticket officiel avec QR. Présente-le à l’entrée. Un message de confirmation part aussi automatiquement sur ton téléphone.",
     leadSave:
-      "Présente ce QR à l’entrée. Enregistre le PNG ou le lien — tu pourras le retrouver via Mon pass.",
-    groupTitle: "Groupe : {n} pass créés",
-    groupBody: "Voici ton pass. Les autres pass du groupe :",
-    passN: "Pass n°{n} →",
+      "Voici ton ticket officiel avec QR. Télécharge-le ou enregistre le lien — tu pourras le retrouver via Mon pass.",
+    groupTitle: "Groupe : {n} tickets créés",
+    groupBody: "Voici ton ticket. Les autres du groupe :",
+    passN: "Ticket n°{n} →",
     lostLink: "Tu perds ce lien ?",
     recover: "Retrouve ton pass",
   },
   passActions: {
     confirmed: "Confirmé",
     messageSent:
-      "message envoyé par {channel}. Garde aussi ce pass ci-dessous.",
+      "message envoyé par {channel}. Garde aussi ton ticket ci-dessous.",
     savePass:
-      "Enregistre ce pass (PNG ou favori). Tu pourras aussi le retrouver via Mon pass.",
-    downloadPng: "Télécharger le PNG",
+      "Télécharge ton ticket (PNG) ou enregistre le lien. Tu pourras aussi le retrouver via Mon pass.",
+    downloadPng: "Télécharger le ticket",
     share: "Partager / copier le lien",
     linkCopied: "Lien copié",
-    shareTitle: "Pass YUNA Festival 2026",
-    shareText: "Mon pass QR YUNA",
+    shareTitle: "Ticket YUNA Festival 2026",
+    shareText: "Mon ticket QR YUNA",
   },
   countdown: {
     days: "Jours",

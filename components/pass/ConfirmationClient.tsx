@@ -76,7 +76,6 @@ export function ConfirmationClient({
 
       <PassActions
         registrationId={registration.id}
-        qrCodeDataUrl={registration.qr_code}
         shortId={shortId}
       />
 
