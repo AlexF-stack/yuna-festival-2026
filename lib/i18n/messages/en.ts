@@ -17,7 +17,6 @@ export const en: Messages = {
     { href: "/mouvement", label: "Movement" },
     { href: "/artistes", label: "Line-up" },
     { href: "/journee", label: "Daytime" },
-    { href: "/boutique", label: "Shop" },
     { href: "/soutenir", label: "Support" },
   ],
   footerNav: [
@@ -40,7 +39,7 @@ export const en: Messages = {
     dove: "יוֹנָה · The Dove — the Spirit on a generation",
     verseLine:
       "An extraordinary generation rises. Isaiah 60:1 · 5–6 September 2026",
-    openNote: "Free entry · Gates open 5:00 PM",
+    openNote: "Free entry · Gates open 4:00 PM",
   },
   hero: {
     eyebrow: "Youth United for New Awakening · יוֹנָה",
@@ -88,7 +87,6 @@ export const en: Messages = {
   },
   stats: [
     { value: "2", label: "Festival days" },
-    { value: "13", label: "Artists & speakers" },
     { value: "3", label: "Masterclasses & actions" },
     { value: "1", label: "Generation rising" },
   ],
@@ -96,7 +94,7 @@ export const en: Messages = {
     eyebrow: "Explore",
     title: "The whole festival",
     description:
-      "Movement, line-up, daytime, shop and FAQ — details live on each page.",
+      "Movement, line-up, daytime and FAQ — details live on each page.",
     cards: [
       {
         href: "/mouvement",
@@ -115,12 +113,6 @@ export const en: Messages = {
         title: "Daytime",
         description: "Medical outreach, masterclasses and activity hubs.",
         imageAlt: "Community daytime actions",
-      },
-      {
-        href: "/boutique",
-        title: "Shop",
-        description: "YUNA LED tees — wear the fire.",
-        imageAlt: "Stage lights",
       },
       {
         href: "/faq",
@@ -185,12 +177,12 @@ export const en: Messages = {
     title: "The artists",
     description:
       "Worship, praise and powerful stages — the line-up is revealed progressively.",
-    teaser: "{n} artists & speakers — line-up revealed progressively",
+    teaser: "Line-up revealed progressively — stay tuned",
     coming: "Line-up coming soon.",
     mysteryEyebrow: "Line-up in progress",
     mysteryTitle: "Coming soon",
     mysteryBody:
-      "{n} artist(s) still under wraps — names drop progressively. Stay tuned.",
+      "More names still under wraps — announcements drop progressively. Stay tuned.",
   },
   pages: {
     artistes: {

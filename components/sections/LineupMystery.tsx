@@ -3,19 +3,13 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { useMessages } from "@/components/i18n/LocaleProvider";
-import { fill } from "@/lib/i18n/index";
 import { EASE_YUNA } from "@/lib/motion";
 
-type LineupMysteryProps = {
-  /** Nombre total d'artistes encore sous emballage (pour le texte). */
-  count: number;
-};
-
 /**
- * Remplace la grille de N cartes « Artiste surprise » par une seule
- * composition : trois ombres de silhouettes + « ? ».
+ * Remplace la grille de cartes « Artiste surprise » par une seule
+ * composition : trois ombres de silhouettes + « ? » (sans compteur).
  */
-export function LineupMystery({ count }: LineupMysteryProps) {
+export function LineupMystery() {
   const reduce = useReducedMotion();
   const t = useMessages();
 
@@ -26,7 +20,7 @@ export function LineupMystery({ count }: LineupMysteryProps) {
       viewport={{ once: true, amount: 0.35 }}
       transition={{ duration: 0.65, ease: EASE_YUNA }}
       className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-bleu to-bleu-fonce px-6 py-12 text-center text-papier shadow-ombre-bleu-lg min-[640px]:px-10 min-[640px]:py-14"
-      aria-label={fill(t.lineup.mysteryBody, { n: count })}
+      aria-label={t.lineup.mysteryBody}
     >
       <div
         aria-hidden
@@ -37,7 +31,6 @@ export function LineupMystery({ count }: LineupMysteryProps) {
         className="pointer-events-none absolute -right-10 bottom-0 h-48 w-48 rounded-full bg-jaune/15 blur-3xl"
       />
 
-      {/* Trois silhouettes qui se chevauchent */}
       <div
         aria-hidden
         className="relative mx-auto flex h-40 w-full max-w-sm items-end justify-center min-[640px]:h-48"
@@ -54,7 +47,7 @@ export function LineupMystery({ count }: LineupMysteryProps) {
         {t.lineup.mysteryTitle}
       </h3>
       <p className="mx-auto mt-4 max-w-md text-[1.02rem] leading-relaxed text-papier/75">
-        {fill(t.lineup.mysteryBody, { n: count })}
+        {t.lineup.mysteryBody}
       </p>
     </motion.div>
   );
@@ -70,10 +63,11 @@ function SilhouetteShadow({
   return (
     <div
       className={`relative flex flex-col items-center ${
-        featured ? "h-36 w-28 min-[640px]:h-44 min-[640px]:w-32" : "h-28 w-24 min-[640px]:h-36 min-[640px]:w-28"
+        featured
+          ? "h-36 w-28 min-[640px]:h-44 min-[640px]:w-32"
+          : "h-28 w-24 min-[640px]:h-36 min-[640px]:w-28"
       } ${className}`}
     >
-      {/* Ombre humaine (tête + buste) */}
       <div className="relative flex h-full w-full flex-col items-center justify-end">
         <div
           className={`rounded-full bg-encre/55 ${
@@ -90,7 +84,6 @@ function SilhouetteShadow({
           }`}
         />
       </div>
-      {/* Badge « ? » */}
       <span
         className={`absolute left-1/2 top-[38%] flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-feu font-display font-extrabold text-papier shadow-[0_8px_24px_color-mix(in_srgb,var(--feu)_45%,transparent)] ${
           featured

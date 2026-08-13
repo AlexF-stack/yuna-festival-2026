@@ -21,10 +21,10 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "heure-arrivee",
     question: "À quelle heure faut-il arriver ?",
     answer:
-      "Le site ouvre à 17h00. Les premières places devant la scène partent vite — viens tôt pour les temps forts du samedi et du dimanche.",
+      "Le site ouvre à 16h00. Les premières places devant la scène partent vite — viens tôt pour les temps forts du samedi et du dimanche.",
     questionEn: "What time should I arrive?",
     answerEn:
-      "Gates open at 5:00 PM. Front-of-stage spots go fast — come early for the Saturday and Sunday highlights.",
+      "Gates open at 4:00 PM. Front-of-stage spots go fast — come early for the Saturday and Sunday highlights.",
   },
   {
     id: "masterclass",

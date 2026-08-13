@@ -60,7 +60,7 @@ const festivalJsonLd = {
 
 /**
  * Home conversion : hero → preuve → explorer → lieu → inscription → coda.
- * Détail (vision, line-up, journée, boutique, FAQ) sur pages dédiées.
+ * Détail (vision, line-up, journée, FAQ) sur pages dédiées.
  */
 export default async function HomePage() {
   const eventStartIso = getEventStartIso();

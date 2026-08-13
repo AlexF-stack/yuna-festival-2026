@@ -17,7 +17,6 @@ export const fr: Messages = {
     { href: "/mouvement", label: "Mouvement" },
     { href: "/artistes", label: "Line-up" },
     { href: "/journee", label: "Journée" },
-    { href: "/boutique", label: "Boutique" },
     { href: "/soutenir", label: "Soutenir" },
   ],
   footerNav: [
@@ -40,7 +39,7 @@ export const fr: Messages = {
     dove: "יוֹנָה · La Colombe — l'Esprit sur une génération",
     verseLine:
       "Une génération non ordinaire se lève. Ésaïe 60:1 · 5–6 septembre 2026",
-    openNote: "Entrée libre · Ouverture 17h00",
+    openNote: "Entrée libre · Ouverture 16h00",
   },
   hero: {
     eyebrow: "Youth United for New Awakening · יוֹנָה",
@@ -88,7 +87,6 @@ export const fr: Messages = {
   },
   stats: [
     { value: "2", label: "Jours de festival" },
-    { value: "13", label: "Artistes & orateurs" },
     { value: "3", label: "Masterclass & actions" },
     { value: "1", label: "Génération qui se lève" },
   ],
@@ -96,7 +94,7 @@ export const fr: Messages = {
     eyebrow: "Explorer",
     title: "Tout le festival",
     description:
-      "Mouvement, line-up, journée, boutique et infos — le détail vit sur chaque page.",
+      "Mouvement, line-up, journée et infos — le détail vit sur chaque page.",
     cards: [
       {
         href: "/mouvement",
@@ -115,12 +113,6 @@ export const fr: Messages = {
         title: "La journée",
         description: "Action médicale, masterclass et pôles d'activités.",
         imageAlt: "Actions communautaires en journée",
-      },
-      {
-        href: "/boutique",
-        title: "Boutique",
-        description: "Tee-shirts LED YUNA — porte le feu.",
-        imageAlt: "Lumières de scène",
       },
       {
         href: "/faq",
@@ -185,12 +177,12 @@ export const fr: Messages = {
     title: "Les artistes",
     description:
       "Adoration, louange et scènes fortes — le line-up se dévoile progressivement.",
-    teaser: "{n} artistes & orateurs — line-up dévoilé progressivement",
+    teaser: "Line-up dévoilé progressivement — reste connecté",
     coming: "Line-up à venir.",
     mysteryEyebrow: "Line-up en construction",
     mysteryTitle: "Bientôt dévoilés",
     mysteryBody:
-      "{n} artiste(s) encore sous emballage — les noms sortent progressivement. Reste connecté.",
+      "D’autres noms encore sous emballage — les annonces sortent progressivement. Reste connecté.",
   },
   pages: {
     artistes: {

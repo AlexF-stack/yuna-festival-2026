@@ -77,11 +77,6 @@ export const JOURNEE = {
       title: "Masterclass Entrepreneuriat",
       description:
         "Bâtir en jeune non ordinaire : vision, excellence et royaume dans les affaires.",
-      speakers: [
-        "Prophète Joël Francis Tatu",
-        "Prophète Johnny Doefia",
-        "Prophète Dr Hervé Mama",
-      ],
     },
   ],
 } as const;
@@ -93,7 +88,7 @@ export const VENUE = {
     "Un espace ouvert au cœur de la ville — accessible à tous, entrée libre. Le festival vient à la rencontre de la jeunesse, là où elle vit.",
   amenities: [
     "Entrée gratuite, ouverte à tous",
-    "Ouverture du site à 17h00 chaque soir",
+    "Ouverture du site à 16h00 chaque soir",
     "Espace sécurisé, sanitaires et points d'eau sur place",
     "Stands de restauration et espace prière",
     "Accès facile en zém, taxi et bus",
@@ -294,11 +289,11 @@ export const DONATE = {
   pillars: [
     {
       title: "Scène Midombo · 5–6 sept",
-      text: "Location sono & lumières, groupe électrogène, sécurité du terrain, eau et sanitaires — pour 2 soirées (sam. 17h–23h / dim. 17h–22h30), entrée libre pour tout le public.",
+      text: "Location sono & lumières, groupe électrogène, sécurité du terrain, eau et sanitaires — pour 2 soirées (sam. 16h–23h / dim. 16h–22h30), entrée libre pour tout le public.",
     },
     {
       title: "2 masterclass samedi",
-      text: "VTeam 10h–13h (musiciens & chantres) + Entrepreneuriat 15h–17h avec Joël Francis Tatu, Johnny Doefia et Dr Hervé Mama — salles, matériel et places limitées sur inscription QR.",
+      text: "VTeam 10h–13h (musiciens & chantres) + Entrepreneuriat 15h–17h — salles, matériel et places limitées sur inscription QR.",
     },
     {
       title: "Action médicale 08h–13h",

@@ -64,11 +64,6 @@ export const FESTIVAL_SESSIONS: FestivalSession[] = [
       "Vision, excellence et royaume dans les affaires — bâtir en jeune non ordinaire.",
     descriptionEn:
       "Vision, excellence and kingdom business — build as an extraordinary youth.",
-    speakers: [
-      "Prophète Joël Francis Tatu",
-      "Prophète Johnny Doefia",
-      "Prophète Dr Hervé Mama",
-    ],
     registerType: "masterclass_entrepreneuriat",
     capacity: 60,
   },

@@ -15,7 +15,7 @@ export const URGENCY = {
   /** Message court sticky — FR (i18n écrase côté client). */
   preorderLabelFr: "Précommande tee-shirts LED",
   masterclassLabelFr: "Masterclass · places limitées",
-  ctaPreorderHref: "/boutique",
+  ctaPreorderHref: "/soutenir",
   ctaMasterclassHref: "/journee#sessions",
   ctaRegisterHref: "/#inscription",
 } as const;

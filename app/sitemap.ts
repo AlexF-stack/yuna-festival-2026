@@ -41,12 +41,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: "https://yunafestival.com/boutique",
-      lastModified: LAST_DEPLOY,
-      changeFrequency: "weekly",
-      priority: 0.7,
-    },
-    {
       url: "https://yunafestival.com/faq",
       lastModified: LAST_DEPLOY,
       changeFrequency: "monthly",

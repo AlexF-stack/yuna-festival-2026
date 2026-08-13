@@ -54,9 +54,8 @@ Health → GET  /api/health
 ## Line-up / programme content
 
 - Minute-by-minute programme: **do not show** on `/artistes` until approved (`<Programme />` removed).
-- Announced total: `LINEUP_TOTAL = 13` in `lib/festival.ts` (matches `EVENT_STATS`).
-- Display: `totalCount = Math.max(artists.length, LINEUP_TOTAL)`; mystery = `totalCount - revealed`.
-- **Do not invent** artist names in DB to reach 13 → pad UI only.
+- Announced total: **none** — do not display artist counts (`LINEUP_TOTAL` removed).
+- Display revealed artists from DB; mystery block without a headcount.
 
 ## Secrets & env
 
@@ -144,7 +143,7 @@ components/ui/AppChrome.tsx
 components/staff/StaffNav.tsx | StaffScanClient.tsx | StaffCrmClient.tsx
 components/Loader.tsx
 app/api/health/route.ts | staff/unlock | check-in | crm/registrations | register
-lib/festival.ts (LINEUP_TOTAL, EVENT_STATS) | lib/crm.ts | lib/rate-limit.ts
+lib/festival.ts (EVENT_STATS, siteOpens) | lib/crm.ts | lib/rate-limit.ts
 app/artistes/page.tsx
 ```
 

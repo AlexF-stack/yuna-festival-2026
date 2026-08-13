@@ -14,14 +14,14 @@ manquante, demander à l'utilisateur plutôt que d'improviser.
 - Samedi 5 septembre 2026, 18h–23h
 - Dimanche 6 septembre 2026, 18h–22h30
 - Lieu : Terrain de Midombo, Cotonou, Bénin
-- Entrée libre et gratuite, ouverture du site à 17h chaque soir
+- Entrée libre et gratuite, ouverture du site à 16h chaque soir
 - Sur place : espace sécurisé, sanitaires, points d'eau, stands de restauration, espace prière
 - Accès : zémidjan, taxi, bus
 
 ## Journée du samedi (avant les concerts)
 - 08h–13h : Action sociale & médicale (consultations gratuites, dépistages, dons, assistance aux familles du quartier)
 - 10h–13h : Masterclass VTeam (musiciens et chantres — technique instrumentale, direction de louange, vie d'adorateur)
-- 15h–17h : Masterclass Entrepreneuriat (vision, excellence, royaume dans les affaires) — intervenants : Joël Francis Tatu, Prophète Johnny Doefia, Prophète Dr Hervé Mama
+- 15h–17h : Masterclass Entrepreneuriat (vision, excellence, royaume dans les affaires)
 
 ## Line-up
 **Tête d'affiche internationale** : Joe Mettle (Ghana) — dimanche 6 sept, 21h20
@@ -61,9 +61,9 @@ manquante, demander à l'utilisateur plutôt que d'improviser.
 
 ## Statistiques clés (affichées en compteurs animés)
 - 2 jours de festival
-- 13 artistes & orateurs
 - 3 masterclass & actions
 - 1 génération qui se lève
+- Line-up : dévoilé progressivement (ne pas afficher un total d’artistes)
 
 ## Catégories d'inscription
 - 🔥 Festival — 2 soirées

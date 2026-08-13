@@ -10,7 +10,7 @@
 - [ ] Row visible in `/staff/crm` (**clé CRM**, pas le secret scan)
 - [ ] Check-in OK then re-scan = already checked in / « déjà entré »
 - [ ] Recover pass `/mon-pass`
-- [ ] `/artistes`: **13** artists & speakers, **no** Programme section
+- [ ] `/artistes`: line-up progressif **sans** total d’artistes, **no** Programme section
 - [ ] Mobile 390px: home, scan, CRM (cards)
 - [ ] Favicon / StaffNav = YUNA mark (not Vercel triangle)
 - [ ] Vercel Toolbar off (projects + team)

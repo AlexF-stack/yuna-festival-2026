@@ -26,10 +26,6 @@ const CARD_MEDIA: Record<
     image: "/media/venue-midombo.webp",
     objectPosition: "center 40%",
   },
-  "/boutique": {
-    image: "/media/lights.webp",
-    objectPosition: "center 30%",
-  },
   "/faq": { image: "/media/crowd.webp" },
 };
 

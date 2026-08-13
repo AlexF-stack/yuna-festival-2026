@@ -247,12 +247,12 @@ export function JourneePageContent() {
           <h2 className="mt-3 max-w-2xl font-display text-[clamp(1.8rem,4vw,2.6rem)] font-extrabold uppercase leading-[1.05]">
             {isEn ? (
               <>
-                Site opens at 5pm —{" "}
+                Site opens at 4pm —{" "}
                 <span className="text-feu-core">concerts from 6pm</span>
               </>
             ) : (
               <>
-                À 17h le site ouvre —{" "}
+                À 16h le site ouvre —{" "}
                 <span className="text-feu-core">concerts dès 18h</span>
               </>
             )}

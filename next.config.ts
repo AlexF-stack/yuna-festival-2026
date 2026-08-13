@@ -15,6 +15,11 @@ const nextConfig = {
         destination: "/soutenir",
         permanent: true,
       },
+      {
+        source: "/boutique",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
   async headers() {

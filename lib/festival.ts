@@ -28,7 +28,7 @@ export const FESTIVAL = {
   country: "Bénin",
   freeEntry: "Entrée libre",
   tagline: "Une génération non ordinaire se lève.",
-  siteOpens: "17h00",
+  siteOpens: "16h00",
 } as const;
 
 export const HERO_COPY = {
@@ -52,7 +52,6 @@ export const NAV_LINKS = [
   { href: "/mouvement", label: "Mouvement" },
   { href: "/artistes", label: "Line-up" },
   { href: "/journee", label: "Journée" },
-  { href: "/boutique", label: "Boutique" },
   { href: "/soutenir", label: "Soutenir" },
 ] as const;
 
@@ -71,10 +70,6 @@ export const FOOTER_LINKS = [
 
 export const EVENT_STATS = [
   { value: "2", label: "Jours de festival" },
-  { value: "13", label: "Artistes & orateurs" },
   { value: "3", label: "Masterclass & actions" },
   { value: "1", label: "Génération qui se lève" },
 ] as const;
-
-/** Total annoncé du line-up (stats + page artistes), même si la DB n’a pas encore toutes les lignes. */
-export const LINEUP_TOTAL = 13;

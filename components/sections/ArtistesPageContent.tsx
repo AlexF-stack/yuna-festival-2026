@@ -6,8 +6,7 @@ import { ArtistMarquee } from "@/components/sections/ArtistMarquee";
 import { LineupMystery } from "@/components/sections/LineupMystery";
 import { useLocale, useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { fill } from "@/lib/i18n";
-import { FESTIVAL, LINEUP_TOTAL } from "@/lib/festival";
+import { FESTIVAL } from "@/lib/festival";
 import { EASE_PREMIUM, EASE_YUNA } from "@/lib/motion";
 import type { PublicArtist } from "@/types/artist";
 
@@ -20,7 +19,7 @@ const SOIREES = {
     {
       day: "Samedi 5 septembre",
       short: "Sam. 5",
-      meta: "ouverture 17h · scène 18h",
+      meta: "ouverture 16h · scène 18h",
       slots: [
         { time: "18:00", label: "Ouverture & prière" },
         { time: "18:15–20:05", label: "Louange & scènes (artistes à dévoiler)" },
@@ -32,7 +31,7 @@ const SOIREES = {
     {
       day: "Dimanche 6 septembre",
       short: "Dim. 6",
-      meta: "ouverture 17h · scène 18h",
+      meta: "ouverture 16h · scène 18h",
       slots: [
         { time: "18:00", label: "Ouverture & prière" },
         { time: "18:10–18:50", label: "Louange (artistes à dévoiler)" },
@@ -48,7 +47,7 @@ const SOIREES = {
     {
       day: "Saturday 5 September",
       short: "Sat. 5",
-      meta: "gates 5pm · stage 6pm",
+      meta: "gates 4pm · stage 6pm",
       slots: [
         { time: "18:00", label: "Opening & prayer" },
         { time: "18:15–20:05", label: "Worship & stages (artists TBA)" },
@@ -60,7 +59,7 @@ const SOIREES = {
     {
       day: "Sunday 6 September",
       short: "Sun. 6",
-      meta: "gates 5pm · stage 6pm",
+      meta: "gates 4pm · stage 6pm",
       slots: [
         { time: "18:00", label: "Opening & prayer" },
         { time: "18:10–18:50", label: "Worship (artists TBA)" },
@@ -86,8 +85,7 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
   const soirees = SOIREES[isEn ? "en" : "fr"];
 
   const revealed = artists.filter((a) => a.is_revealed && a.name);
-  const totalCount = Math.max(artists.length, LINEUP_TOTAL);
-  const mysteryCount = Math.max(0, totalCount - revealed.length);
+  const hasMystery = artists.some((a) => !a.is_revealed || !a.name);
   const revealedNames = revealed.map((a) => a.name as string);
   const headliner = revealed.find((a) => a.is_headliner);
   const others = revealed.filter((a) => !a.is_headliner);
@@ -136,7 +134,7 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
               {intro.lead}
             </p>
             <p className="mt-4 font-mono text-[0.68rem] font-bold uppercase tracking-[0.16em] text-papier/55">
-              {fill(t.lineup.teaser, { n: String(totalCount) })}
+              {t.lineup.teaser}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="#artistes">
@@ -176,7 +174,7 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
             {t.lineup.description}
           </p>
 
-          {totalCount === 0 ? (
+          {artists.length === 0 ? (
             <p className="mt-14 text-ivoire-froid/80">{t.lineup.coming}</p>
           ) : (
             <ol className="mt-14 space-y-0">
@@ -234,9 +232,9 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
                 </motion.li>
               ))}
 
-              {mysteryCount > 0 ? (
+              {hasMystery || revealed.length === 0 ? (
                 <li className="pt-10">
-                  <LineupMystery count={mysteryCount} />
+                  <LineupMystery />
                 </li>
               ) : null}
             </ol>
