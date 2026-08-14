@@ -6,7 +6,8 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FESTIVAL } from "@/lib/festival";
 
 const SIZE = 1080;
-const CIRCLE = { cx: 540, cy: 460, r: 340 };
+const CIRCLE = { cx: 540, cy: 481, r: 458 };
+const FRAME_SRC = "/media/filter-benin-debout-overlay.png";
 
 type PhotoState = {
   img: HTMLImageElement;
@@ -29,51 +30,14 @@ function coverScale(img: HTMLImageElement, diameter: number) {
   return Math.max(diameter / img.naturalWidth, diameter / img.naturalHeight);
 }
 
-function drawRoundedRect(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  r: number,
-) {
-  const radius = Math.min(r, w / 2, h / 2);
-  ctx.beginPath();
-  ctx.moveTo(x + radius, y);
-  ctx.arcTo(x + w, y, x + w, y + h, radius);
-  ctx.arcTo(x + w, y + h, x, y + h, radius);
-  ctx.arcTo(x, y + h, x, y, radius);
-  ctx.arcTo(x, y, x + w, y, radius);
-  ctx.closePath();
-}
-
-function drawFlame(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  scale: number,
-  color: string,
-) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.scale(scale, scale);
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.bezierCurveTo(-28, -40, -42, -90, -8, -150);
-  ctx.bezierCurveTo(-20, -110, 8, -100, 12, -130);
-  ctx.bezierCurveTo(48, -80, 36, -30, 0, 0);
-  ctx.fill();
-  ctx.restore();
-}
-
 /**
- * Filtre photo officiel Bénin Debout — cadre circulaire + branding YUNA.
+ * Filtre photo officiel Bénin Debout — visuel fourni par l’équipe YUNA.
  */
 export function PhotoFilterClient() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-  const logoRef = useRef<HTMLImageElement | null>(null);
+  const cameraRef = useRef<HTMLInputElement>(null);
+  const frameRef = useRef<HTMLImageElement | null>(null);
   const photoRef = useRef<PhotoState | null>(null);
   const dragRef = useRef<{ x: number; y: number } | null>(null);
 
@@ -88,31 +52,15 @@ export function PhotoFilterClient() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    if (!logoRef.current) {
+    if (!frameRef.current) {
       try {
-        logoRef.current = await loadImage("/brand/yuna-mark.png");
+        frameRef.current = await loadImage(FRAME_SRC);
       } catch {
-        logoRef.current = null;
+        frameRef.current = null;
       }
     }
 
     ctx.clearRect(0, 0, SIZE, SIZE);
-
-    // Fond — flammes haut / bleu bas
-    const sky = ctx.createLinearGradient(0, 0, 0, SIZE * 0.55);
-    sky.addColorStop(0, "#FF8A1A");
-    sky.addColorStop(0.35, "#FF3B00");
-    sky.addColorStop(0.7, "#C92E00");
-    sky.addColorStop(1, "#0077BB");
-    ctx.fillStyle = sky;
-    ctx.fillRect(0, 0, SIZE, SIZE * 0.52);
-
-    ctx.fillStyle = "#0077BB";
-    ctx.fillRect(0, SIZE * 0.48, SIZE, SIZE * 0.52);
-
-    // Halo flamme droite
-    drawFlame(ctx, 860, 780, 2.4, "rgba(255, 255, 255, 0.12)");
-    drawFlame(ctx, 820, 740, 1.6, "rgba(255, 193, 77, 0.22)");
 
     // Photo dans le cercle
     const photo = photoRef.current;
@@ -134,80 +82,18 @@ export function PhotoFilterClient() {
         h,
       );
     } else {
-      ctx.fillStyle = "#0A0E14";
+      ctx.fillStyle = "#050505";
       ctx.fillRect(0, 0, SIZE, SIZE);
-      ctx.fillStyle = "rgba(255,248,241,0.55)";
+      ctx.fillStyle = "rgba(255,248,241,0.72)";
       ctx.font = "600 42px 'Space Grotesk', system-ui, sans-serif";
       ctx.textAlign = "center";
       ctx.fillText("Ta photo ici", CIRCLE.cx, CIRCLE.cy);
     }
     ctx.restore();
 
-    // Anneau cercle
-    ctx.beginPath();
-    ctx.arc(CIRCLE.cx, CIRCLE.cy, CIRCLE.r + 6, 0, Math.PI * 2);
-    ctx.strokeStyle = "rgba(255,248,241,0.35)";
-    ctx.lineWidth = 10;
-    ctx.stroke();
-
-    // Thème
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#FCD116";
-    ctx.font = "800 28px 'JetBrains Mono', monospace";
-    ctx.fillText("BÉNIN DEBOUT · 2026", CIRCLE.cx, 78);
-
-    // Verset
-    ctx.fillStyle = "rgba(255,248,241,0.92)";
-    ctx.font = "italic 500 26px 'Space Grotesk', system-ui, sans-serif";
-    ctx.fillText("« Lève-toi, sois éclairée… »", CIRCLE.cx, SIZE - 56);
-    ctx.font = "700 20px 'JetBrains Mono', monospace";
-    ctx.fillStyle = "#FCD116";
-    ctx.fillText("Ésaïe 60:1", CIRCLE.cx, SIZE - 24);
-
-    // Sticker logo
-    const stickerX = 48;
-    const stickerY = 760;
-    const stickerW = 210;
-    const stickerH = 210;
-    ctx.save();
-    ctx.shadowColor = "rgba(0,0,0,0.35)";
-    ctx.shadowBlur = 18;
-    ctx.shadowOffsetY = 8;
-    ctx.fillStyle = "#FFF8F1";
-    drawRoundedRect(ctx, stickerX, stickerY, stickerW, stickerH, 28);
-    ctx.fill();
-    ctx.restore();
-
-    if (logoRef.current) {
-      const pad = 22;
-      const logoBox = stickerW - pad * 2;
-      ctx.drawImage(
-        logoRef.current,
-        stickerX + pad,
-        stickerY + 14,
-        logoBox,
-        logoBox * 0.78,
-      );
-      ctx.fillStyle = "#FF3B00";
-      ctx.font = "800 34px 'Baloo 2', system-ui, sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText("YUNA", stickerX + stickerW / 2, stickerY + stickerH - 48);
-      ctx.fillStyle = "#0077BB";
-      ctx.font = "700 20px 'Space Grotesk', system-ui, sans-serif";
-      ctx.fillText("festival", stickerX + stickerW / 2, stickerY + stickerH - 22);
+    if (frameRef.current) {
+      ctx.drawImage(frameRef.current, 0, 0, SIZE, SIZE);
     }
-
-    // « j'y serai »
-    ctx.save();
-    ctx.translate(720, 900);
-    ctx.rotate((-8 * Math.PI) / 180);
-    ctx.font = "800 72px 'Baloo 2', system-ui, sans-serif";
-    ctx.textAlign = "left";
-    ctx.fillStyle = "#FF3B00";
-    ctx.fillText("j'y serai", 4, 6);
-    ctx.fillStyle = "#FFF8F1";
-    ctx.fillText("j'y serai", 0, 0);
-    ctx.restore();
   }, []);
 
   useEffect(() => {
@@ -363,20 +249,37 @@ export function PhotoFilterClient() {
         ref={fileRef}
         type="file"
         accept="image/*"
+        className="sr-only"
+        onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
+      />
+      <input
+        ref={cameraRef}
+        type="file"
+        accept="image/*"
         capture="user"
         className="sr-only"
         onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
       />
 
       <div className="mt-6 flex flex-col gap-3">
-        <button
-          type="button"
-          disabled={busy}
-          onClick={() => fileRef.current?.click()}
-          className="btn-cta-flame inline-flex min-h-12 items-center justify-center rounded-full px-8 py-3.5 text-[0.95rem] font-bold text-papier disabled:opacity-60"
-        >
-          {hasPhoto ? "Changer de photo" : "Prendre / choisir ma photo"}
-        </button>
+        <div className="grid gap-2 min-[420px]:grid-cols-2">
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => fileRef.current?.click()}
+            className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-feu bg-transparent px-6 py-3 text-sm font-bold text-feu disabled:opacity-60"
+          >
+            {hasPhoto ? "Changer la photo" : "Choisir une photo"}
+          </button>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => cameraRef.current?.click()}
+            className="btn-cta-flame inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-sm font-bold text-papier disabled:opacity-60"
+          >
+            Prendre une photo
+          </button>
+        </div>
 
         {hasPhoto ? (
           <label className="block rounded-2xl border border-bleu/12 bg-papier px-4 py-3">

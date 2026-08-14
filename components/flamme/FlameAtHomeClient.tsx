@@ -6,74 +6,76 @@ import * as THREE from "three";
 const OUTPUT_WIDTH = 720;
 const OUTPUT_HEIGHT = 1280;
 
-function createFlameGeometry() {
-  const shape = new THREE.Shape();
-  shape.moveTo(0, -1.35);
-  shape.bezierCurveTo(-0.9, -0.85, -1.12, 0.05, -0.55, 0.82);
-  shape.bezierCurveTo(-0.2, 1.3, -0.18, 1.78, 0.08, 2.2);
-  shape.bezierCurveTo(0.82, 1.37, 1.04, 0.45, 0.68, -0.12);
-  shape.bezierCurveTo(1.1, 0.18, 1.32, 0.7, 1.15, 1.12);
-  shape.bezierCurveTo(1.8, 0.18, 1.3, -0.98, 0, -1.35);
-  return new THREE.ExtrudeGeometry(shape, {
-    depth: 0.42,
-    bevelEnabled: true,
-    bevelSegments: 5,
-    steps: 1,
-    bevelSize: 0.11,
-    bevelThickness: 0.1,
-    curveSegments: 28,
+function loadLogoTexture(): Promise<THREE.CanvasTexture> {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+      const context = canvas.getContext("2d", { willReadFrequently: true });
+      if (!context) {
+        reject(new Error("canvas"));
+        return;
+      }
+      context.drawImage(image, 0, 0);
+      const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < pixels.data.length; i += 4) {
+        const r = pixels.data[i];
+        const g = pixels.data[i + 1];
+        const b = pixels.data[i + 2];
+        const lightest = Math.max(r, g, b);
+        const darkest = Math.min(r, g, b);
+        if (darkest > 180 && lightest - darkest < 18) {
+          pixels.data[i + 3] = Math.min(255, (255 - darkest) * 3);
+        }
+      }
+      context.putImageData(pixels, 0, 0);
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.anisotropy = 4;
+      resolve(texture);
+    };
+    image.onerror = () => reject(new Error("logo"));
+    image.src = "/brand/yuna-mark.png";
   });
 }
 
-function createEmblem() {
+function createEmblem(texture: THREE.Texture) {
   const group = new THREE.Group();
+  const geometry = new THREE.PlaneGeometry(2.62, 3.82);
 
-  const flame = new THREE.Mesh(
-    createFlameGeometry(),
-    new THREE.MeshPhysicalMaterial({
-      color: 0xff3b00,
-      emissive: 0x6b1300,
-      emissiveIntensity: 0.45,
-      metalness: 0.15,
-      roughness: 0.28,
-      clearcoat: 0.8,
-      clearcoatRoughness: 0.2,
+  // Plusieurs silhouettes superposées donnent une vraie épaisseur au logo
+  // sans modifier son dessin officiel.
+  for (let layer = 9; layer >= 1; layer -= 1) {
+    const edge = new THREE.Mesh(
+      geometry.clone(),
+      new THREE.MeshBasicMaterial({
+        map: texture,
+        color: layer % 2 === 0 ? 0x004e7a : 0x07354f,
+        transparent: true,
+        alphaTest: 0.08,
+        side: THREE.DoubleSide,
+      }),
+    );
+    edge.position.z = -layer * 0.045;
+    group.add(edge);
+  }
+
+  const face = new THREE.Mesh(
+    geometry,
+    new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true,
+      alphaTest: 0.08,
+      side: THREE.DoubleSide,
     }),
   );
-  flame.geometry.center();
-  flame.position.y = 0.45;
-  flame.castShadow = true;
-  group.add(flame);
-
-  const innerFlame = new THREE.Mesh(
-    createFlameGeometry(),
-    new THREE.MeshPhysicalMaterial({
-      color: 0xfcd116,
-      emissive: 0xff7a00,
-      emissiveIntensity: 0.8,
-      roughness: 0.25,
-      clearcoat: 1,
-    }),
-  );
-  innerFlame.geometry.center();
-  innerFlame.scale.setScalar(0.44);
-  innerFlame.position.set(0.03, 0.18, 0.35);
-  group.add(innerFlame);
-
-  const halo = new THREE.Mesh(
-    new THREE.TorusGeometry(1.72, 0.12, 24, 96),
-    new THREE.MeshPhysicalMaterial({
-      color: 0x0077bb,
-      metalness: 0.35,
-      roughness: 0.2,
-      clearcoat: 1,
-    }),
-  );
-  halo.position.z = -0.28;
-  group.add(halo);
+  face.position.z = 0.035;
+  group.add(face);
 
   const base = new THREE.Mesh(
-    new THREE.CylinderGeometry(1.7, 1.92, 0.34, 80),
+    new THREE.CylinderGeometry(1.25, 1.48, 0.28, 64),
     new THREE.MeshPhysicalMaterial({
       color: 0x004e7a,
       metalness: 0.55,
@@ -81,12 +83,11 @@ function createEmblem() {
       clearcoat: 0.8,
     }),
   );
-  base.rotation.x = Math.PI / 2;
-  base.position.set(0, -1.72, 0.05);
+  base.position.set(0, -2.02, -0.12);
   base.castShadow = true;
   group.add(base);
 
-  group.rotation.x = -0.08;
+  group.rotation.x = -0.04;
   return group;
 }
 
@@ -157,7 +158,7 @@ export function FlameAtHomeClient() {
   const [scale, setScale] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [hint, setHint] = useState(
-    "Autorise la caméra, puis place la flamme dans ton espace.",
+    "Autorise la caméra, puis place l’emblème YUNA dans ton espace.",
   );
 
   useEffect(() => {
@@ -198,13 +199,29 @@ export function FlameAtHomeClient() {
     warm.position.set(-3, 1, 5);
     scene.add(warm);
 
-    const group = createEmblem();
-    group.position.set(0, -0.45, 0);
+    const group = new THREE.Group();
+    group.position.set(0, -0.15, 0);
     groupRef.current = group;
     scene.add(group);
 
     let frame = 0;
     let disposed = false;
+    let logoTexture: THREE.CanvasTexture | null = null;
+    void loadLogoTexture()
+      .then((texture) => {
+        if (disposed) {
+          texture.dispose();
+          return;
+        }
+        logoTexture = texture;
+        group.add(createEmblem(texture));
+      })
+      .catch(() => {
+        if (!disposed) {
+          setHint("Impossible de charger l’emblème YUNA. Actualise la page.");
+        }
+      });
+
     const render = (time: number) => {
       if (disposed) return;
       frame = requestAnimationFrame(render);
@@ -262,6 +279,7 @@ export function FlameAtHomeClient() {
       disposed = true;
       cancelAnimationFrame(frame);
       renderer.dispose();
+      logoTexture?.dispose();
       scene.traverse((object) => {
         if (object instanceof THREE.Mesh) {
           object.geometry.dispose();
@@ -298,7 +316,7 @@ export function FlameAtHomeClient() {
       streamRef.current = stream;
       videoRef.current = video;
       setCameraOn(true);
-      setHint("Glisse la flamme, ajuste sa taille, puis lance la vidéo.");
+      setHint("Glisse l’emblème, ajuste sa taille, puis lance la vidéo.");
     } catch {
       setHint(
         "Accès caméra refusé. Autorise la caméra dans ton navigateur et réessaie.",
@@ -404,7 +422,7 @@ export function FlameAtHomeClient() {
     recorder.start(250);
     recordingRef.current = true;
     setRecording(true);
-    setHint("Ça tourne… déplace-toi autour de la flamme.");
+    setHint("Ça tourne… déplace-toi autour de l’emblème.");
   }
 
   function stopRecording() {
@@ -452,7 +470,7 @@ export function FlameAtHomeClient() {
           Expérience caméra
         </p>
         <h2 className="mt-3 font-display text-[clamp(2rem,5vw,3.2rem)] font-extrabold uppercase leading-[0.98] text-bleu">
-          Pose la flamme.{" "}
+          Pose l’emblème YUNA.{" "}
           <span className="text-feu">Fais tourner.</span>
         </h2>
         <p className="mt-4 leading-relaxed text-charbon">
@@ -513,7 +531,7 @@ export function FlameAtHomeClient() {
             onClick={resetPlacement}
             className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-bleu/20 px-6 py-3 text-sm font-bold text-bleu"
           >
-            Recentrer la flamme
+            Recentrer l’emblème
           </button>
 
           {recording ? (
