@@ -26,10 +26,7 @@ export function Participate() {
           >
             {PARTICIPATE.ctaVolunteer}
           </ButtonLink>
-          <ButtonLink
-            href={`mailto:${SITE_CONTACT.email}?subject=${encodeURIComponent("YUNA 2026 — Partenariat")}`}
-            variant="outline-light"
-          >
+          <ButtonLink href="/partenaires" variant="outline-light">
             {PARTICIPATE.ctaPartner}
           </ButtonLink>
         </div>

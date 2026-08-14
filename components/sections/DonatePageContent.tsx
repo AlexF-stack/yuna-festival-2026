@@ -106,7 +106,7 @@ export function DonatePageContent() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="#semer">Allumer une flamme →</ButtonLink>
-              <ButtonLink href="#partenariat-grille" variant="outline-light">
+              <ButtonLink href="/partenaires" variant="outline-light">
                 Partenariat
               </ButtonLink>
             </div>

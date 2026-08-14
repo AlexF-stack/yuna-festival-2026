@@ -20,6 +20,11 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/partenaire",
+        destination: "/partenaires",
+        permanent: true,
+      },
     ];
   },
   async headers() {

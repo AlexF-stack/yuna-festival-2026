@@ -11,7 +11,7 @@ import { AnimatedThemeTitle } from "@/components/sections/AnimatedThemeTitle";
 import { HeroCountdown } from "@/components/sections/HeroCountdown";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useMessages } from "@/components/i18n/LocaleProvider";
-import { HERO_COPY } from "@/lib/festival";
+import { FESTIVAL, HERO_COPY } from "@/lib/festival";
 import { EASE_PREMIUM } from "@/lib/motion";
 
 type HeroProps = {
@@ -53,32 +53,15 @@ export function Hero({ eventStartIso }: HeroProps) {
           animate={reduceMotion ? undefined : "show"}
           className="pb-2 min-[900px]:pb-0"
         >
-          <motion.div variants={reduceMotion ? undefined : rise} className="mb-5">
+          <motion.div variants={reduceMotion ? undefined : rise} className="mb-4">
             <YunaLogo size="hero" priority />
-          </motion.div>
-
-          <motion.div
-            variants={reduceMotion ? undefined : rise}
-            className="mb-4 flex flex-wrap items-center gap-3"
-          >
-            <p className="inline-flex items-center gap-2 rounded-full border border-jaune/40 bg-nuit-profonde/35 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.18em] text-jaune shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
-              {hero.eyebrow}
-            </p>
-            <span
-              aria-hidden
-              className="flag-stripe h-[3px] w-14 overflow-hidden rounded-full min-[900px]:hidden"
-            >
-              <span className="bg-vert" />
-              <span className="bg-jaune" />
-              <span className="bg-rouge" />
-            </span>
           </motion.div>
 
           <motion.p
             variants={reduceMotion ? undefined : rise}
-            className="mb-3 font-mono text-[0.72rem] font-bold uppercase tracking-[0.2em] text-ivoire-froid/80"
+            className="mb-3 font-mono text-[0.78rem] font-bold uppercase tracking-[0.22em] text-jaune"
           >
-            {hero.venueLine}
+            {FESTIVAL.brand} {FESTIVAL.edition}
           </motion.p>
 
           <motion.div variants={reduceMotion ? undefined : rise}>
@@ -88,21 +71,29 @@ export function Hero({ eventStartIso }: HeroProps) {
             />
           </motion.div>
 
-          <motion.blockquote
+          <motion.dl
             variants={reduceMotion ? undefined : rise}
-            className="mt-5 max-w-xl min-[900px]:mt-7"
+            className="mt-5 space-y-1.5 font-mono text-[0.78rem] font-bold uppercase tracking-[0.14em] text-papier/90 min-[900px]:mt-6 min-[900px]:text-[0.82rem]"
           >
-            <p className="text-[0.95rem] italic leading-relaxed text-ivoire-froid/90 min-[900px]:text-[1.02rem] min-[900px]:text-papier/88">
-              {hero.verse}
-            </p>
-            <footer className="mt-2 font-mono text-[0.68rem] font-bold uppercase tracking-[0.16em] text-jaune min-[900px]:text-[0.72rem]">
-              {hero.verseRef}
-            </footer>
-          </motion.blockquote>
+            <div>
+              <dt className="sr-only">Dates</dt>
+              <dd>{FESTIVAL.datesShort}</dd>
+            </div>
+            <div>
+              <dt className="sr-only">Lieu</dt>
+              <dd>
+                {FESTIVAL.venue} – {FESTIVAL.city}
+              </dd>
+            </div>
+            <div>
+              <dt className="sr-only">Entrée</dt>
+              <dd className="text-jaune">{FESTIVAL.freeEntry}</dd>
+            </div>
+          </motion.dl>
 
           <motion.p
             variants={reduceMotion ? undefined : rise}
-            className="mt-4 max-w-lg text-[0.95rem] leading-relaxed text-ivoire-froid/75 min-[900px]:mt-5 min-[900px]:text-[0.98rem] min-[900px]:text-papier/72"
+            className="mt-5 max-w-lg text-[0.98rem] leading-relaxed text-ivoire-froid/80 min-[900px]:text-[1.02rem] min-[900px]:text-papier/78"
           >
             {hero.support}
           </motion.p>
@@ -125,6 +116,18 @@ export function Hero({ eventStartIso }: HeroProps) {
               {hero.ctaSecondary}
             </ButtonLink>
           </motion.div>
+
+          <motion.blockquote
+            variants={reduceMotion ? undefined : rise}
+            className="mt-6 max-w-xl border-l border-jaune/35 pl-4"
+          >
+            <p className="text-[0.88rem] italic leading-relaxed text-ivoire-froid/70 min-[900px]:text-[0.92rem] min-[900px]:text-papier/68">
+              {hero.verse}
+            </p>
+            <footer className="mt-1.5 font-mono text-[0.65rem] font-bold uppercase tracking-[0.16em] text-jaune/85">
+              {hero.verseRef}
+            </footer>
+          </motion.blockquote>
 
           <motion.div
             variants={reduceMotion ? undefined : rise}

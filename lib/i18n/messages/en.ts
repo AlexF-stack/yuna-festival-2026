@@ -27,6 +27,7 @@ export const en: Messages = {
     { href: "/#lieu", label: "Venue" },
     { href: "/mon-pass", label: "Recover my pass" },
     { href: "/soutenir", label: "Support" },
+    { href: "/partenaires", label: "Partners" },
     { href: "/faq", label: "FAQ" },
     { href: "/confidentialite", label: "Privacy" },
     { href: "/mentions-legales", label: "Legal notice" },
@@ -54,7 +55,7 @@ export const en: Messages = {
     ctaSecondary: "See the daytime programme",
     meta: "5–6 September 2026 · Midombo Grounds, Cotonou",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "Midombo Grounds, Cotonou — Free entry",
+    venueLine: "5–6 September 2026 · Midombo Grounds – Cotonou · Free entry",
   },
   registerExtras: {
     addGuest: "+ Add a pass for someone else",

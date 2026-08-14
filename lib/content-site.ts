@@ -88,7 +88,7 @@ export const VENUE = {
     "Un espace ouvert au cœur de la ville — accessible à tous, entrée libre. Le festival vient à la rencontre de la jeunesse, là où elle vit.",
   amenities: [
     "Entrée gratuite, ouverte à tous",
-    "Ouverture du site à 16h00 chaque soir",
+    "Ouverture du site à 16h00 chaque soir — concerts dès 18h",
     "Espace sécurisé, sanitaires et points d'eau sur place",
     "Stands de restauration et espace prière",
     "Accès facile en zém, taxi et bus",
@@ -148,6 +148,75 @@ export const SPONSORS = {
       featured: false,
     },
   ],
+} as const;
+
+/** Page dédiée /partenaires — dossier PDF à déposer dans public/media quand prêt. */
+export const PARTNERS_PAGE = {
+  eyebrow: "Partenariat",
+  title: "Devenir partenaire de YUNA",
+  lead:
+    "Associez votre marque à Bénin Debout : un festival jeunesse à Midombo, entrée libre, dimension nationale et diaspora.",
+  whyTitle: "Pourquoi soutenir YUNA",
+  why: [
+    "Un événement structuré autour de la jeunesse, de la foi et de l’excellence — pas seulement un concert.",
+    "Entrée libre : votre soutien rend possible un festival ouvert à toutes et tous.",
+    "Visibilité concrète : site, affiches, scène, stands et réseaux — sur 2 soirées à Cotonou.",
+  ],
+  audienceTitle: "Audience attendue",
+  audience: [
+    "Des milliers de jeunes sur le Terrain de Midombo (5–6 septembre 2026).",
+    "Objectif d’inscriptions pass QR : 5 000 — suivi staff et check-in sur site.",
+    "Public local Cotonou + rayonnement diaspora via le site et les réseaux.",
+  ],
+  visibilityTitle: "Visibilité offerte",
+  visibility: [
+    "Logo sur le site officiel et supports print selon le palier.",
+    "Mentions scène et présence écran géant (Argent / Or).",
+    "Contenu dédié réseaux sociaux (Argent / Or).",
+    "Naming « présenté par » et prise de parole (Or — partenaire officiel).",
+  ],
+  brandingTitle: "Espaces de branding",
+  branding: [
+    "Affiches et communication digitale du festival",
+    "Écran géant et bannières scène",
+    "Stand sur le site (activation de marque)",
+    "Flyers et distribution terrain (Argent+)",
+  ],
+  supportModesTitle: "Sponsoring financier ou matériel",
+  supportModes: [
+    {
+      title: "Financier",
+      text: "Paliers Bronze 500 000 · Argent 1 500 000 · Or 3 000 000 FCFA — contreparties listées ci-dessous.",
+    },
+    {
+      title: "Matériel / en nature",
+      text: "Sono, lumière, groupe électrogène, eau, sanitaires, restauration, logistique médicale — à discuter selon vos moyens.",
+    },
+  ],
+  formTitle: "Formulaire de contact",
+  formLead:
+    "Indiquez votre organisation et votre intérêt. Nous vous répondons à contact@yunafestival.org.",
+  formOrg: "Organisation / marque *",
+  formName: "Nom du contact *",
+  formEmail: "E-mail *",
+  formPhone: "Téléphone (WhatsApp)",
+  formMode: "Type de partenariat *",
+  formModeFinancial: "Financier",
+  formModeInKind: "Matériel / en nature",
+  formModeBoth: "Les deux",
+  formMessage: "Message",
+  formMessagePh: "Paliers visés, nature du don matériel, questions…",
+  formMailSubject: "Partenariat — YUNA 2026",
+  dossierTitle: "Dossier de sponsoring",
+  dossierLead:
+    "Le dossier PDF détaillé (audiences, plans média, contreparties) sera disponible ici dès validation. En attendant, demandez-le par e-mail.",
+  /** Mettre true + déposer le fichier quand le PDF client est prêt. */
+  dossierReady: false,
+  dossierHref: "/media/dossier-sponsoring-yuna-2026.pdf",
+  dossierCta: "Télécharger le dossier",
+  dossierMailSubject: "Dossier de sponsoring — YUNA 2026",
+  dossierMailCta: "Recevoir le dossier par e-mail",
+  contactCta: "Envoyer ma demande",
 } as const;
 
 export const PARTICIPATE = {
@@ -281,9 +350,9 @@ export const DONATE = {
     {
       id: "partenariat",
       title: "Partenariat",
-      text: "Paliers Bronze 500 000 · Argent 1 500 000 · Or 3 000 000 FCFA — logo, scène, stand. Détail des contreparties plus bas.",
-      cta: "Voir les paliers →",
-      href: "#partenariat-grille",
+      text: "Paliers Bronze 500 000 · Argent 1 500 000 · Or 3 000 000 FCFA — logo, scène, stand. Dossier et formulaire sur la page partenaires.",
+      cta: "Devenir partenaire →",
+      href: "/partenaires",
     },
   ],
   pillars: [

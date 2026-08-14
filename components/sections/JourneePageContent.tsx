@@ -71,8 +71,8 @@ export function JourneePageContent() {
             </p>
             <p className="mt-4 font-mono text-[0.68rem] font-bold uppercase tracking-[0.16em] text-papier/55">
               {isEn
-                ? `Saturday 5 Sep · 8am–5pm · ${FESTIVAL.venue}`
-                : `Samedi 5 sept · 08h–17h · ${FESTIVAL.venue}`}
+                ? `Saturday 5 Sep · daytime workshops 8am–5pm · evenings open ${FESTIVAL.siteOpens}`
+                : `Samedi 5 sept · ateliers 08h–17h · soirées ouverture ${FESTIVAL.siteOpens}`}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="#sessions">

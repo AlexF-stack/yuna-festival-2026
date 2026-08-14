@@ -21,10 +21,10 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "heure-arrivee",
     question: "À quelle heure faut-il arriver ?",
     answer:
-      "Le site ouvre à 16h00. Les premières places devant la scène partent vite — viens tôt pour les temps forts du samedi et du dimanche.",
+      "Le site ouvre à 16h00 chaque soir (concerts dès 18h). Le créneau 15h–17h concerne uniquement la masterclass Entrepreneuriat du samedi — ce n’est pas l’heure d’ouverture du festival.",
     questionEn: "What time should I arrive?",
     answerEn:
-      "Gates open at 4:00 PM. Front-of-stage spots go fast — come early for the Saturday and Sunday highlights.",
+      "Gates open at 4:00 PM each evening (concerts from 6:00 PM). The 3–5 PM slot is only the Saturday Entrepreneurship masterclass — not festival opening time.",
   },
   {
     id: "masterclass",

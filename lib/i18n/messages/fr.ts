@@ -27,6 +27,7 @@ export const fr: Messages = {
     { href: "/#lieu", label: "Lieu" },
     { href: "/mon-pass", label: "Retrouver mon pass" },
     { href: "/soutenir", label: "Soutenir" },
+    { href: "/partenaires", label: "Partenaires" },
     { href: "/faq", label: "FAQ" },
     { href: "/confidentialite", label: "Confidentialité" },
     { href: "/mentions-legales", label: "Mentions légales" },
@@ -54,7 +55,7 @@ export const fr: Messages = {
     ctaSecondary: "Voir la journée",
     meta: "5–6 septembre 2026 · Terrain de Midombo, Cotonou",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "Terrain de Midombo, Cotonou — Entrée libre",
+    venueLine: "5–6 septembre 2026 · Terrain de Midombo – Cotonou · Entrée libre",
   },
   registerExtras: {
     addGuest: "+ Ajouter un pass pour quelqu’un d’autre",

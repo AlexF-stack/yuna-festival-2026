@@ -345,7 +345,7 @@ export function MouvementPageContent() {
           </ul>
 
           <div className="mt-10">
-            <ButtonLink href="/soutenir#partenariat-grille">
+            <ButtonLink href="/partenaires">
               Devenir partenaire
             </ButtonLink>
           </div>

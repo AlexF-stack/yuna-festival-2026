@@ -29,10 +29,14 @@ export function HeroShowcase({ eventStartIso }: HeroShowcaseProps) {
     >
       <div className="relative flex flex-col items-center px-1 min-[1100px]:px-2">
         <p className="text-center font-mono text-[0.68rem] font-bold uppercase tracking-[0.22em] text-jaune">
-          {FESTIVAL.theme} · {FESTIVAL.edition}
+          {FESTIVAL.brand} {FESTIVAL.edition} · {FESTIVAL.theme}
         </p>
-        <p className="mt-2 max-w-[22rem] text-center text-sm leading-relaxed text-papier/75">
-          {t.hero.venueLine}
+        <p className="mt-2 max-w-[22rem] text-center font-mono text-[0.72rem] font-bold uppercase tracking-[0.12em] text-papier/85">
+          {FESTIVAL.datesShort}
+        </p>
+        <p className="mt-1.5 max-w-[22rem] text-center text-sm leading-relaxed text-papier/75">
+          {FESTIVAL.venue} – {FESTIVAL.city}
+          <span className="mt-1 block text-jaune">{t.common.freeEntry}</span>
         </p>
 
         <div className="mt-5 w-full">
