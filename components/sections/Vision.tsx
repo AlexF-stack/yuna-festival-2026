@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { TiltCard } from "@/components/motion/TiltCard";
+import { HebrewText } from "@/components/ui/HebrewText";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { SoftImage } from "@/components/ui/SoftImage";
@@ -35,7 +36,9 @@ export function Vision() {
             <span className="block">{VISION.titleLine1}</span>
             <span className="mt-1 block text-feu">{VISION.titleLine2}</span>
           </h2>
-          <p className="section-lead max-w-2xl text-papier/85">{VISION.intro}</p>
+          <p className="section-lead max-w-2xl text-papier/85" spellCheck={false}>
+            <HebrewText>{VISION.intro}</HebrewText>
+          </p>
         </header>
       </Reveal>
 
@@ -85,7 +88,7 @@ export function Vision() {
                       }`}
                     />
                     <p className="absolute bottom-3 left-4 font-mono text-[0.68rem] font-bold tracking-[0.12em] text-papier/85">
-                      {pillar.hebrew}
+                      <HebrewText>{pillar.hebrew}</HebrewText>
                     </p>
                   </div>
                   <div className="p-6">

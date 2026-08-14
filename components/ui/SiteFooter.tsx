@@ -2,6 +2,7 @@
 
 import { YunaLogo } from "@/components/brand/YunaLogo";
 import { useMessages } from "@/components/i18n/LocaleProvider";
+import { HebrewText } from "@/components/ui/HebrewText";
 import { ORGANIZER } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
 import { SITE_CONTACT } from "@/lib/site";
@@ -24,7 +25,9 @@ export function SiteFooter() {
             {FESTIVAL.theme} · {FESTIVAL.edition}
           </p>
           <p className="mt-3 text-sm text-papier/75">{t.footer.tagline}</p>
-          <p className="mt-2 text-sm text-papier/65">{t.footer.dove}</p>
+          <p className="mt-2 text-sm text-papier/65">
+            <HebrewText>{t.footer.dove}</HebrewText>
+          </p>
           <p className="mt-4 max-w-sm text-[0.95rem] leading-relaxed text-papier/75">
             {t.footer.verseLine}
           </p>

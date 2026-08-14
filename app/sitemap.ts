@@ -59,6 +59,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: "https://yunafestival.com/filtre",
+      lastModified: LAST_DEPLOY,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+    {
+      url: "https://yunafestival.com/flamme",
+      lastModified: LAST_DEPLOY,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+    {
       url: "https://yunafestival.com/confidentialite",
       lastModified: LAST_DEPLOY,
       changeFrequency: "yearly",

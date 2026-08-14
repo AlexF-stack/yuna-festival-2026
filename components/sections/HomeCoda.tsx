@@ -49,6 +49,16 @@ export function HomeCoda() {
             {PARTICIPATE.ctaPartner}
           </ButtonLink>
         </RevealItem>
+        <RevealItem>
+          <ButtonLink href="/filtre" variant="ghost">
+            Filtre photo
+          </ButtonLink>
+        </RevealItem>
+        <RevealItem>
+          <ButtonLink href="/flamme" variant="ghost">
+            La flamme chez toi
+          </ButtonLink>
+        </RevealItem>
       </RevealGroup>
     </SectionShell>
   );

@@ -32,7 +32,7 @@ export function ConfirmationClient({
   return (
     <main
       id="contenu"
-      className="flex min-h-dvh flex-col items-center bg-nuage px-5 pb-16 pt-28 text-encre"
+      className="flex min-h-dvh flex-col items-center bg-papier px-5 pb-16 pt-28 text-encre"
     >
       <p className="text-[0.72rem] font-bold uppercase tracking-[0.32em] text-feu">
         {c.eyebrow}
@@ -65,7 +65,7 @@ export function ConfirmationClient({
         </div>
       ) : null}
 
-      <div className="mt-10 w-full max-w-[420px]">
+      <div className="mt-10 w-full max-w-[560px]">
         <PassTicket
           name={registration.name}
           qrCode={registration.qr_code}

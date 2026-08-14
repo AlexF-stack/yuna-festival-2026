@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { useLocale, useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { HebrewText } from "@/components/ui/HebrewText";
 import { SoftImage } from "@/components/ui/SoftImage";
 import { MISSION, SPONSORS, VISION } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
@@ -218,8 +219,11 @@ export function MouvementPageContent() {
             {VISION.titleLine1}{" "}
             <span className="text-feu">{VISION.titleLine2}</span>
           </h2>
-          <p className="mt-5 max-w-3xl text-[1.05rem] leading-relaxed text-charbon">
-            {VISION.intro}
+          <p
+            className="mt-5 max-w-3xl text-[1.05rem] leading-relaxed text-charbon"
+            spellCheck={false}
+          >
+            <HebrewText>{VISION.intro}</HebrewText>
           </p>
         </div>
 
@@ -255,7 +259,7 @@ export function MouvementPageContent() {
                   }`}
                 >
                   <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.16em] text-feu-glow">
-                    {pillar.hebrew}
+                    <HebrewText>{pillar.hebrew}</HebrewText>
                   </p>
                   <h3 className="mt-3 font-display text-[clamp(2rem,5vw,3rem)] font-extrabold uppercase leading-none text-feu-core">
                     {pillar.title}

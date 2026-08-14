@@ -27,6 +27,14 @@ const CARD_MEDIA: Record<
     objectPosition: "center 40%",
   },
   "/faq": { image: "/media/crowd.webp" },
+  "/filtre": {
+    image: "/media/festival.webp",
+    objectPosition: "center 30%",
+  },
+  "/flamme": {
+    image: "/media/lights.webp",
+    objectPosition: "center 35%",
+  },
 };
 
 /**

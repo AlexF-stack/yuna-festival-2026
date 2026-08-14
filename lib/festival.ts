@@ -64,6 +64,8 @@ export const FOOTER_LINKS = [
   { href: "/mon-pass", label: "Retrouver mon pass" },
   { href: "/soutenir", label: "Soutenir" },
   { href: "/partenaires", label: "Partenaires" },
+  { href: "/filtre", label: "Filtre photo" },
+  { href: "/flamme", label: "La flamme chez toi" },
   { href: "/faq", label: "FAQ" },
   { href: "/confidentialite", label: "Confidentialité" },
   { href: "/mentions-legales", label: "Mentions légales" },

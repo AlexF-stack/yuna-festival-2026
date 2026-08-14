@@ -195,7 +195,7 @@ export const PARTNERS_PAGE = {
   ],
   formTitle: "Formulaire de contact",
   formLead:
-    "Indiquez votre organisation et votre intérêt. Nous vous répondons à contact@yunafestival.org.",
+    "Présentez-nous votre organisation, le soutien envisagé et vos objectifs de visibilité. L’équipe YUNA reprendra contact avec vous.",
   formOrg: "Organisation / marque *",
   formName: "Nom du contact *",
   formEmail: "E-mail *",
@@ -204,9 +204,22 @@ export const PARTNERS_PAGE = {
   formModeFinancial: "Financier",
   formModeInKind: "Matériel / en nature",
   formModeBoth: "Les deux",
+  formTier: "Niveau envisagé",
+  formTierOptions: [
+    "À définir ensemble",
+    "Bronze — 500 000 FCFA",
+    "Argent — 1 500 000 FCFA",
+    "Or — 3 000 000 FCFA",
+    "Contribution matérielle / sur mesure",
+  ],
   formMessage: "Message",
-  formMessagePh: "Paliers visés, nature du don matériel, questions…",
+  formMessagePh:
+    "Vos objectifs, les espaces souhaités ou la nature du matériel proposé…",
   formMailSubject: "Partenariat — YUNA 2026",
+  formPrivacy:
+    "Les informations saisies servent uniquement à traiter votre demande de partenariat.",
+  formSubmitHint:
+    "L’envoi prépare votre demande à destination de l’équipe partenariat YUNA.",
   dossierTitle: "Dossier de sponsoring",
   dossierLead:
     "Le dossier PDF détaillé (audiences, plans média, contreparties) sera disponible ici dès validation. En attendant, demandez-le par e-mail.",

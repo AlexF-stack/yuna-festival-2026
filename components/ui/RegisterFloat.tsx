@@ -12,6 +12,8 @@ const HIDDEN_PREFIXES = [
   "/lab",
   "/don",
   "/soutenir",
+  "/filtre",
+  "/flamme",
   "/confidentialite",
   "/mentions-legales",
 ] as const;

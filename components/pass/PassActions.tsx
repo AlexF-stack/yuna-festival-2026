@@ -66,7 +66,7 @@ export function PassActions({
       const dataUrl = await toPng(node, {
         cacheBust: true,
         pixelRatio: 2,
-        backgroundColor: "#FFF8F1",
+        backgroundColor: "#0A0E14",
       });
       const link = document.createElement("a");
       link.download = `yuna-ticket-${shortId}.png`;
@@ -104,7 +104,7 @@ export function PassActions({
   const channel = caps?.messaging.whatsapp ? "WhatsApp" : "SMS";
 
   return (
-    <div className="mt-5 flex w-full max-w-[400px] flex-col gap-3">
+    <div className="mt-5 flex w-full max-w-[560px] flex-col gap-3">
       {messagingOn ? (
         <p className="rounded-2xl border border-vert/30 bg-vert/12 px-4 py-3 text-center text-sm leading-relaxed text-encre">
           <span className="font-bold text-vert">{a.confirmed}</span>

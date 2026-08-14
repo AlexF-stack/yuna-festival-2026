@@ -13,8 +13,21 @@ type PassTicketProps = {
   registrationType: RegistrationType;
 };
 
+function stubHint(type: RegistrationType): string {
+  switch (type) {
+    case "masterclass_vteam":
+      return "Samedi 10h–13h";
+    case "masterclass_entrepreneuriat":
+      return "Samedi 15h–17h";
+    case "benevole":
+      return "Staff · jour J";
+    default:
+      return "Entrée libre · 2 soirées";
+  }
+}
+
 /**
- * Ticket officiel YUNA — généré à l’inscription (QR + identité festival).
+ * Ticket officiel YUNA — format billet à talon (corps + stub QR).
  * `id="yuna-pass-ticket"` sert à l’export PNG.
  */
 export function PassTicket({
@@ -29,135 +42,99 @@ export function PassTicket({
   return (
     <article
       id="yuna-pass-ticket"
-      className="pass-ticket relative w-full max-w-[400px] overflow-hidden rounded-[1.35rem] bg-papier text-encre shadow-[0_28px_70px_rgba(0,70,120,0.22)] ring-1 ring-bleu/10"
+      className="pass-ticket w-full max-w-[560px] rounded-[1.25rem] bg-nuit-profonde p-4 shadow-[0_28px_70px_rgba(0,20,40,0.35)] sm:p-5"
       aria-label={`Ticket YUNA de ${name}`}
     >
-      {/* En-tête marque */}
-      <header className="relative overflow-hidden bg-gradient-to-br from-nuit-profonde via-bleu-fonce to-bleu px-5 pb-5 pt-5 text-papier">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full bg-feu/30 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -bottom-16 left-0 h-32 w-32 rounded-full bg-jaune/20 blur-3xl"
-        />
-
-        <div className="relative z-10 flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-papier/10 ring-2 ring-feu/50">
-              <Image
-                src="/brand/yuna-mark.png"
-                alt=""
-                width={40}
-                height={40}
-                className="h-9 w-9 object-contain"
-                unoptimized
-              />
-            </span>
-            <div>
-              <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.28em] text-feu-glow">
-                Ticket officiel
-              </p>
-              <h2 className="mt-0.5 font-display text-[1.85rem] font-extrabold uppercase leading-[0.9] tracking-tight">
-                YUNA{" "}
-                <span className="bg-gradient-to-r from-feu-glow via-feu-core to-feu bg-clip-text text-transparent">
-                  {FESTIVAL.edition}
-                </span>
-              </h2>
-            </div>
-          </div>
-          <div className="shrink-0 rounded-xl border border-papier/20 bg-papier/10 px-2.5 py-2 text-center backdrop-blur-sm">
-            <p className="font-mono text-[0.7rem] font-bold tabular-nums leading-none">
-              05–06
-            </p>
-            <p className="mt-1 font-mono text-[0.58rem] font-bold uppercase tracking-[0.14em] text-feu-glow">
-              Sept
-            </p>
-          </div>
-        </div>
-
-        <p className="relative z-10 mt-4 font-display text-[1.05rem] font-extrabold uppercase leading-none tracking-wide text-papier">
-          {FESTIVAL.theme}
-        </p>
-        <p className="relative z-10 mt-1.5 text-sm text-papier/75">
-          {FESTIVAL.venue}, {FESTIVAL.city} · Ouverture {FESTIVAL.siteOpens}
-        </p>
-      </header>
-
-      <div
-        aria-hidden
-        className="flag-stripe flex h-1.5 w-full"
-      >
-        <span className="flex-1 bg-vert" />
-        <span className="flex-1 bg-jaune" />
-        <span className="flex-1 bg-rouge" />
-      </div>
-
-      {/* Perforation */}
-      <div className="relative h-5 bg-papier" aria-hidden>
-        <div className="absolute inset-x-4 top-1/2 border-t border-dashed border-bleu/30" />
-        <span className="absolute left-0 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-nuage" />
-        <span className="absolute right-0 top-1/2 size-5 translate-x-1/2 -translate-y-1/2 rounded-full bg-nuage" />
-      </div>
-
-      <div className="px-5 pb-2 pt-1">
-        <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.2em] text-charbon/70">
-          Titulaire
-        </p>
-        <p className="mt-1 font-display text-[clamp(1.55rem,6vw,2.05rem)] font-extrabold uppercase leading-[0.95] text-bleu">
-          {name}
-        </p>
-        <p className="mt-3 inline-flex rounded-full bg-gradient-to-r from-feu/15 to-feu/5 px-3.5 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.14em] text-feu">
-          {typeLabel}
-        </p>
-      </div>
-
-      {/* QR intégré */}
-      <div className="mx-5 mt-4 mb-2 rounded-2xl border border-bleu/12 bg-gradient-to-b from-nuage to-papier p-4">
-        <div className="mx-auto w-fit rounded-xl bg-papier p-2.5 shadow-[0_8px_24px_rgba(0,90,140,0.1)] ring-1 ring-bleu/8">
-          <Image
-            src={qrCode}
-            alt={`QR code ticket ${name}`}
-            width={220}
-            height={220}
-            unoptimized
-            className="h-auto w-[min(58vw,220px)]"
-            priority
+      <div className="relative flex min-h-[168px] overflow-hidden rounded-[1rem] sm:min-h-[196px]">
+        {/* Corps — scène festival */}
+        <div className="relative flex min-w-0 flex-[1.65] flex-col justify-between overflow-hidden bg-gradient-to-br from-bleu-fonce via-bleu to-[#005a94] px-4 py-4 text-papier sm:px-5 sm:py-5">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.14]"
+            style={{
+              backgroundImage:
+                "linear-gradient(135deg, transparent 46%, rgba(255,255,255,0.55) 49%, transparent 52%), linear-gradient(45deg, transparent 46%, rgba(255,255,255,0.35) 49%, transparent 52%)",
+              backgroundSize: "18px 18px",
+            }}
           />
-        </div>
-        <p className="mt-3 text-center font-mono text-[0.65rem] font-bold uppercase tracking-[0.18em] text-bleu">
-          À scanner à l&apos;entrée
-        </p>
-      </div>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-8 -top-10 h-28 w-28 rounded-full bg-feu/35 blur-3xl"
+          />
 
-      <div className="flex items-center justify-between px-5 py-3">
-        <div>
-          <p className="font-mono text-[0.58rem] font-bold uppercase tracking-[0.16em] text-charbon/60">
-            N° ticket
-          </p>
-          <p className="mt-0.5 font-mono text-sm font-bold tracking-wider text-encre">
-            YUNA-{shortId}
+          <div className="relative z-10 flex items-center gap-2.5">
+            <Image
+              src="/brand/yuna-mark.png"
+              alt=""
+              width={36}
+              height={36}
+              className="h-8 w-8 object-contain sm:h-9 sm:w-9"
+              unoptimized
+            />
+            <p className="font-mono text-[0.58rem] font-bold uppercase tracking-[0.22em] text-jaune sm:text-[0.62rem]">
+              YUNA Festival
+            </p>
+          </div>
+
+          <div className="relative z-10 mt-5 sm:mt-6">
+            <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.22em] text-jaune">
+              Billet d&apos;entrée
+            </p>
+            <h2 className="mt-1.5 font-display text-[clamp(1.35rem,5.5vw,2.15rem)] font-extrabold uppercase leading-[0.92] tracking-tight text-papier">
+              {typeLabel}
+            </h2>
+            <p className="mt-2 max-w-[18ch] truncate font-sans text-sm text-papier/80 sm:text-[0.95rem]">
+              {name}
+            </p>
+          </div>
+
+          <p className="relative z-10 mt-4 font-mono text-[0.58rem] font-bold uppercase tracking-[0.14em] text-jaune sm:text-[0.65rem]">
+            {FESTIVAL.datesShort} · {FESTIVAL.venue}
           </p>
         </div>
-        <div className="text-right">
-          <p className="font-mono text-[0.58rem] font-bold uppercase tracking-[0.16em] text-charbon/60">
-            Accès
-          </p>
-          <p className="mt-0.5 font-mono text-sm font-bold uppercase tracking-wide text-vert">
-            {FESTIVAL.freeEntry}
-          </p>
+
+        {/* Perforation */}
+        <div
+          aria-hidden
+          className="relative z-20 w-0 shrink-0 border-l border-dashed border-nuit-profonde/35"
+        >
+          <span className="absolute left-1/2 top-0 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-nuit-profonde" />
+          <span className="absolute bottom-0 left-1/2 size-4 -translate-x-1/2 translate-y-1/2 rounded-full bg-nuit-profonde" />
+        </div>
+
+        {/* Talon */}
+        <div className="relative flex w-[38%] min-w-[118px] flex-col items-center justify-between bg-papier px-2.5 py-3 text-center sm:min-w-[140px] sm:px-3 sm:py-4">
+          <div className="w-full rounded-lg bg-papier p-1.5 ring-1 ring-bleu/10">
+            <Image
+              src={qrCode}
+              alt={`QR code ticket ${name}`}
+              width={160}
+              height={160}
+              unoptimized
+              className="mx-auto h-auto w-full max-w-[112px] sm:max-w-[128px]"
+              priority
+            />
+          </div>
+
+          <div className="mt-2 w-full">
+            <p className="font-display text-[0.72rem] font-extrabold uppercase leading-tight text-bleu sm:text-[0.82rem]">
+              {typeLabel}
+            </p>
+            <p className="mt-0.5 text-[0.62rem] leading-snug text-charbon/75 sm:text-[0.68rem]">
+              {stubHint(registrationType)}
+            </p>
+          </div>
+
+          <div className="mt-2 w-full border-t border-bleu/10 pt-2">
+            <p className="font-mono text-[0.52rem] font-bold uppercase tracking-[0.12em] text-charbon/55">
+              YUNA {FESTIVAL.edition} · {shortId}
+            </p>
+            <p className="mt-0.5 font-mono text-[0.58rem] font-bold uppercase tracking-wide text-vert">
+              {FESTIVAL.freeEntry}
+            </p>
+          </div>
         </div>
       </div>
-
-      <footer className="flex items-center justify-between bg-gradient-to-r from-bleu to-bleu-fonce px-5 py-3.5 text-sm text-papier">
-        <span className="font-bold tracking-wide">
-          Présente ce ticket · QR
-        </span>
-        <span className="font-mono text-xs tracking-wider text-papier/80">
-          Ésaïe 60:1
-        </span>
-      </footer>
     </article>
   );
 }

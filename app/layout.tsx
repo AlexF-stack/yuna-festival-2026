@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Baloo_2, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import {
+  Baloo_2,
+  JetBrains_Mono,
+  Noto_Sans_Hebrew,
+  Space_Grotesk,
+} from "next/font/google";
 
 import { Loader } from "@/components/Loader";
 import { AppChrome } from "@/components/ui/AppChrome";
@@ -24,6 +29,13 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["700"],
   variable: "--font-jetbrains-mono",
+  display: "swap",
+});
+
+const notoHebrew = Noto_Sans_Hebrew({
+  subsets: ["hebrew"],
+  weight: ["500", "700"],
+  variable: "--font-noto-hebrew",
   display: "swap",
 });
 
@@ -80,7 +92,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body
-        className={`${baloo2.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        className={`${baloo2.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${notoHebrew.variable} font-sans antialiased`}
       >
         <a
           href="#contenu"
