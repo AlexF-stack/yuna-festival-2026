@@ -47,7 +47,7 @@ function createEmblem(texture: THREE.Texture) {
 
   // Plusieurs silhouettes superposées donnent une vraie épaisseur au logo
   // sans modifier son dessin officiel.
-  for (let layer = 9; layer >= 1; layer -= 1) {
+  for (let layer = 4; layer >= 1; layer -= 1) {
     const edge = new THREE.Mesh(
       geometry.clone(),
       new THREE.MeshBasicMaterial({
@@ -58,7 +58,7 @@ function createEmblem(texture: THREE.Texture) {
         side: THREE.DoubleSide,
       }),
     );
-    edge.position.z = -layer * 0.045;
+    edge.position.z = -layer * 0.04;
     group.add(edge);
   }
 
@@ -154,6 +154,7 @@ export function FlameAtHomeClient() {
   const recordingRef = useRef(false);
 
   const [cameraOn, setCameraOn] = useState(false);
+  const [cameraBusy, setCameraBusy] = useState(false);
   const [recording, setRecording] = useState(false);
   const [scale, setScale] = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -163,6 +164,7 @@ export function FlameAtHomeClient() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    const videoElement = videoRef.current;
     if (!canvas) return;
     const output = canvas.getContext("2d");
     if (!output) return;
@@ -226,9 +228,6 @@ export function FlameAtHomeClient() {
       if (disposed) return;
       frame = requestAnimationFrame(render);
 
-      if (!dragRef.current && !recordingRef.current) {
-        group.rotation.y += 0.0025;
-      }
       group.scale.setScalar(scaleRef.current);
       group.rotation.z = (rotationRef.current * Math.PI) / 180;
 
@@ -290,6 +289,9 @@ export function FlameAtHomeClient() {
         }
       });
       streamRef.current?.getTracks().forEach((track) => track.stop());
+      if (videoElement) {
+        videoElement.srcObject = null;
+      }
     };
   }, []);
 
@@ -298,8 +300,17 @@ export function FlameAtHomeClient() {
       setHint("La caméra n’est pas disponible sur ce navigateur.");
       return;
     }
+    const video = videoRef.current;
+    if (!video) {
+      setHint("La caméra n’est pas encore prête. Actualise la page.");
+      return;
+    }
+    setCameraBusy(true);
+    setCameraOn(false);
+    setHint("Ouverture de la caméra…");
     try {
       streamRef.current?.getTracks().forEach((track) => track.stop());
+      video.srcObject = null;
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: { ideal: "environment" },
@@ -308,19 +319,28 @@ export function FlameAtHomeClient() {
         },
         audio: false,
       });
-      const video = document.createElement("video");
-      video.srcObject = stream;
-      video.muted = true;
-      video.playsInline = true;
-      await video.play();
       streamRef.current = stream;
-      videoRef.current = video;
+      video.srcObject = stream;
+      await video.play();
+      stream.getVideoTracks()[0]?.addEventListener(
+        "ended",
+        () => {
+          setCameraOn(false);
+          setHint("La caméra a été arrêtée. Appuie pour la relancer.");
+        },
+        { once: true },
+      );
       setCameraOn(true);
       setHint("Glisse l’emblème, ajuste sa taille, puis lance la vidéo.");
     } catch {
+      streamRef.current?.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+      video.srcObject = null;
       setHint(
         "Accès caméra refusé. Autorise la caméra dans ton navigateur et réessaie.",
       );
+    } finally {
+      setCameraBusy(false);
     }
   }
 
@@ -369,6 +389,8 @@ export function FlameAtHomeClient() {
 
   function preferredVideoType() {
     const types = [
+      "video/mp4;codecs=avc1.42E01E",
+      "video/mp4",
       "video/webm;codecs=vp9",
       "video/webm;codecs=vp8",
       "video/webm",
@@ -378,13 +400,25 @@ export function FlameAtHomeClient() {
 
   function startRecording() {
     const canvas = canvasRef.current;
-    if (!canvas || typeof MediaRecorder === "undefined") {
+    if (
+      !canvas ||
+      typeof MediaRecorder === "undefined" ||
+      typeof canvas.captureStream !== "function"
+    ) {
       setHint("L’enregistrement vidéo n’est pas disponible sur ce navigateur.");
       return;
     }
-    const stream = canvas.captureStream(30);
-    const type = preferredVideoType();
-    const recorder = new MediaRecorder(stream, type ? { mimeType: type } : {});
+    let recorder: MediaRecorder;
+    try {
+      const stream = canvas.captureStream(30);
+      const type = preferredVideoType();
+      recorder = new MediaRecorder(stream, type ? { mimeType: type } : {});
+    } catch {
+      setHint(
+        "Ce navigateur ne peut pas enregistrer la scène. Essaie Chrome ou Safari à jour.",
+      );
+      return;
+    }
     chunksRef.current = [];
     recorder.ondataavailable = (event) => {
       if (event.data.size) chunksRef.current.push(event.data);
@@ -434,8 +468,8 @@ export function FlameAtHomeClient() {
 
   function resetPlacement() {
     if (!groupRef.current) return;
-    groupRef.current.position.set(0, -0.45, 0);
-    groupRef.current.rotation.set(-0.08, 0, 0);
+    groupRef.current.position.set(0, -0.15, 0);
+    groupRef.current.rotation.set(0, 0, 0);
     scaleRef.current = 1;
     rotationRef.current = 0;
     setScale(1);
@@ -446,6 +480,14 @@ export function FlameAtHomeClient() {
     <div className="mx-auto grid max-w-[1080px] gap-10 min-[900px]:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.55fr)] min-[900px]:items-start">
       <div className="mx-auto w-full max-w-[520px]">
         <div className="relative overflow-hidden rounded-[2rem] bg-nuit-profonde p-2.5 shadow-[0_30px_80px_rgba(0,40,80,.35)]">
+          <video
+            ref={videoRef}
+            muted
+            playsInline
+            autoPlay
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 top-0 h-px w-px opacity-[0.01]"
+          />
           <canvas
             ref={canvasRef}
             width={OUTPUT_WIDTH}
@@ -482,10 +524,15 @@ export function FlameAtHomeClient() {
         <div className="mt-7 space-y-4">
           <button
             type="button"
+            disabled={cameraBusy}
             onClick={() => void startCamera()}
-            className="btn-cta-flame inline-flex min-h-12 w-full items-center justify-center rounded-full px-7 py-3.5 font-bold text-papier"
+            className="btn-cta-flame inline-flex min-h-12 w-full items-center justify-center rounded-full px-7 py-3.5 font-bold text-papier disabled:opacity-60"
           >
-            {cameraOn ? "Relancer la caméra" : "Activer la caméra"}
+            {cameraBusy
+              ? "Ouverture de la caméra…"
+              : cameraOn
+                ? "Relancer la caméra"
+                : "Activer la caméra"}
           </button>
 
           <label className="block rounded-2xl border border-bleu/12 bg-papier p-4">

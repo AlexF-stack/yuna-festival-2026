@@ -36,13 +36,15 @@ function coverScale(img: HTMLImageElement, diameter: number) {
 export function PhotoFilterClient() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-  const cameraRef = useRef<HTMLInputElement>(null);
+  const cameraVideoRef = useRef<HTMLVideoElement>(null);
+  const cameraStreamRef = useRef<MediaStream | null>(null);
   const frameRef = useRef<HTMLImageElement | null>(null);
   const photoRef = useRef<PhotoState | null>(null);
   const dragRef = useRef<{ x: number; y: number } | null>(null);
 
   const [hasPhoto, setHasPhoto] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [cameraOpen, setCameraOpen] = useState(false);
   const [hint, setHint] = useState<string | null>(null);
   const [scale, setScale] = useState(1);
 
@@ -100,24 +102,107 @@ export function PhotoFilterClient() {
     void paint();
   }, [paint, hasPhoto, scale]);
 
+  useEffect(
+    () => () => {
+      cameraStreamRef.current?.getTracks().forEach((track) => track.stop());
+    },
+    [],
+  );
+
+  function applyPhoto(img: HTMLImageElement) {
+    photoRef.current = {
+      img,
+      offsetX: 0,
+      offsetY: 0,
+      scale: 1,
+    };
+    setScale(1);
+    setHasPhoto(true);
+  }
+
   async function onFile(file: File | null) {
     if (!file || !file.type.startsWith("image/")) return;
     setBusy(true);
     setHint(null);
+    const url = URL.createObjectURL(file);
     try {
-      const url = URL.createObjectURL(file);
       const img = await loadImage(url);
-      photoRef.current = {
-        img,
-        offsetX: 0,
-        offsetY: 0,
-        scale: 1,
-      };
-      setScale(1);
-      setHasPhoto(true);
+      applyPhoto(img);
       await paint();
     } catch {
       setHint("Impossible de lire cette image. Réessaie avec un JPG ou PNG.");
+    } finally {
+      URL.revokeObjectURL(url);
+      setBusy(false);
+    }
+  }
+
+  function closeCamera() {
+    cameraStreamRef.current?.getTracks().forEach((track) => track.stop());
+    cameraStreamRef.current = null;
+    if (cameraVideoRef.current) {
+      cameraVideoRef.current.srcObject = null;
+    }
+    setCameraOpen(false);
+  }
+
+  async function startCamera() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setHint("La caméra n’est pas disponible sur ce navigateur.");
+      return;
+    }
+    setBusy(true);
+    setHint("Autorise la caméra pour prendre ton portrait.");
+    try {
+      closeCamera();
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: { ideal: "user" },
+          width: { ideal: 1280 },
+          height: { ideal: 1280 },
+        },
+        audio: false,
+      });
+      cameraStreamRef.current = stream;
+      setCameraOpen(true);
+      const video = cameraVideoRef.current;
+      if (!video) throw new Error("video");
+      video.srcObject = stream;
+      await video.play();
+      setHint("Cadre ton visage puis appuie sur « Capturer ».");
+    } catch {
+      closeCamera();
+      setHint(
+        "Impossible d’ouvrir la caméra. Vérifie son autorisation dans le navigateur.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function capturePhoto() {
+    const video = cameraVideoRef.current;
+    if (!video?.videoWidth || !video.videoHeight) {
+      setHint("La caméra démarre encore. Réessaie dans un instant.");
+      return;
+    }
+    setBusy(true);
+    try {
+      const snapshot = document.createElement("canvas");
+      snapshot.width = video.videoWidth;
+      snapshot.height = video.videoHeight;
+      const context = snapshot.getContext("2d");
+      if (!context) throw new Error("canvas");
+      context.translate(snapshot.width, 0);
+      context.scale(-1, 1);
+      context.drawImage(video, 0, 0, snapshot.width, snapshot.height);
+      const img = await loadImage(snapshot.toDataURL("image/jpeg", 0.92));
+      applyPhoto(img);
+      closeCamera();
+      setHint("Photo capturée. Glisse-la dans le cercle pour la recadrer.");
+      await paint();
+    } catch {
+      setHint("La capture a échoué. Réessaie ou choisis une photo.");
     } finally {
       setBusy(false);
     }
@@ -252,14 +337,43 @@ export function PhotoFilterClient() {
         className="sr-only"
         onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
       />
-      <input
-        ref={cameraRef}
-        type="file"
-        accept="image/*"
-        capture="user"
-        className="sr-only"
-        onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-      />
+
+      <div
+        className={
+          cameraOpen
+            ? "mt-5 overflow-hidden rounded-[1.5rem] border border-bleu/15 bg-nuit-profonde p-3"
+            : "pointer-events-none h-px w-px overflow-hidden opacity-0"
+        }
+        aria-hidden={!cameraOpen}
+      >
+        <video
+          ref={cameraVideoRef}
+          muted
+          playsInline
+          autoPlay
+          className="aspect-square w-full scale-x-[-1] rounded-[1rem] bg-charbon object-cover"
+        />
+        {cameraOpen ? (
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              disabled={busy}
+              onClick={closeCamera}
+              className="min-h-11 rounded-full border border-papier/40 px-4 text-sm font-bold text-papier"
+            >
+              Annuler
+            </button>
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => void capturePhoto()}
+              className="min-h-11 rounded-full bg-feu px-4 text-sm font-bold text-papier"
+            >
+              Capturer
+            </button>
+          </div>
+        ) : null}
+      </div>
 
       <div className="mt-6 flex flex-col gap-3">
         <div className="grid gap-2 min-[420px]:grid-cols-2">
@@ -274,7 +388,7 @@ export function PhotoFilterClient() {
           <button
             type="button"
             disabled={busy}
-            onClick={() => cameraRef.current?.click()}
+            onClick={() => void startCamera()}
             className="btn-cta-flame inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-sm font-bold text-papier disabled:opacity-60"
           >
             Prendre une photo
