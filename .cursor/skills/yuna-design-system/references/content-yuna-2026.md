@@ -19,7 +19,6 @@ manquante, demander à l'utilisateur plutôt que d'improviser.
 - Accès : zémidjan, taxi, bus
 
 ## Journée du samedi (avant les concerts)
-- 08h–13h : Action sociale & médicale (consultations gratuites, dépistages, dons, assistance aux familles du quartier)
 - 10h–13h : Masterclass VTeam (musiciens et chantres — technique instrumentale, direction de louange, vie d'adorateur)
 - 15h–17h : Masterclass Entrepreneuriat (vision, excellence, royaume dans les affaires)
 

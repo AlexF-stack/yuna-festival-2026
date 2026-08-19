@@ -73,8 +73,8 @@ export const en: Messages = {
   },
   sessions: {
     eyebrow: "Saturday sessions",
-    title: "Workshops & actions",
-    lead: "Medical outreach, VTeam and Entrepreneurship masterclasses — free registration, limited seats for masterclasses.",
+    title: "Masterclasses",
+    lead: "VTeam and Entrepreneurship masterclasses — free registration, limited seats.",
     register: "Register →",
     capacity: "Up to {n} seats",
     free: "Free",
@@ -91,7 +91,7 @@ export const en: Messages = {
   },
   stats: [
     { value: "2", label: "Festival days" },
-    { value: "3", label: "Masterclasses & actions" },
+    { value: "2", label: "Masterclasses" },
     { value: "1", label: "Generation rising" },
   ],
   explore: {
@@ -115,7 +115,7 @@ export const en: Messages = {
       {
         href: "/journee",
         title: "Daytime",
-        description: "Medical outreach, masterclasses and activity hubs.",
+        description: "VTeam and Entrepreneurship masterclasses, plus gospel, art and dance hubs.",
         imageAlt: "Community daytime actions",
       },
       {
@@ -217,7 +217,7 @@ export const en: Messages = {
       eyebrow: "Saturday daytime",
       title: "Impact before the stage",
       lead:
-        "Awakening starts with service. Before the spotlights, YUNA serves the city.",
+        "Before the concerts, Saturday hosts the VTeam and Entrepreneurship masterclasses — plus gospel, art and dance hubs.",
     },
     lieu: {
       eyebrow: "The venue",

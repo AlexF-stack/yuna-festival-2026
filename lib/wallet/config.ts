@@ -28,7 +28,7 @@ export function confirmationUrlFor(registrationId: string): string {
   const base = (
     process.env.NEXT_PUBLIC_SITE_URL ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
-    "https://festivalyuna.com"
+    "https://www.festivalyuna.com"
   ).replace(/\/$/, "");
   return `${base}/confirmation/${registrationId}`;
 }

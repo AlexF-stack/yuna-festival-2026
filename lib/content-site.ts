@@ -55,15 +55,8 @@ export const JOURNEE = {
   eyebrow: "Samedi en journée",
   title: "Impact avant la scène",
   intro:
-    "Le réveil commence par le service. Avant les projecteurs, YUNA touche la ville.",
+    "Avant les concerts, le samedi accueille les masterclass et les pôles d'activités — gospel, art, danse.",
   items: [
-    {
-      id: "medical",
-      time: "08:00 – 13:00",
-      title: "Action sociale & médicale",
-      description:
-        "Consultations médicales gratuites, dépistages, dons et assistance aux familles du quartier de Midombo et environs.",
-    },
     {
       id: "vteam",
       time: "10:00 – 13:00",
@@ -99,7 +92,7 @@ export const SPONSORS = {
   eyebrow: "Partenariat",
   title: "Devenez partenaire du réveil",
   intro:
-    "Associez votre marque à l'événement jeunesse de l'année au Bénin : des milliers de jeunes, deux masterclass, une action médicale et une visibilité nationale et diaspora.",
+    "Associez votre marque à l'événement jeunesse de l'année au Bénin : des milliers de jeunes, deux masterclass et une visibilité nationale et diaspora.",
   tiers: [
     {
       id: "bronze",
@@ -190,7 +183,7 @@ export const PARTNERS_PAGE = {
     },
     {
       title: "Matériel / en nature",
-      text: "Sono, lumière, groupe électrogène, eau, sanitaires, restauration, logistique médicale — à discuter selon vos moyens.",
+      text: "Sono, lumière, groupe électrogène, eau, sanitaires, restauration — à discuter selon vos moyens.",
     },
   ],
   formTitle: "Formulaire de contact",
@@ -349,7 +342,7 @@ export const DONATE = {
     {
       id: "ponctuel",
       title: "Soutien ponctuel",
-      text: "Mobile Money ou virement, une seule fois. Ex. 5 000 FCFA = contribution directe à la sono / l’action médicale du samedi.",
+      text: "Mobile Money ou virement, une seule fois. Ex. 5 000 FCFA = contribution directe à la sono et à la scène du samedi.",
       cta: "Allumer une flamme →",
       href: "#semer",
     },
@@ -378,8 +371,8 @@ export const DONATE = {
       text: "VTeam 10h–13h (musiciens & chantres) + Entrepreneuriat 15h–17h — salles, matériel et places limitées sur inscription QR.",
     },
     {
-      title: "Action médicale 08h–13h",
-      text: "Consultations gratuites, dépistages et dons pour les familles du quartier Midombo le samedi matin — avant même l’ouverture des concerts.",
+      title: "Pôles gospel, art, danse",
+      text: "Espaces d'activités et de scène pour les talents de la génération — avant et pendant les concerts du week-end.",
     },
   ],
   ctaEmail: "Écrire pour soutenir",

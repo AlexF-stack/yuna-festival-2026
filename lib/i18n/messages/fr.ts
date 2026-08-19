@@ -73,8 +73,8 @@ export const fr: Messages = {
   },
   sessions: {
     eyebrow: "Sessions du samedi",
-    title: "Ateliers & actions",
-    lead: "Action médicale, masterclass VTeam et Entrepreneuriat — inscription gratuite, places limitées pour les masterclass.",
+    title: "Masterclass",
+    lead: "Masterclass VTeam et Entrepreneuriat — inscription gratuite, places limitées.",
     register: "S’inscrire →",
     capacity: "Jusqu’à {n} places",
     free: "Gratuit",
@@ -91,7 +91,7 @@ export const fr: Messages = {
   },
   stats: [
     { value: "2", label: "Jours de festival" },
-    { value: "3", label: "Masterclass & actions" },
+    { value: "2", label: "Masterclass" },
     { value: "1", label: "Génération qui se lève" },
   ],
   explore: {
@@ -115,7 +115,7 @@ export const fr: Messages = {
       {
         href: "/journee",
         title: "La journée",
-        description: "Action médicale, masterclass et pôles d'activités.",
+        description: "Masterclass VTeam et Entrepreneuriat, pôles gospel, art, danse.",
         imageAlt: "Actions communautaires en journée",
       },
       {
@@ -217,7 +217,7 @@ export const fr: Messages = {
       eyebrow: "Samedi en journée",
       title: "Impact avant la scène",
       lead:
-        "Le réveil commence par le service. Avant les projecteurs, YUNA touche la ville.",
+        "Avant les concerts, le samedi accueille les masterclass VTeam et Entrepreneuriat — et les pôles gospel, art, danse.",
     },
     lieu: {
       eyebrow: "Le lieu",

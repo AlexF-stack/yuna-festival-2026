@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Devenir partenaire de YUNA | Festival 2026",
     description: PARTNERS_PAGE.lead,
-    url: "https://festivalyuna.com/partenaires",
+    url: "https://www.festivalyuna.com/partenaires",
   },
 };
 

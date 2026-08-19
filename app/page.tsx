@@ -27,7 +27,7 @@ const festivalJsonLd = {
   "@context": "https://schema.org",
   "@type": ["Event", "Festival"],
   name: "YUNA Festival 2026 — Bénin Debout",
-  url: "https://festivalyuna.com/",
+  url: "https://www.festivalyuna.com/",
   startDate: "2026-09-05T18:00:00+01:00",
   endDate: "2026-09-06T22:30:00+01:00",
   eventStatus: "https://schema.org/EventScheduled",
@@ -41,7 +41,7 @@ const festivalJsonLd = {
       addressCountry: "BJ",
     },
   },
-  image: ["https://festivalyuna.com/opengraph-image"],
+  image: ["https://www.festivalyuna.com/opengraph-image"],
   description:
     "YUNA Festival 2026 : Bénin Debout. Une génération non ordinaire se lève. 5–6 septembre 2026, Terrain de Midombo, Cotonou. Entrée libre — line-up dévoilé progressivement.",
   offers: {
@@ -49,13 +49,13 @@ const festivalJsonLd = {
     price: "0",
     priceCurrency: "XOF",
     availability: "https://schema.org/InStock",
-    url: "https://festivalyuna.com/#inscription",
+    url: "https://www.festivalyuna.com/#inscription",
     validFrom: "2026-01-01T00:00:00+01:00",
   },
   organizer: {
     "@type": "Organization",
     name: "Global Impact Ministries",
-    url: "https://festivalyuna.com/",
+    url: "https://www.festivalyuna.com/",
   },
 } as const;
 

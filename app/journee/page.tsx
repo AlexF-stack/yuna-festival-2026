@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { JourneePageContent } from "@/components/sections/JourneePageContent";
 
 const DESCRIPTION =
-  "Samedi en journée : action sociale et médicale gratuite, Masterclass VTeam et Entrepreneuriat, pôles gospel, art, danse — le réveil commence par le service.";
+  "Samedi en journée : Masterclass VTeam et Entrepreneuriat, pôles gospel, art, danse — avant les concerts du soir.";
 
 export const metadata: Metadata = {
   title: "La journée d'impact",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "La journée d'impact | YUNA Festival 2026",
     description: DESCRIPTION,
-    url: "https://festivalyuna.com/journee",
+    url: "https://www.festivalyuna.com/journee",
   },
 };
 

@@ -50,7 +50,7 @@ export type CrmRegistrationPayload = {
 export function siteOrigin(): string {
   return (
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-    "https://festivalyuna.com"
+    "https://www.festivalyuna.com"
   );
 }
 

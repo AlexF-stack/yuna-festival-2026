@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Filtre photo Bénin Debout | YUNA Festival 2026",
     description: DESCRIPTION,
-    url: "https://festivalyuna.com/filtre",
+    url: "https://www.festivalyuna.com/filtre",
   },
 };
 

@@ -22,20 +22,6 @@ export type FestivalSession = {
 
 export const FESTIVAL_SESSIONS: FestivalSession[] = [
   {
-    id: "medical",
-    kind: "action",
-    day: "samedi",
-    time: "08:00 – 13:00",
-    title: "Action sociale & médicale",
-    titleEn: "Social & medical outreach",
-    place: "Terrain de Midombo",
-    placeEn: "Midombo grounds",
-    description:
-      "Consultations gratuites, dépistages, dons et assistance aux familles du quartier.",
-    descriptionEn:
-      "Free consultations, screenings, gifts and support for Midombo families.",
-  },
-  {
     id: "vteam",
     kind: "masterclass",
     day: "samedi",

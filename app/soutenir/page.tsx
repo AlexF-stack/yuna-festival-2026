@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Soutenir | YUNA Festival 2026",
     description: DONATE.pageLead,
-    url: "https://festivalyuna.com/soutenir",
+    url: "https://www.festivalyuna.com/soutenir",
   },
 };
 

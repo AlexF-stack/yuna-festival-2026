@@ -14,8 +14,8 @@ const PREUVES = {
   fr: [
     {
       n: "01",
-      title: "Action médicale",
-      body: "Consultations et dépistages gratuits pour les familles du quartier — la foi en actes avant les concerts.",
+      title: "Masterclass",
+      body: "VTeam pour musiciens et chantres, Entrepreneuriat pour bâtir en jeune non ordinaire — avant les concerts du soir.",
     },
     {
       n: "02",
@@ -31,8 +31,8 @@ const PREUVES = {
   en: [
     {
       n: "01",
-      title: "Medical outreach",
-      body: "Free consultations and screenings for neighbourhood families — faith in action before the concerts.",
+      title: "Masterclasses",
+      body: "VTeam for musicians and worship leaders, Entrepreneurship to build as an extraordinary youth — before the evening concerts.",
     },
     {
       n: "02",

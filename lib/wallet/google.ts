@@ -45,7 +45,7 @@ export async function buildGoogleWalletSaveUrl(
     aud: "google",
     typ: "savetowallet",
     origins: [
-      (process.env.NEXT_PUBLIC_SITE_URL || "https://festivalyuna.com").replace(
+      (process.env.NEXT_PUBLIC_SITE_URL || "https://www.festivalyuna.com").replace(
         /\/$/,
         "",
       ),

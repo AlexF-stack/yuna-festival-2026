@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "La flamme chez toi | YUNA Festival 2026",
     description: DESCRIPTION,
-    url: "https://festivalyuna.com/flamme",
+    url: "https://www.festivalyuna.com/flamme",
   },
 };
 

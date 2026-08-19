@@ -36,15 +36,6 @@ export const FAQ_ITEMS: FaqItem[] = [
       "Use the registration form on this site: VTeam masterclass (musicians & worship leaders, Saturday 10am–1pm) or Entrepreneurship masterclass (Saturday 3–5pm). Show your QR pass at the room entrance.",
   },
   {
-    id: "action-medicale",
-    question: "L'action médicale du samedi matin, c'est pour qui ?",
-    answer:
-      "Ouverte à tous, gratuite : consultations, dépistages et assistance, de 8h à 13h au Terrain de Midombo. Aucune inscription requise.",
-    questionEn: "Who is Saturday’s medical outreach for?",
-    answerEn:
-      "Open to everyone, free: consultations, screenings and care from 8am to 1pm at Midombo Grounds. No registration required.",
-  },
-  {
     id: "acces",
     question: "Comment accéder au Terrain de Midombo ?",
     answer:
@@ -66,10 +57,10 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "benevole",
     question: "Puis-je servir comme bénévole ?",
     answer:
-      "Oui ! Inscris-toi via le formulaire en choisissant « Bénévole » : accueil, sécurité, technique, protocole, action médicale. L'équipe te recontactera sur WhatsApp.",
+      "Oui ! Inscris-toi via le formulaire en choisissant « Bénévole » : accueil, sécurité, technique, protocole. L'équipe te recontactera sur WhatsApp.",
     questionEn: "Can I volunteer?",
     answerEn:
-      "Yes! Register via the form and choose “Volunteer”: welcome, security, tech, protocol, medical outreach. The team will follow up on WhatsApp.",
+      "Yes! Register via the form and choose “Volunteer”: welcome, security, tech, protocol. The team will follow up on WhatsApp.",
   },
   {
     id: "inscription-place",

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/mon-pass" },
   openGraph: {
     title: "Retrouver mon pass | YUNA Festival 2026",
-    url: "https://festivalyuna.com/mon-pass",
+    url: "https://www.festivalyuna.com/mon-pass",
   },
 };
 

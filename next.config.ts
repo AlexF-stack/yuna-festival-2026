@@ -11,21 +11,27 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/",
+        has: [{ type: "host", value: "festivalyuna.com" }],
+        destination: "https://www.festivalyuna.com/",
+        permanent: true,
+      },
+      {
         source: "/:path*",
-        has: [{ type: "host", value: "www.festivalyuna.com" }],
-        destination: "https://festivalyuna.com/:path*",
+        has: [{ type: "host", value: "festivalyuna.com" }],
+        destination: "https://www.festivalyuna.com/:path*",
         permanent: true,
       },
       {
         source: "/:path*",
         has: [{ type: "host", value: "yunafestival.com" }],
-        destination: "https://festivalyuna.com/:path*",
+        destination: "https://www.festivalyuna.com/:path*",
         permanent: true,
       },
       {
         source: "/:path*",
         has: [{ type: "host", value: "www.yunafestival.com" }],
-        destination: "https://festivalyuna.com/:path*",
+        destination: "https://www.festivalyuna.com/:path*",
         permanent: true,
       },
       {

@@ -16,7 +16,7 @@ const SECTIONS: Array<{ title: string; paragraphs: string[] }> = [
   {
     title: "1. Qui est responsable de tes données ?",
     paragraphs: [
-      `Le site festivalyuna.com est édité par ${ORGANIZER.name}, organisateur du YUNA Festival 2026 à Cotonou (Bénin). Pour toute question relative à tes données personnelles, écris-nous à ${SITE_CONTACT.email}.`,
+      `Le site www.festivalyuna.com est édité par ${ORGANIZER.name}, organisateur du YUNA Festival 2026 à Cotonou (Bénin). Pour toute question relative à tes données personnelles, écris-nous à ${SITE_CONTACT.email}.`,
     ],
   },
   {
