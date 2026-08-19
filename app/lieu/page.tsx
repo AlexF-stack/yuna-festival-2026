@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Le lieu — Terrain de Midombo | YUNA Festival 2026",
     description: DESCRIPTION,
-    url: "https://yunafestival.com/lieu",
+    url: "https://festivalyuna.com/lieu",
   },
 };
 

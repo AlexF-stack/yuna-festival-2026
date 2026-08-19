@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/confirmation/", "/staff/", "/mon-pass", "/lab/"],
       },
     ],
-    sitemap: "https://yunafestival.com/sitemap.xml",
+    sitemap: "https://festivalyuna.com/sitemap.xml",
   };
 }

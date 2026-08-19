@@ -11,6 +11,24 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.festivalyuna.com" }],
+        destination: "https://festivalyuna.com/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "yunafestival.com" }],
+        destination: "https://festivalyuna.com/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.yunafestival.com" }],
+        destination: "https://festivalyuna.com/:path*",
+        permanent: true,
+      },
+      {
         source: "/don",
         destination: "/soutenir",
         permanent: true,

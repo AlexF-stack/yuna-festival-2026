@@ -317,17 +317,56 @@ export function PhotoFilterClient() {
 
   return (
     <div className="mx-auto w-full max-w-[560px]">
-      <div className="overflow-hidden rounded-[1.5rem] bg-nuit-profonde p-3 shadow-[0_28px_70px_rgba(0,40,80,0.28)] sm:p-4">
+      <div className="mb-3 flex items-center justify-between px-1 font-mono text-[0.62rem] font-bold uppercase tracking-[0.14em] text-charbon/60">
+        <span>1 · Ajoute ta photo</span>
+        <span>2 · Recadre et partage</span>
+      </div>
+
+      <div className="relative overflow-hidden rounded-[1.35rem] bg-nuit-profonde p-2.5 shadow-[0_28px_70px_rgba(0,40,80,0.28)] min-[480px]:rounded-[1.5rem] min-[480px]:p-4">
         <canvas
           ref={canvasRef}
           width={SIZE}
           height={SIZE}
-          className="aspect-square w-full touch-none rounded-[1.1rem] bg-bleu"
+          className={`aspect-square w-full touch-none rounded-[1rem] bg-bleu min-[480px]:rounded-[1.1rem] ${
+            cameraOpen ? "invisible" : ""
+          }`}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
         />
+        <video
+          ref={cameraVideoRef}
+          muted
+          playsInline
+          autoPlay
+          className={
+            cameraOpen
+              ? "absolute inset-2.5 size-[calc(100%-1.25rem)] scale-x-[-1] rounded-[1rem] bg-charbon object-cover min-[480px]:inset-4 min-[480px]:size-[calc(100%-2rem)]"
+              : "pointer-events-none absolute left-0 top-0 h-px w-px opacity-0"
+          }
+          aria-hidden={!cameraOpen}
+        />
+        {cameraOpen ? (
+          <div className="absolute inset-x-5 bottom-5 grid grid-cols-2 gap-2 rounded-2xl bg-nuit-profonde/80 p-2 backdrop-blur-md min-[480px]:inset-x-8 min-[480px]:bottom-8">
+            <button
+              type="button"
+              disabled={busy}
+              onClick={closeCamera}
+              className="min-h-11 rounded-full border border-papier/45 px-3 text-sm font-bold text-papier"
+            >
+              Annuler
+            </button>
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => void capturePhoto()}
+              className="min-h-11 rounded-full bg-feu px-3 text-sm font-bold text-papier"
+            >
+              Capturer
+            </button>
+          </div>
+        ) : null}
       </div>
 
       <input
@@ -338,50 +377,14 @@ export function PhotoFilterClient() {
         onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
       />
 
-      <div
-        className={
-          cameraOpen
-            ? "mt-5 overflow-hidden rounded-[1.5rem] border border-bleu/15 bg-nuit-profonde p-3"
-            : "pointer-events-none h-px w-px overflow-hidden opacity-0"
-        }
-        aria-hidden={!cameraOpen}
-      >
-        <video
-          ref={cameraVideoRef}
-          muted
-          playsInline
-          autoPlay
-          className="aspect-square w-full scale-x-[-1] rounded-[1rem] bg-charbon object-cover"
-        />
-        {cameraOpen ? (
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              disabled={busy}
-              onClick={closeCamera}
-              className="min-h-11 rounded-full border border-papier/40 px-4 text-sm font-bold text-papier"
-            >
-              Annuler
-            </button>
-            <button
-              type="button"
-              disabled={busy}
-              onClick={() => void capturePhoto()}
-              className="min-h-11 rounded-full bg-feu px-4 text-sm font-bold text-papier"
-            >
-              Capturer
-            </button>
-          </div>
-        ) : null}
-      </div>
-
-      <div className="mt-6 flex flex-col gap-3">
-        <div className="grid gap-2 min-[420px]:grid-cols-2">
+      <div className="mt-4 flex flex-col gap-3 min-[480px]:mt-6">
+        {!cameraOpen ? (
+        <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
             disabled={busy}
             onClick={() => fileRef.current?.click()}
-            className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-feu bg-transparent px-6 py-3 text-sm font-bold text-feu disabled:opacity-60"
+            className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-feu bg-transparent px-3 py-3 text-center text-sm font-bold leading-tight text-feu disabled:opacity-60 min-[480px]:px-6"
           >
             {hasPhoto ? "Changer la photo" : "Choisir une photo"}
           </button>
@@ -389,11 +392,12 @@ export function PhotoFilterClient() {
             type="button"
             disabled={busy}
             onClick={() => void startCamera()}
-            className="btn-cta-flame inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-sm font-bold text-papier disabled:opacity-60"
+            className="btn-cta-flame inline-flex min-h-12 items-center justify-center rounded-full px-3 py-3 text-center text-sm font-bold leading-tight text-papier disabled:opacity-60 min-[480px]:px-6"
           >
             Prendre une photo
           </button>
         </div>
+        ) : null}
 
         {hasPhoto ? (
           <label className="block rounded-2xl border border-bleu/12 bg-papier px-4 py-3">
@@ -415,7 +419,7 @@ export function PhotoFilterClient() {
           </label>
         ) : null}
 
-        <div className="grid gap-2 min-[420px]:grid-cols-2">
+        <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
             disabled={busy || !hasPhoto}

@@ -29,7 +29,7 @@ export default function MentionsLegalesPage() {
             Éditeur du site
           </h2>
           <p className="mt-3 leading-relaxed text-charbon">
-            Le site yunafestival.com est édité par {ORGANIZER.name},
+            Le site festivalyuna.com est édité par {ORGANIZER.name},
             organisateur du {FESTIVAL.brandFull} — {FESTIVAL.theme}, qui se
             tient les {FESTIVAL.datesShort} au Terrain de Midombo,{" "}
             {FESTIVAL.city}, {FESTIVAL.country}.

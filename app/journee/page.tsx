@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "La journée d'impact | YUNA Festival 2026",
     description: DESCRIPTION,
-    url: "https://yunafestival.com/journee",
+    url: "https://festivalyuna.com/journee",
   },
 };
 

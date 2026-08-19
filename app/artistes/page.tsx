@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Line-up & artistes | YUNA Festival 2026",
     description: DESCRIPTION,
-    url: "https://yunafestival.com/artistes",
+    url: "https://festivalyuna.com/artistes",
   },
 };
 

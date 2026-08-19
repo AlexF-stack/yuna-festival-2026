@@ -42,6 +42,9 @@ const CARD_MEDIA: Record<
  */
 export function ExploreSections() {
   const t = useMessages();
+  const cards = t.explore.cards.filter(
+    (card) => card.href !== "/filtre" && card.href !== "/flamme",
+  );
 
   return (
     <SectionShell id="explorer" labelledBy="explorer-title" tone="papier">
@@ -56,7 +59,7 @@ export function ExploreSections() {
         />
       </Reveal>
       <RevealGroup className="mt-10 grid grid-cols-1 gap-4 min-[560px]:grid-cols-2 min-[1000px]:grid-cols-3">
-        {t.explore.cards.map((card, i) => {
+        {cards.map((card, i) => {
           const media = CARD_MEDIA[card.href] ?? {
             image: "/media/crowd.webp",
           };

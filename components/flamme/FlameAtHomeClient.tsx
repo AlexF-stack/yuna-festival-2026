@@ -477,9 +477,9 @@ export function FlameAtHomeClient() {
   }
 
   return (
-    <div className="mx-auto grid max-w-[1080px] gap-10 min-[900px]:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.55fr)] min-[900px]:items-start">
-      <div className="mx-auto w-full max-w-[520px]">
-        <div className="relative overflow-hidden rounded-[2rem] bg-nuit-profonde p-2.5 shadow-[0_30px_80px_rgba(0,40,80,.35)]">
+    <div className="mx-auto grid max-w-[1080px] gap-5 min-[900px]:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.55fr)] min-[900px]:items-start min-[900px]:gap-10">
+      <div className="mx-auto w-full max-w-[min(100%,calc(64svh*9/16))] min-[900px]:max-w-[520px]">
+        <div className="relative overflow-hidden rounded-[1.4rem] bg-nuit-profonde p-2 shadow-[0_24px_60px_rgba(0,40,80,.3)] min-[480px]:rounded-[2rem] min-[480px]:p-2.5">
           <video
             ref={videoRef}
             muted
@@ -498,6 +498,18 @@ export function FlameAtHomeClient() {
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
           />
+          {!cameraOn ? (
+            <div className="absolute inset-x-6 top-24 min-[900px]:hidden">
+              <button
+                type="button"
+                disabled={cameraBusy}
+                onClick={() => void startCamera()}
+                className="btn-cta-flame inline-flex min-h-12 w-full items-center justify-center rounded-full px-5 py-3 text-sm font-bold text-papier shadow-lg disabled:opacity-60"
+              >
+                {cameraBusy ? "Ouverture de la caméra…" : "Activer la caméra"}
+              </button>
+            </div>
+          ) : null}
           {recording ? (
             <span className="absolute left-6 top-6 flex items-center gap-2 rounded-full bg-nuit-profonde/75 px-3 py-2 font-mono text-xs font-bold uppercase tracking-wider text-papier backdrop-blur">
               <span className="size-2 animate-pulse rounded-full bg-rouge" />
@@ -508,25 +520,29 @@ export function FlameAtHomeClient() {
       </div>
 
       <div className="min-[900px]:sticky min-[900px]:top-28">
-        <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu">
-          Expérience caméra
-        </p>
-        <h2 className="mt-3 font-display text-[clamp(2rem,5vw,3.2rem)] font-extrabold uppercase leading-[0.98] text-bleu">
-          Pose l’emblème YUNA.{" "}
-          <span className="text-feu">Fais tourner.</span>
-        </h2>
-        <p className="mt-4 leading-relaxed text-charbon">
-          Utilise la caméra arrière, place l’emblème dans ton salon, ta chambre
-          ou ton église, puis enregistre une vidéo verticale prête pour tes
-          réseaux.
-        </p>
+        <div className="hidden min-[900px]:block">
+          <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu">
+            Expérience caméra
+          </p>
+          <h2 className="mt-3 font-display text-[clamp(2rem,5vw,3.2rem)] font-extrabold uppercase leading-[0.98] text-bleu">
+            Pose l’emblème YUNA.{" "}
+            <span className="text-feu">Fais tourner.</span>
+          </h2>
+          <p className="mt-4 leading-relaxed text-charbon">
+            Utilise la caméra arrière, place l’emblème dans ton salon, ta
+            chambre ou ton église, puis enregistre une vidéo verticale prête
+            pour tes réseaux.
+          </p>
+        </div>
 
-        <div className="mt-7 space-y-4">
+        <div className="space-y-3 min-[900px]:mt-7 min-[900px]:space-y-4">
           <button
             type="button"
             disabled={cameraBusy}
             onClick={() => void startCamera()}
-            className="btn-cta-flame inline-flex min-h-12 w-full items-center justify-center rounded-full px-7 py-3.5 font-bold text-papier disabled:opacity-60"
+            className={`btn-cta-flame min-h-12 w-full items-center justify-center rounded-full px-7 py-3.5 font-bold text-papier disabled:opacity-60 ${
+              cameraOn ? "inline-flex" : "hidden min-[900px]:inline-flex"
+            }`}
           >
             {cameraBusy
               ? "Ouverture de la caméra…"
@@ -535,9 +551,10 @@ export function FlameAtHomeClient() {
                 : "Activer la caméra"}
           </button>
 
-          <label className="block rounded-2xl border border-bleu/12 bg-papier p-4">
+          <div className="grid grid-cols-2 gap-2 min-[900px]:grid-cols-1 min-[900px]:gap-4">
+          <label className="block rounded-2xl border border-bleu/12 bg-papier p-3 min-[480px]:p-4">
             <span className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.15em] text-charbon/70">
-              Taille de l’emblème
+              Taille
             </span>
             <input
               type="range"
@@ -554,7 +571,7 @@ export function FlameAtHomeClient() {
             />
           </label>
 
-          <label className="block rounded-2xl border border-bleu/12 bg-papier p-4">
+          <label className="block rounded-2xl border border-bleu/12 bg-papier p-3 min-[480px]:p-4">
             <span className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.15em] text-charbon/70">
               Inclinaison
             </span>
@@ -572,6 +589,7 @@ export function FlameAtHomeClient() {
               className="mt-3 w-full accent-bleu"
             />
           </label>
+          </div>
 
           <button
             type="button"
@@ -601,7 +619,7 @@ export function FlameAtHomeClient() {
           )}
         </div>
 
-        <p className="mt-5 rounded-2xl bg-logo-feu-soft px-4 py-3 text-sm leading-relaxed text-charbon">
+        <p className="mt-3 rounded-2xl bg-logo-feu-soft px-4 py-3 text-sm leading-relaxed text-charbon min-[900px]:mt-5">
           {hint}
         </p>
         <p className="mt-3 text-xs leading-relaxed text-charbon/60">
