@@ -16,27 +16,11 @@ export type FestivalSession = {
   descriptionEn: string;
   speakers?: string[];
   /** Lien préselection type inscription */
-  registerType?: "pass" | "masterclass_vteam" | "masterclass_entrepreneuriat" | "benevole";
+  registerType?: "pass" | "masterclass_entrepreneuriat" | "benevole";
   capacity?: number;
 };
 
 export const FESTIVAL_SESSIONS: FestivalSession[] = [
-  {
-    id: "vteam",
-    kind: "masterclass",
-    day: "samedi",
-    time: "10:00 – 13:00",
-    title: "Masterclass VTeam",
-    titleEn: "VTeam Masterclass",
-    place: "Espace masterclass",
-    placeEn: "Masterclass space",
-    description:
-      "Musiciens & chantres : technique instrumentale, direction de louange, vie d'adorateur.",
-    descriptionEn:
-      "Musicians & worship leaders: instrument technique, leading worship, the worshipper’s life.",
-    registerType: "masterclass_vteam",
-    capacity: 80,
-  },
   {
     id: "entrepreneuriat",
     kind: "masterclass",

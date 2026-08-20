@@ -15,7 +15,7 @@ const PREUVES = {
     {
       n: "01",
       title: "Masterclass",
-      body: "VTeam pour musiciens et chantres, Entrepreneuriat pour bâtir en jeune non ordinaire. Avant les concerts du soir.",
+      body: "Entrepreneuriat pour bâtir en jeune non ordinaire. Avant les concerts du soir.",
     },
     {
       n: "02",
@@ -25,14 +25,14 @@ const PREUVES = {
     {
       n: "03",
       title: "Bénin Debout",
-      body: `${FESTIVAL.theme} · ${FESTIVAL.datesShort} · ${FESTIVAL.venue}. Entrée libre, génération non ordinaire.`,
+      body: `${FESTIVAL.theme} · ${FESTIVAL.datesShort} · ${FESTIVAL.locationLine}. Entrée libre, génération non ordinaire.`,
     },
   ],
   en: [
     {
       n: "01",
       title: "Masterclasses",
-      body: "VTeam for musicians and worship leaders, Entrepreneurship to build as an extraordinary youth. Before the evening concerts.",
+      body: "Entrepreneurship to build as an extraordinary youth. Before the evening concerts.",
     },
     {
       n: "02",
@@ -42,7 +42,7 @@ const PREUVES = {
     {
       n: "03",
       title: "Bénin Debout",
-      body: `${FESTIVAL.theme} · ${FESTIVAL.datesShort} · ${FESTIVAL.venue}. Free entry, an extraordinary generation.`,
+      body: `${FESTIVAL.theme} · ${FESTIVAL.datesShort} · ${FESTIVAL.locationLine}. Free entry, an extraordinary generation.`,
     },
   ],
 } as const;

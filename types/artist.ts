@@ -6,6 +6,7 @@ export type Artist = {
   is_revealed: boolean;
   order: number;
   bio_short: string | null;
+  portrait_url: string | null;
 };
 
 /** Vue publique : jamais de nom/bio si non révélé. */
@@ -18,6 +19,7 @@ export type PublicArtist = {
   name: string | null;
   role: string | null;
   bio_short: string | null;
+  portrait_url: string | null;
 };
 
 export function toPublicArtist(artist: Artist): PublicArtist {
@@ -30,6 +32,7 @@ export function toPublicArtist(artist: Artist): PublicArtist {
       name: null,
       role: null,
       bio_short: null,
+      portrait_url: null,
     };
   }
   return {
@@ -40,5 +43,6 @@ export function toPublicArtist(artist: Artist): PublicArtist {
     name: artist.name,
     role: artist.role,
     bio_short: artist.bio_short,
+    portrait_url: artist.portrait_url,
   };
 }

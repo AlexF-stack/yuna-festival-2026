@@ -9,7 +9,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { FESTIVAL } from "@/lib/festival";
 import {
-  isRegistrationType,
+  isOpenRegistrationType,
   REGISTRATION_TYPES,
   type RegistrationType,
 } from "@/lib/registration-types";
@@ -58,7 +58,7 @@ export function Register() {
 
   useEffect(() => {
     const type = searchParams.get("type");
-    if (type && isRegistrationType(type)) {
+    if (type && isOpenRegistrationType(type)) {
       setRegistrationType(type);
     }
   }, [searchParams]);

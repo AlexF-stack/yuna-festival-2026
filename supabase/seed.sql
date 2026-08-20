@@ -1,41 +1,42 @@
--- Seed line-up YUNA 2026 (HTML / meta actuels)
--- Headliner : Derek Jones (tête d'affiche · Côte d'Ivoire / VTeam)
+-- Seed line-up YUNA 2026 — affiches officielles + artistes déjà au programme.
+-- Tête d'affiche internationale (Joe Mettle) : à révéler séparément.
 
 truncate table public.artists cascade;
 
-insert into public.artists (name, role, is_headliner, "order", bio_short) values
+insert into public.artists (name, role, is_headliner, is_revealed, "order", bio_short, portrait_url) values
   (
-    'Derek Jones',
-    'Adoration · Côte d''Ivoire',
+    'Valère Kouton',
+    'Chantre · Bénin',
+    false,
     true,
-    1,
-    'Tête d''affiche — adoration avec la VTeam.'
+    10,
+    'Louange et adoration. Moment fort pour les fils et filles du Royaume.',
+    '/media/artists/valere-kouton.png'
   ),
   (
-    'Simiane Brahi Tatu',
-    'Adoration',
+    'Simiane Tatu',
+    'Chantre · Adoration',
     false,
-    2,
-    'Temps fort d''adoration.'
+    true,
+    20,
+    'Temps fort d''adoration. Louange et impactation divine.',
+    '/media/artists/simiane-tatu.png'
   ),
   (
-    'David Okit',
-    'Artiste · RDC / Belgique',
+    'Dany Kasongo',
+    'Chantre',
     false,
-    3,
-    'Louange et présence scénique.'
+    true,
+    30,
+    'Louange, adoration et présence scénique pour la génération.',
+    '/media/artists/dany-kasongo.png'
   ),
   (
-    'Serviteur Pierre',
-    'Artiste · France',
+    'Joe Mettle',
+    'Tête d''affiche · Ghana',
+    true,
     false,
-    4,
-    'Ministère de louange.'
-  ),
-  (
-    'Exo Éclats',
-    'Groupe · International',
-    false,
-    5,
-    'Énergie live et adoration collective.'
+    100,
+    null,
+    null
   );

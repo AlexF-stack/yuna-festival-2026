@@ -203,7 +203,7 @@ export function DonatePageContent() {
                 {DONATE.seedLead}
               </p>
               <p className="mt-8 font-mono text-[0.65rem] font-bold uppercase tracking-[0.18em] text-ivoire-froid/45">
-                {FESTIVAL.venue} · {FESTIVAL.city} · entrée libre
+                {FESTIVAL.locationLine} · entrée libre
               </p>
 
               {/* Intensité visuelle — barres de braise */}
@@ -442,7 +442,7 @@ export function DonatePageContent() {
           </ul>
 
           <p className="mt-12 text-center text-sm text-charbon/80">
-            {FESTIVAL.datesShort} · {FESTIVAL.venue}, {FESTIVAL.city}
+            {FESTIVAL.datesShort} · {FESTIVAL.locationFull}
           </p>
         </div>
       </section>

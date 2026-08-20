@@ -114,7 +114,7 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
           </div>
 
           <p className="relative z-10 mt-3 font-mono text-[0.55rem] font-bold uppercase tracking-[0.12em] text-jaune sm:text-[0.6rem]">
-            {FESTIVAL.datesShort} · Midombo
+            {FESTIVAL.datesShort} · {FESTIVAL.locationLine}
           </p>
         </div>
 

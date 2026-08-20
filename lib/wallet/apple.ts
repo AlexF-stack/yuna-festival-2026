@@ -99,7 +99,7 @@ export async function buildAppleWalletPass(
     {
       key: "venue",
       label: "LIEU",
-      value: `${FESTIVAL.venue}, ${FESTIVAL.city}`,
+      value: `${FESTIVAL.locationLine}`,
     },
   );
   pass.backFields.push(

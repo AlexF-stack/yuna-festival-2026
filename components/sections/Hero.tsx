@@ -82,7 +82,7 @@ export function Hero({ eventStartIso }: HeroProps) {
             <div>
               <dt className="sr-only">Lieu</dt>
               <dd>
-                {FESTIVAL.venue} – {FESTIVAL.city}
+                {FESTIVAL.locationLine}
               </dd>
             </div>
             <div>

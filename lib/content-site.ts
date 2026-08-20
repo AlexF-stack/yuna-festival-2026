@@ -55,15 +55,8 @@ export const JOURNEE = {
   eyebrow: "Samedi en journée",
   title: "Impact avant la scène",
   intro:
-    "Avant les concerts, le samedi accueille les masterclass et les pôles d'activités : gospel, art, danse.",
+    "Avant les concerts, le samedi accueille la masterclass et les pôles d'activités : gospel, art, danse.",
   items: [
-    {
-      id: "vteam",
-      time: "10:00 – 13:00",
-      title: "Masterclass VTeam",
-      description:
-        "Pour musiciens et chantres : technique instrumentale, direction de louange, vie d'adorateur.",
-    },
     {
       id: "entrepreneuriat",
       time: "15:00 – 17:00",
@@ -78,7 +71,7 @@ export const VENUE = {
   eyebrow: "Le lieu",
   title: "Terrain de Midombo",
   intro:
-    "Un espace ouvert au cœur de la ville, accessible à tous. Entrée libre. Le festival vient à la rencontre de la jeunesse, là où elle vit.",
+    "Quartier Midombo en Cotonou. Un espace ouvert, accessible à tous. Entrée libre. Le festival vient à la rencontre de la jeunesse, là où elle vit.",
   amenities: [
     "Entrée gratuite, ouverte à tous",
     "Ouverture du site à 16h00 chaque soir, concerts dès 18h",
@@ -92,7 +85,7 @@ export const SPONSORS = {
   eyebrow: "Partenariat",
   title: "Devenez partenaire du réveil",
   intro:
-    "Associez votre marque à l'événement jeunesse de l'année au Bénin : des milliers de jeunes, deux masterclass et une visibilité nationale et diaspora.",
+    "Associez votre marque à l'événement jeunesse de l'année au Bénin : des milliers de jeunes, une masterclass et une visibilité nationale et diaspora.",
   tiers: [
     {
       id: "bronze",
@@ -282,7 +275,7 @@ export const POLES = [
     id: "formation",
     title: "Masterclass",
     description:
-      "VTeam (musiciens & chantres) et Entrepreneuriat. Exceller sans quitter le Royaume.",
+      "Entrepreneuriat : vision, excellence et royaume dans les affaires. Exceller sans quitter le Royaume.",
     accent: "bleu" as const,
     image: "/media/pole-masterclass.webp",
     objectPosition: "center 40%",
@@ -367,8 +360,8 @@ export const DONATE = {
       text: "Location sono & lumières, groupe électrogène, sécurité du terrain, eau et sanitaires pour 2 soirées (sam. 16h–23h / dim. 16h–22h30). Entrée libre pour tout le public.",
     },
     {
-      title: "2 masterclass samedi",
-      text: "VTeam 10h–13h (musiciens & chantres) + Entrepreneuriat 15h–17h. Salles, matériel et places limitées sur inscription QR.",
+      title: "Masterclass Entrepreneuriat",
+      text: "Samedi 15h–17h. Salle, matériel et places limitées sur inscription QR.",
     },
     {
       title: "Pôles gospel, art, danse",

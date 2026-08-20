@@ -56,9 +56,9 @@ export const fr: Messages = {
     verseRef: "Ésaïe 60:1",
     ctaPrimary: "C’est gratuit, je prends ma place",
     ctaSecondary: "Voir la journée",
-    meta: "5–6 septembre 2026 · Terrain de Midombo, Cotonou",
+    meta: "5–6 septembre 2026 · Midombo en Cotonou",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "5–6 septembre 2026 · Terrain de Midombo, Cotonou · Entrée libre",
+    venueLine: "5–6 septembre 2026 · Midombo en Cotonou · Entrée libre",
   },
   registerExtras: {
     addGuest: "+ Ajouter un pass pour quelqu’un d’autre",
@@ -74,7 +74,7 @@ export const fr: Messages = {
   sessions: {
     eyebrow: "Sessions du samedi",
     title: "Masterclass",
-    lead: "Masterclass VTeam et Entrepreneuriat. Inscription gratuite, places limitées.",
+    lead: "Masterclass Entrepreneuriat. Inscription gratuite, places limitées.",
     register: "S’inscrire →",
     capacity: "Jusqu’à {n} places",
     free: "Gratuit",
@@ -91,7 +91,7 @@ export const fr: Messages = {
   },
   stats: [
     { value: "2", label: "Jours de festival" },
-    { value: "2", label: "Masterclass" },
+    { value: "1", label: "Masterclass" },
     { value: "1", label: "Génération qui se lève" },
   ],
   explore: {
@@ -115,7 +115,7 @@ export const fr: Messages = {
       {
         href: "/journee",
         title: "La journée",
-        description: "Masterclass VTeam et Entrepreneuriat, pôles gospel, art, danse.",
+        description: "Masterclass Entrepreneuriat, pôles gospel, art, danse.",
         imageAlt: "Actions communautaires en journée",
       },
       {
@@ -144,7 +144,7 @@ export const fr: Messages = {
     support:
       "Une génération non ordinaire se lève. Joseph. Daniel. David. À toi maintenant.",
     venue:
-      "Terrain de Midombo, Cotonou. Entrée libre. Garde la date, génère ton pass.",
+      "Midombo en Cotonou. Entrée libre. Garde la date, génère ton pass.",
   },
   register: {
     eyebrow: "Inscription",
@@ -205,7 +205,7 @@ export const fr: Messages = {
       eyebrow: "Scènes & adoration",
       title: "Le line-up",
       lead:
-        "Adoration, louange et scènes fortes. Le line-up 2026 se dévoile progressivement. Reste connecté, les annonces arrivent.",
+        "Adoration, louange et scènes fortes. Valère Kouton, Simiane Tatu, Dany Kasongo déjà dévoilés. Le reste arrive progressivement.",
     },
     vision: {
       eyebrow: "La vision",
@@ -217,13 +217,13 @@ export const fr: Messages = {
       eyebrow: "Samedi en journée",
       title: "Impact avant la scène",
       lead:
-        "Avant les concerts, le samedi accueille les masterclass VTeam et Entrepreneuriat, plus les pôles gospel, art et danse.",
+        "Avant les concerts, le samedi accueille la Masterclass Entrepreneuriat, plus les pôles gospel, art et danse.",
     },
     lieu: {
       eyebrow: "Le lieu",
       title: "Terrain de Midombo",
       lead:
-        "Un espace ouvert au cœur de Cotonou, accessible à tous. Entrée libre.",
+        "Terrain de Midombo, quartier Midombo en Cotonou. Entrée libre, accessible à tous.",
     },
     boutique: {
       eyebrow: "Boutique",

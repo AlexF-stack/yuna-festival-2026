@@ -24,8 +24,13 @@ export const FESTIVAL = {
   datesShort: "5–6 septembre 2026",
   datesHero: "5–6 SEP · 2026",
   venue: "Terrain de Midombo",
+  venueArea: "Midombo",
   city: "Cotonou",
   country: "Bénin",
+  /** Libellé court public */
+  locationLine: "Midombo en Cotonou",
+  /** Libellé formel SEO / meta */
+  locationFull: "Terrain de Midombo en Cotonou",
   freeEntry: "Entrée libre",
   tagline: "Une génération non ordinaire se lève.",
   siteOpens: "16h00",
@@ -39,7 +44,7 @@ export const HERO_COPY = {
   titleLine2: "DEBOUT",
   support:
     "Une génération non ordinaire se lève. Joseph. Daniel. David. À toi maintenant.",
-  meta: `${FESTIVAL.datesShort} · ${FESTIVAL.venue}, ${FESTIVAL.city}`,
+  meta: `${FESTIVAL.datesShort} · ${FESTIVAL.locationFull}`,
   verse:
     "« Lève-toi, sois éclairée, car ta lumière arrive, et la gloire de l'Éternel se lève sur toi. »",
   verseRef: "Ésaïe 60:1",
@@ -73,6 +78,6 @@ export const FOOTER_LINKS = [
 
 export const EVENT_STATS = [
   { value: "2", label: "Jours de festival" },
-  { value: "3", label: "Masterclass & actions" },
+  { value: "1", label: "Masterclass" },
   { value: "1", label: "Génération qui se lève" },
 ] as const;

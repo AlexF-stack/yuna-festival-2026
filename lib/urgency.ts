@@ -7,7 +7,6 @@ export const PREORDER_DEADLINE_ISO = "2026-09-01T23:59:59+01:00";
 
 /** Capacité indicative masterclass (places limitées, pas de jauge DB encore). */
 export const MASTERCLASS_CAPACITY = {
-  masterclass_vteam: 80,
   masterclass_entrepreneuriat: 60,
 } as const;
 

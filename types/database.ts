@@ -18,6 +18,7 @@ type ArtistsTable = {
     is_revealed: boolean;
     order: number;
     bio_short: string | null;
+    portrait_url: string | null;
     created_at: string;
   };
   Insert: {
@@ -28,6 +29,7 @@ type ArtistsTable = {
     is_revealed?: boolean;
     order: number;
     bio_short?: string | null;
+    portrait_url?: string | null;
     created_at?: string;
   };
   Update: {
@@ -38,6 +40,7 @@ type ArtistsTable = {
     is_revealed?: boolean;
     order?: number;
     bio_short?: string | null;
+    portrait_url?: string | null;
     created_at?: string;
   };
   Relationships: [];

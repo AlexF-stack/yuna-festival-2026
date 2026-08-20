@@ -8,7 +8,7 @@ export function getGoogleCalendarUrl(): string {
     dates: "20260905T180000/20260906T223000",
     ctz: "Africa/Porto-Novo",
     details: `${FESTIVAL.tagline} ${HERO_COPY.verseRef}`,
-    location: `${FESTIVAL.venue}, ${FESTIVAL.city}, ${FESTIVAL.country}`,
+    location: `${FESTIVAL.locationFull}, ${FESTIVAL.country}`,
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
@@ -16,7 +16,7 @@ export function getGoogleCalendarUrl(): string {
 export function getShareData(url: string) {
   return {
     title: `${FESTIVAL.brandFull} ${FESTIVAL.edition}, ${FESTIVAL.theme}`,
-    text: `${FESTIVAL.tagline} ${FESTIVAL.datesShort} · ${FESTIVAL.venue}, ${FESTIVAL.city}. ${FESTIVAL.freeEntry}.`,
+    text: `${FESTIVAL.tagline} ${FESTIVAL.datesShort} · ${FESTIVAL.locationLine}. ${FESTIVAL.freeEntry}.`,
     url,
   };
 }

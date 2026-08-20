@@ -89,7 +89,7 @@ export function PassTicket({
           </div>
 
           <p className="relative z-10 mt-4 font-mono text-[0.58rem] font-bold uppercase tracking-[0.14em] text-jaune sm:text-[0.65rem]">
-            {FESTIVAL.datesShort} · {FESTIVAL.venue}
+            {FESTIVAL.datesShort} · {FESTIVAL.locationLine}
           </p>
         </div>
 

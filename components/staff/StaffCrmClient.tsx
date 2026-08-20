@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
+  ALL_KNOWN_REGISTRATION_TYPES,
   REGISTRATION_TYPE_LABELS,
-  REGISTRATION_TYPES,
   isRegistrationType,
 } from "@/lib/registration-types";
 
@@ -412,7 +412,7 @@ export function StaffCrmClient() {
               aria-label="Type de ticket"
             >
               <option value="">Tous types</option>
-              {REGISTRATION_TYPES.map((t) => (
+              {ALL_KNOWN_REGISTRATION_TYPES.map((t) => (
                 <option key={t.value} value={t.value}>
                   {t.label}
                 </option>

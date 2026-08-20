@@ -56,9 +56,9 @@ export const en: Messages = {
     verseRef: "Isaiah 60:1",
     ctaPrimary: "It’s free, I’m taking my spot",
     ctaSecondary: "See the daytime programme",
-    meta: "5–6 September 2026 · Midombo Grounds, Cotonou",
+    meta: "5–6 September 2026 · Midombo, Cotonou",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "5–6 September 2026 · Midombo Grounds, Cotonou · Free entry",
+    venueLine: "5–6 September 2026 · Midombo, Cotonou · Free entry",
   },
   registerExtras: {
     addGuest: "+ Add a pass for someone else",
@@ -74,7 +74,7 @@ export const en: Messages = {
   sessions: {
     eyebrow: "Saturday sessions",
     title: "Masterclasses",
-    lead: "VTeam and Entrepreneurship masterclasses. Free registration, limited seats.",
+    lead: "Entrepreneurship masterclass. Free registration, limited seats.",
     register: "Register →",
     capacity: "Up to {n} seats",
     free: "Free",
@@ -91,7 +91,7 @@ export const en: Messages = {
   },
   stats: [
     { value: "2", label: "Festival days" },
-    { value: "2", label: "Masterclasses" },
+    { value: "1", label: "Masterclass" },
     { value: "1", label: "Generation rising" },
   ],
   explore: {
@@ -115,7 +115,7 @@ export const en: Messages = {
       {
         href: "/journee",
         title: "Daytime",
-        description: "VTeam and Entrepreneurship masterclasses, plus gospel, art and dance hubs.",
+        description: "Entrepreneurship masterclass, plus gospel, art and dance hubs.",
         imageAlt: "Community daytime actions",
       },
       {
@@ -144,7 +144,7 @@ export const en: Messages = {
     support:
       "An extraordinary generation rises. Joseph. Daniel. David. Now it’s your turn.",
     venue:
-      "Midombo Grounds, Cotonou. Free entry. Save the date, get your pass.",
+      "Midombo in Cotonou. Free entry. Save the date, get your pass.",
   },
   register: {
     eyebrow: "Registration",
@@ -205,7 +205,7 @@ export const en: Messages = {
       eyebrow: "Stages & worship",
       title: "The line-up",
       lead:
-        "Worship, praise and strong stages. The 2026 line-up is revealed progressively. Stay tuned for announcements.",
+        "Worship, praise and strong stages. Valère Kouton, Simiane Tatu and Dany Kasongo are already revealed. More names drop progressively.",
     },
     vision: {
       eyebrow: "The vision",
@@ -217,13 +217,13 @@ export const en: Messages = {
       eyebrow: "Saturday daytime",
       title: "Impact before the stage",
       lead:
-        "Before the concerts, Saturday hosts the VTeam and Entrepreneurship masterclasses, plus gospel, art and dance hubs.",
+        "Before the concerts, Saturday hosts the Entrepreneurship masterclass, plus gospel, art and dance hubs.",
     },
     lieu: {
       eyebrow: "The venue",
       title: "Midombo Grounds",
       lead:
-        "An open space in the heart of Cotonou, open to all. Free entry.",
+        "Midombo Grounds, Midombo neighborhood in Cotonou. Free entry, open to all.",
     },
     boutique: {
       eyebrow: "Shop",

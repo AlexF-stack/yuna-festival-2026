@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { JourneePageContent } from "@/components/sections/JourneePageContent";
 
 const DESCRIPTION =
-  "Samedi en journée : Masterclass VTeam et Entrepreneuriat, pôles gospel, art, danse. Avant les concerts du soir.";
+  "Samedi en journée : Masterclass Entrepreneuriat, pôles gospel, art, danse. Avant les concerts du soir.";
 
 export const metadata: Metadata = {
   title: "La journée d'impact",

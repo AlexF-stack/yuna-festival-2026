@@ -12,10 +12,10 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "entree-gratuite",
     question: "L'entrée est-elle vraiment gratuite ?",
     answer:
-      "Oui, 100 % gratuite les deux soirs. L'inscription en ligne avec pass QR accélère ton entrée mais n'est pas obligatoire pour les soirées. Elle est en revanche requise pour les masterclass (places limitées).",
+      "Oui, 100 % gratuite les deux soirs. L'inscription en ligne avec pass QR accélère ton entrée mais n'est pas obligatoire pour les soirées. Elle est en revanche requise pour la masterclass (places limitées).",
     questionEn: "Is entry really free?",
     answerEn:
-      "Yes, 100% free both evenings. Online QR registration speeds up entry but isn’t required for the concerts. It is required for masterclasses (limited seats).",
+      "Yes, 100% free both evenings. Online QR registration speeds up entry but isn’t required for the concerts. It is required for the masterclass (limited seats).",
   },
   {
     id: "heure-arrivee",
@@ -28,21 +28,21 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "masterclass",
-    question: "Comment s'inscrire aux masterclass ?",
+    question: "Comment s'inscrire à la masterclass ?",
     answer:
-      "Via le formulaire d'inscription sur ce site : Masterclass VTeam (musiciens et chantres, samedi 10h–13h) ou Masterclass Entrepreneuriat (samedi 15h–17h). Présente ton pass QR à l'entrée de la salle.",
-    questionEn: "How do I register for masterclasses?",
+      "Via le formulaire d'inscription sur ce site : Masterclass Entrepreneuriat (samedi 15h–17h). Présente ton pass QR à l'entrée de la salle.",
+    questionEn: "How do I register for the masterclass?",
     answerEn:
-      "Use the registration form on this site: VTeam masterclass (musicians & worship leaders, Saturday 10am–1pm) or Entrepreneurship masterclass (Saturday 3–5pm). Show your QR pass at the room entrance.",
+      "Use the registration form on this site: Entrepreneurship masterclass (Saturday 3–5pm). Show your QR pass at the room entrance.",
   },
   {
     id: "acces",
     question: "Comment accéder au Terrain de Midombo ?",
     answer:
-      "Le site est accessible en zém, taxi et bus depuis tout Cotonou. Un plan d'accès détaillé sera publié ici avant le festival.",
+      "Le site est accessible en zém, taxi et bus depuis tout Cotonou (quartier Midombo). Un plan d'accès détaillé sera publié ici avant le festival.",
     questionEn: "How do I get to Midombo Grounds?",
     answerEn:
-      "The site is reachable by zém, taxi and bus from across Cotonou. A detailed access map will be published here before the festival.",
+      "The site is reachable by zém, taxi and bus from across Cotonou (Midombo neighborhood). A detailed access map will be published here before the festival.",
   },
   {
     id: "pluie",

@@ -77,7 +77,7 @@ export function BeninMap({
             compact ? "text-[0.62rem]" : "text-[0.72rem]"
           }`}
         >
-          Cotonou · Midombo
+          Midombo en Cotonou
         </p>
         {!compact ? (
           <p className="mt-1 font-mono text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-papier/60">

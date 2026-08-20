@@ -19,13 +19,14 @@ manquante, demander à l'utilisateur plutôt que d'improviser.
 - Accès : zémidjan, taxi, bus
 
 ## Journée du samedi (avant les concerts)
-- 10h–13h : Masterclass VTeam (musiciens et chantres — technique instrumentale, direction de louange, vie d'adorateur)
 - 15h–17h : Masterclass Entrepreneuriat (vision, excellence, royaume dans les affaires)
 
 ## Line-up
 **Tête d'affiche internationale** : Joe Mettle (Ghana) — dimanche 6 sept, 21h20
 
-**Internationaux** : Derek Jones (adoration, dimanche), Simiane Tatu (adoration, samedi), Exo Éclats (samedi), David Okit (samedi), Serviteur Pierre (samedi)
+**Annoncés (affiches officielles)** : Valère Kouton, Simiane Tatu, Dany Kasongo
+
+**Internationaux** : Derek Jones (adoration, dimanche), Simiane Tatu (adoration, samedi), Exo Éclats (samedi), David Okit (samedi), Serviteur Pierre (samedi), Dany Kasongo
 
 **Orateurs** : Joël Francis Tatu (parole prophétique, dimanche), Prophète Johnny Doefia (parole prophétique, samedi), Prophète Dr Hervé Mama (hôte/exhortation, dimanche)
 

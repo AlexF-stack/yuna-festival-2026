@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { ArtistMarquee } from "@/components/sections/ArtistMarquee";
@@ -88,7 +89,8 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
   const hasMystery = artists.some((a) => !a.is_revealed || !a.name);
   const revealedNames = revealed.map((a) => a.name as string);
   const headliner = revealed.find((a) => a.is_headliner);
-  const others = revealed.filter((a) => !a.is_headliner);
+  const withPortrait = revealed.filter((a) => a.portrait_url);
+  const others = revealed.filter((a) => !a.is_headliner && !a.portrait_url);
 
   return (
     <>
@@ -149,6 +151,60 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
       </section>
 
       <ArtistMarquee revealedNames={revealedNames} />
+
+      {withPortrait.length > 0 ? (
+        <section
+          aria-label={isEn ? "Announced artists" : "Artistes annoncés"}
+          data-tone="charbon"
+          data-nav-tone="charbon"
+          className="relative overflow-hidden bg-nuit-profonde py-10 text-ivoire-froid min-[760px]:py-14"
+        >
+          <div className="section-container px-5 min-[760px]:px-6">
+            <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu-glow">
+              {isEn ? "Just announced" : "Viennent d’être dévoilés"}
+            </p>
+            <ul className="mt-8 grid gap-5 min-[640px]:grid-cols-3 min-[640px]:gap-6">
+              {withPortrait.map((artist, i) => (
+                <motion.li
+                  key={artist.id}
+                  initial={reduce ? false : { opacity: 0, y: 24 }}
+                  whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{
+                    duration: 0.55,
+                    ease: EASE_YUNA,
+                    delay: reduce ? 0 : i * 0.08,
+                  }}
+                  className="group"
+                >
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-[1.25rem] rounded-tr-[0.35rem] shadow-ombre-bleu-lg">
+                    <Image
+                      src={artist.portrait_url!}
+                      alt={`${artist.name} · YUNA Festival 2026`}
+                      fill
+                      sizes="(min-width: 640px) 33vw, 90vw"
+                      className="object-cover object-top transition-transform duration-700 ease-yuna group-hover:scale-[1.03]"
+                      priority={i < 2}
+                    />
+                    <div
+                      aria-hidden
+                      className="absolute inset-0 bg-gradient-to-t from-nuit-profonde/90 via-nuit-profonde/15 to-transparent"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 p-4 min-[760px]:p-5">
+                      <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-jaune">
+                        {artist.role}
+                      </p>
+                      <h3 className="mt-1 font-display text-[clamp(1.35rem,3vw,1.85rem)] font-extrabold uppercase leading-[1.02] text-papier">
+                        {artist.name}
+                      </h3>
+                    </div>
+                  </div>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
 
       <section
         id="artistes"

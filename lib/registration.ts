@@ -1,5 +1,5 @@
 import {
-  isRegistrationType,
+  isOpenRegistrationType,
   type RegistrationType,
 } from "@/lib/registration-types";
 
@@ -55,8 +55,8 @@ export function validateRegistrationInput(input: {
   const phone = normalizePhone(phoneRaw);
   const emailRaw =
     typeof input.email === "string" ? input.email.trim() : "";
-  if (!isRegistrationType(input.registrationType)) {
-    return { error: "Type d'inscription inconnu." };
+  if (!isOpenRegistrationType(input.registrationType)) {
+    return { error: "Type d'inscription indisponible." };
   }
   const registrationType = input.registrationType;
 

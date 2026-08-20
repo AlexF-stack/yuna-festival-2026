@@ -69,7 +69,7 @@ export async function buildGoogleWalletSaveUrl(
             { header: "TYPE", body: typeLabel },
             {
               header: "LIEU",
-              body: `${FESTIVAL.venue}, ${FESTIVAL.city}`,
+              body: `${FESTIVAL.locationLine}`,
             },
             { header: "DATES", body: "5–6 septembre 2026" },
           ],
