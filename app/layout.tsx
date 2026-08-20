@@ -47,8 +47,7 @@ const SITE_DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default:
-      "YUNA Festival 2026, Bénin Debout | 5–6 septembre · Cotonou",
+    default: "YUNA 2026 · Bénin Debout",
     template: "%s | YUNA Festival 2026",
   },
   description: SITE_DESCRIPTION,
@@ -68,11 +67,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/brand/yuna-mark.png", type: "image/png" },
-      { url: "/icon.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
     ],
-    apple: [{ url: "/apple-icon.png", type: "image/png" }],
-    shortcut: "/brand/yuna-mark.png",
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+    shortcut: "/favicon.ico",
   },
 };
 
