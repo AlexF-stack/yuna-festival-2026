@@ -23,14 +23,13 @@ export const FESTIVAL = {
   theme: "Bénin Debout",
   datesShort: "5–6 septembre 2026",
   datesHero: "5–6 SEP · 2026",
-  venue: "Terrain de Midombo",
-  venueArea: "Midombo",
+  venue: "Cotonou",
   city: "Cotonou",
   country: "Bénin",
   /** Libellé court public */
-  locationLine: "Midombo en Cotonou",
+  locationLine: "Cotonou",
   /** Libellé formel SEO / meta */
-  locationFull: "Terrain de Midombo en Cotonou",
+  locationFull: "Cotonou",
   freeEntry: "Entrée libre",
   tagline: "Une génération non ordinaire se lève.",
   siteOpens: "16h00",

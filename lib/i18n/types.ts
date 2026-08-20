@@ -94,6 +94,14 @@ export type Messages = {
     phonePh: string;
     email: string;
     emailPh: string;
+    busQuestion: string;
+    busHint: string;
+    busYes: string;
+    busNo: string;
+    busLocation: string;
+    busLocationPh: string;
+    busRequired: string;
+    busLocationRequired: string;
     consent: string;
     privacy: string;
     submit: string;
@@ -148,6 +156,9 @@ export type Messages = {
     passN: string;
     lostLink: string;
     recover: string;
+    channelCta: string;
+    channelRedirect: string;
+    channelCountdown: string;
   };
   passActions: {
     confirmed: string;

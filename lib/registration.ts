@@ -42,12 +42,16 @@ export function validateRegistrationInput(input: {
   phone?: unknown;
   email?: unknown;
   registrationType?: unknown;
+  busWanted?: unknown;
+  busLocation?: unknown;
 }):
   | {
       name: string;
       phone: string;
       email: string | null;
       registrationType: RegistrationType;
+      busWanted: boolean;
+      busLocation: string | null;
     }
   | { error: string } {
   const name = typeof input.name === "string" ? input.name.trim() : "";
@@ -77,10 +81,25 @@ export function validateRegistrationInput(input: {
     };
   }
 
+  const busWanted = input.busWanted === true || input.busWanted === "true";
+  const busLocationRaw =
+    typeof input.busLocation === "string" ? input.busLocation.trim() : "";
+  if (busWanted && busLocationRaw.length < 2) {
+    return {
+      error:
+        "Indique ton quartier ou ton point de départ pour la navette bus.",
+    };
+  }
+  if (busLocationRaw.length > 200) {
+    return { error: "La position pour le bus est trop longue (200 car. max)." };
+  }
+
   return {
     name,
     phone,
     email: emailRaw.length > 0 ? emailRaw : null,
     registrationType,
+    busWanted,
+    busLocation: busWanted ? busLocationRaw : null,
   };
 }

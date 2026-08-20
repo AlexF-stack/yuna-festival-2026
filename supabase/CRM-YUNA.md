@@ -14,7 +14,7 @@ Ref projet actuel : `rroyxwiyyaexrvqijwnu`
 
 | Table | Rôle |
 | --- | --- |
-| `inscriptions` | Pass / masterclass / bénévoles (sync site) |
+| `inscriptions` | Pass / masterclass / bénévoles (sync site) — colonnes `bus_wanted`, `bus_location` |
 | `scans` | Journal des scans entrée |
 | `equipe` | Staff admin / scan / accueil |
 | `partenaires` | Sponsors |
@@ -33,5 +33,7 @@ YUNA_STAFF_SECRET=...
 
 ## Sync
 
-- Inscription site → upsert `inscriptions`
+- Inscription site → upsert `inscriptions` (y compris demande bus + position)
 - Check-in `/staff/scan` → update `inscriptions` + insert `scans`
+
+Migration CRM bus : `supabase/crm-migrations/20260820200000_inscriptions_bus.sql`

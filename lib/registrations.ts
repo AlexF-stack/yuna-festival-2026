@@ -133,6 +133,8 @@ export type CrmListOptions = {
   q?: string;
   /** all | yes | no */
   checkedIn?: "all" | "yes" | "no";
+  /** all | yes | no — filtre navette bus */
+  busWanted?: "all" | "yes" | "no";
   registrationType?: string;
 };
 
@@ -146,6 +148,8 @@ export type CrmRegistrationRow = {
   checkedInAt: string | null;
   checkedInBy: string | null;
   partyId: string | null;
+  busWanted: boolean;
+  busLocation: string | null;
   /** Alias snake_case pour l’UI staff historique */
   pass_type: string;
   qr_token: string;
@@ -166,11 +170,13 @@ export async function listRegistrationsForCrm(
 
   const supabase = createSupabaseAdminClient();
   const selectCols =
+    "id, name, phone, email, registration_type, created_at, checked_in_at, checked_in_by, party_id, bus_wanted, bus_location";
+  const selectNoBus =
     "id, name, phone, email, registration_type, created_at, checked_in_at, checked_in_by, party_id";
   const selectFallback =
     "id, name, phone, email, registration_type, created_at, checked_in_at, checked_in_by";
 
-  const buildQuery = (cols: string) => {
+  const buildQuery = (cols: string, withBus: boolean) => {
     let query = supabase
       .from("registrations")
       .select(cols, { count: "exact" })
@@ -179,15 +185,24 @@ export async function listRegistrationsForCrm(
     const q = opts.q?.trim();
     if (q) {
       const safe = q.replace(/[%_,]/g, " ").slice(0, 80);
-      query = query.or(
-        `name.ilike.%${safe}%,phone.ilike.%${safe}%,email.ilike.%${safe}%`,
-      );
+      const fields = withBus
+        ? `name.ilike.%${safe}%,phone.ilike.%${safe}%,email.ilike.%${safe}%,bus_location.ilike.%${safe}%`
+        : `name.ilike.%${safe}%,phone.ilike.%${safe}%,email.ilike.%${safe}%`;
+      query = query.or(fields);
     }
 
     if (opts.checkedIn === "yes") {
       query = query.not("checked_in_at", "is", null);
     } else if (opts.checkedIn === "no") {
       query = query.is("checked_in_at", null);
+    }
+
+    if (withBus) {
+      if (opts.busWanted === "yes") {
+        query = query.eq("bus_wanted", true);
+      } else if (opts.busWanted === "no") {
+        query = query.eq("bus_wanted", false);
+      }
     }
 
     if (opts.registrationType?.trim()) {
@@ -197,9 +212,15 @@ export async function listRegistrationsForCrm(
     return query.range(from, to);
   };
 
-  let { data, error, count } = await buildQuery(selectCols);
+  let { data, error, count } = await buildQuery(selectCols, true);
+  if (
+    error?.message?.includes("bus_wanted") ||
+    error?.message?.includes("bus_location")
+  ) {
+    ({ data, error, count } = await buildQuery(selectNoBus, false));
+  }
   if (error?.message?.includes("party_id")) {
-    ({ data, error, count } = await buildQuery(selectFallback));
+    ({ data, error, count } = await buildQuery(selectFallback, false));
   }
 
   if (error) throw new Error(error.message);
@@ -215,6 +236,8 @@ export async function listRegistrationsForCrm(
       checked_in_at: string | null;
       checked_in_by?: string | null;
       party_id?: string | null;
+      bus_wanted?: boolean | null;
+      bus_location?: string | null;
     };
     const checkedIn = Boolean(row.checked_in_at);
     return {
@@ -227,6 +250,8 @@ export async function listRegistrationsForCrm(
       checkedInAt: row.checked_in_at,
       checkedInBy: row.checked_in_by ?? null,
       partyId: row.party_id ?? null,
+      busWanted: Boolean(row.bus_wanted),
+      busLocation: row.bus_location ?? null,
       pass_type: row.registration_type,
       qr_token: row.id,
       checked_in: checkedIn,

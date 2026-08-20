@@ -2,14 +2,13 @@ import type { Metadata } from "next";
 
 import { ArtistesPageContent } from "@/components/sections/ArtistesPageContent";
 import { MediaBand } from "@/components/sections/MediaBand";
-import { Teaser } from "@/components/sections/Teaser";
 import { getArtists } from "@/lib/artists";
 
 export const revalidate = 60;
 export const dynamic = "force-static";
 
 const DESCRIPTION =
-  "Le line-up du YUNA Festival 2026 se dévoile progressivement : adoration, louange et scènes fortes, les 5 et 6 septembre au Terrain de Midombo en Cotonou.";
+  "Le line-up du YUNA Festival 2026 se dévoile progressivement : adoration, louange et scènes fortes, les 5 et 6 septembre à Cotonou.";
 
 export const metadata: Metadata = {
   title: "Line-up & artistes",
@@ -28,7 +27,6 @@ export default async function ArtistesPage() {
   return (
     <main id="contenu" className="bg-papier text-encre">
       <ArtistesPageContent artists={artists} />
-      <Teaser />
       <MediaBand />
     </main>
   );

@@ -50,6 +50,9 @@ export async function GET(request: Request) {
   const checkedRaw = searchParams.get("checkedIn") ?? "all";
   const checkedIn =
     checkedRaw === "yes" || checkedRaw === "no" ? checkedRaw : "all";
+  const busRaw = searchParams.get("busWanted") ?? "all";
+  const busWanted =
+    busRaw === "yes" || busRaw === "no" ? busRaw : "all";
   const registrationType = searchParams.get("type") ?? undefined;
 
   try {
@@ -59,6 +62,7 @@ export async function GET(request: Request) {
         pageSize: Number.isFinite(pageSize) ? pageSize : 25,
         q,
         checkedIn,
+        busWanted,
         registrationType,
       }),
       getCrmStats({ q, registrationType }),

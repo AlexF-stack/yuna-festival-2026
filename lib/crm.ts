@@ -18,6 +18,9 @@ export type YunaCrmSyncPayload = {
   urlConfirmation?: string;
   checkedInAt?: string | null;
   checkedInBy?: string | null;
+  /** Demande de navette bus + point de prise en charge */
+  busWanted?: boolean;
+  busLocation?: string | null;
   /** Résultat journal scans CRM */
   scanResultat?: "ok" | "deja_scanne" | "inconnu" | "refuse";
   /**
@@ -45,6 +48,8 @@ export type CrmRegistrationPayload = {
   confirmationUrl?: string;
   checkedInAt?: string | null;
   checkedInBy?: string | null;
+  busWanted?: boolean;
+  busLocation?: string | null;
 };
 
 export function siteOrigin(): string {
@@ -139,11 +144,40 @@ async function upsertInscription(payload: YunaCrmSyncPayload): Promise<void> {
         payload.urlConfirmation ?? `${siteOrigin()}/confirmation/${payload.id}`,
       checked_in_at: payload.checkedInAt ?? null,
       checked_in_by: payload.checkedInBy ?? null,
+      bus_wanted: payload.busWanted ?? false,
+      bus_location: payload.busLocation ?? null,
       created_at: payload.createdAt ?? new Date().toISOString(),
       synced_at: new Date().toISOString(),
     },
     { onConflict: "id" },
   );
+
+  // Colonnes bus absentes côté CRM : retry sans elles.
+  if (
+    error &&
+    (error.message.includes("bus_wanted") ||
+      error.message.includes("bus_location"))
+  ) {
+    const { error: retryError } = await crm.from("inscriptions").upsert(
+      {
+        id: payload.id,
+        nom: payload.nom,
+        telephone: payload.telephone,
+        email: payload.email,
+        type_pass: payload.typePass,
+        url_confirmation:
+          payload.urlConfirmation ??
+          `${siteOrigin()}/confirmation/${payload.id}`,
+        checked_in_at: payload.checkedInAt ?? null,
+        checked_in_by: payload.checkedInBy ?? null,
+        created_at: payload.createdAt ?? new Date().toISOString(),
+        synced_at: new Date().toISOString(),
+      },
+      { onConflict: "id" },
+    );
+    if (retryError) throw new Error(`inscriptions upsert: ${retryError.message}`);
+    return;
+  }
 
   if (error) throw new Error(`inscriptions upsert: ${error.message}`);
 }
@@ -249,6 +283,8 @@ export async function notifyCrmRegistration(
     urlConfirmation: payload.confirmationUrl,
     checkedInAt: payload.checkedInAt,
     checkedInBy: payload.checkedInBy,
+    busWanted: payload.busWanted,
+    busLocation: payload.busLocation,
     scanId: payload.scanId,
     scanResultat:
       event === "inscription.checked_in"

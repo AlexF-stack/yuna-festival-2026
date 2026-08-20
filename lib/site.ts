@@ -6,6 +6,11 @@ export const SITE_CONTACT = {
   whatsappPrefill: "Bonjour YUNA 2026 !",
 } as const;
 
+/** Canal WhatsApp officiel — redirigé après inscription. */
+export const WHATSAPP_CHANNEL_URL =
+  process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_URL?.trim() ||
+  "https://whatsapp.com/channel/0029Vb6ZGo37tkjEmwoRt80H";
+
 /** null si le numéro WhatsApp n'est pas configuré — évite de shipper un faux numéro. */
 export function getWhatsAppHref(): string | null {
   if (!SITE_CONTACT.whatsappNumber) return null;

@@ -97,6 +97,8 @@ type RegistrationsTable = {
     notify_channel: string | null;
     notified_at: string | null;
     notify_error: string | null;
+    bus_wanted: boolean;
+    bus_location: string | null;
   };
   Insert: {
     id?: string;
@@ -114,6 +116,8 @@ type RegistrationsTable = {
     notify_channel?: string | null;
     notified_at?: string | null;
     notify_error?: string | null;
+    bus_wanted?: boolean;
+    bus_location?: string | null;
   };
   Update: {
     id?: string;
@@ -131,6 +135,8 @@ type RegistrationsTable = {
     notify_channel?: string | null;
     notified_at?: string | null;
     notify_error?: string | null;
+    bus_wanted?: boolean;
+    bus_location?: string | null;
   };
   Relationships: [];
 };

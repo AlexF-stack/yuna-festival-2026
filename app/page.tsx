@@ -34,10 +34,9 @@ const festivalJsonLd = {
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   location: {
     "@type": "Place",
-    name: "Terrain de Midombo",
+    name: "Cotonou",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Quartier Midombo",
       addressLocality: "Cotonou",
       addressRegion: "Littoral",
       addressCountry: "BJ",
@@ -45,7 +44,7 @@ const festivalJsonLd = {
   },
   image: ["https://www.festivalyuna.com/opengraph-image"],
   description:
-    "YUNA Festival 2026 : Bénin Debout. Une génération non ordinaire se lève. 5–6 septembre 2026, Terrain de Midombo en Cotonou. Entrée libre, line-up dévoilé progressivement.",
+    "YUNA Festival 2026 : Bénin Debout. Une génération non ordinaire se lève. 5–6 septembre 2026, Cotonou. Entrée libre, line-up dévoilé progressivement.",
   offers: {
     "@type": "Offer",
     price: "0",

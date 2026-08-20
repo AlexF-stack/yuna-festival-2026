@@ -37,12 +37,12 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "acces",
-    question: "Comment accéder au Terrain de Midombo ?",
+    question: "Comment venir au festival ?",
     answer:
-      "Le site est accessible en zém, taxi et bus depuis tout Cotonou (quartier Midombo). Un plan d'accès détaillé sera publié ici avant le festival.",
-    questionEn: "How do I get to Midombo Grounds?",
+      "Le site est accessible en zém, taxi et bus depuis tout Cotonou. Un plan d'accès détaillé sera publié ici avant le festival.",
+    questionEn: "How do I get to the festival?",
     answerEn:
-      "The site is reachable by zém, taxi and bus from across Cotonou (Midombo neighborhood). A detailed access map will be published here before the festival.",
+      "The site is reachable by zém, taxi and bus from across Cotonou. A detailed access map will be published here before the festival.",
   },
   {
     id: "pluie",

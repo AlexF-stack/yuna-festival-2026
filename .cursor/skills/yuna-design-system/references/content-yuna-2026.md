@@ -13,7 +13,7 @@ manquante, demander à l'utilisateur plutôt que d'improviser.
 ## Dates et lieu
 - Samedi 5 septembre 2026, 18h–23h
 - Dimanche 6 septembre 2026, 18h–22h30
-- Lieu : Terrain de Midombo, Cotonou, Bénin
+- Lieu : Cotonou, Bénin
 - Entrée libre et gratuite, ouverture du site à 16h chaque soir
 - Sur place : espace sécurisé, sanitaires, points d'eau, stands de restauration, espace prière
 - Accès : zémidjan, taxi, bus
@@ -84,6 +84,6 @@ Contact sponsoring : contact@yunafestival.org
 - L'entrée est-elle gratuite ? Oui, 100% les deux soirs. L'inscription en ligne avec pass QR accélère l'entrée mais n'est pas obligatoire pour les soirées — elle est en revanche **requise** pour les masterclass (places limitées).
 
 ## Éléments non confirmés / à valider avec le client avant intégration finale
-- Lien vidéo du teaser YouTube (placeholder `VIDEO_ID_ICI` dans le draft — à remplacer)
+- Pas de teaser vidéo sur le site (retiré)
 - Logos sponsors (actuellement "Votre logo ici")
 - Visuel de l'affiche officielle haute résolution (nécessaire seulement pour le lot optionnel AR, voir Annexe A du cahier des charges)

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import { PassActions } from "@/components/pass/PassActions";
 import { PassTicket } from "@/components/pass/PassTicket";
@@ -8,6 +9,7 @@ import { useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { fill } from "@/lib/i18n";
 import type { RegistrationType } from "@/lib/registration-types";
+import { WHATSAPP_CHANNEL_URL } from "@/lib/site";
 
 type ConfirmationClientProps = {
   registration: {
@@ -18,16 +20,46 @@ type ConfirmationClientProps = {
   };
   groupIds: string[];
   messagingAny: boolean;
+  /** Après une inscription fraîche : redirection canal WhatsApp. */
+  joinChannel?: boolean;
 };
+
+const WA_REDIRECT_MS = 2800;
 
 export function ConfirmationClient({
   registration,
   groupIds,
   messagingAny,
+  joinChannel = false,
 }: ConfirmationClientProps) {
   const t = useMessages();
   const c = t.confirmation;
   const shortId = registration.id.slice(0, 8).toUpperCase();
+  const [secondsLeft, setSecondsLeft] = useState(
+    joinChannel ? Math.ceil(WA_REDIRECT_MS / 1000) : 0,
+  );
+
+  useEffect(() => {
+    if (!joinChannel) return;
+
+    const started = Date.now();
+    const tick = window.setInterval(() => {
+      const left = Math.max(
+        0,
+        Math.ceil((WA_REDIRECT_MS - (Date.now() - started)) / 1000),
+      );
+      setSecondsLeft(left);
+    }, 200);
+
+    const redirect = window.setTimeout(() => {
+      window.location.assign(WHATSAPP_CHANNEL_URL);
+    }, WA_REDIRECT_MS);
+
+    return () => {
+      window.clearInterval(tick);
+      window.clearTimeout(redirect);
+    };
+  }, [joinChannel]);
 
   return (
     <main
@@ -43,6 +75,30 @@ export function ConfirmationClient({
       <p className="mt-4 max-w-md text-center text-[1.02rem] leading-relaxed text-charbon">
         {messagingAny ? c.leadMessaging : c.leadSave}
       </p>
+
+      {joinChannel ? (
+        <div className="mt-6 w-full max-w-[420px] rounded-2xl border border-vert/30 bg-vert/10 px-4 py-4 text-center">
+          <p className="text-sm font-semibold text-encre">{c.channelRedirect}</p>
+          {secondsLeft > 0 ? (
+            <p className="mt-1 font-mono text-xs font-bold uppercase tracking-wide text-charbon">
+              {fill(c.channelCountdown, { n: secondsLeft })}
+            </p>
+          ) : null}
+          <a
+            href={WHATSAPP_CHANNEL_URL}
+            className="btn-cta-flame mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-full px-6 text-base font-extrabold uppercase tracking-[0.04em] text-papier"
+          >
+            {c.channelCta}
+          </a>
+        </div>
+      ) : (
+        <a
+          href={WHATSAPP_CHANNEL_URL}
+          className="btn-cta-flame mt-6 inline-flex min-h-12 items-center justify-center rounded-full px-7 text-base font-extrabold uppercase tracking-[0.04em] text-papier"
+        >
+          {c.channelCta}
+        </a>
+      )}
 
       {groupIds.length > 0 ? (
         <div className="mt-6 w-full max-w-[420px] rounded-2xl border border-bleu/15 bg-papier p-4 text-sm text-charbon">

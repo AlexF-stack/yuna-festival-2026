@@ -47,6 +47,8 @@ export function Register() {
   const [registrationType, setRegistrationType] =
     useState<RegistrationType>("pass");
   const [guests, setGuests] = useState<Guest[]>([]);
+  const [busWanted, setBusWanted] = useState<boolean | null>(null);
+  const [busLocation, setBusLocation] = useState("");
   const [website, setWebsite] = useState("");
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -83,6 +85,19 @@ export function Register() {
       }
     }
 
+    if (busWanted === null) {
+      setErrors({
+        form: t.register.busRequired,
+      });
+      return;
+    }
+    if (busWanted && busLocation.trim().length < 2) {
+      setErrors({
+        form: t.register.busLocationRequired,
+      });
+      return;
+    }
+
     setPending(true);
 
     const key = idempotencyKey || createIdempotencyKey();
@@ -97,6 +112,8 @@ export function Register() {
           phone,
           email,
           registrationType,
+          busWanted,
+          busLocation: busWanted ? busLocation.trim() : null,
           idempotencyKey: key,
           website,
           consent,
@@ -127,10 +144,10 @@ export function Register() {
         if (partialId) {
           if (partialIds && partialIds.length > 1) {
             router.push(
-              `/confirmation/${partialId}?groupe=${partialIds.join(",")}`,
+              `/confirmation/${partialId}?wa=1&groupe=${partialIds.join(",")}`,
             );
           } else {
-            router.push(`/confirmation/${partialId}`);
+            router.push(`/confirmation/${partialId}?wa=1`);
           }
           return;
         }
@@ -153,10 +170,10 @@ export function Register() {
 
       if (payload.ids && payload.ids.length > 1) {
         router.push(
-          `/confirmation/${payload.id}?groupe=${payload.ids.join(",")}`,
+          `/confirmation/${payload.id}?wa=1&groupe=${payload.ids.join(",")}`,
         );
       } else {
-        router.push(`/confirmation/${payload.id}`);
+        router.push(`/confirmation/${payload.id}?wa=1`);
       }
     } catch {
       setErrors({
@@ -314,6 +331,73 @@ export function Register() {
                 className={fieldClass}
               />
             </div>
+
+            <fieldset className="mb-5">
+              <legend className="mb-2 block text-sm font-medium text-encre">
+                {t.register.busQuestion}
+              </legend>
+              <p className="mb-3 text-xs leading-relaxed text-charbon">
+                {t.register.busHint}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <label
+                  className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-colors ${
+                    busWanted === true
+                      ? "border-bleu bg-bleu text-papier"
+                      : "border-sable bg-papier text-encre hover:border-bleu/40"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="busWanted"
+                    className="sr-only"
+                    checked={busWanted === true}
+                    onChange={() => setBusWanted(true)}
+                  />
+                  {t.register.busYes}
+                </label>
+                <label
+                  className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-colors ${
+                    busWanted === false
+                      ? "border-bleu bg-bleu text-papier"
+                      : "border-sable bg-papier text-encre hover:border-bleu/40"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="busWanted"
+                    className="sr-only"
+                    checked={busWanted === false}
+                    onChange={() => {
+                      setBusWanted(false);
+                      setBusLocation("");
+                    }}
+                  />
+                  {t.register.busNo}
+                </label>
+              </div>
+              {busWanted ? (
+                <div className="mt-4">
+                  <label
+                    htmlFor="reg-bus-location"
+                    className="mb-1.5 block text-sm font-medium text-encre"
+                  >
+                    {t.register.busLocation}
+                  </label>
+                  <input
+                    id="reg-bus-location"
+                    name="busLocation"
+                    type="text"
+                    required
+                    value={busLocation}
+                    onChange={(e) => setBusLocation(e.target.value)}
+                    placeholder={t.register.busLocationPh}
+                    className={fieldClass}
+                    maxLength={200}
+                  />
+                </div>
+              ) : null}
+            </fieldset>
 
             {registrationType === "pass" ? (
               <div className="mb-6 rounded-2xl border border-bleu/10 bg-ciel/30 p-4">

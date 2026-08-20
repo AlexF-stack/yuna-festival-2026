@@ -31,7 +31,7 @@ export default function OpenGraphImage() {
             fontWeight: 700,
           }}
         >
-          5–6 septembre 2026 · Midombo en Cotonou
+          5–6 septembre 2026 · Cotonou
         </div>
         <div
           style={{
@@ -56,7 +56,7 @@ export default function OpenGraphImage() {
             maxWidth: 900,
           }}
         >
-          YUNA Festival 2026. Entrée libre · Midombo en Cotonou
+          YUNA Festival 2026. Entrée libre · Cotonou
         </div>
       </div>
     ),

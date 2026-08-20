@@ -69,9 +69,9 @@ export const JOURNEE = {
 
 export const VENUE = {
   eyebrow: "Le lieu",
-  title: "Terrain de Midombo",
+  title: "Cotonou",
   intro:
-    "Quartier Midombo en Cotonou. Un espace ouvert, accessible à tous. Entrée libre. Le festival vient à la rencontre de la jeunesse, là où elle vit.",
+    "Cotonou. Un espace ouvert, accessible à tous. Entrée libre. Le festival vient à la rencontre de la jeunesse, là où elle vit.",
   amenities: [
     "Entrée gratuite, ouverte à tous",
     "Ouverture du site à 16h00 chaque soir, concerts dès 18h",
@@ -150,7 +150,7 @@ export const PARTNERS_PAGE = {
   ],
   audienceTitle: "Audience attendue",
   audience: [
-    "Des milliers de jeunes sur le Terrain de Midombo (5–6 septembre 2026).",
+    "Des milliers de jeunes à Cotonou (5–6 septembre 2026).",
     "Objectif d’inscriptions pass QR : 5 000, avec suivi staff et check-in sur site.",
     "Public local Cotonou + rayonnement diaspora via le site et les réseaux.",
   ],
@@ -225,15 +225,6 @@ export const PARTICIPATE = {
     "Bénévoles, chorales, partenaires, sponsors, médias : YUNA 2026 se bâtit ensemble. Rejoins la génération qui se lève.",
   ctaVolunteer: "Devenir bénévole",
   ctaPartner: "Devenir partenaire",
-} as const;
-
-export const TEASER = {
-  eyebrow: "Aftermovie & teaser",
-  title: "Vis l'expérience",
-  intro:
-    "Regarde le teaser officiel YUNA 2026 et imagine-toi au milieu de la foule le 5 septembre.",
-  /** Remplacer par l'ID YouTube officiel quand disponible */
-  youtubeId: process.env.NEXT_PUBLIC_YUNA_TEASER_ID ?? "",
 } as const;
 
 export const REGISTER_COPY = {

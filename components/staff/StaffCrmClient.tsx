@@ -21,6 +21,8 @@ type Registration = {
   created_at: string;
   checkedInBy?: string | null;
   partyId?: string | null;
+  busWanted?: boolean;
+  busLocation?: string | null;
 };
 
 type CrmStats = {
@@ -71,6 +73,8 @@ function exportCsv(rows: Registration[]) {
     "phone",
     "email",
     "type",
+    "bus_wanted",
+    "bus_location",
     "checked_in",
     "checked_in_at",
     "created_at",
@@ -86,6 +90,8 @@ function exportCsv(rows: Registration[]) {
         JSON.stringify(r.phone),
         JSON.stringify(r.email ?? ""),
         r.pass_type,
+        r.busWanted ? "1" : "0",
+        JSON.stringify(r.busLocation ?? ""),
         r.checked_in ? "1" : "0",
         r.checked_in_at ?? "",
         r.created_at,
@@ -112,6 +118,7 @@ export function StaffCrmClient() {
   const [unlocked, setUnlocked] = useState(false);
   const [q, setQ] = useState("");
   const [checkedIn, setCheckedIn] = useState<"all" | "yes" | "no">("all");
+  const [busFilter, setBusFilter] = useState<"all" | "yes" | "no">("all");
   const [typeFilter, setTypeFilter] = useState("");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -128,6 +135,7 @@ export function StaffCrmClient() {
       query: string,
       status: "all" | "yes" | "no",
       type: string,
+      bus: "all" | "yes" | "no" = "all",
       key = secret,
       opts?: { silent?: boolean },
     ) => {
@@ -141,6 +149,7 @@ export function StaffCrmClient() {
           page: String(nextPage),
           pageSize: "25",
           checkedIn: status,
+          busWanted: bus,
         });
         if (query.trim()) params.set("q", query.trim());
         if (type.trim()) params.set("type", type.trim());
@@ -216,7 +225,7 @@ export function StaffCrmClient() {
       const saved = sessionStorage.getItem(CRM_KEY);
       if (!saved) return;
       setSecret(saved);
-      void fetchPage(1, "", "all", "", saved);
+      void fetchPage(1, "", "all", "", "all", saved);
     } catch {
       /* ignore */
     }
@@ -226,24 +235,36 @@ export function StaffCrmClient() {
   useEffect(() => {
     if (!unlocked) return;
     const t = window.setTimeout(() => {
-      void fetchPage(1, q, checkedIn, typeFilter);
+      void fetchPage(1, q, checkedIn, typeFilter, busFilter);
     }, 280);
     return () => window.clearTimeout(t);
-  }, [q, checkedIn, typeFilter, unlocked, fetchPage]);
+  }, [q, checkedIn, typeFilter, busFilter, unlocked, fetchPage]);
 
   useEffect(() => {
     if (!unlocked || !live) return;
     const tick = () => {
       if (document.hidden) return;
-      void fetchPage(page, q, checkedIn, typeFilter, secret, { silent: true });
+      void fetchPage(page, q, checkedIn, typeFilter, busFilter, secret, {
+        silent: true,
+      });
     };
     const id = window.setInterval(tick, LIVE_POLL_MS);
     return () => window.clearInterval(id);
-  }, [unlocked, live, page, q, checkedIn, typeFilter, secret, fetchPage]);
+  }, [
+    unlocked,
+    live,
+    page,
+    q,
+    checkedIn,
+    typeFilter,
+    busFilter,
+    secret,
+    fetchPage,
+  ]);
 
   async function onUnlock(e: React.FormEvent) {
     e.preventDefault();
-    await fetchPage(1, q, checkedIn, typeFilter);
+    await fetchPage(1, q, checkedIn, typeFilter, busFilter);
   }
 
   const totalPages = data
@@ -418,9 +439,23 @@ export function StaffCrmClient() {
                 </option>
               ))}
             </select>
+            <select
+              value={busFilter}
+              onChange={(e) =>
+                setBusFilter(e.target.value as "all" | "yes" | "no")
+              }
+              className="min-h-12 rounded-2xl border border-sable bg-papier px-4 text-sm font-bold text-bleu sm:max-w-[12rem]"
+              aria-label="Filtre bus"
+            >
+              <option value="all">Bus : tous</option>
+              <option value="yes">Bus : oui</option>
+              <option value="no">Bus : non</option>
+            </select>
             <button
               type="button"
-              onClick={() => void fetchPage(page, q, checkedIn, typeFilter)}
+              onClick={() =>
+                void fetchPage(page, q, checkedIn, typeFilter, busFilter)
+              }
               disabled={loading}
               className="min-h-12 shrink-0 rounded-full border-2 border-bleu/30 bg-papier px-5 py-3 text-sm font-bold text-bleu disabled:opacity-50"
             >
@@ -447,7 +482,10 @@ export function StaffCrmClient() {
               <>
                 <span className="font-bold text-encre">{data.total}</span>{" "}
                 résultat{data.total > 1 ? "s" : ""}
-                {checkedIn !== "all" || typeFilter || q.trim()
+                {checkedIn !== "all" ||
+                busFilter !== "all" ||
+                typeFilter ||
+                q.trim()
                   ? " (filtre actif)"
                   : ""}
               </>
@@ -506,10 +544,20 @@ export function StaffCrmClient() {
                     <dd className="mt-0.5">{typeLabel(r.pass_type)}</dd>
                   </div>
                   <div>
+                    <dt className="font-semibold text-encre/70">Bus</dt>
+                    <dd className="mt-0.5">
+                      {r.busWanted
+                        ? r.busLocation
+                          ? `Oui · ${r.busLocation}`
+                          : "Oui"
+                        : "Non"}
+                    </dd>
+                  </div>
+                  <div>
                     <dt className="font-semibold text-encre/70">Inscrit</dt>
                     <dd className="mt-0.5">{formatWhen(r.created_at)}</dd>
                   </div>
-                  <div className="col-span-2">
+                  <div>
                     <dt className="font-semibold text-encre/70">Entrée</dt>
                     <dd className="mt-0.5">
                       {formatWhen(r.checked_in_at)}
@@ -541,6 +589,7 @@ export function StaffCrmClient() {
                   <th className="px-4 py-3">Nom</th>
                   <th className="px-4 py-3">Téléphone</th>
                   <th className="px-4 py-3">Type</th>
+                  <th className="px-4 py-3">Bus</th>
                   <th className="px-4 py-3">Statut</th>
                   <th className="px-4 py-3">Inscrit</th>
                   <th className="px-4 py-3">Entrée</th>
@@ -573,6 +622,20 @@ export function StaffCrmClient() {
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">{r.phone}</td>
                     <td className="px-4 py-3">{typeLabel(r.pass_type)}</td>
+                    <td className="px-4 py-3 text-charbon">
+                      {r.busWanted ? (
+                        <>
+                          <span className="font-bold text-bleu">Oui</span>
+                          {r.busLocation ? (
+                            <span className="mt-0.5 block text-xs">
+                              {r.busLocation}
+                            </span>
+                          ) : null}
+                        </>
+                      ) : (
+                        "Non"
+                      )}
+                    </td>
                     <td className="px-4 py-3">
                       {r.checked_in ? (
                         <span className="font-bold text-vert">Entré</span>
@@ -621,7 +684,7 @@ export function StaffCrmClient() {
                 type="button"
                 disabled={loading || page <= 1}
                 onClick={() =>
-                  void fetchPage(page - 1, q, checkedIn, typeFilter)
+                  void fetchPage(page - 1, q, checkedIn, typeFilter, busFilter)
                 }
                 className="min-h-11 flex-1 rounded-full border-2 border-bleu/25 bg-papier px-4 py-2.5 text-sm font-bold text-bleu disabled:opacity-40 sm:flex-none"
               >
@@ -634,7 +697,7 @@ export function StaffCrmClient() {
                 type="button"
                 disabled={loading || page >= totalPages}
                 onClick={() =>
-                  void fetchPage(page + 1, q, checkedIn, typeFilter)
+                  void fetchPage(page + 1, q, checkedIn, typeFilter, busFilter)
                 }
                 className="min-h-11 flex-1 rounded-full border-2 border-bleu/25 bg-papier px-4 py-2.5 text-sm font-bold text-bleu disabled:opacity-40 sm:flex-none"
               >

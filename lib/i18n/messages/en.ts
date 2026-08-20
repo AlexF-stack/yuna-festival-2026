@@ -56,9 +56,9 @@ export const en: Messages = {
     verseRef: "Isaiah 60:1",
     ctaPrimary: "It’s free, I’m taking my spot",
     ctaSecondary: "See the daytime programme",
-    meta: "5–6 September 2026 · Midombo, Cotonou",
+    meta: "5–6 September 2026 · Cotonou",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "5–6 September 2026 · Midombo, Cotonou · Free entry",
+    venueLine: "5–6 September 2026 · Cotonou · Free entry",
   },
   registerExtras: {
     addGuest: "+ Add a pass for someone else",
@@ -144,7 +144,7 @@ export const en: Messages = {
     support:
       "An extraordinary generation rises. Joseph. Daniel. David. Now it’s your turn.",
     venue:
-      "Midombo in Cotonou. Free entry. Save the date, get your pass.",
+      "Cotonou. Free entry. Save the date, get your pass.",
   },
   register: {
     eyebrow: "Registration",
@@ -158,6 +158,16 @@ export const en: Messages = {
     phonePh: "+229 01 XX XX XX XX",
     email: "Email (optional)",
     emailPh: "you@email.com",
+    busQuestion: "Do you need a bus?",
+    busHint:
+      "Shuttle buses are available. Tell us if you need one and from which area.",
+    busYes: "Yes, I need a bus",
+    busNo: "No thanks",
+    busLocation: "Your neighborhood / pickup point *",
+    busLocationPh: "e.g. Akpakpa, Cadjehoun, Godomey…",
+    busRequired: "Please say whether you need a bus or not.",
+    busLocationRequired:
+      "Enter your neighborhood or pickup point for the shuttle.",
     consent:
       "I agree that my information may be used to generate my ticket and organize the festival, as described in the",
     privacy: "privacy policy",
@@ -221,9 +231,9 @@ export const en: Messages = {
     },
     lieu: {
       eyebrow: "The venue",
-      title: "Midombo Grounds",
+      title: "Cotonou",
       lead:
-        "Midombo Grounds, Midombo neighborhood in Cotonou. Free entry, open to all.",
+        "Cotonou. Free entry, open to all.",
     },
     boutique: {
       eyebrow: "Shop",
@@ -267,6 +277,10 @@ export const en: Messages = {
     passN: "Ticket #{n} →",
     lostLink: "Lost this link?",
     recover: "Recover your pass",
+    channelCta: "Join the WhatsApp channel",
+    channelRedirect:
+      "Next step: join the official YUNA channel for announcements.",
+    channelCountdown: "Redirecting in {n} s…",
   },
   passActions: {
     confirmed: "Confirmed",

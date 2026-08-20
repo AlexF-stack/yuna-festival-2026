@@ -22,6 +22,8 @@ type RegisterBody = {
   phone?: string;
   email?: string;
   registrationType?: string;
+  busWanted?: boolean;
+  busLocation?: string;
   idempotencyKey?: string;
   website?: string;
   consent?: boolean;
@@ -33,6 +35,8 @@ type ParsedPerson = {
   phone: string;
   email: string | null;
   registrationType: RegistrationType;
+  busWanted: boolean;
+  busLocation: string | null;
 };
 
 const UUID_RE =
@@ -73,16 +77,18 @@ async function insertOne(
     registration_type: input.registrationType,
     idempotency_key: input.idempotencyKey,
     qr_code,
+    bus_wanted: input.busWanted,
+    bus_location: input.busLocation,
   };
 
-  // party_id ajouté en migration — cast jusqu’à regen des types Supabase.
-  const withParty = {
+  // party_id / bus_* ajoutés en migration — cast jusqu’à regen des types.
+  const withExtras = {
     ...baseRow,
     ...(input.partyId ? { party_id: input.partyId } : {}),
   };
   let { data, error } = await supabase
     .from("registrations")
-    .insert(withParty as typeof baseRow)
+    .insert(withExtras as typeof baseRow)
     .select("id, name, qr_code, created_at")
     .single();
 
@@ -93,6 +99,32 @@ async function insertOne(
       .insert(baseRow)
       .select("id, name, qr_code, created_at")
       .single());
+  }
+
+  // Migration bus_* pas encore appliquée : retry sans ces colonnes.
+  if (
+    error?.message?.includes("bus_wanted") ||
+    error?.message?.includes("bus_location")
+  ) {
+    const { bus_wanted: _bw, bus_location: _bl, ...withoutBus } = baseRow;
+    void _bw;
+    void _bl;
+    const retryRow = {
+      ...withoutBus,
+      ...(input.partyId ? { party_id: input.partyId } : {}),
+    };
+    ({ data, error } = await supabase
+      .from("registrations")
+      .insert(retryRow as typeof withoutBus)
+      .select("id, name, qr_code, created_at")
+      .single());
+    if (error?.message?.includes("party_id") && input.partyId) {
+      ({ data, error } = await supabase
+        .from("registrations")
+        .insert(withoutBus)
+        .select("id, name, qr_code, created_at")
+        .single());
+    }
   }
 
   if (error) {
@@ -204,6 +236,9 @@ export async function POST(request: Request) {
       phone: rawGuests[i]?.phone,
       email: undefined,
       registrationType: parsed.registrationType,
+      // Même navette pour tout le groupe
+      busWanted: parsed.busWanted,
+      busLocation: parsed.busLocation ?? undefined,
     });
     if ("error" in g) {
       return NextResponse.json(
@@ -280,6 +315,8 @@ export async function POST(request: Request) {
           registrationType: person.registrationType,
           createdAt: row.created_at,
           confirmationUrl: `${siteOrigin()}/confirmation/${row.id}`,
+          busWanted: person.busWanted,
+          busLocation: person.busLocation,
         });
       }
     }

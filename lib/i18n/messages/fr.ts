@@ -56,9 +56,9 @@ export const fr: Messages = {
     verseRef: "Ésaïe 60:1",
     ctaPrimary: "C’est gratuit, je prends ma place",
     ctaSecondary: "Voir la journée",
-    meta: "5–6 septembre 2026 · Midombo en Cotonou",
+    meta: "5–6 septembre 2026 · Cotonou",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "5–6 septembre 2026 · Midombo en Cotonou · Entrée libre",
+    venueLine: "5–6 septembre 2026 · Cotonou · Entrée libre",
   },
   registerExtras: {
     addGuest: "+ Ajouter un pass pour quelqu’un d’autre",
@@ -144,7 +144,7 @@ export const fr: Messages = {
     support:
       "Une génération non ordinaire se lève. Joseph. Daniel. David. À toi maintenant.",
     venue:
-      "Midombo en Cotonou. Entrée libre. Garde la date, génère ton pass.",
+      "Cotonou. Entrée libre. Garde la date, génère ton pass.",
   },
   register: {
     eyebrow: "Inscription",
@@ -158,6 +158,16 @@ export const fr: Messages = {
     phonePh: "+229 01 XX XX XX XX",
     email: "Email (optionnel)",
     emailPh: "ton@email.com",
+    busQuestion: "As-tu besoin d’un bus ?",
+    busHint:
+      "Des navettes sont mises à disposition. Dis-nous si tu en as besoin et depuis quel quartier.",
+    busYes: "Oui, je veux un bus",
+    busNo: "Non merci",
+    busLocation: "Ton quartier / point de départ *",
+    busLocationPh: "Ex : Akpakpa, Cadjèhoun, Godomey…",
+    busRequired: "Indique si tu as besoin d’un bus ou non.",
+    busLocationRequired:
+      "Indique ton quartier ou ton point de départ pour la navette.",
     consent:
       "J'accepte que mes informations soient utilisées pour générer mon ticket et organiser le festival, comme décrit dans la",
     privacy: "politique de confidentialité",
@@ -221,9 +231,9 @@ export const fr: Messages = {
     },
     lieu: {
       eyebrow: "Le lieu",
-      title: "Terrain de Midombo",
+      title: "Cotonou",
       lead:
-        "Terrain de Midombo, quartier Midombo en Cotonou. Entrée libre, accessible à tous.",
+        "Cotonou. Entrée libre, accessible à tous.",
     },
     boutique: {
       eyebrow: "Boutique",
@@ -267,6 +277,10 @@ export const fr: Messages = {
     passN: "Ticket n°{n} →",
     lostLink: "Tu perds ce lien ?",
     recover: "Retrouve ton pass",
+    channelCta: "Rejoindre le canal WhatsApp",
+    channelRedirect:
+      "Prochaine étape : rejoins le canal officiel YUNA pour les annonces.",
+    channelCountdown: "Redirection dans {n} s…",
   },
   passActions: {
     confirmed: "Confirmé",

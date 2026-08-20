@@ -7,7 +7,7 @@ import { getRegistrationById } from "@/lib/registrations";
 
 type ConfirmationPageProps = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ groupe?: string }>;
+  searchParams: Promise<{ groupe?: string; wa?: string }>;
 };
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default async function ConfirmationPage({
   searchParams,
 }: ConfirmationPageProps) {
   const { id } = await params;
-  const { groupe } = await searchParams;
+  const { groupe, wa } = await searchParams;
 
   let registration;
   try {
@@ -47,6 +47,7 @@ export default async function ConfirmationPage({
       }}
       groupIds={groupIds}
       messagingAny={messaging.any}
+      joinChannel={wa === "1"}
     />
   );
 }
