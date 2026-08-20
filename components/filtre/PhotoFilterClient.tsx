@@ -301,13 +301,13 @@ export function PhotoFilterClient() {
       if (navigator.share && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
-          title: "YUNA 2026 — Bénin Debout",
-          text: `J'y serai — ${FESTIVAL.theme} · ${FESTIVAL.datesShort}`,
+          title: "YUNA 2026, Bénin Debout",
+          text: `J'y serai : ${FESTIVAL.theme} · ${FESTIVAL.datesShort}`,
         });
         return;
       }
       await onDownload();
-      setHint("Image téléchargée — partage-la sur tes réseaux.");
+      setHint("Image téléchargée. Partage-la sur tes réseaux.");
     } catch {
       /* annulé */
     } finally {

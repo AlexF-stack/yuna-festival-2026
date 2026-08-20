@@ -4,7 +4,7 @@ import { FESTIVAL, HERO_COPY } from "@/lib/festival";
 export function getGoogleCalendarUrl(): string {
   const params = new URLSearchParams({
     action: "TEMPLATE",
-    text: `${FESTIVAL.brandFull} ${FESTIVAL.edition} — ${FESTIVAL.theme}`,
+    text: `${FESTIVAL.brandFull} ${FESTIVAL.edition}, ${FESTIVAL.theme}`,
     dates: "20260905T180000/20260906T223000",
     ctz: "Africa/Porto-Novo",
     details: `${FESTIVAL.tagline} ${HERO_COPY.verseRef}`,
@@ -15,7 +15,7 @@ export function getGoogleCalendarUrl(): string {
 
 export function getShareData(url: string) {
   return {
-    title: `${FESTIVAL.brandFull} ${FESTIVAL.edition} — ${FESTIVAL.theme}`,
+    title: `${FESTIVAL.brandFull} ${FESTIVAL.edition}, ${FESTIVAL.theme}`,
     text: `${FESTIVAL.tagline} ${FESTIVAL.datesShort} · ${FESTIVAL.venue}, ${FESTIVAL.city}. ${FESTIVAL.freeEntry}.`,
     url,
   };

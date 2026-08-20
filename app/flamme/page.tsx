@@ -23,7 +23,7 @@ export default function FlammePage() {
       <PageIntro
         eyebrow="Expérience 3D"
         title="La flamme chez toi"
-        lead="Pose l’emblème YUNA en 3D dans ton salon, ta chambre ou ton église — puis fais tourner la vidéo et partage Bénin Debout."
+        lead="Pose l’emblème YUNA en 3D dans ton salon, ta chambre ou ton église, puis fais tourner la vidéo et partage Bénin Debout."
         compact
       />
 

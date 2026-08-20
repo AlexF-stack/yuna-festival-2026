@@ -24,7 +24,7 @@ export function StaffNav() {
         <Link
           href="/"
           className="flex min-w-0 items-center gap-2.5"
-          aria-label="YUNA Festival — site public"
+          aria-label="YUNA Festival, site public"
         >
           <YunaLogo
             size="nav"

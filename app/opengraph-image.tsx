@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "YUNA Festival 2026 — Bénin Debout";
+export const alt = "YUNA Festival 2026, Bénin Debout";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -56,7 +56,7 @@ export default function OpenGraphImage() {
             maxWidth: 900,
           }}
         >
-          YUNA Festival 2026 — Entrée libre · Terrain de Midombo
+          YUNA Festival 2026. Entrée libre · Terrain de Midombo
         </div>
       </div>
     ),

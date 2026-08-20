@@ -38,7 +38,7 @@ export function HomeCoda() {
         </RevealItem>
         <RevealItem>
           <ButtonLink
-            href={`mailto:${SITE_CONTACT.email}?subject=${encodeURIComponent("YUNA 2026 — Bénévolat")}`}
+            href={`mailto:${SITE_CONTACT.email}?subject=${encodeURIComponent("YUNA 2026, Bénévolat")}`}
             variant="secondary"
           >
             {PARTICIPATE.ctaVolunteer}

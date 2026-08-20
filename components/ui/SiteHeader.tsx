@@ -200,7 +200,7 @@ export function SiteHeader() {
             href="/"
             className="flex shrink-0 items-center"
             onClick={() => setOpen(false)}
-            aria-label="YUNA Festival — retour à l'accueil"
+            aria-label="YUNA Festival, retour à l'accueil"
           >
             <YunaLogo size="nav" priority />
           </Link>

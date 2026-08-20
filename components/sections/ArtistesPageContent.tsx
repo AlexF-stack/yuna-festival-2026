@@ -268,8 +268,8 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
           </h2>
           <p className="mt-4 max-w-lg text-[1.05rem] text-charbon">
             {isEn
-              ? "Names drop progressively — the rundown is already set."
-              : "Les noms sortent progressivement — le déroulé est déjà là."}
+              ? "Names drop progressively. The rundown is already set."
+              : "Les noms sortent progressivement. Le déroulé est déjà là."}
           </p>
 
           <div className="mt-14 space-y-16">

@@ -38,7 +38,7 @@ export const HERO_COPY = {
   titleLine1: "BÉNIN",
   titleLine2: "DEBOUT",
   support:
-    "Une génération non ordinaire se lève — Joseph. Daniel. David. À toi maintenant.",
+    "Une génération non ordinaire se lève. Joseph. Daniel. David. À toi maintenant.",
   meta: `${FESTIVAL.datesShort} · ${FESTIVAL.venue}, ${FESTIVAL.city}`,
   verse:
     "« Lève-toi, sois éclairée, car ta lumière arrive, et la gloire de l'Éternel se lève sur toi. »",

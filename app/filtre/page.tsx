@@ -5,7 +5,7 @@ import { PageIntro } from "@/components/ui/PageIntro";
 import { FESTIVAL } from "@/lib/festival";
 
 const DESCRIPTION =
-  "Filtre photo Bénin Debout : prends ta photo avec le cadre officiel du festival — flammes, thème et verset — et partage-la sur tes réseaux.";
+  "Filtre photo Bénin Debout : prends ta photo avec le cadre officiel du festival (flammes, thème et verset) et partage-la sur tes réseaux.";
 
 export const metadata: Metadata = {
   title: "Filtre photo Bénin Debout",
@@ -24,7 +24,7 @@ export default function FiltrePage() {
       <PageIntro
         eyebrow="Filtre photo"
         title="Bénin Debout"
-        lead={`Prends ta photo avec le cadre officiel du festival — flammes, thème et verset — et partage-la sur tes réseaux. ${FESTIVAL.datesShort} · ${FESTIVAL.venue}.`}
+        lead={`Prends ta photo avec le cadre officiel du festival (flammes, thème et verset) et partage-la sur tes réseaux. ${FESTIVAL.datesShort} · ${FESTIVAL.venue}.`}
         compact
       />
 

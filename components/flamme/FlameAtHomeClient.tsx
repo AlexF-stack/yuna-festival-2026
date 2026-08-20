@@ -435,7 +435,7 @@ export function FlameAtHomeClient() {
         try {
           await navigator.share({
             files: [file],
-            title: "La flamme chez moi — YUNA 2026",
+            title: "La flamme chez moi, YUNA 2026",
             text: "Bénin Debout · Ésaïe 60:1",
           });
           setHint("Vidéo prête à partager.");
@@ -450,7 +450,7 @@ export function FlameAtHomeClient() {
       link.download = file.name;
       link.click();
       URL.revokeObjectURL(url);
-      setHint("Vidéo téléchargée — partage-la sur tes réseaux.");
+      setHint("Vidéo téléchargée. Partage-la sur tes réseaux.");
     };
     recorderRef.current = recorder;
     recorder.start(250);

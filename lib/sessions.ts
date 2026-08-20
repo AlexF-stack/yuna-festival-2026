@@ -47,9 +47,9 @@ export const FESTIVAL_SESSIONS: FestivalSession[] = [
     place: "Espace masterclass",
     placeEn: "Masterclass space",
     description:
-      "Vision, excellence et royaume dans les affaires — bâtir en jeune non ordinaire.",
+      "Vision, excellence et royaume dans les affaires. Bâtir en jeune non ordinaire.",
     descriptionEn:
-      "Vision, excellence and kingdom business — build as an extraordinary youth.",
+      "Vision, excellence and kingdom business. Build as an extraordinary youth.",
     registerType: "masterclass_entrepreneuriat",
     capacity: 60,
   },

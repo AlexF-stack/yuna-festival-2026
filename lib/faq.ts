@@ -15,16 +15,16 @@ export const FAQ_ITEMS: FaqItem[] = [
       "Oui, 100 % gratuite les deux soirs. L'inscription en ligne avec pass QR accélère ton entrée mais n'est pas obligatoire pour les soirées. Elle est en revanche requise pour les masterclass (places limitées).",
     questionEn: "Is entry really free?",
     answerEn:
-      "Yes — 100% free both evenings. Online QR registration speeds up entry but isn’t required for the concerts. It is required for masterclasses (limited seats).",
+      "Yes, 100% free both evenings. Online QR registration speeds up entry but isn’t required for the concerts. It is required for masterclasses (limited seats).",
   },
   {
     id: "heure-arrivee",
     question: "À quelle heure faut-il arriver ?",
     answer:
-      "Le site ouvre à 16h00 chaque soir (concerts dès 18h). Le créneau 15h–17h concerne uniquement la masterclass Entrepreneuriat du samedi — ce n’est pas l’heure d’ouverture du festival.",
+      "Le site ouvre à 16h00 chaque soir (concerts dès 18h). Le créneau 15h–17h concerne uniquement la masterclass Entrepreneuriat du samedi. Ce n’est pas l’heure d’ouverture du festival.",
     questionEn: "What time should I arrive?",
     answerEn:
-      "Gates open at 4:00 PM each evening (concerts from 6:00 PM). The 3–5 PM slot is only the Saturday Entrepreneurship masterclass — not festival opening time.",
+      "Gates open at 4:00 PM each evening (concerts from 6:00 PM). The 3–5 PM slot is only the Saturday Entrepreneurship masterclass, not festival opening time.",
   },
   {
     id: "masterclass",

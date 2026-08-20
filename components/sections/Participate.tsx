@@ -21,7 +21,7 @@ export function Participate() {
         />
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <ButtonLink
-            href={`mailto:${SITE_CONTACT.email}?subject=${encodeURIComponent("YUNA 2026 — Bénévolat")}`}
+            href={`mailto:${SITE_CONTACT.email}?subject=${encodeURIComponent("YUNA 2026, Bénévolat")}`}
             className="!bg-papier !text-feu hover:!bg-papier/90"
           >
             {PARTICIPATE.ctaVolunteer}

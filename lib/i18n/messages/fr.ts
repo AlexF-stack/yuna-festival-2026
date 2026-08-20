@@ -6,7 +6,7 @@ export const fr: Messages = {
   langSwitch: "Langue",
   common: {
     register: "Réserve ton pass",
-    registerCta: "C’est gratuit — je prends ma place",
+    registerCta: "C’est gratuit, je prends ma place",
     myPass: "Mon pass",
     recoverPass: "Pass perdu ? Retrouver mon pass",
     freeEntry: "Entrée libre",
@@ -40,7 +40,7 @@ export const fr: Messages = {
     contact: "Contact",
     organization: "Organisation",
     tagline: "Youth United for New Awakening",
-    dove: "יוֹנָה · La Colombe — l'Esprit sur une génération",
+    dove: "יוֹנָה · La Colombe, l'Esprit sur une génération",
     verseLine:
       "Une génération non ordinaire se lève. Ésaïe 60:1 · 5–6 septembre 2026",
     openNote: "Entrée libre · Ouverture 16h00",
@@ -50,7 +50,7 @@ export const fr: Messages = {
     titleLine1: "BÉNIN",
     titleLine2: "DEBOUT",
     support:
-      "Une génération non ordinaire se lève — Joseph. Daniel. David. À toi maintenant.",
+      "Une génération non ordinaire se lève. Joseph. Daniel. David. À toi maintenant.",
     verse:
       "« Lève-toi, sois éclairée, car ta lumière arrive, et la gloire de l'Éternel se lève sur toi. »",
     verseRef: "Ésaïe 60:1",
@@ -58,7 +58,7 @@ export const fr: Messages = {
     ctaSecondary: "Voir la journée",
     meta: "5–6 septembre 2026 · Terrain de Midombo, Cotonou",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "5–6 septembre 2026 · Terrain de Midombo – Cotonou · Entrée libre",
+    venueLine: "5–6 septembre 2026 · Terrain de Midombo, Cotonou · Entrée libre",
   },
   registerExtras: {
     addGuest: "+ Ajouter un pass pour quelqu’un d’autre",
@@ -67,14 +67,14 @@ export const fr: Messages = {
     guestName: "Nom complet *",
     guestPhone: "Téléphone (WhatsApp) *",
     guestsHint:
-      "Tu peux réserver jusqu’à 5 pass en une fois (toi + proches). Chaque personne a son propre QR — enregistre les liens de confirmation (aucun e-mail envoyé pour l’instant).",
+      "Tu peux réserver jusqu’à 5 pass en une fois (toi + proches). Chaque personne a son propre QR. Enregistre les liens de confirmation : aucun e-mail n’est envoyé pour l’instant.",
     maxGuests: "Maximum 5 pass par inscription.",
     submitMulti: "Recevoir les pass QR",
   },
   sessions: {
     eyebrow: "Sessions du samedi",
     title: "Masterclass",
-    lead: "Masterclass VTeam et Entrepreneuriat — inscription gratuite, places limitées.",
+    lead: "Masterclass VTeam et Entrepreneuriat. Inscription gratuite, places limitées.",
     register: "S’inscrire →",
     capacity: "Jusqu’à {n} places",
     free: "Gratuit",
@@ -98,12 +98,12 @@ export const fr: Messages = {
     eyebrow: "Explorer",
     title: "Tout le festival",
     description:
-      "Mouvement, line-up, journée et infos — le détail vit sur chaque page.",
+      "Mouvement, line-up, journée et infos. Le détail est sur chaque page.",
     cards: [
       {
         href: "/mouvement",
         title: "Le mouvement",
-        description: "Plus qu’un festival — Midombo, foi et génération.",
+        description: "Plus qu’un festival. Foi et génération à Midombo.",
         imageAlt: "Le mouvement YUNA",
       },
       {
@@ -121,13 +121,13 @@ export const fr: Messages = {
       {
         href: "/faq",
         title: "FAQ & infos",
-        description: "Entrée, pass QR, accès — les réponses essentielles.",
+        description: "Entrée, pass QR, accès. Les réponses essentielles.",
         imageAlt: "Public du festival",
       },
       {
         href: "/filtre",
         title: "Filtre photo",
-        description: "Cadre Bénin Debout — flammes, thème et verset.",
+        description: "Cadre Bénin Debout : flammes, thème et verset.",
         imageAlt: "Filtre photo YUNA Bénin Debout",
       },
       {
@@ -142,15 +142,15 @@ export const fr: Messages = {
     eyebrow: "Save the date · 2026",
     title: "5–6 septembre 2026",
     support:
-      "Une génération non ordinaire se lève — Joseph. Daniel. David. À toi maintenant.",
+      "Une génération non ordinaire se lève. Joseph. Daniel. David. À toi maintenant.",
     venue:
-      "Terrain de Midombo, Cotonou — Entrée libre. Garde la date, génère ton pass.",
+      "Terrain de Midombo, Cotonou. Entrée libre. Garde la date, génère ton pass.",
   },
   register: {
     eyebrow: "Inscription",
-    title: "Inscris-toi — ticket gratuit",
+    title: "Inscris-toi, ticket gratuit",
     lead:
-      "Inscris-toi gratuitement et reçois immédiatement ton ticket officiel avec QR — à présenter à l'entrée. Enregistre le lien de confirmation : aucun e-mail n'est envoyé pour l'instant.",
+      "Inscris-toi gratuitement et reçois tout de suite ton ticket officiel avec QR, à présenter à l'entrée. Enregistre le lien de confirmation : aucun e-mail n'est envoyé pour l'instant.",
     formTitle: "Tes infos",
     name: "Nom complet *",
     namePh: "Ex : Grâce Ahouansou",
@@ -166,11 +166,11 @@ export const fr: Messages = {
     recoverLink: "Retrouver mon pass",
     previewLabel: "Aperçu du ticket",
     previewHint:
-      "Le ticket définitif (avec QR) est créé après validation — cet aperçu te montre à quoi il ressemblera à l'entrée.",
+      "Le ticket définitif (avec QR) est créé après validation. Cet aperçu te montre à quoi il ressemblera à l'entrée.",
   },
   registerTypes: {
     pass: {
-      label: "Festival — 2 soirées",
+      label: "Festival, 2 soirées",
       hint: "Entrée libre · ticket QR pour accès prioritaire",
     },
     masterclass_vteam: {
@@ -192,43 +192,43 @@ export const fr: Messages = {
     eyebrow: "Line-up",
     title: "Les artistes",
     description:
-      "Adoration, louange et scènes fortes — le line-up se dévoile progressivement.",
-    teaser: "Line-up dévoilé progressivement — reste connecté",
+      "Adoration, louange et scènes fortes. Le line-up se dévoile progressivement.",
+    teaser: "Line-up dévoilé progressivement. Reste connecté.",
     coming: "Line-up à venir.",
     mysteryEyebrow: "Line-up en construction",
     mysteryTitle: "Bientôt dévoilés",
     mysteryBody:
-      "D’autres noms encore sous emballage — les annonces sortent progressivement. Reste connecté.",
+      "D’autres noms encore sous emballage. Les annonces sortent progressivement. Reste connecté.",
   },
   pages: {
     artistes: {
       eyebrow: "Scènes & adoration",
       title: "Le line-up",
       lead:
-        "Adoration, louange et scènes fortes — le line-up 2026 se dévoile progressivement. Reste connecté, les annonces arrivent.",
+        "Adoration, louange et scènes fortes. Le line-up 2026 se dévoile progressivement. Reste connecté, les annonces arrivent.",
     },
     vision: {
       eyebrow: "La vision",
       title: "Une génération non ordinaire",
       lead:
-        "Joseph, Daniel, David — des jeunes qui portent un esprit supérieur et se tiennent devant les rois.",
+        "Joseph, Daniel, David : des jeunes qui portent un esprit supérieur et se tiennent devant les rois.",
     },
     journee: {
       eyebrow: "Samedi en journée",
       title: "Impact avant la scène",
       lead:
-        "Avant les concerts, le samedi accueille les masterclass VTeam et Entrepreneuriat — et les pôles gospel, art, danse.",
+        "Avant les concerts, le samedi accueille les masterclass VTeam et Entrepreneuriat, plus les pôles gospel, art et danse.",
     },
     lieu: {
       eyebrow: "Le lieu",
       title: "Terrain de Midombo",
       lead:
-        "Un espace ouvert au cœur de Cotonou — accessible à tous, entrée libre.",
+        "Un espace ouvert au cœur de Cotonou, accessible à tous. Entrée libre.",
     },
     boutique: {
       eyebrow: "Boutique",
       title: "Porte le feu",
-      lead: "Tee-shirts LED YUNA — l’identité du mouvement sur toi.",
+      lead: "Tee-shirts LED YUNA. L’identité du mouvement sur toi.",
     },
     don: {
       eyebrow: "Soutenir",
@@ -239,7 +239,7 @@ export const fr: Messages = {
     faq: {
       eyebrow: "Infos",
       title: "FAQ",
-      lead: "Entrée, pass QR, accès — les réponses essentielles.",
+      lead: "Entrée, pass QR, accès. Les réponses essentielles.",
     },
     monPass: {
       eyebrow: "Pass perdu ?",
@@ -252,7 +252,7 @@ export const fr: Messages = {
       eyebrow: "Le mouvement",
       title: "Plus qu’un festival",
       lead:
-        "Foi, talents et impact terrain — une génération qui se lève à Midombo et au-delà.",
+        "Foi, talents et impact terrain. Une génération qui se lève à Midombo et au-delà.",
     },
   },
   confirmation: {
@@ -261,7 +261,7 @@ export const fr: Messages = {
     leadMessaging:
       "Voici ton ticket officiel avec QR. Présente-le à l’entrée. Un message de confirmation part aussi automatiquement sur ton téléphone.",
     leadSave:
-      "Voici ton ticket officiel avec QR. Télécharge-le ou enregistre le lien — tu pourras le retrouver via Mon pass.",
+      "Voici ton ticket officiel avec QR. Télécharge-le ou enregistre le lien. Tu pourras le retrouver via Mon pass.",
     groupTitle: "Groupe : {n} tickets créés",
     groupBody: "Voici ton ticket. Les autres du groupe :",
     passN: "Ticket n°{n} →",

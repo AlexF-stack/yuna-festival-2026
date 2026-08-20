@@ -67,7 +67,7 @@ export function Newsletter() {
 
       {ok ? (
         <p className="mt-4 font-medium text-alert-soft" role="status">
-          C&apos;est noté — tu recevras nos annonces.
+          C&apos;est noté. Tu recevras nos annonces.
         </p>
       ) : (
         <form onSubmit={onSubmit} className="relative mt-5 flex flex-col gap-2.5" noValidate>
@@ -108,7 +108,7 @@ export function Newsletter() {
             />
             <span>
               J&apos;accepte de recevoir les annonces YUNA par e-mail.
-              Désinscription à tout moment —{" "}
+              Désinscription à tout moment.{" "}
               <a
                 href="/confidentialite"
                 className="underline underline-offset-2 hover:text-papier"

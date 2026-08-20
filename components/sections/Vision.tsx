@@ -73,7 +73,7 @@ export function Vision() {
                   <div className="relative h-40 overflow-hidden">
                     <SoftImage
                       src={pillar.image}
-                      alt={`${pillar.title} — ${pillar.ref}`}
+                      alt={`${pillar.title} · ${pillar.ref}`}
                       fill
                       sizes="(max-width: 880px) 100vw, 33vw"
                       quality={65}

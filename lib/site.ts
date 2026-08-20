@@ -24,7 +24,7 @@ export function getBoutiqueCheckoutHref(productName?: string): string {
   if (fedapay) return fedapay;
   const subject = encodeURIComponent(
     productName
-      ? `Précommande ${productName} — YUNA 2026`
+      ? `Précommande ${productName}, YUNA 2026`
       : SITE_CONTACT.preorderSubject,
   );
   return `mailto:${SITE_CONTACT.email}?subject=${subject}`;

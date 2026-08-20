@@ -46,7 +46,7 @@ function confirmationBody(job: NotifyJob): string {
         ]
       : job.registrationType;
   return (
-    `YUNA Festival 2026 — inscription confirmée ✓\n` +
+    `YUNA Festival 2026 : inscription confirmée ✓\n` +
     `${job.name} · ${type}\n` +
     `Ton pass QR : ${job.confirmationUrl}\n` +
     `Présente-le à l'entrée (5–6 sept, Midombo).`

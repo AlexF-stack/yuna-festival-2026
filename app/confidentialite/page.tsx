@@ -31,7 +31,7 @@ const SECTIONS: Array<{ title: string; paragraphs: string[] }> = [
   {
     title: "3. Pourquoi ces données ?",
     paragraphs: [
-      "Générer et t'envoyer ton pass QR personnel, contrôler les entrées le jour J, organiser les masterclass et le programme bénévole, et — si tu t'y abonnes — t'envoyer les annonces du festival (artistes, horaires, infos pratiques).",
+      "Générer et t'envoyer ton pass QR personnel, contrôler les entrées le jour J, organiser les masterclass et le programme bénévole, et, si tu t'y abonnes, t'envoyer les annonces du festival (artistes, horaires, infos pratiques).",
       "Base légale : ton consentement, exprimé lors de l'envoi du formulaire d'inscription ou d'abonnement à la newsletter.",
     ],
   },
@@ -50,7 +50,7 @@ const SECTIONS: Array<{ title: string; paragraphs: string[] }> = [
   {
     title: "6. Tes droits",
     paragraphs: [
-      `Conformément au Règlement général sur la protection des données (RGPD) et à la loi béninoise n°2017-20 portant code du numérique, tu disposes d'un droit d'accès, de rectification, d'effacement et d'opposition sur tes données. Pour l'exercer, écris à ${SITE_CONTACT.email} — nous répondons sous 30 jours.`,
+      `Conformément au Règlement général sur la protection des données (RGPD) et à la loi béninoise n°2017-20 portant code du numérique, tu disposes d'un droit d'accès, de rectification, d'effacement et d'opposition sur tes données. Pour l'exercer, écris à ${SITE_CONTACT.email} : nous répondons sous 30 jours.`,
       "Tu peux aussi introduire une réclamation auprès de l'Autorité de protection des données personnelles du Bénin (APDP).",
     ],
   },

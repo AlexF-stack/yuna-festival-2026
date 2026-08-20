@@ -25,7 +25,7 @@ export function HeroShowcase({ eventStartIso }: HeroShowcaseProps) {
       animate={reduce ? undefined : { opacity: 1, x: 0 }}
       transition={{ duration: 0.7, ease: EASE_PREMIUM, delay: 0.3 }}
       className="hidden min-[900px]:block"
-      aria-label={`${FESTIVAL.theme} — ${FESTIVAL.venue}`}
+      aria-label={`${FESTIVAL.theme} · ${FESTIVAL.venue}`}
     >
       <div className="relative flex flex-col items-center px-1 min-[1100px]:px-2">
         <p className="text-center font-mono text-[0.68rem] font-bold uppercase tracking-[0.22em] text-jaune">

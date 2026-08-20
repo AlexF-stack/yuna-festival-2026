@@ -84,7 +84,7 @@ export function PartnersPageContent() {
     if (!event.currentTarget.reportValidity()) return;
 
     const subject = encodeURIComponent(
-      `${copy.formMailSubject} — ${org.trim()}`,
+      `${copy.formMailSubject} : ${org.trim()}`,
     );
     const body = encodeURIComponent(
       [
@@ -203,7 +203,7 @@ export function PartnersPageContent() {
             eyebrow="Votre marque dans l’expérience"
             title="Visibilité et activation"
             titleId="visibilite-title"
-            description="Des points de contact avant, pendant et après le festival — selon le niveau de partenariat retenu."
+            description="Des points de contact avant, pendant et après le festival, selon le niveau de partenariat retenu."
             variant="light"
           />
         </Reveal>

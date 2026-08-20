@@ -74,7 +74,7 @@ export function RecoverPassForm() {
           Tes pass
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-charbon">
-          Plusieurs inscriptions correspondent — choisis le pass à afficher.
+          Plusieurs inscriptions correspondent. Choisis le pass à afficher.
         </p>
         <ul className="mt-5 space-y-2.5">
           {passes.map((p) => (

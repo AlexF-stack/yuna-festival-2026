@@ -32,14 +32,14 @@ export type SectionBgConfig = {
 export const SECTION_BACKGROUNDS: Record<SectionBgKey, SectionBgConfig> = {
   vision: {
     src: "/media/title-vision.jpg",
-    alt: "La vision — YUNA Festival 2026",
+    alt: "La vision, YUNA Festival 2026",
     objectPosition: "center center",
     overlay: "nuit",
     photoOpacity: 0.88,
   },
   lineup: {
     src: "/media/title-lineup.jpg",
-    alt: "Line-up — YUNA Festival 2026",
+    alt: "Line-up, YUNA Festival 2026",
     objectPosition: "center center",
     overlay: "nuit",
     photoOpacity: 0.88,

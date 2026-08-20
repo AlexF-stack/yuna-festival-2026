@@ -116,7 +116,7 @@ export async function buildAppleWalletPass(
     {
       key: "note",
       label: "Entrée",
-      value: "Entrée libre — présente ce pass à la porte.",
+      value: "Entrée libre. Présente ce pass à la porte.",
     },
   );
 

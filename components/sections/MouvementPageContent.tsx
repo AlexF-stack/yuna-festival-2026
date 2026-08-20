@@ -15,12 +15,12 @@ const PREUVES = {
     {
       n: "01",
       title: "Masterclass",
-      body: "VTeam pour musiciens et chantres, Entrepreneuriat pour bâtir en jeune non ordinaire — avant les concerts du soir.",
+      body: "VTeam pour musiciens et chantres, Entrepreneuriat pour bâtir en jeune non ordinaire. Avant les concerts du soir.",
     },
     {
       n: "02",
       title: "Pass QR moderne",
-      body: "Inscription en ligne, pass nominatif sécurisé, scan staff le jour J — une ops digne d’un festival international.",
+      body: "Inscription en ligne, pass nominatif sécurisé, scan staff le jour J. Une organisation digne d’un festival international.",
     },
     {
       n: "03",
@@ -32,12 +32,12 @@ const PREUVES = {
     {
       n: "01",
       title: "Masterclasses",
-      body: "VTeam for musicians and worship leaders, Entrepreneurship to build as an extraordinary youth — before the evening concerts.",
+      body: "VTeam for musicians and worship leaders, Entrepreneurship to build as an extraordinary youth. Before the evening concerts.",
     },
     {
       n: "02",
       title: "Modern QR pass",
-      body: "Online registration, named secure pass, staff scan on the day — ops worthy of an international festival.",
+      body: "Online registration, named secure pass, staff scan on the day. Operations worthy of an international festival.",
     },
     {
       n: "03",
@@ -342,7 +342,7 @@ export function MouvementPageContent() {
                   </ul>
                 </div>
                 <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.14em] text-papier/45">
-                  Logo — à fournir
+                  Logo à fournir
                 </p>
               </motion.li>
             ))}

@@ -7,11 +7,11 @@ const DESCRIPTION =
   "Terrain de Midombo, Cotonou : entrée libre, site ouvert dès 16h00, accès facile en zém, taxi et bus. Le festival vient à la rencontre de la jeunesse.";
 
 export const metadata: Metadata = {
-  title: "Le lieu — Terrain de Midombo",
+  title: "Le lieu : Terrain de Midombo",
   description: DESCRIPTION,
   alternates: { canonical: "/lieu" },
   openGraph: {
-    title: "Le lieu — Terrain de Midombo | YUNA Festival 2026",
+    title: "Le lieu : Terrain de Midombo | YUNA Festival 2026",
     description: DESCRIPTION,
     url: "https://www.festivalyuna.com/lieu",
   },

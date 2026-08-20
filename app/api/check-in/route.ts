@@ -56,7 +56,7 @@ export async function POST(request: Request) {
   const id = extractRegistrationId(body.code ?? "");
   if (!id) {
     return NextResponse.json(
-      { error: "QR invalide — UUID d’inscription attendu." },
+      { error: "QR invalide. UUID d’inscription attendu." },
       { status: 400 },
     );
   }

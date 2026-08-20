@@ -247,20 +247,20 @@ export function JourneePageContent() {
           <h2 className="mt-3 max-w-2xl font-display text-[clamp(1.8rem,4vw,2.6rem)] font-extrabold uppercase leading-[1.05]">
             {isEn ? (
               <>
-                Site opens at 4pm —{" "}
+                Site opens at 4pm.{" "}
                 <span className="text-feu-core">concerts from 6pm</span>
               </>
             ) : (
               <>
-                À 16h le site ouvre —{" "}
+                À 16h le site ouvre.{" "}
                 <span className="text-feu-core">concerts dès 18h</span>
               </>
             )}
           </h2>
           <p className="mt-4 max-w-lg text-[1.05rem] leading-relaxed text-ivoire-froid/75">
             {isEn
-              ? "Daytime prepares the ground. At night, a generation rises on Midombo’s stage — free entry."
-              : "La journée prépare le terrain. Le soir, la génération se lève sur scène à Midombo — entrée libre."}
+              ? "Daytime prepares the ground. At night, a generation rises on Midombo’s stage. Free entry."
+              : "La journée prépare le terrain. Le soir, la génération se lève sur scène à Midombo. Entrée libre."}
           </p>
           <div className="mt-8">
             <ButtonLink href="/artistes">
@@ -297,8 +297,8 @@ export function JourneePageContent() {
           </h2>
           <p className="mt-4 max-w-lg text-[1.05rem] text-charbon">
             {isEn
-              ? "One aim: glorify God — gospel, art, dance, training."
-              : "Un seul objectif : glorifier Dieu — gospel, art, danse, formation."}
+              ? "One aim: glorify God. Gospel, art, dance, training."
+              : "Un seul objectif : glorifier Dieu. Gospel, art, danse, formation."}
           </p>
         </div>
 

@@ -22,7 +22,7 @@ function buildSupportMailto(amount: number | null): string {
   if (fedapay) return fedapay;
   const subject = encodeURIComponent(
     amount
-      ? `Soutenir YUNA 2026 — ${amount} FCFA`
+      ? `Soutenir YUNA 2026, ${amount} FCFA`
       : "Soutenir YUNA Festival 2026",
   );
   const body = encodeURIComponent(
@@ -344,12 +344,12 @@ export function DonatePageContent() {
               <p className="mt-5 text-center text-sm leading-relaxed text-ivoire-froid/60">
                 {isMailtoSeed ? (
                   <>
-                    Pas de paiement en ligne pour l’instant — tu ouvres un e-mail
+                    Pas de paiement en ligne pour l’instant. Tu ouvres un e-mail
                     prérempli (ou WhatsApp). L’équipe te guide pour Mobile Money /
                     virement.{" "}
                   </>
                 ) : (
-                  <>Checkout sécurisé — confirmation par l’équipe. </>
+                  <>Checkout sécurisé. Confirmation par l’équipe. </>
                 )}
                 <a
                   href={DONATE.href}

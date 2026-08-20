@@ -5,7 +5,7 @@ import { Vision } from "@/components/sections/Vision";
 import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
 
 const DESCRIPTION =
-  "La vision YUNA 2026 : une génération non ordinaire se lève — Joseph, Daniel, David. La colombe et le feu, l'Esprit sur toute une génération.";
+  "La vision YUNA 2026 : une génération non ordinaire se lève. Joseph, Daniel, David. La colombe et le feu, l'Esprit sur toute une génération.";
 
 export const metadata: Metadata = {
   title: "La vision",

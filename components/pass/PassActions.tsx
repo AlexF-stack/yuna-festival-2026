@@ -108,7 +108,7 @@ export function PassActions({
       {messagingOn ? (
         <p className="rounded-2xl border border-vert/30 bg-vert/12 px-4 py-3 text-center text-sm leading-relaxed text-encre">
           <span className="font-bold text-vert">{a.confirmed}</span>
-          {" — "}
+          {" · "}
           {fill(a.messageSent, { channel })}
         </p>
       ) : (

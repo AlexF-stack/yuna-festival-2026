@@ -14,7 +14,7 @@ export function Poles() {
           eyebrow="Les pôles"
           title="Des activités pour tous"
           titleId="poles-title"
-          description="Des activités pour tous les goûts — un seul objectif : glorifier Dieu."
+          description="Des activités pour tous les goûts. Un seul objectif : glorifier Dieu."
         />
       </Reveal>
 

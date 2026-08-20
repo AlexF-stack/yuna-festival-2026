@@ -60,7 +60,7 @@ export function Teaser() {
                   Teaser bientôt disponible
                 </p>
                 <p className="max-w-md text-sm text-papier/75">
-                  La vidéo officielle sera publiée ici — inscris-toi pour être
+                  La vidéo officielle sera publiée ici. Inscris-toi pour être
                   prévenu en premier.
                 </p>
               </div>

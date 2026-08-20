@@ -335,7 +335,7 @@ export function StaffCrmClient() {
             {loading ? "Connexion…" : "Ouvrir le CRM"}
           </button>
           <p className="mt-3 text-xs leading-relaxed text-charbon">
-            Distinct du secret scan — la tablette d’entrée n’ouvre pas ce
+            Distinct du secret scan. La tablette d’entrée n’ouvre pas ce
             listing.
           </p>
           {error ? (
