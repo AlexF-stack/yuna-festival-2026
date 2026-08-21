@@ -41,6 +41,7 @@ export async function GET() {
     messagingSms: messaging.sms,
     walletApple: wallet.apple,
     walletGoogle: wallet.google,
+    fedapay: Boolean(process.env.FEDAPAY_SECRET_KEY?.trim()),
   };
 
   checks.ok =
