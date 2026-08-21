@@ -109,11 +109,11 @@ export function Hero({ eventStartIso }: HeroProps) {
 
           <motion.div
             variants={reduceMotion ? undefined : rise}
-            className="mt-7 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap"
+            className="mt-7 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap min-[420px]:items-center"
           >
             <ButtonLink
               href={HERO_COPY.ctaPrimaryHref}
-              className="min-h-[3.25rem] w-full !px-7 text-[1.02rem] font-extrabold uppercase tracking-[0.04em] min-[420px]:w-auto"
+              className="cta-register-pulse min-h-[3.6rem] w-full !px-8 text-[1.08rem] font-extrabold uppercase tracking-[0.05em] shadow-ombre-cta min-[420px]:min-w-[17rem] min-[420px]:w-auto"
             >
               {hero.ctaPrimary}
             </ButtonLink>
@@ -125,6 +125,12 @@ export function Hero({ eventStartIso }: HeroProps) {
               {hero.ctaSecondary}
             </ButtonLink>
           </motion.div>
+          <motion.p
+            variants={reduceMotion ? undefined : rise}
+            className="mt-3 font-mono text-[0.72rem] font-bold uppercase tracking-[0.16em] text-jaune"
+          >
+            {t.common.freeEntry} · Pass QR
+          </motion.p>
 
           <motion.blockquote
             variants={reduceMotion ? undefined : rise}

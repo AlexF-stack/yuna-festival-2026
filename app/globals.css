@@ -333,7 +333,8 @@ body {
   .marquee-track,
   .hero-kenburns,
   .scroll-cue,
-  .logo-flame--hero {
+  .logo-flame--hero,
+  .cta-register-pulse {
     animation: none !important;
   }
 }
@@ -460,6 +461,31 @@ body {
       drop-shadow(0 0 20px color-mix(in srgb, var(--feu) 75%, transparent))
       drop-shadow(0 0 48px color-mix(in srgb, var(--feu-glow) 55%, transparent))
       drop-shadow(0 0 72px color-mix(in srgb, var(--feu-core) 38%, transparent));
+  }
+}
+
+/* CTA inscription — halo discret pour rester visible au scroll */
+@keyframes cta-register-pulse {
+  0%,
+  100% {
+    box-shadow:
+      var(--ombre-cta),
+      0 0 0 0 color-mix(in srgb, var(--feu) 0%, transparent);
+  }
+  55% {
+    box-shadow:
+      var(--ombre-cta),
+      0 0 0 10px color-mix(in srgb, var(--feu) 18%, transparent);
+  }
+}
+
+.cta-register-pulse {
+  animation: cta-register-pulse 2.4s var(--ease-yuna) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-register-pulse {
+    animation: none;
   }
 }
 

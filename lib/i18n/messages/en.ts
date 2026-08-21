@@ -7,6 +7,7 @@ export const en: Messages = {
   common: {
     register: "Get your pass",
     registerCta: "It’s free, I’m in",
+    registerShort: "Register",
     myPass: "My pass",
     recoverPass: "Lost your pass? Recover it",
     freeEntry: "Free entry",
@@ -209,8 +210,8 @@ export const en: Messages = {
       hint: "Welcome, security, tech… · dedicated WhatsApp group",
     },
   },
-  floatCta: "My pass",
-  floatAria: "Get my free QR pass",
+  floatCta: "Register · Free",
+  floatAria: "Register for free and get my QR pass",
   lineup: {
     eyebrow: "Artists",
     title: "The artists",

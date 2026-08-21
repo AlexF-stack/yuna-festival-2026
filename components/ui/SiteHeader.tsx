@@ -239,7 +239,7 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="hidden items-center justify-end gap-2 min-[900px]:flex">
+        <div className="hidden items-center justify-end gap-2.5 min-[900px]:flex">
           <LanguageSwitcher light={lightText} surface={activeSurface} />
           <TransitionLink
             href="/mon-pass"
@@ -249,7 +249,7 @@ export function SiteHeader() {
           </TransitionLink>
           <ButtonLink
             href="/#inscription"
-            className={`min-h-11 !px-4 !py-2.5 text-[0.72rem] font-extrabold uppercase tracking-[0.06em] min-[1100px]:!px-5 min-[1100px]:text-[0.78rem] ${style.cta}`}
+            className={`cta-register-pulse min-h-12 !px-5 !py-3 text-[0.8rem] font-extrabold uppercase tracking-[0.06em] min-[1100px]:!px-6 min-[1100px]:text-[0.85rem] ${style.cta}`}
           >
             {messages.common.register}
           </ButtonLink>
@@ -257,6 +257,12 @@ export function SiteHeader() {
 
         <div className="flex items-center justify-end gap-2 min-[900px]:hidden">
           <LanguageSwitcher light={lightText} surface={activeSurface} />
+          <ButtonLink
+            href="/#inscription"
+            className={`cta-register-pulse min-h-10 !px-3.5 !py-2 text-[0.68rem] font-extrabold uppercase tracking-[0.05em] ${style.cta}`}
+          >
+            {messages.common.registerShort}
+          </ButtonLink>
           <button
             type="button"
             className={`relative z-[130] flex h-11 w-11 items-center justify-center rounded-full border ${style.burger}`}
@@ -329,10 +335,10 @@ export function SiteHeader() {
           </TransitionLink>
           <ButtonLink
             href="/#inscription"
-            className={`mt-3 w-full !py-4 font-extrabold uppercase tracking-[0.06em] ${style.cta}`}
+            className={`cta-register-pulse mt-3 w-full !py-4 text-[1.05rem] font-extrabold uppercase tracking-[0.06em] ${style.cta}`}
             onClick={() => setOpen(false)}
           >
-            {messages.common.register}
+            {messages.common.registerCta}
           </ButtonLink>
         </nav>
       </div>

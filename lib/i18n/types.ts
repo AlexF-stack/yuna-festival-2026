@@ -7,6 +7,7 @@ export type Messages = {
   common: {
     register: string;
     registerCta: string;
+    registerShort: string;
     myPass: string;
     recoverPass: string;
     freeEntry: string;
