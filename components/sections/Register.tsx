@@ -2,7 +2,6 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
-import { PassPreview } from "@/components/pass/PassPreview";
 import { RegistrationGauge } from "@/components/sections/RegistrationGauge";
 import { useMessages } from "@/components/i18n/LocaleProvider";
 import { Reveal } from "@/components/ui/Reveal";
@@ -209,7 +208,6 @@ export function Register() {
 
   const includesFestival = registrationTypes.includes("pass");
   const canAddGuest = includesFestival && guests.length < MAX_GUESTS;
-  const previewType = registrationTypes[0] ?? "pass";
   const submitLabel =
     guests.length > 0 || registrationTypes.length > 1
       ? t.registerExtras.submitMulti
@@ -235,7 +233,7 @@ export function Register() {
           <RegistrationGauge />
         </Reveal>
 
-        <div className="mt-12 grid items-start gap-10 min-[960px]:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] min-[960px]:gap-12">
+        <div className="mt-12 max-w-xl">
           <Reveal variant="left">
           <form
             onSubmit={onSubmit}
@@ -570,16 +568,6 @@ export function Register() {
               ))}
             </ul>
           </form>
-          </Reveal>
-
-          <Reveal variant="right" delay={0.08} className="min-[960px]:sticky min-[960px]:top-28">
-            <p className="mb-3 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-charbon">
-              {t.register.previewLabel}
-            </p>
-            <PassPreview name={name} registrationType={previewType} />
-            <p className="mt-4 text-sm leading-relaxed text-charbon">
-              {t.register.previewHint}
-            </p>
           </Reveal>
         </div>
       </div>
