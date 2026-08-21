@@ -113,7 +113,7 @@ export function Hero({ eventStartIso }: HeroProps) {
           >
             <ButtonLink
               href={HERO_COPY.ctaPrimaryHref}
-              className="cta-register-pulse min-h-[3.6rem] w-full !px-8 text-[1.08rem] font-extrabold uppercase tracking-[0.05em] shadow-ombre-cta min-[420px]:min-w-[17rem] min-[420px]:w-auto"
+              className="cta-register-pulse min-h-[3.35rem] w-full !px-5 text-balance text-[0.95rem] font-extrabold uppercase tracking-[0.04em] shadow-ombre-cta min-[420px]:min-h-[3.6rem] min-[420px]:min-w-[17rem] min-[420px]:w-auto min-[420px]:!px-8 min-[420px]:text-[1.08rem] min-[420px]:tracking-[0.05em]"
             >
               {hero.ctaPrimary}
             </ButtonLink>

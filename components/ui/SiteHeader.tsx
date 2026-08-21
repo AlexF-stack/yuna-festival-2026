@@ -255,17 +255,17 @@ export function SiteHeader() {
           </ButtonLink>
         </div>
 
-        <div className="flex items-center justify-end gap-2 min-[900px]:hidden">
+        <div className="flex max-w-[min(100%,14.5rem)] items-center justify-end gap-1.5 min-[380px]:max-w-none min-[380px]:gap-2 min-[900px]:hidden">
           <LanguageSwitcher light={lightText} surface={activeSurface} />
           <ButtonLink
             href="/#inscription"
-            className={`cta-register-pulse min-h-10 !px-3.5 !py-2 text-[0.68rem] font-extrabold uppercase tracking-[0.05em] ${style.cta}`}
+            className={`cta-register-pulse min-h-10 shrink-0 !px-3 !py-2 text-[0.65rem] font-extrabold uppercase tracking-[0.04em] min-[380px]:!px-3.5 min-[380px]:text-[0.68rem] ${style.cta}`}
           >
             {messages.common.registerShort}
           </ButtonLink>
           <button
             type="button"
-            className={`relative z-[130] flex h-11 w-11 items-center justify-center rounded-full border ${style.burger}`}
+            className={`relative z-[130] flex h-10 w-10 shrink-0 items-center justify-center rounded-full border min-[380px]:h-11 min-[380px]:w-11 ${style.burger}`}
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}

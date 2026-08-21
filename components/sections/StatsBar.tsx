@@ -52,15 +52,15 @@ export function StatsBar() {
             key={stat.label}
             variants={reduce ? undefined : rise(20)}
             transition={{ duration: 0.7, ease: EASE_YUNA }}
-            className="group relative px-4 py-8 text-center text-papier min-[480px]:px-5 min-[480px]:py-9"
+            className="group relative px-3 py-7 text-center text-papier min-[480px]:px-5 min-[480px]:py-9"
           >
             <p
-              className="font-display text-[clamp(2.35rem,9vw,2.85rem)] font-extrabold leading-none text-jaune transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
+              className="font-display text-[clamp(1.85rem,8vw,2.85rem)] font-extrabold leading-none text-jaune transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
               aria-label={`${stat.value} ${stat.label}`}
             >
               {stat.value}
             </p>
-            <p className="mt-2 text-[0.68rem] font-bold uppercase tracking-[0.18em] text-ivoire-froid/85 min-[480px]:text-[0.72rem] min-[480px]:tracking-[0.2em]">
+            <p className="mt-2 text-[0.62rem] font-bold uppercase leading-snug tracking-[0.12em] text-ivoire-froid/85 min-[480px]:text-[0.72rem] min-[480px]:tracking-[0.2em]">
               {stat.label}
             </p>
           </motion.div>
