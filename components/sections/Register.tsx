@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
+import { PassPreview } from "@/components/pass/PassPreview";
 import { RegistrationGauge } from "@/components/sections/RegistrationGauge";
 import { useMessages } from "@/components/i18n/LocaleProvider";
 import { Reveal } from "@/components/ui/Reveal";
@@ -208,6 +209,7 @@ export function Register() {
 
   const includesFestival = registrationTypes.includes("pass");
   const canAddGuest = includesFestival && guests.length < MAX_GUESTS;
+  const previewType = registrationTypes[0] ?? "pass";
   const submitLabel =
     guests.length > 0 || registrationTypes.length > 1
       ? t.registerExtras.submitMulti
