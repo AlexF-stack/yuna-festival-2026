@@ -37,6 +37,23 @@ function fromAddress(): string {
   );
 }
 
+function fallbackFrom(): string {
+  return (
+    process.env.RESEND_FALLBACK_FROM_EMAIL?.trim() ||
+    "YUNA Festival <onboarding@resend.dev>"
+  );
+}
+
+function inboxList(): string[] {
+  const primary = inbox();
+  const extra = process.env.CONTACT_INBOX_CC?.trim();
+  const list = [primary];
+  if (extra && extra.toLowerCase() !== primary.toLowerCase()) {
+    list.push(extra);
+  }
+  return list;
+}
+
 function escape(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -123,7 +140,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const to = inbox();
+  const to = inboxList();
   const subject =
     kind === "support"
       ? amount
@@ -164,14 +181,23 @@ export async function POST(request: Request) {
 
   try {
     const resend = new Resend(apiKey);
-    const { error } = await resend.emails.send({
-      from: fromAddress(),
-      to: [to],
-      replyTo: email,
-      subject,
-      text,
-      html,
-    });
+    const attempt = async (from: string) =>
+      resend.emails.send({
+        from,
+        to,
+        replyTo: email,
+        subject,
+        text,
+        html,
+      });
+
+    let { error } = await attempt(fromAddress());
+    if (
+      error &&
+      /not verified|domain/i.test(error.message || "")
+    ) {
+      ({ error } = await attempt(fallbackFrom()));
+    }
     if (error) {
       console.error("[contact] resend", error);
       return NextResponse.json(
@@ -193,5 +219,5 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({ ok: true, inbox: to });
+  return NextResponse.json({ ok: true, inbox: to[0] });
 }
