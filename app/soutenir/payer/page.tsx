@@ -7,20 +7,30 @@ import { SITE_CONTACT } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Payer mon soutien",
   description:
-    "Soutiens YUNA Festival 2026 par Mobile Money ou WhatsApp. Montant libre.",
+    "Soutiens YUNA Festival 2026 par Mobile Money (MTN ou Moov). Montant libre.",
   alternates: { canonical: "/soutenir/payer" },
   robots: { index: true, follow: true },
 };
 
-const MOMO_DISPLAY = "+229 01 59 03 71 59";
-const MOMO_DIGITS = "2290159037159";
-const WHATSAPP_HREF = `https://wa.me/${MOMO_DIGITS}?text=${encodeURIComponent(
+const PAYMENT_NUMBERS = [
+  {
+    label: "Moov Money",
+    display: "+229 01 45 69 83 91",
+    digits: "2290145698391",
+  },
+  {
+    label: "MTN MoMo",
+    display: "+229 01 51 49 77 97",
+    digits: "2290151497797",
+  },
+] as const;
+
+const WHATSAPP_HREF = `https://wa.me/${PAYMENT_NUMBERS[1].digits}?text=${encodeURIComponent(
   "Bonjour YUNA Festival, je souhaite soutenir l’édition 2026. Montant : ",
 )}`;
 
 /**
- * Paiement soutien par Mobile Money (MTN MoMo / Moov).
- * Numéro officiel contact YUNA.
+ * Paiement soutien par Mobile Money — numéros officiels Moov + MTN.
  */
 export default function SoutenirPayerPage() {
   return (
@@ -45,14 +55,23 @@ export default function SoutenirPayerPage() {
           <ol className="mt-10 space-y-5">
             <li className="rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde/50 p-5">
               <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-feu-glow">
-                1 · Numéro
+                1 · Numéros
               </p>
-              <p className="mt-2 font-display text-2xl font-extrabold text-papier">
-                {MOMO_DISPLAY}
-              </p>
-              <p className="mt-1 text-sm text-ivoire-froid/65">
-                MTN MoMo ou Moov Money · Bénin
-              </p>
+              <ul className="mt-4 space-y-4">
+                {PAYMENT_NUMBERS.map((n) => (
+                  <li key={n.digits}>
+                    <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.14em] text-ivoire-froid/55">
+                      {n.label}
+                    </p>
+                    <a
+                      href={`tel:+${n.digits}`}
+                      className="mt-1 block font-display text-[1.55rem] font-extrabold leading-none text-papier underline-offset-4 hover:text-feu-glow hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-feu min-[420px]:text-2xl"
+                    >
+                      {n.display}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </li>
             <li className="rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde/50 p-5">
               <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-feu-glow">
@@ -84,7 +103,7 @@ export default function SoutenirPayerPage() {
               href={WHATSAPP_HREF}
               className="min-h-12 w-full !px-6 text-center min-[420px]:w-auto"
             >
-              Payer via WhatsApp
+              Confirmer via WhatsApp
             </ButtonLink>
             <ButtonLink
               href="/soutenir"
