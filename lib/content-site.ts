@@ -205,7 +205,7 @@ export const PARTNERS_PAGE = {
   formPrivacy:
     "Les informations saisies servent uniquement à traiter votre demande de partenariat.",
   formSubmitHint:
-    "L’envoi prépare votre demande à destination de l’équipe partenariat YUNA.",
+    "La demande est envoyée directement à contact@festivalyuna.com (équipe partenariats).",
   dossierTitle: "Dossier de sponsoring",
   dossierLead:
     "Le dossier PDF détaillé (audiences, plans média, contreparties) sera disponible ici dès validation. En attendant, demandez-le par e-mail.",

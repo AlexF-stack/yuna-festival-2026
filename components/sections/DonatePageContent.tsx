@@ -43,6 +43,13 @@ export function DonatePageContent() {
     SUPPORT_FLAMES[2].amount,
   );
   const [custom, setCustom] = useState("");
+  const [donorName, setDonorName] = useState("");
+  const [donorEmail, setDonorEmail] = useState("");
+  const [donorPhone, setDonorPhone] = useState("");
+  const [sendStatus, setSendStatus] = useState<
+    "idle" | "sending" | "ok" | "error"
+  >("idle");
+  const [sendError, setSendError] = useState("");
   const whatsapp = getWhatsAppHref();
 
   const amount = useMemo(() => {
@@ -66,6 +73,47 @@ export function DonatePageContent() {
     : custom
       ? SUPPORT_FLAMES.length - 1
       : -1;
+
+  async function submitSupportIntent() {
+    if (!isMailtoSeed) {
+      window.location.href = seedHref;
+      return;
+    }
+    if (donorName.trim().length < 2 || !donorEmail.includes("@")) {
+      setSendStatus("error");
+      setSendError("Indique ton nom et ton e-mail pour que l’équipe te réponde.");
+      return;
+    }
+    setSendStatus("sending");
+    setSendError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          kind: "support",
+          name: donorName.trim(),
+          email: donorEmail.trim(),
+          phone: donorPhone.trim(),
+          amount,
+          website: "",
+        }),
+      });
+      const data = (await res.json()) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) {
+        setSendStatus("error");
+        setSendError(
+          data.error ||
+            "Envoi impossible. Écris à contact@festivalyuna.com.",
+        );
+        return;
+      }
+      setSendStatus("ok");
+    } catch {
+      setSendStatus("error");
+      setSendError("Réseau indisponible. Réessaie dans un instant.");
+    }
+  }
 
   return (
     <>
@@ -329,24 +377,81 @@ export function DonatePageContent() {
                 />
               </label>
 
-              <a
-                href={seedHref}
-                className="btn-cta-flame mt-6 flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-4 py-4 text-[1.05rem] font-extrabold uppercase tracking-[0.04em] text-papier ring-2 ring-[color-mix(in_srgb,var(--feu-glow)_50%,transparent)] transition-[filter,transform] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-feu motion-reduce:hover:translate-y-0"
-              >
-                {DONATE.seedCta}
-                {amount ? (
-                  <span className="font-mono text-sm font-bold normal-case tracking-normal opacity-90">
-                    · {formatFcfa(amount)}
-                  </span>
-                ) : null}
-              </a>
+              {isMailtoSeed ? (
+                <div className="mt-5 grid gap-3">
+                  <input
+                    type="text"
+                    autoComplete="name"
+                    required
+                    placeholder="Ton nom"
+                    value={donorName}
+                    onChange={(e) => setDonorName(e.target.value)}
+                    className="w-full rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde px-4 py-3.5 text-base text-ivoire-froid outline-none placeholder:text-ivoire-froid/35 focus:border-feu"
+                  />
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    required
+                    placeholder="Ton e-mail"
+                    value={donorEmail}
+                    onChange={(e) => setDonorEmail(e.target.value)}
+                    className="w-full rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde px-4 py-3.5 text-base text-ivoire-froid outline-none placeholder:text-ivoire-froid/35 focus:border-feu"
+                  />
+                  <input
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="Téléphone (WhatsApp)"
+                    value={donorPhone}
+                    onChange={(e) => setDonorPhone(e.target.value)}
+                    className="w-full rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde px-4 py-3.5 text-base text-ivoire-froid outline-none placeholder:text-ivoire-froid/35 focus:border-feu"
+                  />
+                </div>
+              ) : null}
+
+              {isMailtoSeed ? (
+                <button
+                  type="button"
+                  onClick={() => void submitSupportIntent()}
+                  disabled={sendStatus === "sending" || sendStatus === "ok"}
+                  className="btn-cta-flame mt-6 flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-4 py-4 text-[1.05rem] font-extrabold uppercase tracking-[0.04em] text-papier ring-2 ring-[color-mix(in_srgb,var(--feu-glow)_50%,transparent)] transition-[filter,transform] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-feu motion-reduce:hover:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {sendStatus === "sending"
+                    ? "Envoi…"
+                    : sendStatus === "ok"
+                      ? "Demande envoyée"
+                      : DONATE.seedCta}
+                  {amount && sendStatus === "idle" ? (
+                    <span className="font-mono text-sm font-bold normal-case tracking-normal opacity-90">
+                      · {formatFcfa(amount)}
+                    </span>
+                  ) : null}
+                </button>
+              ) : (
+                <a
+                  href={seedHref}
+                  className="btn-cta-flame mt-6 flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-4 py-4 text-[1.05rem] font-extrabold uppercase tracking-[0.04em] text-papier ring-2 ring-[color-mix(in_srgb,var(--feu-glow)_50%,transparent)] transition-[filter,transform] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-feu motion-reduce:hover:translate-y-0"
+                >
+                  {DONATE.seedCta}
+                  {amount ? (
+                    <span className="font-mono text-sm font-bold normal-case tracking-normal opacity-90">
+                      · {formatFcfa(amount)}
+                    </span>
+                  ) : null}
+                </a>
+              )}
 
               <p className="mt-5 text-center text-sm leading-relaxed text-ivoire-froid/60">
-                {isMailtoSeed ? (
+                {sendStatus === "ok" ? (
                   <>
-                    Pas de paiement en ligne pour l’instant. Tu ouvres un e-mail
-                    prérempli (ou WhatsApp). L’équipe te guide pour Mobile Money /
-                    virement.{" "}
+                    Merci. Ta demande part vers {SITE_CONTACT.email}. L’équipe
+                    te guide pour Mobile Money / virement.{" "}
+                  </>
+                ) : sendStatus === "error" ? (
+                  <>{sendError} </>
+                ) : isMailtoSeed ? (
+                  <>
+                    Ta demande arrive sur {SITE_CONTACT.email}. L’équipe te guide
+                    pour Mobile Money / virement.{" "}
                   </>
                 ) : (
                   <>Checkout sécurisé. Confirmation par l’équipe. </>

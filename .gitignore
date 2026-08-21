@@ -50,6 +50,7 @@ next-env.d.ts
 
 .staff-secret.local
 .resend-api-key.local
+.contact-mailbox.local
 
 # supabase CLI local cache
 supabase/.temp/

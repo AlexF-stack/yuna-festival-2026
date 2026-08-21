@@ -71,6 +71,10 @@ export function PartnersPageContent() {
   const [mode, setMode] = useState<PartnerMode>("financier");
   const [tier, setTier] = useState<string>(copy.formTierOptions[0]);
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">(
+    "idle",
+  );
+  const [errorMsg, setErrorMsg] = useState("");
 
   const modeLabel =
     mode === "materiel"
@@ -79,31 +83,49 @@ export function PartnersPageContent() {
         ? copy.formModeBoth
         : copy.formModeFinancial;
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!event.currentTarget.reportValidity()) return;
+    setStatus("sending");
+    setErrorMsg("");
 
-    const subject = encodeURIComponent(
-      `${copy.formMailSubject} : ${org.trim()}`,
-    );
-    const body = encodeURIComponent(
-      [
-        "Bonjour,",
-        "",
-        "Nous souhaitons étudier un partenariat avec YUNA Festival 2026.",
-        "",
-        `Organisation : ${org.trim()}`,
-        `Contact : ${name.trim()}`,
-        `E-mail : ${email.trim()}`,
-        `Téléphone : ${phone.trim() || "—"}`,
-        `Type de partenariat : ${modeLabel}`,
-        `Niveau envisagé : ${tier}`,
-        "",
-        "Notre demande :",
-        message.trim() || "(à préciser ensemble)",
-      ].join("\n"),
-    );
-    window.location.href = `mailto:${SITE_CONTACT.email}?subject=${subject}&body=${body}`;
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          kind: "partnership",
+          organization: org.trim(),
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          mode: modeLabel,
+          tier,
+          message: message.trim(),
+          website: "",
+        }),
+      });
+      const data = (await res.json()) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) {
+        setStatus("error");
+        setErrorMsg(
+          data.error ||
+            "Envoi impossible. Réessaie ou écris à contact@festivalyuna.com.",
+        );
+        return;
+      }
+      setStatus("ok");
+      setOrg("");
+      setName("");
+      setEmail("");
+      setPhone("");
+      setMessage("");
+    } catch {
+      setStatus("error");
+      setErrorMsg(
+        "Réseau indisponible. Réessaie ou écris à contact@festivalyuna.com.",
+      );
+    }
   }
 
   return (
@@ -455,12 +477,21 @@ export function PartnersPageContent() {
               <div className="mt-7 flex flex-col gap-3 min-[560px]:flex-row min-[560px]:items-center">
                 <button
                   type="submit"
-                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-feu px-8 py-3.5 text-[0.95rem] font-bold text-papier shadow-lg transition-[filter,transform] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-feu motion-reduce:hover:translate-y-0"
+                  disabled={status === "sending" || status === "ok"}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-feu px-8 py-3.5 text-[0.95rem] font-bold text-papier shadow-lg transition-[filter,transform] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-feu motion-reduce:hover:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {copy.contactCta}
+                  {status === "sending"
+                    ? "Envoi…"
+                    : status === "ok"
+                      ? "Demande envoyée"
+                      : copy.contactCta}
                 </button>
                 <p className="max-w-xs text-xs leading-relaxed text-charbon/60">
-                  {copy.formSubmitHint}
+                  {status === "ok"
+                    ? "Merci. L’équipe partenariat lit ta demande sur contact@festivalyuna.com."
+                    : status === "error"
+                      ? errorMsg
+                      : copy.formSubmitHint}
                 </p>
               </div>
             </form>
