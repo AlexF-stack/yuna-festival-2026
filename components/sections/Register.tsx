@@ -44,8 +44,9 @@ export function Register() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [registrationType, setRegistrationType] =
-    useState<RegistrationType>("pass");
+  const [registrationTypes, setRegistrationTypes] = useState<
+    RegistrationType[]
+  >(["pass"]);
   const [guests, setGuests] = useState<Guest[]>([]);
   const [busWanted, setBusWanted] = useState<boolean | null>(null);
   const [busLocation, setBusLocation] = useState("");
@@ -61,13 +62,30 @@ export function Register() {
   useEffect(() => {
     const type = searchParams.get("type");
     if (type && isOpenRegistrationType(type)) {
-      setRegistrationType(type);
+      setRegistrationTypes([type]);
     }
   }, [searchParams]);
+
+  function toggleType(type: RegistrationType) {
+    setRegistrationTypes((prev) => {
+      if (prev.includes(type)) {
+        if (type === "pass") setGuests([]);
+        return prev.filter((t) => t !== type);
+      }
+      return [...prev, type];
+    });
+  }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setErrors({});
+
+    if (registrationTypes.length === 0) {
+      setErrors({
+        form: t.register.typesRequired,
+      });
+      return;
+    }
 
     if (!consent) {
       setErrors({
@@ -111,7 +129,7 @@ export function Register() {
           name,
           phone,
           email,
-          registrationType,
+          registrationTypes,
           busWanted,
           busLocation: busWanted ? busLocation.trim() : null,
           idempotencyKey: key,
@@ -140,14 +158,17 @@ export function Register() {
         } catch {
           /* ignore */
         }
+        const wa = registrationTypes.includes("benevole")
+          ? "benevole"
+          : "1";
         // Échec partiel : au moins un pass existe — on oriente vers la confirmation.
         if (partialId) {
           if (partialIds && partialIds.length > 1) {
             router.push(
-              `/confirmation/${partialId}?wa=1&groupe=${partialIds.join(",")}`,
+              `/confirmation/${partialId}?wa=${wa}&groupe=${partialIds.join(",")}`,
             );
           } else {
-            router.push(`/confirmation/${partialId}?wa=1`);
+            router.push(`/confirmation/${partialId}?wa=${wa}`);
           }
           return;
         }
@@ -168,12 +189,13 @@ export function Register() {
         return;
       }
 
+      const wa = registrationTypes.includes("benevole") ? "benevole" : "1";
       if (payload.ids && payload.ids.length > 1) {
         router.push(
-          `/confirmation/${payload.id}?wa=1&groupe=${payload.ids.join(",")}`,
+          `/confirmation/${payload.id}?wa=${wa}&groupe=${payload.ids.join(",")}`,
         );
       } else {
-        router.push(`/confirmation/${payload.id}?wa=1`);
+        router.push(`/confirmation/${payload.id}?wa=${wa}`);
       }
     } catch {
       setErrors({
@@ -184,10 +206,13 @@ export function Register() {
     }
   }
 
-  const canAddGuest =
-    registrationType === "pass" && guests.length < MAX_GUESTS;
+  const includesFestival = registrationTypes.includes("pass");
+  const canAddGuest = includesFestival && guests.length < MAX_GUESTS;
+  const previewType = registrationTypes[0] ?? "pass";
   const submitLabel =
-    guests.length > 0 ? t.registerExtras.submitMulti : t.register.submit;
+    guests.length > 0 || registrationTypes.length > 1
+      ? t.registerExtras.submitMulti
+      : t.register.submit;
 
   return (
     <SectionShell
@@ -231,12 +256,15 @@ export function Register() {
             />
 
             <fieldset className="mb-5">
-              <legend className="mb-3 text-sm font-medium text-encre">
-                {t.register.eyebrow} *
+              <legend className="mb-1 text-sm font-medium text-encre">
+                {t.register.typesLegend} *
               </legend>
+              <p className="mb-3 text-xs leading-relaxed text-charbon">
+                {t.register.typesHint}
+              </p>
               <div className="grid gap-2">
                 {REGISTRATION_TYPES.map((type) => {
-                  const selected = registrationType === type.value;
+                  const selected = registrationTypes.includes(type.value);
                   const localized = t.registerTypes[type.value] ?? type;
                   return (
                     <label
@@ -248,14 +276,11 @@ export function Register() {
                       }`}
                     >
                       <input
-                        type="radio"
-                        name="registrationType"
+                        type="checkbox"
+                        name="registrationTypes"
                         value={type.value}
                         checked={selected}
-                        onChange={() => {
-                          setRegistrationType(type.value);
-                          if (type.value !== "pass") setGuests([]);
-                        }}
+                        onChange={() => toggleType(type.value)}
                         className="mt-1 shrink-0 accent-bleu"
                       />
                       <span>
@@ -324,7 +349,7 @@ export function Register() {
                 name="email"
                 type="email"
                 autoComplete="email"
-                required={registrationType === "benevole"}
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t.register.emailPh}
@@ -399,7 +424,7 @@ export function Register() {
               ) : null}
             </fieldset>
 
-            {registrationType === "pass" ? (
+            {includesFestival ? (
               <div className="mb-6 rounded-2xl border border-bleu/10 bg-ciel/30 p-4">
                 <p className="text-xs leading-relaxed text-charbon">
                   {t.registerExtras.guestsHint}
@@ -549,7 +574,7 @@ export function Register() {
             <p className="mb-3 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-charbon">
               {t.register.previewLabel}
             </p>
-            <PassPreview name={name} registrationType={registrationType} />
+            <PassPreview name={name} registrationType={previewType} />
             <p className="mt-4 text-sm leading-relaxed text-charbon">
               {t.register.previewHint}
             </p>

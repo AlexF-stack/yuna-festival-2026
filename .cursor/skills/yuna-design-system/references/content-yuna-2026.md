@@ -78,7 +78,7 @@ manquante, demander à l'utilisateur plutôt que d'improviser.
 | Argent | 1 500 000 FCFA | Logo écran géant + site + affiches, mention scène chaque soir, stand + flyers, post réseaux sociaux dédié |
 | Or (partenaire officiel) | 3 000 000 FCFA | Naming "présenté par", logo écran géant + bannières scène, prise de parole en soirée, stand premium + activation de marque, contenu réseaux sociaux dédié, accès VIP artistes |
 
-Contact sponsoring : contact@yunafestival.org
+Contact sponsoring : contact@festivalyuna.com
 
 ## FAQ (extrait du draft, à compléter avec le client)
 - L'entrée est-elle gratuite ? Oui, 100% les deux soirs. L'inscription en ligne avec pass QR accélère l'entrée mais n'est pas obligatoire pour les soirées — elle est en revanche **requise** pour les masterclass (places limitées).

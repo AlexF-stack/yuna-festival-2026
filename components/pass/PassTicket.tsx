@@ -15,6 +15,8 @@ type PassTicketProps = {
 
 function stubHint(type: RegistrationType): string {
   switch (type) {
+    case "ecole_royale":
+      return "École royale";
     case "masterclass_vteam":
       return "Samedi 10h–13h";
     case "masterclass_entrepreneuriat":

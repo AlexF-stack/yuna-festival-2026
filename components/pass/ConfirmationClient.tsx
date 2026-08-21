@@ -9,7 +9,12 @@ import { useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { fill } from "@/lib/i18n";
 import type { RegistrationType } from "@/lib/registration-types";
-import { WHATSAPP_CHANNEL_URL } from "@/lib/site";
+import {
+  WHATSAPP_CHANNEL_URL,
+  WHATSAPP_VOLUNTEERS_GROUP_URL,
+} from "@/lib/site";
+
+type WhatsappTarget = "channel" | "volunteers";
 
 type ConfirmationClientProps = {
   registration: {
@@ -20,8 +25,8 @@ type ConfirmationClientProps = {
   };
   groupIds: string[];
   messagingAny: boolean;
-  /** Après une inscription fraîche : redirection canal WhatsApp. */
-  joinChannel?: boolean;
+  /** Après inscription : redirection WhatsApp (canal ou groupe bénévoles). */
+  whatsappTarget?: WhatsappTarget | null;
 };
 
 const WA_REDIRECT_MS = 2800;
@@ -30,17 +35,29 @@ export function ConfirmationClient({
   registration,
   groupIds,
   messagingAny,
-  joinChannel = false,
+  whatsappTarget = null,
 }: ConfirmationClientProps) {
   const t = useMessages();
   const c = t.confirmation;
   const shortId = registration.id.slice(0, 8).toUpperCase();
+  const joinWhatsapp = Boolean(whatsappTarget);
+  const waUrl =
+    whatsappTarget === "volunteers"
+      ? WHATSAPP_VOLUNTEERS_GROUP_URL
+      : WHATSAPP_CHANNEL_URL;
+  const waCta =
+    whatsappTarget === "volunteers" ? c.volunteersCta : c.channelCta;
+  const waRedirect =
+    whatsappTarget === "volunteers"
+      ? c.volunteersRedirect
+      : c.channelRedirect;
+
   const [secondsLeft, setSecondsLeft] = useState(
-    joinChannel ? Math.ceil(WA_REDIRECT_MS / 1000) : 0,
+    joinWhatsapp ? Math.ceil(WA_REDIRECT_MS / 1000) : 0,
   );
 
   useEffect(() => {
-    if (!joinChannel) return;
+    if (!joinWhatsapp) return;
 
     const started = Date.now();
     const tick = window.setInterval(() => {
@@ -52,14 +69,14 @@ export function ConfirmationClient({
     }, 200);
 
     const redirect = window.setTimeout(() => {
-      window.location.assign(WHATSAPP_CHANNEL_URL);
+      window.location.assign(waUrl);
     }, WA_REDIRECT_MS);
 
     return () => {
       window.clearInterval(tick);
       window.clearTimeout(redirect);
     };
-  }, [joinChannel]);
+  }, [joinWhatsapp, waUrl]);
 
   return (
     <main
@@ -76,27 +93,33 @@ export function ConfirmationClient({
         {messagingAny ? c.leadMessaging : c.leadSave}
       </p>
 
-      {joinChannel ? (
+      {joinWhatsapp ? (
         <div className="mt-6 w-full max-w-[420px] rounded-2xl border border-vert/30 bg-vert/10 px-4 py-4 text-center">
-          <p className="text-sm font-semibold text-encre">{c.channelRedirect}</p>
+          <p className="text-sm font-semibold text-encre">{waRedirect}</p>
           {secondsLeft > 0 ? (
             <p className="mt-1 font-mono text-xs font-bold uppercase tracking-wide text-charbon">
               {fill(c.channelCountdown, { n: secondsLeft })}
             </p>
           ) : null}
           <a
-            href={WHATSAPP_CHANNEL_URL}
+            href={waUrl}
             className="btn-cta-flame mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-full px-6 text-base font-extrabold uppercase tracking-[0.04em] text-papier"
           >
-            {c.channelCta}
+            {waCta}
           </a>
         </div>
       ) : (
         <a
-          href={WHATSAPP_CHANNEL_URL}
+          href={
+            registration.registration_type === "benevole"
+              ? WHATSAPP_VOLUNTEERS_GROUP_URL
+              : WHATSAPP_CHANNEL_URL
+          }
           className="btn-cta-flame mt-6 inline-flex min-h-12 items-center justify-center rounded-full px-7 text-base font-extrabold uppercase tracking-[0.04em] text-papier"
         >
-          {c.channelCta}
+          {registration.registration_type === "benevole"
+            ? c.volunteersCta
+            : c.channelCta}
         </a>
       )}
 

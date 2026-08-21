@@ -94,6 +94,9 @@ export type Messages = {
     phonePh: string;
     email: string;
     emailPh: string;
+    typesLegend: string;
+    typesHint: string;
+    typesRequired: string;
     busQuestion: string;
     busHint: string;
     busYes: string;
@@ -159,6 +162,8 @@ export type Messages = {
     channelCta: string;
     channelRedirect: string;
     channelCountdown: string;
+    volunteersCta: string;
+    volunteersRedirect: string;
   };
   passActions: {
     confirmed: string;

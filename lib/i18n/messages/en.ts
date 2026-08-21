@@ -67,7 +67,7 @@ export const en: Messages = {
     guestName: "Full name *",
     guestPhone: "Phone (WhatsApp) *",
     guestsHint:
-      "Book up to 5 passes at once (you + friends/family). Each person gets their own QR. Save the confirmation links: no email is sent yet.",
+      "With Concert / Festival you can add up to 4 guests (5 passes max). Royal school and masterclass stay individual. Everyone gets their own QR.",
     maxGuests: "Maximum 5 passes per registration.",
     submitMulti: "Get the QR passes",
   },
@@ -150,14 +150,18 @@ export const en: Messages = {
     eyebrow: "Registration",
     title: "Register, free ticket",
     lead:
-      "Register for free and instantly get your official ticket with QR. Show it at the gate. Save your confirmation link: no email is sent yet.",
+      "Register for free and get your official QR ticket by email. Show it at the gate.",
     formTitle: "Your details",
     name: "Full name *",
     namePh: "e.g. Grace Ahouansou",
     phone: "Phone (WhatsApp) *",
     phonePh: "+229 01 XX XX XX XX",
-    email: "Email (optional)",
+    email: "Email *",
     emailPh: "you@email.com",
+    typesLegend: "You’re signing up for",
+    typesHint:
+      "Pick one, two, or all options. Each choice gets its own QR pass.",
+    typesRequired: "Choose at least one option.",
     busQuestion: "Do you need a bus?",
     busHint:
       "Shuttle buses are available. Tell us if you need one and from which area.",
@@ -179,9 +183,13 @@ export const en: Messages = {
       "The final ticket (with QR) is created after validation. This preview shows how it will look at the gate.",
   },
   registerTypes: {
+    ecole_royale: {
+      label: "Royal school",
+      hint: "Training · limited seats",
+    },
     pass: {
-      label: "Festival, 2 evenings",
-      hint: "Free entry · QR ticket for priority access",
+      label: "Concert / Festival",
+      hint: "Free entry · QR ticket for both evenings",
     },
     masterclass_vteam: {
       label: "VTeam masterclass",
@@ -192,8 +200,8 @@ export const en: Messages = {
       hint: "Saturday 3–5pm · limited seats",
     },
     benevole: {
-      label: "Volunteer",
-      hint: "Welcome, security, tech, protocol…",
+      label: "Volunteer / Ambassador",
+      hint: "Welcome, security, tech… · dedicated WhatsApp group",
     },
   },
   floatCta: "My pass",
@@ -269,9 +277,9 @@ export const en: Messages = {
     eyebrow: "Registration confirmed",
     title: "Your YUNA ticket",
     leadMessaging:
-      "Here’s your official ticket with QR. Show it at the gate. A confirmation message is also sent automatically to your phone.",
+      "Here’s your official ticket with QR. An email with your pass link is sent automatically. Show the QR at the gate.",
     leadSave:
-      "Here’s your official ticket with QR. Download it or save this link. You can recover it via My pass.",
+      "Here’s your official ticket with QR. A confirmation email is also sent when Resend is configured. You can recover it via My pass.",
     groupTitle: "Group: {n} tickets created",
     groupBody: "Here’s your ticket. The others in the group:",
     passN: "Ticket #{n} →",
@@ -281,6 +289,9 @@ export const en: Messages = {
     channelRedirect:
       "Next step: join the official YUNA channel for announcements.",
     channelCountdown: "Redirecting in {n} s…",
+    volunteersCta: "Join the volunteers group",
+    volunteersRedirect:
+      "Next step: join the WhatsApp group for volunteers and ambassadors.",
   },
   passActions: {
     confirmed: "Confirmed",

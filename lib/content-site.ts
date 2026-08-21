@@ -310,7 +310,7 @@ export const SUPPORT_AMOUNTS_FCFA = [
 export const DONATE = {
   label: "Soutenir YUNA",
   pageHref: "/soutenir",
-  href: "mailto:contact@yunafestival.org?subject=Soutenir%20YUNA%20Festival%202026",
+  href: "mailto:contact@festivalyuna.com?subject=Soutenir%20YUNA%20Festival%202026",
   blurb:
     "On ne vend rien ici. Ton soutien garde le festival gratuit et ouvert à tous.",
   pageTitle: "Soutenir YUNA",

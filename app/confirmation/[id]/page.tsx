@@ -37,6 +37,13 @@ export default async function ConfirmationPage({
     .filter((x) => x && x !== id);
   const messaging = getMessagingCapabilities();
 
+  const whatsappTarget =
+    wa === "benevole" || wa === "staff"
+      ? ("volunteers" as const)
+      : wa === "1"
+        ? ("channel" as const)
+        : null;
+
   return (
     <ConfirmationClient
       registration={{
@@ -47,7 +54,7 @@ export default async function ConfirmationPage({
       }}
       groupIds={groupIds}
       messagingAny={messaging.any}
-      joinChannel={wa === "1"}
+      whatsappTarget={whatsappTarget}
     />
   );
 }

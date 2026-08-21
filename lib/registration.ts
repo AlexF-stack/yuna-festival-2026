@@ -44,6 +44,8 @@ export function validateRegistrationInput(input: {
   registrationType?: unknown;
   busWanted?: unknown;
   busLocation?: unknown;
+  /** false pour les invités (pass groupe) — e-mail non exigé */
+  requireEmail?: boolean;
 }):
   | {
       name: string;
@@ -63,6 +65,7 @@ export function validateRegistrationInput(input: {
     return { error: "Type d'inscription indisponible." };
   }
   const registrationType = input.registrationType;
+  const requireEmail = input.requireEmail !== false;
 
   if (name.length < 2) {
     return { error: "Indique ton nom complet (2 caractères minimum)." };
@@ -75,9 +78,9 @@ export function validateRegistrationInput(input: {
   if (emailRaw && !EMAIL_RE.test(emailRaw)) {
     return { error: "L'adresse e-mail n'est pas valide." };
   }
-  if (registrationType === "benevole" && !emailRaw) {
+  if (requireEmail && !emailRaw) {
     return {
-      error: "Indique ton e-mail pour le suivi bénévole.",
+      error: "Indique ton e-mail pour recevoir ton pass QR.",
     };
   }
 

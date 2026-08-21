@@ -8,6 +8,7 @@ import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { generateRegistrationQr } from "@/lib/registration-qr";
 import { validateRegistrationInput } from "@/lib/registration";
 import {
+  parseOpenRegistrationTypes,
   REGISTRATION_TYPE_LABELS,
   type RegistrationType,
 } from "@/lib/registration-types";
@@ -22,6 +23,7 @@ type RegisterBody = {
   phone?: string;
   email?: string;
   registrationType?: string;
+  registrationTypes?: string[];
   busWanted?: boolean;
   busLocation?: string;
   idempotencyKey?: string;
@@ -48,6 +50,21 @@ const MAX_PARTY = 5;
 function deriveGuestIdempotencyKey(parent: string, index: number): string {
   const hex = parent.replace(/-/g, "").toLowerCase();
   const suffix = (index + 1).toString(16).padStart(4, "0");
+  const next = `${hex.slice(0, 28)}${suffix}`;
+  return `${next.slice(0, 8)}-${next.slice(8, 12)}-${next.slice(12, 16)}-${next.slice(16, 20)}-${next.slice(20, 32)}`;
+}
+
+/** Clé stable par catégorie (multi-inscription même personne). */
+function deriveCategoryIdempotencyKey(
+  parent: string,
+  type: RegistrationType,
+): string {
+  const hex = parent.replace(/-/g, "").toLowerCase();
+  let h = 0xc0ff;
+  for (let i = 0; i < type.length; i++) {
+    h = (h * 31 + type.charCodeAt(i)) >>> 0;
+  }
+  const suffix = (h & 0xffff).toString(16).padStart(4, "0");
   const next = `${hex.slice(0, 28)}${suffix}`;
   return `${next.slice(0, 8)}-${next.slice(8, 12)}-${next.slice(12, 16)}-${next.slice(16, 20)}-${next.slice(20, 32)}`;
 }
@@ -196,10 +213,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const parsed = validateRegistrationInput(body);
-  if ("error" in parsed) {
-    return NextResponse.json({ error: parsed.error }, { status: 400 });
+  const typesParsed = parseOpenRegistrationTypes(body);
+  if ("error" in typesParsed) {
+    return NextResponse.json({ error: typesParsed.error }, { status: 400 });
   }
+  const selectedTypes = typesParsed;
 
   const idempotencyKey =
     typeof body.idempotencyKey === "string" ? body.idempotencyKey.trim() : "";
@@ -218,27 +236,40 @@ export async function POST(request: Request) {
     );
   }
 
-  if (rawGuests.length > 0 && parsed.registrationType !== "pass") {
+  const includesFestival = selectedTypes.includes("pass");
+  if (rawGuests.length > 0 && !includesFestival) {
     return NextResponse.json(
       {
         error:
-          "L'inscription groupe n'est disponible que pour le Pass Festival.",
+          "L'inscription groupe (proches) n'est disponible qu'avec Concert / Festival.",
       },
       { status: 400 },
     );
   }
 
-  const party: ParsedPerson[] = [parsed];
+  // Une ligne DB + un QR par catégorie choisie (même personne).
+  const party: ParsedPerson[] = [];
+  for (const registrationType of selectedTypes) {
+    const parsed = validateRegistrationInput({
+      ...body,
+      registrationType,
+    });
+    if ("error" in parsed) {
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
+    }
+    party.push(parsed);
+  }
 
+  // Invités : uniquement le pass Festival (un QR chacun).
   for (let i = 0; i < rawGuests.length; i++) {
     const g = validateRegistrationInput({
       name: rawGuests[i]?.name,
       phone: rawGuests[i]?.phone,
       email: undefined,
-      registrationType: parsed.registrationType,
-      // Même navette pour tout le groupe
-      busWanted: parsed.busWanted,
-      busLocation: parsed.busLocation ?? undefined,
+      registrationType: "pass",
+      requireEmail: false,
+      busWanted: party[0]?.busWanted,
+      busLocation: party[0]?.busLocation ?? undefined,
     });
     if ("error" in g) {
       return NextResponse.json(
@@ -249,12 +280,15 @@ export async function POST(request: Request) {
     party.push(g);
   }
 
-  const phones = party.map((p) => p.phone);
-  if (new Set(phones).size !== phones.length) {
+  // Même téléphone OK entre catégories ; numéros Festival (titulaire + invités) uniques.
+  const festivalPhones = party
+    .filter((p) => p.registrationType === "pass")
+    .map((p) => p.phone);
+  if (new Set(festivalPhones).size !== festivalPhones.length) {
     return NextResponse.json(
       {
         error:
-          "Chaque pass doit avoir un numéro WhatsApp distinct (y compris le tien).",
+          "Chaque pass Festival doit avoir un numéro WhatsApp distinct (y compris le tien).",
       },
       { status: 400 },
     );
@@ -262,7 +296,8 @@ export async function POST(request: Request) {
 
   try {
     const supabase = createSupabaseAdminClient();
-    const partyId = party.length > 1 ? randomUUID() : null;
+    const partyId =
+      party.length > 1 || selectedTypes.length > 1 ? randomUUID() : null;
     const created: {
       id: string;
       name: string;
@@ -271,10 +306,24 @@ export async function POST(request: Request) {
     }[] = [];
     const crmJobs: Parameters<typeof notifyCrmRegistration>[0][] = [];
 
+    let guestIndex = 0;
     for (let i = 0; i < party.length; i++) {
       const person = party[i];
-      const key =
-        i === 0 ? idempotencyKey : deriveGuestIdempotencyKey(idempotencyKey, i);
+
+      let key: string;
+      if (i < selectedTypes.length) {
+        key =
+          i === 0
+            ? idempotencyKey
+            : deriveCategoryIdempotencyKey(
+                idempotencyKey,
+                person.registrationType,
+              );
+      } else {
+        guestIndex += 1;
+        key = deriveGuestIdempotencyKey(idempotencyKey, guestIndex);
+      }
+
       const result = await insertOne(supabase, {
         ...person,
         idempotencyKey: key,
@@ -290,7 +339,7 @@ export async function POST(request: Request) {
         }
         return NextResponse.json(
           {
-            error: `Pass principal créé, mais le pass n°${i + 1} a échoué : ${result.error}`,
+            error: `Inscription partielle : ${result.error}`,
             id: created[0].id,
             ids: created.map((r) => r.id),
           },
@@ -321,6 +370,8 @@ export async function POST(request: Request) {
       }
     }
 
+    const primaryEmail = party[0]?.email ?? null;
+
     if (crmJobs.length > 0) {
       // CRM : await (skill delivery) — ne pas perdre la sync sous cold start.
       await Promise.all(
@@ -338,6 +389,7 @@ export async function POST(request: Request) {
               id: job.id,
               name: job.name,
               phone: job.phone,
+              email: job.email ?? primaryEmail,
               registrationType: job.registrationType,
               confirmationUrl:
                 job.confirmationUrl ??
@@ -356,6 +408,7 @@ export async function POST(request: Request) {
       qrCode: created[0].qr_code,
       ids: created.map((r) => r.id),
       count: created.length,
+      types: selectedTypes,
       partyId,
     });
   } catch (err) {

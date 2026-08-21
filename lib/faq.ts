@@ -28,12 +28,12 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "masterclass",
-    question: "Comment s'inscrire à la masterclass ?",
+    question: "Comment s'inscrire à la masterclass ou à l'École royale ?",
     answer:
-      "Via le formulaire d'inscription sur ce site : Masterclass Entrepreneuriat (samedi 15h–17h). Présente ton pass QR à l'entrée de la salle.",
-    questionEn: "How do I register for the masterclass?",
+      "Via le formulaire : coche Masterclass Entrepreneuriat et/ou École royale (tu peux aussi ajouter Concert / Festival). Chaque option a son pass QR. Présente le bon QR à l'entrée de la salle.",
+    questionEn: "How do I register for the masterclass or Royal school?",
     answerEn:
-      "Use the registration form on this site: Entrepreneurship masterclass (Saturday 3–5pm). Show your QR pass at the room entrance.",
+      "Use the form: check Entrepreneurship masterclass and/or Royal school (you can also add Concert / Festival). Each option gets its own QR. Show the right QR at the room door.",
   },
   {
     id: "acces",
@@ -55,20 +55,20 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "benevole",
-    question: "Puis-je servir comme bénévole ?",
+    question: "Puis-je servir comme bénévole ou ambassadeur ?",
     answer:
-      "Oui ! Inscris-toi via le formulaire en choisissant « Bénévole » : accueil, sécurité, technique, protocole. L'équipe te recontactera sur WhatsApp.",
-    questionEn: "Can I volunteer?",
+      "Oui ! Inscris-toi via le formulaire en cochant « Bénévole / Ambassadeur ». Après ton pass QR, tu es redirigé vers le groupe WhatsApp de l'équipe.",
+    questionEn: "Can I volunteer or be an ambassador?",
     answerEn:
-      "Yes! Register via the form and choose “Volunteer”: welcome, security, tech, protocol. The team will follow up on WhatsApp.",
+      "Yes! Register via the form and check “Volunteer / Ambassador”. After your QR pass, you’re redirected to the team WhatsApp group.",
   },
   {
     id: "inscription-place",
     question: "Et si j'ai un souci à l'inscription en ligne ?",
     answer:
-      "Pas d'inquiétude : même sans mail de confirmation, ton inscription est enregistrée dès que tu vois ton pass QR. Tu pourras aussi t'inscrire sur place le jour J si besoin.",
+      "Pas d'inquiétude : ton inscription est enregistrée dès que tu vois ton pass QR. Tu reçois aussi le lien par e-mail. Tu pourras aussi t'inscrire sur place le jour J si besoin.",
     questionEn: "What if online registration fails?",
     answerEn:
-      "No worries: even without a confirmation email, you’re registered as soon as you see your QR pass. You can also register on site on the day if needed.",
+      "No worries: you’re registered as soon as you see your QR pass. You also get the link by email. You can also register on site on the day if needed.",
   },
 ];

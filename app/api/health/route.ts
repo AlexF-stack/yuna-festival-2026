@@ -36,6 +36,7 @@ export async function GET() {
     siteUrl: Boolean(
       process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL,
     ),
+    messagingEmail: messaging.email,
     messagingWhatsapp: messaging.whatsapp,
     messagingSms: messaging.sms,
     walletApple: wallet.apple,

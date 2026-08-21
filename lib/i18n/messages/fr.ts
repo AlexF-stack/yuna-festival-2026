@@ -67,7 +67,7 @@ export const fr: Messages = {
     guestName: "Nom complet *",
     guestPhone: "Téléphone (WhatsApp) *",
     guestsHint:
-      "Tu peux réserver jusqu’à 5 pass en une fois (toi + proches). Chaque personne a son propre QR. Enregistre les liens de confirmation : aucun e-mail n’est envoyé pour l’instant.",
+      "Avec Concert / Festival, tu peux ajouter jusqu’à 4 proches (5 pass max). École royale et masterclass restent individuels. Chaque personne a son QR.",
     maxGuests: "Maximum 5 pass par inscription.",
     submitMulti: "Recevoir les pass QR",
   },
@@ -150,14 +150,18 @@ export const fr: Messages = {
     eyebrow: "Inscription",
     title: "Inscris-toi, ticket gratuit",
     lead:
-      "Inscris-toi gratuitement et reçois tout de suite ton ticket officiel avec QR, à présenter à l'entrée. Enregistre le lien de confirmation : aucun e-mail n'est envoyé pour l'instant.",
+      "Inscris-toi gratuitement et reçois ton ticket officiel avec QR par e-mail, à présenter à l'entrée.",
     formTitle: "Tes infos",
     name: "Nom complet *",
     namePh: "Ex : Grâce Ahouansou",
     phone: "Téléphone (WhatsApp) *",
     phonePh: "+229 01 XX XX XX XX",
-    email: "Email (optionnel)",
+    email: "Email *",
     emailPh: "ton@email.com",
+    typesLegend: "Tu t’inscris pour",
+    typesHint:
+      "Tu peux cocher une, deux ou toutes les options. Chaque choix génère son propre pass QR.",
+    typesRequired: "Choisis au moins une option.",
     busQuestion: "As-tu besoin d’un bus ?",
     busHint:
       "Des navettes sont mises à disposition. Dis-nous si tu en as besoin et depuis quel quartier.",
@@ -179,9 +183,13 @@ export const fr: Messages = {
       "Le ticket définitif (avec QR) est créé après validation. Cet aperçu te montre à quoi il ressemblera à l'entrée.",
   },
   registerTypes: {
+    ecole_royale: {
+      label: "École royale",
+      hint: "Formation · places limitées",
+    },
     pass: {
-      label: "Festival, 2 soirées",
-      hint: "Entrée libre · ticket QR pour accès prioritaire",
+      label: "Concert / Festival",
+      hint: "Entrée libre · ticket QR pour les 2 soirées",
     },
     masterclass_vteam: {
       label: "Masterclass VTeam",
@@ -192,8 +200,8 @@ export const fr: Messages = {
       hint: "Samedi 15h–17h · places limitées",
     },
     benevole: {
-      label: "Bénévole",
-      hint: "Accueil, sécurité, technique, protocole…",
+      label: "Bénévole / Ambassadeur",
+      hint: "Accueil, sécurité, technique… · groupe WhatsApp dédié",
     },
   },
   floatCta: "Ma place",
@@ -269,9 +277,9 @@ export const fr: Messages = {
     eyebrow: "Inscription confirmée",
     title: "Ton ticket YUNA",
     leadMessaging:
-      "Voici ton ticket officiel avec QR. Présente-le à l’entrée. Un message de confirmation part aussi automatiquement sur ton téléphone.",
+      "Voici ton ticket officiel avec QR. Un e-mail avec le lien de ton pass part automatiquement. Présente le QR à l’entrée.",
     leadSave:
-      "Voici ton ticket officiel avec QR. Télécharge-le ou enregistre le lien. Tu pourras le retrouver via Mon pass.",
+      "Voici ton ticket officiel avec QR. Un e-mail de confirmation part aussi si Resend est configuré. Tu pourras le retrouver via Mon pass.",
     groupTitle: "Groupe : {n} tickets créés",
     groupBody: "Voici ton ticket. Les autres du groupe :",
     passN: "Ticket n°{n} →",
@@ -281,6 +289,9 @@ export const fr: Messages = {
     channelRedirect:
       "Prochaine étape : rejoins le canal officiel YUNA pour les annonces.",
     channelCountdown: "Redirection dans {n} s…",
+    volunteersCta: "Rejoindre le groupe bénévoles",
+    volunteersRedirect:
+      "Prochaine étape : rejoins le groupe WhatsApp des bénévoles et ambassadeurs.",
   },
   passActions: {
     confirmed: "Confirmé",
