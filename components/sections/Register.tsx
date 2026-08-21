@@ -3,15 +3,12 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import { PassPreview } from "@/components/pass/PassPreview";
+import { RegistrationGauge } from "@/components/sections/RegistrationGauge";
 import { useMessages } from "@/components/i18n/LocaleProvider";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { FESTIVAL } from "@/lib/festival";
-import {
-  formatRegistrationsCount,
-  usePublicRegistrationsCount,
-} from "@/hooks/usePublicRegistrationsCount";
 import {
   isOpenRegistrationType,
   REGISTRATION_TYPES,
@@ -44,9 +41,6 @@ export function Register() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useMessages();
-  const { count: registeredCount } = usePublicRegistrationsCount({
-    refreshMs: 45_000,
-  });
   const [idempotencyKey, setIdempotencyKey] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -238,15 +232,7 @@ export function Register() {
             tone="encre"
             accentLast
           />
-          <p
-            className="mt-4 font-mono text-sm font-bold tracking-wide text-feu"
-            aria-live="polite"
-          >
-            {t.register.registeredCount.replace(
-              "{n}",
-              formatRegistrationsCount(registeredCount),
-            )}
-          </p>
+          <RegistrationGauge />
         </Reveal>
 
         <div className="mt-12 grid items-start gap-10 min-[960px]:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] min-[960px]:gap-12">
