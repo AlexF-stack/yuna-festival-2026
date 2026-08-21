@@ -36,4 +36,9 @@ YUNA_STAFF_SECRET=...
 - Inscription site → upsert `inscriptions` (y compris demande bus + position)
 - Check-in `/staff/scan` → update `inscriptions` + insert `scans`
 
-Migration CRM bus : `supabase/crm-migrations/20260820200000_inscriptions_bus.sql`
+Migrations CRM :
+
+- Bus : `supabase/crm-migrations/20260820200000_inscriptions_bus.sql`
+- École royale + multi-types (même téléphone) :
+  `supabase/crm-migrations/20260821020000_inscriptions_ecole_multi.sql`
+  (à exécuter si sync `ecole_royale` / multi-inscription échoue)
