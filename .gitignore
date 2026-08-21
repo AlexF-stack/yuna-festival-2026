@@ -54,3 +54,19 @@ next-env.d.ts
 
 # supabase CLI local cache
 supabase/.temp/
+
+.lws-credentials.local
+.fedapay-secret.local
+.fedapay-account.local
+.contact-mailbox.local
+
+
+.brevo-account.local
+.brevo-api-key.local
+
+
+.brevo-activate-url.txt
+
+
+.brevo-import.csv
+

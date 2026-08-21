@@ -38,6 +38,7 @@ export const fr: Messages = {
   footer: {
     festival: "Festival",
     contact: "Contact",
+    socials: "Réseaux",
     organization: "Organisation",
     tagline: "Youth United for New Awakening",
     dove: "יוֹנָה · La Colombe, l'Esprit sur une génération",

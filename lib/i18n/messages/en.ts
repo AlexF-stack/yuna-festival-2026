@@ -38,6 +38,7 @@ export const en: Messages = {
   footer: {
     festival: "Festival",
     contact: "Contact",
+    socials: "Social",
     organization: "Organization",
     tagline: "Youth United for New Awakening",
     dove: "יוֹנָה · The Dove, the Spirit on a generation",

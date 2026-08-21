@@ -18,6 +18,7 @@ export type Messages = {
   footer: {
     festival: string;
     contact: string;
+    socials: string;
     organization: string;
     tagline: string;
     dove: string;

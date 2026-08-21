@@ -6,6 +6,30 @@ export const SITE_CONTACT = {
   whatsappPrefill: "Bonjour YUNA 2026 !",
 } as const;
 
+/** Réseaux sociaux officiels YUNA Festival. */
+export const SOCIAL_LINKS = [
+  {
+    id: "facebook",
+    label: "Facebook",
+    href: "https://www.facebook.com/YUNAFestival",
+  },
+  {
+    id: "instagram",
+    label: "Instagram",
+    href: "https://www.instagram.com/yuna_festival_",
+  },
+  {
+    id: "tiktok",
+    label: "TikTok",
+    href: "https://www.tiktok.com/@yunafestival",
+  },
+  {
+    id: "youtube",
+    label: "YouTube",
+    href: "https://www.youtube.com/@YunaFestival",
+  },
+] as const;
+
 /** Canal WhatsApp officiel — redirigé après inscription festival. */
 export const WHATSAPP_CHANNEL_URL =
   process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_URL?.trim() ||

@@ -5,7 +5,7 @@ import { useMessages } from "@/components/i18n/LocaleProvider";
 import { HebrewText } from "@/components/ui/HebrewText";
 import { ORGANIZER } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
-import { SITE_CONTACT } from "@/lib/site";
+import { SITE_CONTACT, SOCIAL_LINKS } from "@/lib/site";
 
 export function SiteFooter() {
   const t = useMessages();
@@ -64,6 +64,23 @@ export function SiteFooter() {
           <p className="mt-4 text-sm text-papier/55">
             {FESTIVAL.city}, {FESTIVAL.country}
           </p>
+          <p className="mb-3 mt-8 text-[0.7rem] font-bold uppercase tracking-[0.28em] text-papier/45">
+            {t.footer.socials}
+          </p>
+          <ul className="space-y-2.5">
+            {SOCIAL_LINKS.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-papier/80 transition-colors hover:text-jaune"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div>
