@@ -19,8 +19,8 @@ const PREUVES = {
     },
     {
       n: "02",
-      title: "Pass QR moderne",
-      body: "Inscription en ligne, pass nominatif sécurisé, scan staff le jour J. Une organisation digne d’un festival international.",
+      title: "Concerts & École royale",
+      body: "Deux soirs de scène, entrée libre. Et l’École royale pour celles et ceux qui veulent se former en profondeur, places limitées.",
     },
     {
       n: "03",
@@ -36,8 +36,8 @@ const PREUVES = {
     },
     {
       n: "02",
-      title: "Modern QR pass",
-      body: "Online registration, named secure pass, staff scan on the day. Operations worthy of an international festival.",
+      title: "Concerts & Royal school",
+      body: "Two evenings on stage, free entry. And Royal school for those who want deeper training — limited seats.",
     },
     {
       n: "03",

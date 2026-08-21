@@ -3,11 +3,24 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { useMessages } from "@/components/i18n/LocaleProvider";
+import {
+  formatRegistrationsCount,
+  usePublicRegistrationsCount,
+} from "@/hooks/usePublicRegistrationsCount";
 import { EASE_YUNA, rise, staggerContainer } from "@/lib/motion";
 
 export function StatsBar() {
   const reduce = useReducedMotion();
   const t = useMessages();
+  const { count } = usePublicRegistrationsCount({ refreshMs: 30_000 });
+
+  const items = [
+    {
+      value: formatRegistrationsCount(count),
+      label: t.statsRegistered.label,
+    },
+    ...t.stats,
+  ];
 
   return (
     <section
@@ -34,7 +47,7 @@ export function StatsBar() {
         whileInView={reduce ? undefined : "show"}
         viewport={{ once: true, amount: 0.35 }}
       >
-        {t.stats.map((stat) => (
+        {items.map((stat) => (
           <motion.div
             key={stat.label}
             variants={reduce ? undefined : rise(20)}

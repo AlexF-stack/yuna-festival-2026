@@ -58,6 +58,7 @@ supabase/.temp/
 .lws-credentials.local
 .fedapay-secret.local
 .fedapay-account.local
+.kkiapay-account.local
 .contact-mailbox.local
 
 
@@ -69,4 +70,7 @@ supabase/.temp/
 
 
 .brevo-import.csv
+
+
+.env.count-test.local
 

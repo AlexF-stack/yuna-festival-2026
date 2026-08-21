@@ -16,7 +16,7 @@ export function ArtistMarquee({ revealedNames }: ArtistMarqueeProps) {
   const source =
     revealedNames.length > 0
       ? revealedNames
-      : ["?", "Bientôt dévoilé", "?", "Line-up YUNA"];
+      : ["?", "Bientôt dévoilé", "?", "Artistes YUNA"];
   const loop = [...source, ...source];
 
   return (

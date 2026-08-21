@@ -93,7 +93,7 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
 
           <div className="relative z-10 flex items-center gap-2">
             <Image
-              src="/brand/yuna-mark.png"
+              src="/brand/yuna-mark.webp"
               alt=""
               width={32}
               height={32}

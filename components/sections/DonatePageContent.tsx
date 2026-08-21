@@ -11,7 +11,7 @@ import {
 } from "@/lib/content-site";
 import { FESTIVAL } from "@/lib/festival";
 import { EASE_PREMIUM, EASE_YUNA } from "@/lib/motion";
-import { SITE_CONTACT, getWhatsAppHref } from "@/lib/site";
+import { SITE_CONTACT, getSupportPaymentUrl, getWhatsAppHref } from "@/lib/site";
 
 function formatFcfa(amount: number): string {
   return `${amount.toLocaleString("fr-FR")} FCFA`;
@@ -19,7 +19,7 @@ function formatFcfa(amount: number): string {
 
 /**
  * Page Soutenir — composition festival (pas un widget don générique).
- * Échelle de flammes + bandeau nuit Midombo + checkout FedaPay.
+ * Échelle de flammes + bandeau nuit Midombo + lien de paiement / FedaPay.
  */
 export function DonatePageContent() {
   const reduce = useReducedMotion();
@@ -35,7 +35,9 @@ export function DonatePageContent() {
   >("idle");
   const [sendError, setSendError] = useState("");
   const [fedapayReady, setFedapayReady] = useState(false);
+  const paymentLink = getSupportPaymentUrl();
   const whatsapp = getWhatsAppHref();
+  const canPayOnline = fedapayReady || Boolean(paymentLink);
 
   const amount = useMemo(() => {
     const raw = custom.replace(/\D/g, "");
@@ -78,6 +80,14 @@ export function DonatePageContent() {
       setSendError("Choisis ou saisis un montant (minimum 100 FCFA).");
       return;
     }
+
+    // Lien de paiement fixe (Kkiapay / Monniz / page FedaPay) — pas besoin de formulaire.
+    if (paymentLink && !fedapayReady) {
+      setSendStatus("sending");
+      window.location.href = paymentLink;
+      return;
+    }
+
     if (donorName.trim().length < 2 || !donorEmail.includes("@")) {
       setSendStatus("error");
       setSendError("Indique ton nom et ton e-mail pour le reçu de paiement.");
@@ -111,7 +121,13 @@ export function DonatePageContent() {
         return;
       }
 
-      // 2) Repli : intention e-mail si FedaPay pas configuré
+      // 2) Lien de paiement public si API indisponible
+      if (paymentLink) {
+        window.location.href = paymentLink;
+        return;
+      }
+
+      // 3) Repli : intention e-mail si rien n’est configuré
       if (payRes.status === 503 || payData.code === "fedapay_unconfigured") {
         const res = await fetch("/api/contact", {
           method: "POST",
@@ -411,34 +427,36 @@ export function DonatePageContent() {
                 />
               </label>
 
-              <div className="mt-5 grid gap-3">
-                <input
-                  type="text"
-                  autoComplete="name"
-                  required
-                  placeholder="Ton nom"
-                  value={donorName}
-                  onChange={(e) => setDonorName(e.target.value)}
-                  className="w-full rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde px-4 py-3.5 text-base text-ivoire-froid outline-none placeholder:text-ivoire-froid/35 focus:border-feu"
-                />
-                <input
-                  type="email"
-                  autoComplete="email"
-                  required
-                  placeholder="Ton e-mail"
-                  value={donorEmail}
-                  onChange={(e) => setDonorEmail(e.target.value)}
-                  className="w-full rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde px-4 py-3.5 text-base text-ivoire-froid outline-none placeholder:text-ivoire-froid/35 focus:border-feu"
-                />
-                <input
-                  type="tel"
-                  autoComplete="tel"
-                  placeholder="Téléphone (Mobile Money / WhatsApp)"
-                  value={donorPhone}
-                  onChange={(e) => setDonorPhone(e.target.value)}
-                  className="w-full rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde px-4 py-3.5 text-base text-ivoire-froid outline-none placeholder:text-ivoire-froid/35 focus:border-feu"
-                />
-              </div>
+              {!(paymentLink && !fedapayReady) ? (
+                <div className="mt-5 grid gap-3">
+                  <input
+                    type="text"
+                    autoComplete="name"
+                    required
+                    placeholder="Ton nom"
+                    value={donorName}
+                    onChange={(e) => setDonorName(e.target.value)}
+                    className="w-full rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde px-4 py-3.5 text-base text-ivoire-froid outline-none placeholder:text-ivoire-froid/35 focus:border-feu"
+                  />
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    required
+                    placeholder="Ton e-mail"
+                    value={donorEmail}
+                    onChange={(e) => setDonorEmail(e.target.value)}
+                    className="w-full rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde px-4 py-3.5 text-base text-ivoire-froid outline-none placeholder:text-ivoire-froid/35 focus:border-feu"
+                  />
+                  <input
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="Téléphone (Mobile Money / WhatsApp)"
+                    value={donorPhone}
+                    onChange={(e) => setDonorPhone(e.target.value)}
+                    className="w-full rounded-2xl border border-ivoire-froid/15 bg-nuit-profonde px-4 py-3.5 text-base text-ivoire-froid outline-none placeholder:text-ivoire-froid/35 focus:border-feu"
+                  />
+                </div>
+              ) : null}
 
               <button
                 type="button"
@@ -447,14 +465,16 @@ export function DonatePageContent() {
                 className="btn-cta-flame mt-6 flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-4 py-4 text-[1.05rem] font-extrabold uppercase tracking-[0.04em] text-papier ring-2 ring-[color-mix(in_srgb,var(--feu-glow)_50%,transparent)] transition-[filter,transform] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-feu motion-reduce:hover:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {sendStatus === "sending"
-                  ? fedapayReady
-                    ? "Ouverture FedaPay…"
+                  ? canPayOnline
+                    ? "Ouverture du paiement…"
                     : "Envoi…"
                   : sendStatus === "ok"
                     ? "Demande envoyée"
-                    : fedapayReady
-                      ? "Payer avec FedaPay"
-                      : DONATE.seedCta}
+                    : paymentLink && !fedapayReady
+                      ? "Payer par MoMo"
+                      : canPayOnline
+                        ? "Payer maintenant"
+                        : DONATE.seedCta}
                 {amount && sendStatus === "idle" ? (
                   <span className="font-mono text-sm font-bold normal-case tracking-normal opacity-90">
                     · {formatFcfa(amount)}
@@ -470,15 +490,15 @@ export function DonatePageContent() {
                   </>
                 ) : sendStatus === "error" ? (
                   <>{sendError} </>
-                ) : fedapayReady ? (
+                ) : canPayOnline ? (
                   <>
-                    Paiement sécurisé Mobile Money / carte via FedaPay. Tu es
-                    redirigé vers la page de paiement.{" "}
+                    Paiement sécurisé Mobile Money / carte. Tu es redirigé vers
+                    la page de paiement.{" "}
                   </>
                 ) : (
                   <>
-                    Paiement FedaPay en cours d’activation. En attendant, ta
-                    demande part à {SITE_CONTACT.email}.{" "}
+                    Le lien de paiement arrive bientôt. En attendant, ta demande
+                    part à {SITE_CONTACT.email}.{" "}
                   </>
                 )}
                 <a

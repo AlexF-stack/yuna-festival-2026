@@ -37,7 +37,7 @@ function loadLogoTexture(): Promise<THREE.CanvasTexture> {
       resolve(texture);
     };
     image.onerror = () => reject(new Error("logo"));
-    image.src = "/brand/yuna-mark.png";
+    image.src = "/brand/yuna-mark.webp";
   });
 }
 

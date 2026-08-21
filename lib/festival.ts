@@ -54,7 +54,7 @@ export const HERO_COPY = {
 
 export const NAV_LINKS = [
   { href: "/mouvement", label: "Mouvement" },
-  { href: "/artistes", label: "Line-up" },
+  { href: "/artistes", label: "Artistes" },
   { href: "/journee", label: "Journée" },
   { href: "/soutenir", label: "Soutenir" },
 ] as const;

@@ -66,7 +66,7 @@ export function PassTicket({
 
           <div className="relative z-10 flex items-center gap-2.5">
             <Image
-              src="/brand/yuna-mark.png"
+              src="/brand/yuna-mark.webp"
               alt=""
               width={36}
               height={36}

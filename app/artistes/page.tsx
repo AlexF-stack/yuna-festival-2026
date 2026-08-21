@@ -8,14 +8,14 @@ export const revalidate = 60;
 export const dynamic = "force-static";
 
 const DESCRIPTION =
-  "Le line-up du YUNA Festival 2026 se dévoile progressivement : adoration, louange et scènes fortes, les 5 et 6 septembre à Cotonou.";
+  "Les artistes du YUNA Festival 2026 se dévoilent progressivement : adoration, louange et scènes fortes, les 5 et 6 septembre à Cotonou.";
 
 export const metadata: Metadata = {
-  title: "Line-up & artistes",
+  title: "Artistes",
   description: DESCRIPTION,
   alternates: { canonical: "/artistes" },
   openGraph: {
-    title: "Line-up & artistes | YUNA Festival 2026",
+    title: "Artistes | YUNA Festival 2026",
     description: DESCRIPTION,
     url: "https://www.festivalyuna.com/artistes",
   },

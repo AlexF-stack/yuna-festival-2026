@@ -264,7 +264,7 @@ export function JourneePageContent() {
           </p>
           <div className="mt-8">
             <ButtonLink href="/artistes">
-              {isEn ? "See the line-up →" : "Voir le line-up →"}
+              {isEn ? "See the artists →" : "Voir les artistes →"}
             </ButtonLink>
           </div>
         </div>

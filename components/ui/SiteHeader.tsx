@@ -202,7 +202,7 @@ export function SiteHeader() {
             onClick={() => setOpen(false)}
             aria-label="YUNA Festival, retour à l'accueil"
           >
-            <YunaLogo size="nav" priority />
+            <YunaLogo size="nav" />
           </Link>
           <span
             className={`hidden truncate rounded-full border px-2.5 py-1 font-mono text-[0.6rem] font-bold uppercase tracking-[0.12em] min-[1100px]:inline-flex ${style.chip}`}

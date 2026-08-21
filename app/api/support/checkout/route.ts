@@ -6,6 +6,7 @@ import {
   splitPersonName,
 } from "@/lib/fedapay";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { getSupportPaymentUrl } from "@/lib/site";
 
 export const runtime = "nodejs";
 
@@ -25,6 +26,7 @@ export async function GET() {
   return NextResponse.json({
     ok: true,
     fedapay: isFedaPayConfigured(),
+    paymentLink: Boolean(getSupportPaymentUrl()),
     currency: "XOF",
     minAmount: MIN_AMOUNT,
   });

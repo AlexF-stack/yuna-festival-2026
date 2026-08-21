@@ -15,7 +15,7 @@ export const en: Messages = {
   },
   nav: [
     { href: "/mouvement", label: "Movement" },
-    { href: "/artistes", label: "Line-up" },
+    { href: "/artistes", label: "Artists" },
     { href: "/journee", label: "Daytime" },
     { href: "/partenaires", label: "Partners" },
     { href: "/soutenir", label: "Support" },
@@ -95,11 +95,14 @@ export const en: Messages = {
     { value: "1", label: "Masterclass" },
     { value: "1", label: "Generation rising" },
   ],
+  statsRegistered: {
+    label: "Already registered",
+  },
   explore: {
     eyebrow: "Explore",
     title: "The whole festival",
     description:
-      "Movement, line-up, daytime and FAQ. The details live on each page.",
+      "Movement, artists, daytime and FAQ. The details live on each page.",
     cards: [
       {
         href: "/mouvement",
@@ -109,7 +112,7 @@ export const en: Messages = {
       },
       {
         href: "/artistes",
-        title: "Line-up",
+        title: "Artists",
         description: "Artists are revealed progressively.",
         imageAlt: "Festival stage and artists",
       },
@@ -179,6 +182,7 @@ export const en: Messages = {
     submit: "Get my ticket",
     already: "Already registered?",
     recoverLink: "Recover my pass",
+    registeredCount: "{n} people already registered",
     previewLabel: "Ticket preview",
     previewHint:
       "The final ticket (with QR) is created after validation. This preview shows how it will look at the gate.",
@@ -208,13 +212,13 @@ export const en: Messages = {
   floatCta: "My pass",
   floatAria: "Get my free QR pass",
   lineup: {
-    eyebrow: "Line-up",
+    eyebrow: "Artists",
     title: "The artists",
     description:
-      "Worship, praise and strong stages. The line-up is revealed progressively.",
-    teaser: "Line-up revealed progressively. Stay tuned.",
-    coming: "Line-up coming soon.",
-    mysteryEyebrow: "Line-up in progress",
+      "Worship, praise and strong stages. Names are revealed progressively.",
+    teaser: "Artists are revealed progressively. Stay tuned.",
+    coming: "Artists coming soon.",
+    mysteryEyebrow: "Coming to the stage",
     mysteryTitle: "Coming soon",
     mysteryBody:
       "More names still under wraps. Announcements drop progressively. Stay tuned.",
@@ -222,7 +226,7 @@ export const en: Messages = {
   pages: {
     artistes: {
       eyebrow: "Stages & worship",
-      title: "The line-up",
+      title: "The artists",
       lead:
         "Worship, praise and strong stages. Valère Kouton, Simiane Tatu and Dany Kasongo are already revealed. More names drop progressively.",
     },

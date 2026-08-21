@@ -97,9 +97,9 @@ export function HeroCinematicBackground() {
               priority={i === 0}
               loading={i === 0 ? undefined : "lazy"}
               sizes="100vw"
-              quality={i === 0 ? 88 : 78}
+              quality={i === 0 ? 80 : 70}
               className={`object-cover object-center ${
-                canCycle && active && inView ? "hero-kenburns" : ""
+                canCycle && active && inView && isDesktop ? "hero-kenburns" : ""
               }`}
               style={{ objectPosition: img.position }}
             />

@@ -15,7 +15,7 @@ export const fr: Messages = {
   },
   nav: [
     { href: "/mouvement", label: "Mouvement" },
-    { href: "/artistes", label: "Line-up" },
+    { href: "/artistes", label: "Artistes" },
     { href: "/journee", label: "Journée" },
     { href: "/partenaires", label: "Partenaires" },
     { href: "/soutenir", label: "Soutenir" },
@@ -95,11 +95,14 @@ export const fr: Messages = {
     { value: "1", label: "Masterclass" },
     { value: "1", label: "Génération qui se lève" },
   ],
+  statsRegistered: {
+    label: "Déjà inscrits",
+  },
   explore: {
     eyebrow: "Explorer",
     title: "Tout le festival",
     description:
-      "Mouvement, line-up, journée et infos. Le détail est sur chaque page.",
+      "Mouvement, artistes, journée et infos. Le détail est sur chaque page.",
     cards: [
       {
         href: "/mouvement",
@@ -109,7 +112,7 @@ export const fr: Messages = {
       },
       {
         href: "/artistes",
-        title: "Line-up",
+        title: "Artistes",
         description: "Les artistes se dévoilent progressivement.",
         imageAlt: "Scène et artistes du festival",
       },
@@ -179,6 +182,7 @@ export const fr: Messages = {
     submit: "Recevoir mon ticket",
     already: "Déjà inscrit ?",
     recoverLink: "Retrouver mon pass",
+    registeredCount: "{n} personnes déjà inscrites",
     previewLabel: "Aperçu du ticket",
     previewHint:
       "Le ticket définitif (avec QR) est créé après validation. Cet aperçu te montre à quoi il ressemblera à l'entrée.",
@@ -208,13 +212,13 @@ export const fr: Messages = {
   floatCta: "Ma place",
   floatAria: "Réserver mon pass QR gratuit",
   lineup: {
-    eyebrow: "Line-up",
+    eyebrow: "Artistes",
     title: "Les artistes",
     description:
-      "Adoration, louange et scènes fortes. Le line-up se dévoile progressivement.",
-    teaser: "Line-up dévoilé progressivement. Reste connecté.",
-    coming: "Line-up à venir.",
-    mysteryEyebrow: "Line-up en construction",
+      "Adoration, louange et scènes fortes. Les noms se dévoilent progressivement.",
+    teaser: "Les artistes se dévoilent progressivement. Reste connecté.",
+    coming: "Artistes à venir.",
+    mysteryEyebrow: "Bientôt sur scène",
     mysteryTitle: "Bientôt dévoilés",
     mysteryBody:
       "D’autres noms encore sous emballage. Les annonces sortent progressivement. Reste connecté.",
@@ -222,7 +226,7 @@ export const fr: Messages = {
   pages: {
     artistes: {
       eyebrow: "Scènes & adoration",
-      title: "Le line-up",
+      title: "Les artistes",
       lead:
         "Adoration, louange et scènes fortes. Valère Kouton, Simiane Tatu, Dany Kasongo déjà dévoilés. Le reste arrive progressivement.",
     },

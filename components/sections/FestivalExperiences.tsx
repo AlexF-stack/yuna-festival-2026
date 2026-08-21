@@ -126,7 +126,7 @@ export function FestivalExperiences() {
             <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_50%_35%,#fff8f1_0%,#ffd27a_42%,#ff6600_100%)] min-[480px]:aspect-auto min-[760px]:aspect-[16/10] min-[1080px]:aspect-auto">
               <div className="absolute inset-x-8 bottom-3 h-10 rounded-[50%] bg-charbon/25 blur-xl" />
               <Image
-                src="/brand/yuna-mark.png"
+                src="/brand/yuna-mark.webp"
                 alt=""
                 width={190}
                 height={278}

@@ -4,11 +4,9 @@ import { motion, useReducedMotion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
-import { EASE_PREMIUM } from "@/lib/motion";
-
 /**
- * Fondue d’entrée à chaque navigation (App Router template).
- * Complète les View Transitions navigateur — fallback fluide partout.
+ * Entrée légère à chaque navigation (complète les View Transitions CSS).
+ * Opacity seule — pas de translate (moins de layout/paint).
  */
 export function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -21,9 +19,9 @@ export function PageTransition({ children }: { children: ReactNode }) {
   return (
     <motion.div
       key={pathname}
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: EASE_PREMIUM }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] }}
     >
       {children}
     </motion.div>

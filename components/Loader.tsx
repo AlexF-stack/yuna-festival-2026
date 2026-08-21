@@ -5,14 +5,13 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const HERO_ASSETS = [
-  "/brand/yuna-logo.png",
-  "/media/crowd.webp",
-] as const;
+/** Même asset que le site (évite d’attendre un PNG fantôme). */
+const CRITICAL_ASSETS = ["/brand/yuna-mark.webp"] as const;
 
-const MIN_DISPLAY_MS = 280;
-const MAX_WAIT_MS = 2200;
-const EXIT_MS = 380;
+const MIN_DISPLAY_MS = 120;
+const MAX_WAIT_MS = 900;
+const EXIT_MS = 240;
+const SESSION_KEY = "yuna-loader-seen";
 
 type LoadScores = {
   fonts: number;
@@ -20,8 +19,7 @@ type LoadScores = {
 };
 
 function computeProgress(scores: LoadScores): number {
-  // Ne plus attendre window.load (bloquait sur assets non critiques).
-  const raw = scores.fonts * 35 + scores.images * 65;
+  const raw = scores.fonts * 40 + scores.images * 60;
   return Math.min(100, Math.round(raw));
 }
 
@@ -35,25 +33,30 @@ function loadImage(src: string): Promise<void> {
 }
 
 /**
- * Écran de démarrage YUNA — fonts + images hero critiques uniquement.
- * Se démonte du DOM après fondu Framer Motion (SEO / a11y).
- * Désactivé sur /staff/* (outils terrain, accès immédiat).
+ * Splash court — fonts + mark uniquement.
+ * Skip /staff/* et revisites de session (pas de second blocage).
  */
 export function Loader() {
   const pathname = usePathname() || "/";
   const isStaff = pathname.startsWith("/staff");
   const reduceMotion = useReducedMotion();
   const [progress, setProgress] = useState(0);
-  const [visible, setVisible] = useState(!isStaff);
-  const [mounted, setMounted] = useState(!isStaff);
+  const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const startedAt = useRef<number>(0);
-  const finishedRef = useRef(isStaff);
+  const finishedRef = useRef(false);
   const scoresRef = useRef<LoadScores>({ fonts: 0, images: 0 });
 
   const finish = useCallback(() => {
     if (finishedRef.current) return;
     finishedRef.current = true;
     setProgress(100);
+
+    try {
+      sessionStorage.setItem(SESSION_KEY, "1");
+    } catch {
+      /* ignore */
+    }
 
     const elapsed = Date.now() - startedAt.current;
     const wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
@@ -85,24 +88,39 @@ export function Loader() {
       setMounted(false);
       return;
     }
+
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem(SESSION_KEY) === "1";
+    } catch {
+      seen = false;
+    }
+
+    if (seen) {
+      finishedRef.current = true;
+      setVisible(false);
+      setMounted(false);
+      return;
+    }
+
+    setMounted(true);
+    setVisible(true);
   }, [isStaff]);
 
   useEffect(() => {
-    if (isStaff) return;
+    if (!mounted || isStaff || finishedRef.current) return;
     startedAt.current = Date.now();
 
     if (reduceMotion) {
-      // Pas de barre : spinner court puis sortie.
       const t = window.setTimeout(() => {
         setProgress(100);
-        setVisible(false);
-      }, 450);
+        finish();
+      }, 280);
       return () => window.clearTimeout(t);
     }
 
     let cancelled = false;
 
-    // Fonts (next/font + document)
     const fontsReady =
       typeof document !== "undefined" && document.fonts?.ready
         ? document.fonts.ready
@@ -111,13 +129,12 @@ export function Loader() {
       if (!cancelled) bump({ fonts: 1 });
     });
 
-    // Images critiques (logo + hero) — progression au fil de chaque asset
     let loadedCount = 0;
-    const imageJobs = HERO_ASSETS.map((src) =>
+    const imageJobs = CRITICAL_ASSETS.map((src) =>
       loadImage(src).then(() => {
         if (cancelled) return;
         loadedCount += 1;
-        bump({ images: loadedCount / HERO_ASSETS.length });
+        bump({ images: loadedCount / CRITICAL_ASSETS.length });
       }),
     );
     Promise.all(imageJobs).then(() => {
@@ -132,7 +149,7 @@ export function Loader() {
       cancelled = true;
       window.clearTimeout(hardStop);
     };
-  }, [bump, finish, isStaff, reduceMotion]);
+  }, [bump, finish, isStaff, mounted, reduceMotion]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -178,15 +195,15 @@ export function Loader() {
 
           <motion.div
             className="relative z-10 flex flex-col items-center"
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: [0.2, 0.8, 0.2, 1] }}
+            transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
           >
             <Image
-              src="/brand/yuna-logo.png"
+              src="/brand/yuna-mark.webp"
               alt="YUNA Festival"
               width={220}
-              height={220}
+              height={319}
               priority
               className="logo-flame logo-flame--hero h-[7.5rem] w-auto object-contain min-[480px]:h-36"
             />
@@ -207,7 +224,7 @@ export function Loader() {
                     className="h-full w-full origin-left rounded-full bg-gradient-to-r from-bleu via-feu to-feu"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: progress / 100 }}
-                    transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+                    transition={{ duration: 0.25, ease: [0.2, 0.8, 0.2, 1] }}
                   />
                 </div>
                 <p className="mt-3 text-center font-mono text-sm font-bold tabular-nums text-charbon">

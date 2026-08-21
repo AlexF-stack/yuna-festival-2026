@@ -1,10 +1,9 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
+import dynamic from "next/dynamic";
 
 import { HeroCinematicBackground } from "@/components/hero/HeroCinematicBackground";
-import { HeroFireCanvas } from "@/components/hero/HeroFireCanvas";
-import { HeroOrbs } from "@/components/hero/HeroOrbs";
 import { HeroShowcase } from "@/components/hero/HeroShowcase";
 import { YunaLogo } from "@/components/brand/YunaLogo";
 import { AnimatedThemeTitle } from "@/components/sections/AnimatedThemeTitle";
@@ -13,6 +12,16 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useMessages } from "@/components/i18n/LocaleProvider";
 import { FESTIVAL, HERO_COPY } from "@/lib/festival";
 import { EASE_PREMIUM } from "@/lib/motion";
+
+const HeroFireCanvas = dynamic(
+  () =>
+    import("@/components/hero/HeroFireCanvas").then((m) => m.HeroFireCanvas),
+  { ssr: false },
+);
+const HeroOrbs = dynamic(
+  () => import("@/components/hero/HeroOrbs").then((m) => m.HeroOrbs),
+  { ssr: false },
+);
 
 type HeroProps = {
   eventStartIso: string;

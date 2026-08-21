@@ -30,6 +30,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["700"],
   variable: "--font-jetbrains-mono",
   display: "swap",
+  preload: false,
 });
 
 const notoHebrew = Noto_Sans_Hebrew({
@@ -37,12 +38,13 @@ const notoHebrew = Noto_Sans_Hebrew({
   weight: ["500", "700"],
   variable: "--font-noto-hebrew",
   display: "swap",
+  preload: false,
 });
 
 const siteUrl = "https://www.festivalyuna.com";
 
 const SITE_DESCRIPTION =
-  "YUNA Festival 2026 : Bénin Debout. Une génération non ordinaire se lève. 5–6 septembre 2026, Cotonou. Entrée libre, line-up dévoilé progressivement.";
+  "YUNA Festival 2026 : Bénin Debout. Une génération non ordinaire se lève. 5–6 septembre 2026, Cotonou. Entrée libre, artistes dévoilés progressivement.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

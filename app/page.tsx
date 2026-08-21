@@ -44,7 +44,7 @@ const festivalJsonLd = {
   },
   image: ["https://www.festivalyuna.com/opengraph-image"],
   description:
-    "YUNA Festival 2026 : Bénin Debout. Une génération non ordinaire se lève. 5–6 septembre 2026, Cotonou. Entrée libre, line-up dévoilé progressivement.",
+    "YUNA Festival 2026 : Bénin Debout. Une génération non ordinaire se lève. 5–6 septembre 2026, Cotonou. Entrée libre, artistes dévoilés progressivement.",
   offers: {
     "@type": "Offer",
     price: "0",

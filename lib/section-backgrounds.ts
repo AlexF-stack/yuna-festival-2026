@@ -39,7 +39,7 @@ export const SECTION_BACKGROUNDS: Record<SectionBgKey, SectionBgConfig> = {
   },
   lineup: {
     src: "/media/title-lineup.jpg",
-    alt: "Line-up, YUNA Festival 2026",
+    alt: "Artistes, YUNA Festival 2026",
     objectPosition: "center center",
     overlay: "nuit",
     photoOpacity: 0.88,

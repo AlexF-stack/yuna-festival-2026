@@ -67,6 +67,9 @@ export type Messages = {
     aria: string;
   };
   stats: { value: string; label: string }[];
+  statsRegistered: {
+    label: string;
+  };
   explore: {
     eyebrow: string;
     title: string;
@@ -111,6 +114,7 @@ export type Messages = {
     submit: string;
     already: string;
     recoverLink: string;
+    registeredCount: string;
     previewLabel: string;
     previewHint: string;
   };

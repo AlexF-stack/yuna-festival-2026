@@ -21,6 +21,7 @@ const SIZES = {
 
 /**
  * Logo officiel — orange flamme poussé (saturate + halo feu).
+ * Source compressée (~65 Ko) ; Next sert AVIF/WebP.
  */
 export function YunaLogo({
   size = "nav",
@@ -38,11 +39,18 @@ export function YunaLogo({
 
   return (
     <Image
-      src="/brand/yuna-mark.png"
+      src="/brand/yuna-mark.webp"
       alt="YUNA Festival"
       width={s.width}
       height={s.height}
       priority={priority}
+      sizes={
+        size === "hero"
+          ? "(max-width: 480px) 128px, (max-width: 900px) 144px, 120px"
+          : size === "nav"
+            ? "48px"
+            : "72px"
+      }
       className={`${s.className} object-contain object-left ${flameClass} ${className}`}
     />
   );
