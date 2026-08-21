@@ -235,8 +235,8 @@ export function Register() {
           <RegistrationGauge />
         </Reveal>
 
-        <div className="mt-12 max-w-xl">
-          <Reveal variant="left">
+        <div className="mt-12 grid items-start gap-10 min-[960px]:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] min-[960px]:gap-12">
+          <Reveal variant="left" className="mx-auto w-full max-w-xl min-[960px]:mx-0 min-[960px]:max-w-none">
           <form
             onSubmit={onSubmit}
             noValidate
@@ -570,6 +570,20 @@ export function Register() {
               ))}
             </ul>
           </form>
+          </Reveal>
+
+          <Reveal
+            variant="right"
+            delay={0.08}
+            className="hidden min-[960px]:sticky min-[960px]:top-28 min-[960px]:block"
+          >
+            <p className="mb-3 font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-charbon">
+              {t.register.previewLabel}
+            </p>
+            <PassPreview name={name} registrationType={previewType} />
+            <p className="mt-4 text-sm leading-relaxed text-charbon">
+              {t.register.previewHint}
+            </p>
           </Reveal>
         </div>
       </div>
