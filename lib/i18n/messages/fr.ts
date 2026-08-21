@@ -229,7 +229,7 @@ export const fr: Messages = {
       eyebrow: "Scènes & adoration",
       title: "Les artistes",
       lead:
-        "Adoration, louange et scènes fortes. Valère Kouton, Simiane Tatu, Dany Kasongo déjà dévoilés. Le reste arrive progressivement.",
+        "Adoration, louange et scènes fortes. Exo Éclat, Valère Kouton, Simiane Tatu, Dany Kasongo déjà dévoilés. Le reste arrive progressivement.",
     },
     vision: {
       eyebrow: "La vision",

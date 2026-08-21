@@ -16,6 +16,18 @@ export type AnnouncedArtist = {
 
 export const ANNOUNCED_ARTISTS: AnnouncedArtist[] = [
   {
+    name: "Exo Éclat",
+    role: "Louange & adoration",
+    roleEn: "Praise & worship",
+    bio_short:
+      "Moment de louange, d’adoration et d’impaction divine pour les fils et filles du Royaume.",
+    bio_short_en:
+      "A moment of praise, worship and divine impact for the sons and daughters of the Kingdom.",
+    is_headliner: false,
+    order: 5,
+    portrait_url: "/media/artists/exo-eclat.webp",
+  },
+  {
     name: "Valère Kouton",
     role: "Chantre · Bénin",
     roleEn: "Worship leader · Benin",
@@ -60,6 +72,10 @@ const NAME_ALIASES: Record<string, string> = {
   "valère kouton": "Valère Kouton",
   "valere kouton": "Valère Kouton",
   "dany kasongo": "Dany Kasongo",
+  "exo éclat": "Exo Éclat",
+  "exo eclat": "Exo Éclat",
+  "exo éclats": "Exo Éclat",
+  "exo eclats": "Exo Éclat",
 };
 
 export function canonicalArtistName(name: string): string {

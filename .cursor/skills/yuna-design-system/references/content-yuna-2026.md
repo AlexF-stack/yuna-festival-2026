@@ -24,7 +24,7 @@ manquante, demander à l'utilisateur plutôt que d'improviser.
 ## Line-up
 **Tête d'affiche internationale** : Joe Mettle (Ghana) — dimanche 6 sept, 21h20
 
-**Annoncés (affiches officielles)** : Valère Kouton, Simiane Tatu, Dany Kasongo
+**Annoncés (affiches officielles)** : Exo Éclat, Valère Kouton, Simiane Tatu, Dany Kasongo
 
 **Internationaux** : Derek Jones (adoration, dimanche), Simiane Tatu (adoration, samedi), Exo Éclats (samedi), David Okit (samedi), Serviteur Pierre (samedi), Dany Kasongo
 

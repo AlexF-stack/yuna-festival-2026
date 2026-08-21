@@ -229,7 +229,7 @@ export const en: Messages = {
       eyebrow: "Stages & worship",
       title: "The artists",
       lead:
-        "Worship, praise and strong stages. Valère Kouton, Simiane Tatu and Dany Kasongo are already revealed. More names drop progressively.",
+        "Worship, praise and strong stages. Exo Éclat, Valère Kouton, Simiane Tatu and Dany Kasongo are already revealed. More names drop progressively.",
     },
     vision: {
       eyebrow: "The vision",
