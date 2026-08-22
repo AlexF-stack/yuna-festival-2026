@@ -6,8 +6,8 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FESTIVAL } from "@/lib/festival";
 
 const SIZE = 1024;
-/** Zone photo du template « J’Y SERAI » (coords canvas 1024) — jusqu’au texte. */
-const HOLE = { x: 486, y: 271, w: 461, h: 425, r: 28 };
+/** Zone photo complète — « J’Y SERAI » est dans l’overlay, au-dessus de la photo. */
+const HOLE = { x: 486, y: 269, w: 461, h: 471, r: 28 };
 const HOLE_CX = HOLE.x + HOLE.w / 2;
 const HOLE_CY = HOLE.y + HOLE.h / 2;
 const FRAME_SRC = "/media/filter-jy-serai-overlay.png";
@@ -81,14 +81,19 @@ export function PhotoFilterClient() {
 
     ctx.clearRect(0, 0, SIZE, SIZE);
 
-    if (frameRef.current) {
-      ctx.drawImage(frameRef.current, 0, 0, SIZE, SIZE);
-    }
-
-    // Photo derrière le cadre (visible uniquement dans le trou transparent).
+    // 1) Photo qui remplit le cadre
     const photo = photoRef.current;
     ctx.save();
-    ctx.globalCompositeOperation = "destination-over";
+    {
+      const { x, y, w, h, r } = HOLE;
+      ctx.beginPath();
+      if (typeof ctx.roundRect === "function") {
+        ctx.roundRect(x, y, w, h, r);
+      } else {
+        ctx.rect(x, y, w, h);
+      }
+      ctx.clip();
+    }
     if (photo) {
       const base = coverScale(photo.img, HOLE.w, HOLE.h);
       const s = base * photo.scale;
@@ -108,12 +113,14 @@ export function PhotoFilterClient() {
       ctx.font = "600 36px 'Space Grotesk', system-ui, sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText("Ta photo ici", HOLE_CX, HOLE_CY);
+      ctx.fillText("Ta photo ici", HOLE_CX, HOLE_CY - 24);
     }
-    // Fond derrière tout (coins / hors trou).
-    ctx.fillStyle = "#041a3a";
-    ctx.fillRect(0, 0, SIZE, SIZE);
     ctx.restore();
+
+    // 2) Cadre par-dessus (dont « J’Y SERAI » sur la photo)
+    if (frameRef.current) {
+      ctx.drawImage(frameRef.current, 0, 0, SIZE, SIZE);
+    }
   }, []);
 
   useEffect(() => {
