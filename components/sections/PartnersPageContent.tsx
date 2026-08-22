@@ -17,13 +17,6 @@ const fieldClass =
 
 type PartnerMode = "financier" | "materiel" | "les-deux";
 
-const PAGE_NAV = [
-  { href: "#impact", label: "Impact" },
-  { href: "#visibilite", label: "Visibilité" },
-  { href: "#paliers", label: "Offres" },
-  { href: "#contact-partenaire", label: "Contact" },
-] as const;
-
 function dossierMailto() {
   const subject = encodeURIComponent(PARTNERS_PAGE.dossierMailSubject);
   const body = encodeURIComponent(
