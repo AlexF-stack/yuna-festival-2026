@@ -7,10 +7,10 @@ import { FESTIVAL } from "@/lib/festival";
 
 const SIZE = 1024;
 /** Zone photo du template « J’Y SERAI » (coords canvas 1024). */
-const HOLE = { x: 486, y: 269, w: 462, h: 281 };
+const HOLE = { x: 488, y: 271, w: 458, h: 277, r: 28 };
 const HOLE_CX = HOLE.x + HOLE.w / 2;
 const HOLE_CY = HOLE.y + HOLE.h / 2;
-const FRAME_SRC = "/media/filter-jy-serai-overlay.webp";
+const FRAME_SRC = "/media/filter-jy-serai-overlay.png";
 
 type PhotoState = {
   img: HTMLImageElement;
@@ -22,7 +22,10 @@ type PhotoState = {
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "anonymous";
+    // Same-origin + blob: avoid crossOrigin (can break decode / canvas export).
+    if (/^https?:\/\//i.test(src)) {
+      img.crossOrigin = "anonymous";
+    }
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error("image"));
     img.src = src;
@@ -33,13 +36,15 @@ function coverScale(img: HTMLImageElement, w: number, h: number) {
   return Math.max(w / img.naturalWidth, h / img.naturalHeight);
 }
 
-function pointInHole(x: number, y: number) {
-  return (
-    x >= HOLE.x &&
-    x <= HOLE.x + HOLE.w &&
-    y >= HOLE.y &&
-    y <= HOLE.y + HOLE.h
-  );
+function pointInHole(px: number, py: number) {
+  const { x, y, w, h, r } = HOLE;
+  if (px < x || px > x + w || py < y || py > y + h) return false;
+  const cx = px < x + r ? x + r : px > x + w - r ? x + w - r : px;
+  const cy = py < y + r ? y + r : py > y + h - r ? y + h - r : py;
+  if (cx === px || cy === py) return true;
+  const dx = px - cx;
+  const dy = py - cy;
+  return dx * dx + dy * dy <= r * r;
 }
 
 /**
@@ -76,13 +81,14 @@ export function PhotoFilterClient() {
 
     ctx.clearRect(0, 0, SIZE, SIZE);
 
-    // Photo dans le cadre
+    if (frameRef.current) {
+      ctx.drawImage(frameRef.current, 0, 0, SIZE, SIZE);
+    }
+
+    // Photo derrière le cadre (visible uniquement dans le trou transparent).
     const photo = photoRef.current;
     ctx.save();
-    ctx.beginPath();
-    ctx.rect(HOLE.x, HOLE.y, HOLE.w, HOLE.h);
-    ctx.closePath();
-    ctx.clip();
+    ctx.globalCompositeOperation = "destination-over";
     if (photo) {
       const base = coverScale(photo.img, HOLE.w, HOLE.h);
       const s = base * photo.scale;
@@ -104,11 +110,10 @@ export function PhotoFilterClient() {
       ctx.textBaseline = "middle";
       ctx.fillText("Ta photo ici", HOLE_CX, HOLE_CY);
     }
+    // Fond derrière tout (coins / hors trou).
+    ctx.fillStyle = "#041a3a";
+    ctx.fillRect(0, 0, SIZE, SIZE);
     ctx.restore();
-
-    if (frameRef.current) {
-      ctx.drawImage(frameRef.current, 0, 0, SIZE, SIZE);
-    }
   }, []);
 
   useEffect(() => {

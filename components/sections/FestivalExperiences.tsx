@@ -90,7 +90,7 @@ export function FestivalExperiences() {
               <div className="absolute inset-0 bg-bleu/20" />
               <div className="absolute inset-3 mx-auto aspect-square max-h-[calc(100%-1.5rem)]">
                 <Image
-                  src="/media/filter-jy-serai-overlay.webp"
+                  src="/media/filter-jy-serai-overlay.png"
                   alt=""
                   fill
                   sizes="240px"
