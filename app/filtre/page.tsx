@@ -5,14 +5,14 @@ import { PageIntro } from "@/components/ui/PageIntro";
 import { FESTIVAL } from "@/lib/festival";
 
 const DESCRIPTION =
-  "Filtre photo Bénin Debout : prends ta photo avec le cadre officiel du festival (flammes, thème et verset) et partage-la sur tes réseaux.";
+  "Filtre photo J’y serai : ajoute ta photo au cadre officiel YUNA Festival 2026 et partage-la sur tes réseaux.";
 
 export const metadata: Metadata = {
-  title: "Filtre photo Bénin Debout",
+  title: "Filtre photo J’y serai",
   description: DESCRIPTION,
   alternates: { canonical: "/filtre" },
   openGraph: {
-    title: "Filtre photo Bénin Debout | YUNA Festival 2026",
+    title: "Filtre photo J’y serai | YUNA Festival 2026",
     description: DESCRIPTION,
     url: "https://www.festivalyuna.com/filtre",
   },
@@ -23,8 +23,8 @@ export default function FiltrePage() {
     <main id="contenu" className="bg-papier text-encre">
       <PageIntro
         eyebrow="Filtre photo"
-        title="Bénin Debout"
-        lead={`Prends ta photo avec le cadre officiel du festival (flammes, thème et verset) et partage-la sur tes réseaux. ${FESTIVAL.datesShort} · ${FESTIVAL.venue}.`}
+        title="J’y serai"
+        lead={`Ajoute ta photo au cadre officiel du festival et partage-la sur tes réseaux. ${FESTIVAL.datesShort} · ${FESTIVAL.venue}.`}
         compact
       />
 

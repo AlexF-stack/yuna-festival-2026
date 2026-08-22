@@ -13,10 +13,10 @@ const COPY = {
     eyebrow: "À vivre maintenant",
     title: "Entre dans l’univers YUNA",
     description:
-      "Crée ton visuel Bénin Debout ou pose l’emblème YUNA chez toi. Deux expériences gratuites, directement sur ton téléphone.",
+      "Crée ton visuel « J’y serai » ou pose l’emblème YUNA chez toi. Deux expériences gratuites, directement sur ton téléphone.",
     filter: {
       badge: "Photo officielle",
-      title: "Ton portrait Bénin Debout",
+      title: "Ton cadre J’y serai",
       description:
         "Prends ou choisis ta photo, ajuste le cadre officiel puis partage-la.",
       cta: "Créer ma photo",
@@ -33,10 +33,10 @@ const COPY = {
     eyebrow: "Try it now",
     title: "Step into the YUNA experience",
     description:
-      "Create your Bénin Debout visual or place the YUNA emblem at home. Two free mobile experiences.",
+      "Create your “I’ll be there” visual or place the YUNA emblem at home. Two free mobile experiences.",
     filter: {
       badge: "Official photo",
-      title: "Your Bénin Debout portrait",
+      title: "Your I’ll be there frame",
       description:
         "Take or choose a photo, adjust the official frame and share it.",
       cta: "Create my photo",
@@ -90,7 +90,7 @@ export function FestivalExperiences() {
               <div className="absolute inset-0 bg-bleu/20" />
               <div className="absolute inset-3 mx-auto aspect-square max-h-[calc(100%-1.5rem)]">
                 <Image
-                  src="/media/filter-benin-debout-overlay.png"
+                  src="/media/filter-jy-serai-overlay.webp"
                   alt=""
                   fill
                   sizes="240px"

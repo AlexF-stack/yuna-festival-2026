@@ -132,8 +132,8 @@ export const en: Messages = {
       {
         href: "/filtre",
         title: "Photo filter",
-        description: "Bénin Debout frame: flames, theme and verse.",
-        imageAlt: "YUNA Bénin Debout photo filter",
+        description: "Official I’ll be there frame: add your photo and share.",
+        imageAlt: "YUNA I’ll be there photo filter",
       },
       {
         href: "/flamme",

@@ -5,9 +5,12 @@ import { useCallback, useEffect, useRef, useState, type PointerEvent } from "rea
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FESTIVAL } from "@/lib/festival";
 
-const SIZE = 1080;
-const CIRCLE = { cx: 540, cy: 481, r: 458 };
-const FRAME_SRC = "/media/filter-benin-debout-overlay.png";
+const SIZE = 1024;
+/** Zone photo du template « J’Y SERAI » (coords canvas 1024). */
+const HOLE = { x: 486, y: 269, w: 462, h: 281 };
+const HOLE_CX = HOLE.x + HOLE.w / 2;
+const HOLE_CY = HOLE.y + HOLE.h / 2;
+const FRAME_SRC = "/media/filter-jy-serai-overlay.webp";
 
 type PhotoState = {
   img: HTMLImageElement;
@@ -26,12 +29,21 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
-function coverScale(img: HTMLImageElement, diameter: number) {
-  return Math.max(diameter / img.naturalWidth, diameter / img.naturalHeight);
+function coverScale(img: HTMLImageElement, w: number, h: number) {
+  return Math.max(w / img.naturalWidth, h / img.naturalHeight);
+}
+
+function pointInHole(x: number, y: number) {
+  return (
+    x >= HOLE.x &&
+    x <= HOLE.x + HOLE.w &&
+    y >= HOLE.y &&
+    y <= HOLE.y + HOLE.h
+  );
 }
 
 /**
- * Filtre photo officiel Bénin Debout — visuel fourni par l’équipe YUNA.
+ * Filtre photo officiel « J’Y SERAI » — visuel fourni par l’équipe YUNA.
  */
 export function PhotoFilterClient() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -64,32 +76,33 @@ export function PhotoFilterClient() {
 
     ctx.clearRect(0, 0, SIZE, SIZE);
 
-    // Photo dans le cercle
+    // Photo dans le cadre
     const photo = photoRef.current;
     ctx.save();
     ctx.beginPath();
-    ctx.arc(CIRCLE.cx, CIRCLE.cy, CIRCLE.r, 0, Math.PI * 2);
+    ctx.rect(HOLE.x, HOLE.y, HOLE.w, HOLE.h);
     ctx.closePath();
     ctx.clip();
     if (photo) {
-      const base = coverScale(photo.img, CIRCLE.r * 2);
+      const base = coverScale(photo.img, HOLE.w, HOLE.h);
       const s = base * photo.scale;
       const w = photo.img.naturalWidth * s;
       const h = photo.img.naturalHeight * s;
       ctx.drawImage(
         photo.img,
-        CIRCLE.cx - w / 2 + photo.offsetX,
-        CIRCLE.cy - h / 2 + photo.offsetY,
+        HOLE_CX - w / 2 + photo.offsetX,
+        HOLE_CY - h / 2 + photo.offsetY,
         w,
         h,
       );
     } else {
       ctx.fillStyle = "#050505";
-      ctx.fillRect(0, 0, SIZE, SIZE);
+      ctx.fillRect(HOLE.x, HOLE.y, HOLE.w, HOLE.h);
       ctx.fillStyle = "rgba(255,248,241,0.72)";
-      ctx.font = "600 42px 'Space Grotesk', system-ui, sans-serif";
+      ctx.font = "600 36px 'Space Grotesk', system-ui, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("Ta photo ici", CIRCLE.cx, CIRCLE.cy);
+      ctx.textBaseline = "middle";
+      ctx.fillText("Ta photo ici", HOLE_CX, HOLE_CY);
     }
     ctx.restore();
 
@@ -199,7 +212,7 @@ export function PhotoFilterClient() {
       const img = await loadImage(snapshot.toDataURL("image/jpeg", 0.92));
       applyPhoto(img);
       closeCamera();
-      setHint("Photo capturée. Glisse-la dans le cercle pour la recadrer.");
+      setHint("Photo capturée. Glisse-la dans le cadre pour la recadrer.");
       await paint();
     } catch {
       setHint("La capture a échoué. Réessaie ou choisis une photo.");
@@ -223,9 +236,7 @@ export function PhotoFilterClient() {
   function onPointerDown(e: PointerEvent<HTMLCanvasElement>) {
     if (!photoRef.current) return;
     const p = pointerToCanvas(e.clientX, e.clientY);
-    const dx = p.x - CIRCLE.cx;
-    const dy = p.y - CIRCLE.cy;
-    if (dx * dx + dy * dy > CIRCLE.r * CIRCLE.r) return;
+    if (!pointInHole(p.x, p.y)) return;
     dragRef.current = { x: p.x, y: p.y };
     e.currentTarget.setPointerCapture(e.pointerId);
   }
@@ -272,7 +283,7 @@ export function PhotoFilterClient() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `yuna-benin-debout-jy-serai.png`;
+      a.download = `yuna-festival-2026-jy-serai.png`;
       a.click();
       URL.revokeObjectURL(url);
     } catch {
@@ -295,13 +306,13 @@ export function PhotoFilterClient() {
         canvas.toBlob(resolve, "image/png"),
       );
       if (!blob) throw new Error("blob");
-      const file = new File([blob], "yuna-benin-debout.png", {
+      const file = new File([blob], "yuna-festival-2026-jy-serai.png", {
         type: "image/png",
       });
       if (navigator.share && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
-          title: "YUNA 2026, Bénin Debout",
+          title: "YUNA Festival 2026 — J’y serai",
           text: `J'y serai : ${FESTIVAL.theme} · ${FESTIVAL.datesShort}`,
         });
         return;
@@ -414,7 +425,7 @@ export function PhotoFilterClient() {
               className="mt-2 w-full accent-feu"
             />
             <p className="mt-1 text-xs text-charbon/65">
-              Glisse la photo dans le cercle pour la recadrer.
+              Glisse la photo dans le cadre pour la recadrer.
             </p>
           </label>
         ) : null}

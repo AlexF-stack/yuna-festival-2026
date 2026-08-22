@@ -132,8 +132,8 @@ export const fr: Messages = {
       {
         href: "/filtre",
         title: "Filtre photo",
-        description: "Cadre Bénin Debout : flammes, thème et verset.",
-        imageAlt: "Filtre photo YUNA Bénin Debout",
+        description: "Cadre officiel J’y serai : ajoute ta photo et partage.",
+        imageAlt: "Filtre photo YUNA J’y serai",
       },
       {
         href: "/flamme",
