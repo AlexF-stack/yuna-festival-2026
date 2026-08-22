@@ -6,8 +6,8 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FESTIVAL } from "@/lib/festival";
 
 const SIZE = 1024;
-/** Zone photo du template « J’Y SERAI » (coords canvas 1024). */
-const HOLE = { x: 488, y: 271, w: 458, h: 277, r: 28 };
+/** Zone photo du template « J’Y SERAI » (coords canvas 1024) — jusqu’au texte. */
+const HOLE = { x: 486, y: 271, w: 461, h: 425, r: 28 };
 const HOLE_CX = HOLE.x + HOLE.w / 2;
 const HOLE_CY = HOLE.y + HOLE.h / 2;
 const FRAME_SRC = "/media/filter-jy-serai-overlay.png";
