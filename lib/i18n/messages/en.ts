@@ -60,7 +60,7 @@ export const en: Messages = {
     ctaSecondary: "See the daytime programme",
     meta: "5–6 September 2026 · Cotonou",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "5–6 September 2026 · Cotonou · Free entry",
+    venueLine: "5–6 September 2026 · Midombo · Free entry",
   },
   registerExtras: {
     addGuest: "+ Add a pass for someone else",
@@ -245,9 +245,9 @@ export const en: Messages = {
     },
     lieu: {
       eyebrow: "The venue",
-      title: "Cotonou",
+      title: "Akpakpa · Midombo",
       lead:
-        "Cotonou. Free entry, open to all.",
+        "Midombo grounds, Akpakpa, Cotonou. Free entry, open to all.",
     },
     boutique: {
       eyebrow: "Shop",

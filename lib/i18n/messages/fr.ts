@@ -60,7 +60,7 @@ export const fr: Messages = {
     ctaSecondary: "Voir la journée",
     meta: "5–6 septembre 2026 · Cotonou",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "5–6 septembre 2026 · Cotonou · Entrée libre",
+    venueLine: "5–6 septembre 2026 · Midombo · Entrée libre",
   },
   registerExtras: {
     addGuest: "+ Ajouter un pass pour quelqu’un d’autre",
@@ -245,9 +245,9 @@ export const fr: Messages = {
     },
     lieu: {
       eyebrow: "Le lieu",
-      title: "Cotonou",
+      title: "Akpakpa · Midombo",
       lead:
-        "Cotonou. Entrée libre, accessible à tous.",
+        "Terrain de Midombo, Akpakpa, Cotonou. Entrée libre, accessible à tous.",
     },
     boutique: {
       eyebrow: "Boutique",

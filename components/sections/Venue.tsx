@@ -48,22 +48,22 @@ export function Venue() {
           <div className="relative px-5 min-[900px]:px-0">
             <div className="relative aspect-[5/6] overflow-hidden rounded-[1.75rem] rounded-tr-[0.4rem] shadow-ombre-bleu-lg min-[560px]:aspect-[4/5] min-[900px]:rounded-[2rem] min-[900px]:rounded-tr-[0.45rem]">
               <SoftImage
-                src="/media/venue-midombo.webp"
-                alt="Festival en plein air à Cotonou"
+                src="/media/venue-localisation-akpakpa.webp"
+                alt="YUNA Festival 2026 — Terrain de Midombo, Akpakpa, Cotonou"
                 fill
                 sizes="(min-width: 900px) 520px, 100vw"
                 quality={90}
                 priority
                 wrapperClassName="absolute inset-0"
-                objectPosition="center 40%"
+                objectPosition="center center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-nuit-profonde/95 via-nuit-profonde/25 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-nuit-profonde/90 via-transparent to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-ivoire-froid min-[480px]:p-8">
-                <p className="font-display text-[clamp(2.6rem,12vw,3.5rem)] font-extrabold uppercase leading-none tracking-tight">
-                  Cotonou
+                <p className="font-display text-[clamp(2.2rem,10vw,3.2rem)] font-extrabold uppercase leading-none tracking-tight">
+                  Akpakpa
                 </p>
-                <p className="mt-2 font-mono text-sm font-bold uppercase tracking-[0.18em] text-ivoire-froid/75">
-                  {FESTIVAL.city} · {FESTIVAL.country}
+                <p className="mt-2 font-mono text-sm font-bold uppercase tracking-[0.14em] text-ivoire-froid/80">
+                  Terrain de Midombo · {FESTIVAL.city}
                 </p>
               </div>
             </div>

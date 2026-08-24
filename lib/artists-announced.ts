@@ -16,6 +16,18 @@ export type AnnouncedArtist = {
 
 export const ANNOUNCED_ARTISTS: AnnouncedArtist[] = [
   {
+    name: "Moïse Adounkpè",
+    role: "Chantre",
+    roleEn: "Worship leader",
+    bio_short:
+      "Moment de louange, d’adoration et d’impaction divine pour les fils et filles du Royaume.",
+    bio_short_en:
+      "A moment of praise, worship and divine impact for the sons and daughters of the Kingdom.",
+    is_headliner: false,
+    order: 4,
+    portrait_url: "/media/artists/moise-adounkpe.webp",
+  },
+  {
     name: "Exo Éclat",
     role: "Louange & adoration",
     roleEn: "Praise & worship",
@@ -76,6 +88,10 @@ const NAME_ALIASES: Record<string, string> = {
   "exo eclat": "Exo Éclat",
   "exo éclats": "Exo Éclat",
   "exo eclats": "Exo Éclat",
+  "moïse adounkpè": "Moïse Adounkpè",
+  "moise adounkpe": "Moïse Adounkpè",
+  "moïse adounkpe": "Moïse Adounkpè",
+  "moise adounkpè": "Moïse Adounkpè",
 };
 
 export function canonicalArtistName(name: string): string {

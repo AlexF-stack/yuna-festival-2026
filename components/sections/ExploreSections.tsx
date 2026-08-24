@@ -19,12 +19,12 @@ const CARD_MEDIA: Record<
     objectPosition: "center 40%",
   },
   "/#lieu": {
-    image: "/media/venue-midombo.webp",
-    objectPosition: "center 40%",
+    image: "/media/venue-localisation-akpakpa.webp",
+    objectPosition: "center center",
   },
   "/lieu": {
-    image: "/media/venue-midombo.webp",
-    objectPosition: "center 40%",
+    image: "/media/venue-localisation-akpakpa.webp",
+    objectPosition: "center center",
   },
   "/faq": { image: "/media/crowd.webp" },
   "/filtre": {

@@ -69,10 +69,11 @@ export const JOURNEE = {
 
 export const VENUE = {
   eyebrow: "Le lieu",
-  title: "Cotonou",
+  title: "Akpakpa · Midombo",
   intro:
-    "Cotonou. Un espace ouvert, accessible à tous. Entrée libre. Le festival vient à la rencontre de la jeunesse, là où elle vit.",
+    "Terrain de Midombo, Akpakpa, Cotonou. Un espace ouvert, accessible à tous. Entrée libre. Le festival vient à la rencontre de la jeunesse, là où elle vit.",
   amenities: [
+    "Terrain de Midombo · Akpakpa, Cotonou",
     "Entrée gratuite, ouverte à tous",
     "Ouverture du site à 16h00 chaque soir, concerts dès 18h",
     "Espace sécurisé, sanitaires et points d'eau sur place",

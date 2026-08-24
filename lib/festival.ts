@@ -23,13 +23,13 @@ export const FESTIVAL = {
   theme: "Bénin Debout",
   datesShort: "5–6 septembre 2026",
   datesHero: "5–6 SEP · 2026",
-  venue: "Cotonou",
+  venue: "Akpakpa · Midombo",
   city: "Cotonou",
   country: "Bénin",
   /** Libellé court public */
-  locationLine: "Cotonou",
+  locationLine: "Akpakpa · Midombo",
   /** Libellé formel SEO / meta */
-  locationFull: "Cotonou",
+  locationFull: "Terrain de Midombo, Akpakpa, Cotonou",
   freeEntry: "Entrée libre",
   tagline: "Une génération non ordinaire se lève.",
   siteOpens: "16h00",

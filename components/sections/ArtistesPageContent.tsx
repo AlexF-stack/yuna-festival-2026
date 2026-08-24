@@ -163,7 +163,7 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
             <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu-glow">
               {isEn ? "Just announced" : "Viennent d’être dévoilés"}
             </p>
-            <ul className="mt-8 grid gap-5 min-[640px]:grid-cols-2 min-[960px]:grid-cols-4 min-[640px]:gap-6">
+            <ul className="mt-8 grid gap-5 min-[640px]:grid-cols-2 min-[960px]:grid-cols-3 min-[1200px]:grid-cols-5 min-[640px]:gap-6">
               {withPortrait.map((artist, i) => (
                 <motion.li
                   key={artist.id}
