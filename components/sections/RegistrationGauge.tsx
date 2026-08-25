@@ -11,7 +11,7 @@ import { REGISTRATION_GOAL } from "@/lib/festival";
 import { EASE_YUNA } from "@/lib/motion";
 
 /**
- * Jauge factice d’inscrits — objectif 5 000 (base + inscriptions réelles).
+ * Jauge factice d’inscrits — objectif 15 000 (base + inscriptions réelles).
  */
 export function RegistrationGauge() {
   const reduce = useReducedMotion();

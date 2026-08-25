@@ -10,7 +10,7 @@ export const EVENT_START_ISO = "2026-09-05T18:00:00+01:00";
 /** Fin dimanche soirée */
 export const EVENT_END_ISO = "2026-09-06T22:30:00+01:00";
 
-export const REGISTRATION_GOAL = 5000;
+export const REGISTRATION_GOAL = 15_000;
 
 export function getEventStartIso(): string {
   return EVENT_START_ISO;
