@@ -207,7 +207,7 @@ export function SiteHeader() {
           <span
             className={`hidden truncate rounded-full border px-2.5 py-1 font-mono text-[0.6rem] font-bold uppercase tracking-[0.12em] min-[1100px]:inline-flex ${style.chip}`}
           >
-            {messages.hero.datesHero} · {FESTIVAL.city}
+            {messages.hero.datesHero} · {FESTIVAL.locationLine}
           </span>
         </div>
 
@@ -298,7 +298,7 @@ export function SiteHeader() {
             lightText ? "text-jaune" : "text-feu"
           }`}
         >
-          {messages.hero.datesHero} · {FESTIVAL.city}
+          {messages.hero.datesHero} · {FESTIVAL.locationLine}
         </p>
         <nav aria-label="Navigation mobile" className="flex flex-col gap-1">
           {messages.nav.map((link) => {

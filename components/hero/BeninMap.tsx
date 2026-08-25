@@ -77,11 +77,11 @@ export function BeninMap({
             compact ? "text-[0.62rem]" : "text-[0.72rem]"
           }`}
         >
-          Cotonou
+          Midombo
         </p>
         {!compact ? (
           <p className="mt-1 font-mono text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-papier/60">
-            Terrain du festival
+            Terrain de Midombo
           </p>
         ) : null}
       </div>

@@ -62,6 +62,8 @@ export function SiteFooter() {
             {SITE_CONTACT.email}
           </a>
           <p className="mt-4 text-sm text-papier/55">
+            {FESTIVAL.locationLine}
+            <br />
             {FESTIVAL.city}, {FESTIVAL.country}
           </p>
           <p className="mb-3 mt-8 text-[0.7rem] font-bold uppercase tracking-[0.28em] text-papier/45">

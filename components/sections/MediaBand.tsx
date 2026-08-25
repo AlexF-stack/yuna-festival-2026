@@ -43,7 +43,7 @@ export function MediaBand() {
           </h2>
           <p className="mt-4 max-w-lg text-[1.05rem] leading-relaxed text-papier/80">
             Une génération non ordinaire se lève. Joseph, Daniel, David. À toi
-            maintenant, à Midombo.
+            maintenant, au Terrain de Midombo.
           </p>
         </Reveal>
       </div>

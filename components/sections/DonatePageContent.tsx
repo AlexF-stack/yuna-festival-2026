@@ -542,7 +542,7 @@ export function DonatePageContent() {
             transition={{ duration: 0.55, ease: EASE_YUNA }}
           >
             <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu">
-              Budget réel · Midombo 2026
+              Budget réel · Terrain de Midombo 2026
             </p>
             <h2 className="mt-3 max-w-xl font-display text-[clamp(1.8rem,4vw,2.6rem)] font-extrabold uppercase leading-[1.05] text-bleu">
               Où va chaque <span className="text-feu">franc</span>

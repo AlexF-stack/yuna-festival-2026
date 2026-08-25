@@ -7,11 +7,11 @@ const DESCRIPTION =
   "Terrain de Midombo, Akpakpa, Cotonou : entrée libre, site ouvert dès 16h00, accès facile en zém, taxi et bus.";
 
 export const metadata: Metadata = {
-  title: "Le lieu : Midombo · Akpakpa",
+  title: "Le lieu : Terrain de Midombo",
   description: DESCRIPTION,
   alternates: { canonical: "/lieu" },
   openGraph: {
-    title: "Le lieu : Midombo · Akpakpa | YUNA Festival 2026",
+    title: "Le lieu : Terrain de Midombo | YUNA Festival 2026",
     description: DESCRIPTION,
     url: "https://www.festivalyuna.com/lieu",
   },

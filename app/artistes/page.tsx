@@ -8,7 +8,7 @@ export const revalidate = 60;
 export const dynamic = "force-static";
 
 const DESCRIPTION =
-  "Les artistes du YUNA Festival 2026 se dévoilent progressivement : adoration, louange et scènes fortes, les 5 et 6 septembre à Cotonou.";
+  "Les artistes du YUNA Festival 2026 se dévoilent progressivement : adoration, louange et scènes fortes, les 5 et 6 septembre au Terrain de Midombo.";
 
 export const metadata: Metadata = {
   title: "Artistes",

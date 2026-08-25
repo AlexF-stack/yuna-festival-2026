@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { MouvementPageContent } from "@/components/sections/MouvementPageContent";
 
 const DESCRIPTION =
-  "YUNA est un mouvement : foi vivante, masterclass à Midombo, et une génération non ordinaire qui se lève. Bénin Debout 2026.";
+  "YUNA est un mouvement : foi vivante, masterclass au Terrain de Midombo, et une génération non ordinaire qui se lève. Bénin Debout 2026.";
 
 export const metadata: Metadata = {
   title: "Le mouvement",

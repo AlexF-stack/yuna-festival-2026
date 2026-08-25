@@ -253,7 +253,7 @@ export function StaffScanClient() {
     return (
       <div className="mx-auto w-full max-w-md rounded-[1.5rem] border border-bleu/15 bg-papier p-5 shadow-[0_16px_40px_rgba(0,90,140,0.1)] sm:rounded-3xl sm:p-6">
         <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu">
-          Staff · Midombo
+          Staff · Terrain de Midombo
         </p>
         <h1 className="mt-2 font-display text-[clamp(1.85rem,8vw,2.25rem)] font-extrabold uppercase leading-none text-bleu">
           Scan entrée

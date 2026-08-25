@@ -39,10 +39,10 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "acces",
     question: "Comment venir au festival ?",
     answer:
-      "Le site est accessible en zém, taxi et bus depuis tout Cotonou. Un plan d'accès détaillé sera publié ici avant le festival.",
+      "Le festival a lieu au Terrain de Midombo (Akpakpa, Cotonou), accessible en zém, taxi et bus. Un plan d'accès détaillé sera publié ici avant le festival.",
     questionEn: "How do I get to the festival?",
     answerEn:
-      "The site is reachable by zém, taxi and bus from across Cotonou. A detailed access map will be published here before the festival.",
+      "The festival is at Terrain de Midombo (Akpakpa, Cotonou), reachable by zém, taxi and bus. A detailed access map will be published here before the festival.",
   },
   {
     id: "pluie",

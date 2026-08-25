@@ -69,7 +69,7 @@ export const JOURNEE = {
 
 export const VENUE = {
   eyebrow: "Le lieu",
-  title: "Akpakpa · Midombo",
+  title: "Terrain de Midombo",
   intro:
     "Terrain de Midombo, Akpakpa, Cotonou. Un espace ouvert, accessible à tous. Entrée libre. Le festival vient à la rencontre de la jeunesse, là où elle vit.",
   amenities: [
@@ -142,18 +142,18 @@ export const PARTNERS_PAGE = {
   eyebrow: "Partenariat",
   title: "Devenir partenaire de YUNA",
   lead:
-    "Associez votre marque à Bénin Debout : un festival jeunesse à Midombo, entrée libre, dimension nationale et diaspora.",
+    "Associez votre marque à Bénin Debout : un festival jeunesse au Terrain de Midombo, entrée libre, dimension nationale et diaspora.",
   whyTitle: "Pourquoi soutenir YUNA",
   why: [
     "Un événement structuré autour de la jeunesse, de la foi et de l’excellence. Pas seulement un concert.",
     "Entrée libre : votre soutien rend possible un festival ouvert à toutes et tous.",
-    "Visibilité concrète : site, affiches, scène, stands et réseaux, sur 2 soirées à Cotonou.",
+    "Visibilité concrète : site, affiches, scène, stands et réseaux, sur 2 soirées au Terrain de Midombo.",
   ],
   audienceTitle: "Audience attendue",
   audience: [
-    "Des milliers de jeunes à Cotonou (5–6 septembre 2026).",
+    "Des milliers de jeunes au Terrain de Midombo (5–6 septembre 2026).",
     "Objectif d’inscriptions pass QR : 5 000, avec suivi staff et check-in sur site.",
-    "Public local Cotonou + rayonnement diaspora via le site et les réseaux.",
+    "Public local Cotonou (Akpakpa) + rayonnement diaspora via le site et les réseaux.",
   ],
   visibilityTitle: "Visibilité offerte",
   visibility: [
@@ -317,7 +317,7 @@ export const DONATE = {
   pageTitle: "Soutenir YUNA",
   pageLead:
     "Ton soutien garde le festival gratuit et ouvert à tous. Le montant est libre, sans minimum. Allume une flamme avec ce que tu peux.",
-  seedEyebrow: "Semer · Midombo",
+  seedEyebrow: "Semer · Terrain de Midombo",
   seedTitle: "Allume une flamme",
   seedLead:
     "Choisis l’intensité ou écris ton montant. Aucun minimum. Chaque franc va sur le terrain.",
@@ -348,7 +348,7 @@ export const DONATE = {
   ],
   pillars: [
     {
-      title: "Scène Midombo · 5–6 sept",
+      title: "Scène · Terrain de Midombo · 5–6 sept",
       text: "Location sono & lumières, groupe électrogène, sécurité du terrain, eau et sanitaires pour 2 soirées (sam. 16h–23h / dim. 16h–22h30). Entrée libre pour tout le public.",
     },
     {

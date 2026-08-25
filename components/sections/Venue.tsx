@@ -59,11 +59,11 @@ export function Venue() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-nuit-profonde/90 via-transparent to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-ivoire-froid min-[480px]:p-8">
-                <p className="font-display text-[clamp(2.2rem,10vw,3.2rem)] font-extrabold uppercase leading-none tracking-tight">
-                  Akpakpa
+                <p className="font-display text-[clamp(1.7rem,7vw,2.6rem)] font-extrabold uppercase leading-[1.05] tracking-tight">
+                  Terrain de Midombo
                 </p>
                 <p className="mt-2 font-mono text-sm font-bold uppercase tracking-[0.14em] text-ivoire-froid/80">
-                  Terrain de Midombo · {FESTIVAL.city}
+                  Akpakpa · {FESTIVAL.city}
                 </p>
               </div>
             </div>

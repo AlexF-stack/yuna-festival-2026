@@ -130,23 +130,6 @@ export function PartnersPageContent() {
         cta={{ href: "#paliers", label: "Découvrir les offres" }}
       />
 
-      <nav
-        aria-label="Navigation de la page partenaires"
-        className="sticky top-[4.25rem] z-40 border-b border-bleu/10 bg-papier/95 px-5 py-3 shadow-sm backdrop-blur-md"
-      >
-        <div className="mx-auto flex max-w-[1240px] gap-2 overflow-x-auto">
-          {PAGE_NAV.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="whitespace-nowrap rounded-full px-4 py-2 text-sm font-bold text-bleu transition-colors hover:bg-logo-bleu-soft hover:text-feu"
-            >
-              {item.label}
-            </a>
-          ))}
-        </div>
-      </nav>
-
       <SectionShell id="impact" labelledBy="impact-title" tone="papier">
         <div className="grid gap-12 min-[900px]:grid-cols-[0.9fr_1.1fr] min-[900px]:items-start min-[900px]:gap-20">
           <Reveal>

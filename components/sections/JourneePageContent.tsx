@@ -259,8 +259,8 @@ export function JourneePageContent() {
           </h2>
           <p className="mt-4 max-w-lg text-[1.05rem] leading-relaxed text-ivoire-froid/75">
             {isEn
-              ? "Daytime prepares the ground. At night, a generation rises on Midombo’s stage. Free entry."
-              : "La journée prépare le terrain. Le soir, la génération se lève sur scène à Midombo. Entrée libre."}
+              ? "Daytime prepares the ground. At night, a generation rises on stage at Terrain de Midombo. Free entry."
+              : "La journée prépare le terrain. Le soir, la génération se lève sur scène au Terrain de Midombo. Entrée libre."}
           </p>
           <div className="mt-8">
             <ButtonLink href="/artistes">

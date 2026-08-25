@@ -5,7 +5,7 @@ import { LocalizedPageIntro } from "@/components/i18n/LocalizedPageIntro";
 import { FAQ_ITEMS } from "@/lib/faq";
 
 const DESCRIPTION =
-  "Entrée gratuite, pass QR, horaires, accès à Cotonou, bénévolat. Toutes les réponses pratiques sur le YUNA Festival 2026.";
+  "Entrée gratuite, pass QR, horaires, accès au Terrain de Midombo, bénévolat. Toutes les réponses pratiques sur le YUNA Festival 2026.";
 
 export const metadata: Metadata = {
   title: "FAQ & infos pratiques",

@@ -58,9 +58,9 @@ export const en: Messages = {
     verseRef: "Isaiah 60:1",
     ctaPrimary: "It’s free, I’m taking my spot",
     ctaSecondary: "See the daytime programme",
-    meta: "5–6 September 2026 · Cotonou",
+    meta: "5–6 September 2026 · Terrain de Midombo",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "5–6 September 2026 · Midombo · Free entry",
+    venueLine: "5–6 September 2026 · Terrain de Midombo · Free entry",
   },
   registerExtras: {
     addGuest: "+ Add a pass for someone else",
@@ -85,7 +85,7 @@ export const en: Messages = {
   mouvement: {
     eyebrow: "The movement",
     title: "More than a festival",
-    lead: "YUNA is a movement: living faith, excellence, and impact on the ground in Midombo.",
+    lead: "YUNA is a movement: living faith, excellence, and impact at Terrain de Midombo.",
   },
   whatsapp: {
     label: "WhatsApp",
@@ -108,7 +108,7 @@ export const en: Messages = {
       {
         href: "/mouvement",
         title: "The movement",
-        description: "More than a festival. Faith and generation in Midombo.",
+        description: "More than a festival. Faith and generation at Terrain de Midombo.",
         imageAlt: "YUNA movement",
       },
       {
@@ -149,7 +149,7 @@ export const en: Messages = {
     support:
       "An extraordinary generation rises. Joseph. Daniel. David. Now it’s your turn.",
     venue:
-      "Cotonou. Free entry. Save the date, get your pass.",
+      "Terrain de Midombo. Free entry. Save the date, get your pass.",
   },
   register: {
     eyebrow: "Registration",
@@ -245,9 +245,9 @@ export const en: Messages = {
     },
     lieu: {
       eyebrow: "The venue",
-      title: "Akpakpa · Midombo",
+      title: "Terrain de Midombo",
       lead:
-        "Midombo grounds, Akpakpa, Cotonou. Free entry, open to all.",
+        "Terrain de Midombo, Akpakpa, Cotonou. Free entry, open to all.",
     },
     boutique: {
       eyebrow: "Shop",
@@ -276,7 +276,7 @@ export const en: Messages = {
       eyebrow: "The movement",
       title: "More than a festival",
       lead:
-        "Faith, gifts and impact on the ground. A generation rising in Midombo and beyond.",
+        "Faith, gifts and impact on the ground. A generation rising at Terrain de Midombo and beyond.",
     },
   },
   confirmation: {

@@ -58,7 +58,7 @@ function confirmationBody(job: NotifyJob): string {
     `YUNA Festival 2026 : inscription confirmée ✓\n` +
     `${job.name} · ${typeLabel(job.registrationType)}\n` +
     `Ton pass QR : ${job.confirmationUrl}\n` +
-    `Présente-le à l'entrée (5–6 sept, Cotonou).`
+    `Présente-le à l'entrée (5–6 sept, Terrain de Midombo).`
   );
 }
 
@@ -84,7 +84,7 @@ function passEmailHtml(job: NotifyJob): string {
             Ouvrir mon pass QR
           </a>
           <p style="margin:24px 0 0;font-size:13px;line-height:1.5;color:#64748b;">
-            Présente ce QR à l’entrée · 5–6 septembre 2026 · Cotonou.<br/>
+            Présente ce QR à l’entrée · 5–6 septembre 2026 · Terrain de Midombo.<br/>
             Garde aussi ce mail : tu pourras rouvrir ton pass à tout moment.
           </p>
           <p style="margin:20px 0 0;font-size:12px;color:#94a3b8;">

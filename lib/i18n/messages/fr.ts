@@ -58,9 +58,9 @@ export const fr: Messages = {
     verseRef: "Ésaïe 60:1",
     ctaPrimary: "C’est gratuit, je prends ma place",
     ctaSecondary: "Voir la journée",
-    meta: "5–6 septembre 2026 · Cotonou",
+    meta: "5–6 septembre 2026 · Terrain de Midombo",
     datesHero: "5–6 SEP · 2026",
-    venueLine: "5–6 septembre 2026 · Midombo · Entrée libre",
+    venueLine: "5–6 septembre 2026 · Terrain de Midombo · Entrée libre",
   },
   registerExtras: {
     addGuest: "+ Ajouter un pass pour quelqu’un d’autre",
@@ -85,7 +85,7 @@ export const fr: Messages = {
   mouvement: {
     eyebrow: "Le mouvement",
     title: "Plus qu’un festival",
-    lead: "YUNA est un mouvement : foi vivante, excellence, et impact sur le terrain à Midombo.",
+    lead: "YUNA est un mouvement : foi vivante, excellence, et impact sur le Terrain de Midombo.",
   },
   whatsapp: {
     label: "WhatsApp",
@@ -108,7 +108,7 @@ export const fr: Messages = {
       {
         href: "/mouvement",
         title: "Le mouvement",
-        description: "Plus qu’un festival. Foi et génération à Midombo.",
+        description: "Plus qu’un festival. Foi et génération au Terrain de Midombo.",
         imageAlt: "Le mouvement YUNA",
       },
       {
@@ -149,7 +149,7 @@ export const fr: Messages = {
     support:
       "Une génération non ordinaire se lève. Joseph. Daniel. David. À toi maintenant.",
     venue:
-      "Cotonou. Entrée libre. Garde la date, génère ton pass.",
+      "Terrain de Midombo. Entrée libre. Garde la date, génère ton pass.",
   },
   register: {
     eyebrow: "Inscription",
@@ -245,7 +245,7 @@ export const fr: Messages = {
     },
     lieu: {
       eyebrow: "Le lieu",
-      title: "Akpakpa · Midombo",
+      title: "Terrain de Midombo",
       lead:
         "Terrain de Midombo, Akpakpa, Cotonou. Entrée libre, accessible à tous.",
     },
@@ -276,7 +276,7 @@ export const fr: Messages = {
       eyebrow: "Le mouvement",
       title: "Plus qu’un festival",
       lead:
-        "Foi, talents et impact terrain. Une génération qui se lève à Midombo et au-delà.",
+        "Foi, talents et impact terrain. Une génération qui se lève au Terrain de Midombo et au-delà.",
     },
   },
   confirmation: {
