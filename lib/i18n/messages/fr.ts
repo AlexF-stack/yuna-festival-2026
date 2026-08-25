@@ -116,7 +116,7 @@ export const fr: Messages = {
       {
         href: "/artistes",
         title: "Artistes",
-        description: "Les artistes se dévoilent progressivement.",
+        description: "Le line-up complet est dévoilé.",
         imageAlt: "Scène et artistes du festival",
       },
       {
@@ -222,8 +222,8 @@ export const fr: Messages = {
     eyebrow: "Artistes",
     title: "Les artistes",
     description:
-      "Adoration, louange et scènes fortes. Les noms se dévoilent progressivement.",
-    teaser: "Les artistes se dévoilent progressivement. Reste connecté.",
+      "Adoration, louange et scènes fortes. Le line-up officiel est dévoilé.",
+    teaser: "Tous les artistes sont dévoilés. Prépare-toi pour les 5 et 6 septembre.",
     coming: "Artistes à venir.",
     mysteryEyebrow: "Bientôt sur scène",
     mysteryTitle: "Bientôt dévoilés",
@@ -235,7 +235,7 @@ export const fr: Messages = {
       eyebrow: "Scènes & adoration",
       title: "Les artistes",
       lead:
-        "Adoration, louange et scènes fortes. Exo Éclat, Valère Kouton, Simiane Tatu, Dany Kasongo déjà dévoilés. Le reste arrive progressivement.",
+        "Adoration, louange et scènes fortes. Le line-up officiel YUNA Festival 2026 est entièrement dévoilé.",
     },
     vision: {
       eyebrow: "La vision",

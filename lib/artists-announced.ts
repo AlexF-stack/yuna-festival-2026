@@ -1,7 +1,9 @@
 /**
  * Artistes annoncés avec affiche officielle.
  * Source : visuels YUNA Festival 2026.
+ * Line-up complet : tous les noms ci-dessous sont dévoilés.
  */
+export const LINEUP_FULLY_REVEALED = true;
 
 export type AnnouncedArtist = {
   name: string;
@@ -155,16 +157,14 @@ export const ANNOUNCED_ARTISTS: AnnouncedArtist[] = [
     portrait_url: "/media/artists/simiane-tatu.png",
   },
   {
-    name: "Dany Kasongo",
+    name: "David Track",
     role: "Chantre",
     roleEn: "Worship leader",
-    bio_short:
-      "Louange, adoration et présence scénique pour la génération.",
-    bio_short_en:
-      "Praise, worship and stage presence for the generation.",
+    bio_short: BIO_FR,
+    bio_short_en: BIO_EN,
     is_headliner: false,
-    order: 30,
-    portrait_url: "/media/artists/dany-kasongo.png",
+    order: 21,
+    portrait_url: "/media/artists/david-track.webp",
   },
 ];
 
@@ -195,6 +195,8 @@ const NAME_ALIASES: Record<string, string> = {
   "david qkit": "David Okit",
   "david o.": "David Okit",
   "david o": "David Okit",
+  "david track": "David Track",
+  "chantre david track": "David Track",
 };
 
 export function canonicalArtistName(name: string): string {

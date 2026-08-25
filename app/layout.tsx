@@ -44,7 +44,7 @@ const notoHebrew = Noto_Sans_Hebrew({
 const siteUrl = "https://www.festivalyuna.com";
 
 const SITE_DESCRIPTION =
-  "YUNA Festival 2026 : Bénin Debout. Une génération non ordinaire se lève. 5–6 septembre 2026, Terrain de Midombo, Cotonou. Entrée libre, artistes dévoilés progressivement.";
+  "YUNA Festival 2026 : Bénin Debout. Une génération non ordinaire se lève. 5–6 septembre 2026, Terrain de Midombo, Cotonou. Entrée libre, line-up officiel dévoilé.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

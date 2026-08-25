@@ -1,5 +1,6 @@
 import {
   ANNOUNCED_ARTISTS,
+  LINEUP_FULLY_REVEALED,
   canonicalArtistName,
   portraitForArtist,
 } from "@/lib/artists-announced";
@@ -58,6 +59,13 @@ function ensureAnnounced(rows: Artist[]): Artist[] {
   return merged.sort((a, b) => a.order - b.order);
 }
 
+/** Line-up complet : masquer les placeholders mystère encore en base. */
+function finalizeArtists(rows: Artist[]): Artist[] {
+  const ensured = ensureAnnounced(rows);
+  if (!LINEUP_FULLY_REVEALED) return ensured;
+  return ensured.filter((a) => a.is_revealed && Boolean(a.name?.trim()));
+}
+
 export async function getArtists(): Promise<PublicArtist[]> {
   if (!hasSupabaseEnv()) {
     console.warn(
@@ -92,13 +100,13 @@ export async function getArtists(): Promise<PublicArtist[]> {
           (row) => ({ ...row, portrait_url: null }),
         ),
       );
-      return ensureAnnounced(rows).map(toPublicArtist);
+      return finalizeArtists(rows).map(toPublicArtist);
     }
     throw new Error(`Impossible de charger les artistes: ${error.message}`);
   }
 
   const rows = mergePortraits((data ?? []) as Artist[]);
-  return ensureAnnounced(rows).map(toPublicArtist);
+  return finalizeArtists(rows).map(toPublicArtist);
 }
 
 export async function getArtistsCount(): Promise<number> {

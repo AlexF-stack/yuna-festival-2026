@@ -7,6 +7,7 @@ import { ArtistMarquee } from "@/components/sections/ArtistMarquee";
 import { LineupMystery } from "@/components/sections/LineupMystery";
 import { useLocale, useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { LINEUP_FULLY_REVEALED } from "@/lib/artists-announced";
 import { FESTIVAL } from "@/lib/festival";
 import { EASE_PREMIUM, EASE_YUNA } from "@/lib/motion";
 import type { PublicArtist } from "@/types/artist";
@@ -23,7 +24,7 @@ const SOIREES = {
       meta: "ouverture 16h · scène 18h",
       slots: [
         { time: "18:00", label: "Ouverture & prière" },
-        { time: "18:15–20:05", label: "Louange & scènes (artistes à dévoiler)" },
+        { time: "18:15–20:05", label: "Louange & scènes" },
         { time: "20:05", label: "Parole prophétique · 45 min" },
         { time: "20:50", label: "Adoration · 1 h" },
         { time: "21:50–23:00", label: "Scènes & clôture" },
@@ -35,7 +36,7 @@ const SOIREES = {
       meta: "ouverture 16h · scène 18h",
       slots: [
         { time: "18:00", label: "Ouverture & prière" },
-        { time: "18:10–18:50", label: "Louange (artistes à dévoiler)" },
+        { time: "18:10–18:50", label: "Louange" },
         { time: "18:50", label: "Exhortation · 30 min" },
         { time: "19:20", label: "Adoration · 1 h" },
         { time: "20:20", label: "Parole · 1 h" },
@@ -51,7 +52,7 @@ const SOIREES = {
       meta: "gates 4pm · stage 6pm",
       slots: [
         { time: "18:00", label: "Opening & prayer" },
-        { time: "18:15–20:05", label: "Worship & stages (artists TBA)" },
+        { time: "18:15–20:05", label: "Worship & stages" },
         { time: "20:05", label: "Prophetic word · 45 min" },
         { time: "20:50", label: "Adoration · 1 h" },
         { time: "21:50–23:00", label: "Stages & close" },
@@ -63,7 +64,7 @@ const SOIREES = {
       meta: "gates 4pm · stage 6pm",
       slots: [
         { time: "18:00", label: "Opening & prayer" },
-        { time: "18:10–18:50", label: "Worship (artists TBA)" },
+        { time: "18:10–18:50", label: "Worship" },
         { time: "18:50", label: "Exhortation · 30 min" },
         { time: "19:20", label: "Adoration · 1 h" },
         { time: "20:20", label: "Word · 1 h" },
@@ -86,7 +87,9 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
   const soirees = SOIREES[isEn ? "en" : "fr"];
 
   const revealed = artists.filter((a) => a.is_revealed && a.name);
-  const hasMystery = artists.some((a) => !a.is_revealed || !a.name);
+  const hasMystery =
+    !LINEUP_FULLY_REVEALED &&
+    artists.some((a) => !a.is_revealed || !a.name);
   const revealedNames = revealed.map((a) => a.name as string);
   const headliner = revealed.find((a) => a.is_headliner);
   const withPortrait = revealed.filter((a) => a.portrait_url);
@@ -161,7 +164,7 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
         >
           <div className="section-container px-5 min-[760px]:px-6">
             <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.2em] text-feu-glow">
-              {isEn ? "Just announced" : "Viennent d’être dévoilés"}
+              {isEn ? "Official lineup" : "Line-up officiel"}
             </p>
             <ul className="mt-8 grid gap-5 min-[640px]:grid-cols-2 min-[960px]:grid-cols-3 min-[1200px]:grid-cols-4 min-[640px]:gap-6">
               {withPortrait.map((artist, i) => (
@@ -324,8 +327,8 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
           </h2>
           <p className="mt-4 max-w-lg text-[1.05rem] text-charbon">
             {isEn
-              ? "Names drop progressively. The rundown is already set."
-              : "Les noms sortent progressivement. Le déroulé est déjà là."}
+              ? "The full lineup is revealed. Here’s the shape of both nights."
+              : "Le line-up est dévoilé. Voici la structure des deux soirs."}
           </p>
 
           <div className="mt-14 space-y-16">
