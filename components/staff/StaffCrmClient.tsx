@@ -294,7 +294,7 @@ export function StaffCrmClient() {
           </p>
         </div>
         {unlocked ? (
-          <div className="flex flex-col items-end gap-1">
+          <div className="flex flex-col items-end gap-2">
             <button
               type="button"
               onClick={() => setLive((v) => !v)}
@@ -322,6 +322,18 @@ export function StaffCrmClient() {
                   })}`
                 : "—"}
             </p>
+            <button
+              type="button"
+              className="text-sm font-semibold text-charbon underline underline-offset-2"
+              onClick={() => {
+                sessionStorage.removeItem(CRM_KEY);
+                setUnlocked(false);
+                setSecret("");
+                setData(null);
+              }}
+            >
+              Quitter
+            </button>
           </div>
         ) : null}
       </div>
@@ -465,9 +477,10 @@ export function StaffCrmClient() {
               type="button"
               onClick={() => data && exportCsv(data.registrations)}
               disabled={!data?.registrations.length}
+              title="Exporte la page affichée (25 lignes max)"
               className="min-h-12 shrink-0 rounded-full bg-feu px-5 py-3 text-sm font-bold text-papier disabled:opacity-50"
             >
-              CSV
+              CSV page
             </button>
           </div>
 
@@ -620,7 +633,14 @@ export function StaffCrmClient() {
                         </span>
                       ) : null}
                     </td>
-                    <td className="px-4 py-3 whitespace-nowrap">{r.phone}</td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <a
+                        href={`tel:${r.phone}`}
+                        className="font-semibold text-bleu underline-offset-2 hover:underline"
+                      >
+                        {r.phone}
+                      </a>
+                    </td>
                     <td className="px-4 py-3">{typeLabel(r.pass_type)}</td>
                     <td className="px-4 py-3 text-charbon">
                       {r.busWanted ? (
@@ -667,7 +687,7 @@ export function StaffCrmClient() {
                 {data && data.registrations.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={8}
+                      colSpan={9}
                       className="px-4 py-10 text-center text-charbon"
                     >
                       Aucun ticket.

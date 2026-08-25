@@ -46,6 +46,7 @@ export type Messages = {
     guestName: string;
     guestPhone: string;
     guestsHint: string;
+    ambassadeurGuestsHint: string;
     maxGuests: string;
     submitMulti: string;
   };

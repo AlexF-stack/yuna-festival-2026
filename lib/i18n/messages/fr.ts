@@ -70,6 +70,8 @@ export const fr: Messages = {
     guestPhone: "Téléphone (WhatsApp) *",
     guestsHint:
       "Avec Concert / Festival, tu peux ajouter jusqu’à 4 proches (5 pass max). École royale et masterclass restent individuels. Chaque personne a son QR.",
+    ambassadeurGuestsHint:
+      "En tant qu’ambassadeur, tu peux aussi créer jusqu’à 4 pass Festival pour des personnes qui ne se sont pas inscrites elles-mêmes. Chaque personne reçoit son propre QR (WhatsApp distinct).",
     maxGuests: "Maximum 5 pass par inscription.",
     submitMulti: "Recevoir les pass QR",
   },

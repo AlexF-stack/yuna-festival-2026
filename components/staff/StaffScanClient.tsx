@@ -29,6 +29,7 @@ export function StaffScanClient() {
   const [unlocked, setUnlocked] = useState(false);
   const [staffLabel, setStaffLabel] = useState("porte-1");
   const [manual, setManual] = useState("");
+  const [phoneLookup, setPhoneLookup] = useState("");
   const [scanning, setScanning] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -140,18 +141,20 @@ export function StaffScanClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unlocked]);
 
-  const checkIn = async (code: string) => {
+  const checkIn = async (payload: { code?: string; phone?: string }) => {
+    const key = payload.code?.trim() || payload.phone?.trim() || "";
+    if (!key) return;
     // Anti-rafale : la caméra décode ~8 fps — on ignore les scans pendant
     // une requête en cours et les re-scans du même code sous 3 secondes.
     if (busyRef.current) return;
     const now = Date.now();
     if (
-      code === lastScanRef.current.code &&
+      key === lastScanRef.current.code &&
       now - lastScanRef.current.at < 3000
     ) {
       return;
     }
-    lastScanRef.current = { code, at: now };
+    lastScanRef.current = { code: key, at: now };
 
     busyRef.current = true;
     setBusy(true);
@@ -164,7 +167,7 @@ export function StaffScanClient() {
           "x-yuna-staff": secret.trim(),
         },
         body: JSON.stringify({
-          code,
+          ...payload,
           staffLabel: staffLabel.trim() || "porte-1",
         }),
       });
@@ -228,7 +231,7 @@ export function StaffScanClient() {
           },
         },
         (decoded) => {
-          void checkIn(decoded);
+          void checkIn({ code: decoded });
         },
         () => undefined,
       );
@@ -379,7 +382,7 @@ export function StaffScanClient() {
           htmlFor="staff-manual-code"
           className="text-sm font-semibold text-bleu"
         >
-          Saisie manuelle
+          Saisie manuelle (QR / UUID)
         </label>
         <div className="mt-2 flex flex-col gap-2 sm:flex-row">
           <input
@@ -393,10 +396,40 @@ export function StaffScanClient() {
           <button
             type="button"
             disabled={busy || !manual.trim()}
-            onClick={() => void checkIn(manual)}
+            onClick={() => void checkIn({ code: manual })}
             className="flex min-h-12 shrink-0 items-center justify-center rounded-full bg-bleu px-5 py-3 text-base font-bold text-papier disabled:opacity-50 sm:w-auto"
           >
             Valider
+          </button>
+        </div>
+        <label
+          htmlFor="staff-phone-lookup"
+          className="mt-5 block text-sm font-semibold text-bleu"
+        >
+          Sans QR · numéro WhatsApp
+        </label>
+        <p className="mt-1 text-xs text-charbon">
+          Si le pass n’est pas affiché : cherche le numéro, valide l’entrée
+          Festival en priorité.
+        </p>
+        <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+          <input
+            id="staff-phone-lookup"
+            type="tel"
+            inputMode="tel"
+            value={phoneLookup}
+            onChange={(e) => setPhoneLookup(e.target.value)}
+            placeholder="Ex. 01 XX XX XX XX"
+            enterKeyHint="go"
+            className="min-h-12 min-w-0 flex-1 rounded-xl border border-bleu/20 px-3 py-3 text-base outline-none focus:ring-2 focus:ring-feu"
+          />
+          <button
+            type="button"
+            disabled={busy || !phoneLookup.trim()}
+            onClick={() => void checkIn({ phone: phoneLookup })}
+            className="flex min-h-12 shrink-0 items-center justify-center rounded-full border-2 border-bleu bg-papier px-5 py-3 text-base font-bold text-bleu disabled:opacity-50 sm:w-auto"
+          >
+            Valider tél.
           </button>
         </div>
       </div>

@@ -210,7 +210,9 @@ export function Register() {
   }
 
   const includesFestival = registrationTypes.includes("pass");
-  const canAddGuest = includesFestival && guests.length < MAX_GUESTS;
+  const includesAmbassador = registrationTypes.includes("ambassadeur");
+  const canRegisterOthers = includesFestival || includesAmbassador;
+  const canAddGuest = canRegisterOthers && guests.length < MAX_GUESTS;
   const previewType = registrationTypes[0] ?? "pass";
   const submitLabel =
     guests.length > 0 || registrationTypes.length > 1
@@ -428,10 +430,12 @@ export function Register() {
               ) : null}
             </fieldset>
 
-            {includesFestival ? (
+            {canRegisterOthers ? (
               <div className="mb-6 rounded-2xl border border-bleu/10 bg-ciel/30 p-4">
                 <p className="text-xs leading-relaxed text-charbon">
-                  {t.registerExtras.guestsHint}
+                  {includesAmbassador && !includesFestival
+                    ? t.registerExtras.ambassadeurGuestsHint
+                    : t.registerExtras.guestsHint}
                 </p>
                 {guests.map((guest, index) => (
                   <div

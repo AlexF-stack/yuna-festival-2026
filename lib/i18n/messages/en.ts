@@ -70,6 +70,8 @@ export const en: Messages = {
     guestPhone: "Phone (WhatsApp) *",
     guestsHint:
       "With Concert / Festival you can add up to 4 guests (5 passes max). Royal school and masterclass stay individual. Everyone gets their own QR.",
+    ambassadeurGuestsHint:
+      "As an ambassador, you can also create up to 4 Festival passes for people who haven’t registered themselves. Each person gets their own QR (distinct WhatsApp).",
     maxGuests: "Maximum 5 passes per registration.",
     submitMulti: "Get the QR passes",
   },

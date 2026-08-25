@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 
 import { notifyCrmRegistration } from "@/lib/crm";
 import { extractRegistrationId } from "@/lib/registration-id";
-import { checkInRegistration } from "@/lib/registrations";
+import {
+  checkInRegistration,
+  findRegistrationsByPhone,
+} from "@/lib/registrations";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { assertStaffSecret, getStaffScanSecrets } from "@/lib/staff-auth";
 
@@ -10,6 +13,7 @@ export const runtime = "nodejs";
 
 type Body = {
   code?: string;
+  phone?: string;
   staffLabel?: string;
 };
 
@@ -17,6 +21,7 @@ type Body = {
  * POST /api/check-in
  * Header: x-yuna-staff: <YUNA_STAFF_SECRET>  ou  Authorization: Bearer …
  * Body: { code: "<uuid|url>", staffLabel?: "porte-1" }
+ *    ou  { phone: "<whatsapp>", staffLabel?: "porte-1" }
  */
 export async function POST(request: Request) {
   if (getStaffScanSecrets().length === 0) {
@@ -53,18 +58,41 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "JSON invalide." }, { status: 400 });
   }
 
-  const id = extractRegistrationId(body.code ?? "");
-  if (!id) {
-    return NextResponse.json(
-      { error: "QR invalide. UUID d’inscription attendu." },
-      { status: 400 },
-    );
-  }
-
   const staffLabel =
     typeof body.staffLabel === "string" && body.staffLabel.trim()
       ? body.staffLabel.trim()
       : "staff";
+
+  let id = extractRegistrationId(body.code ?? "");
+
+  // Fallback terrain : présence confirmée par numéro WhatsApp (sans QR).
+  if (!id && typeof body.phone === "string" && body.phone.trim()) {
+    try {
+      const matches = await findRegistrationsByPhone(body.phone.trim());
+      if (matches.length === 0) {
+        return NextResponse.json(
+          { error: "Aucun pass trouvé pour ce numéro." },
+          { status: 404 },
+        );
+      }
+      // Plusieurs catégories : préférer le pass Festival, sinon le plus récent.
+      const festival = matches.find((m) => m.registrationType === "pass");
+      id = festival?.id ?? matches[0].id;
+    } catch (err) {
+      console.error("[check-in] phone lookup", err);
+      return NextResponse.json(
+        { error: "Recherche téléphone indisponible." },
+        { status: 503 },
+      );
+    }
+  }
+
+  if (!id) {
+    return NextResponse.json(
+      { error: "QR ou numéro WhatsApp attendu." },
+      { status: 400 },
+    );
+  }
 
   try {
     const result = await checkInRegistration(id, staffLabel);

@@ -237,11 +237,12 @@ export async function POST(request: Request) {
   }
 
   const includesFestival = selectedTypes.includes("pass");
-  if (rawGuests.length > 0 && !includesFestival) {
+  const includesAmbassador = selectedTypes.includes("ambassadeur");
+  if (rawGuests.length > 0 && !includesFestival && !includesAmbassador) {
     return NextResponse.json(
       {
         error:
-          "L'inscription groupe (proches) n'est disponible qu'avec Concert / Festival.",
+          "L'inscription pour autrui est disponible avec Concert / Festival ou Ambassadeur.",
       },
       { status: 400 },
     );
