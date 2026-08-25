@@ -22,7 +22,7 @@ const SECTIONS: Array<{ title: string; paragraphs: string[] }> = [
   {
     title: "2. Quelles données collectons-nous ?",
     paragraphs: [
-      "Inscription au festival : nom complet, numéro de téléphone (WhatsApp), adresse e-mail (optionnelle, obligatoire pour les bénévoles), type d'inscription (pass, masterclass, bénévole).",
+      "Inscription au festival : nom complet, numéro de téléphone (WhatsApp), adresse e-mail (optionnelle), type d'inscription (pass, masterclass, ambassadeur).",
       "Newsletter : adresse e-mail uniquement.",
       "Jour de l'événement : heure de validation de ton pass à l'entrée (check-in).",
       "Nous ne collectons aucune donnée de navigation à des fins publicitaires et n'utilisons pas de cookies de suivi tiers.",
@@ -31,7 +31,7 @@ const SECTIONS: Array<{ title: string; paragraphs: string[] }> = [
   {
     title: "3. Pourquoi ces données ?",
     paragraphs: [
-      "Générer et t'envoyer ton pass QR personnel, contrôler les entrées le jour J, organiser les masterclass et le programme bénévole, et, si tu t'y abonnes, t'envoyer les annonces du festival (artistes, horaires, infos pratiques).",
+      "Générer et t'envoyer ton pass QR personnel, contrôler les entrées le jour J, organiser les masterclass et le programme ambassadeurs, et, si tu t'y abonnes, t'envoyer les annonces du festival (artistes, horaires, infos pratiques).",
       "Base légale : ton consentement, exprimé lors de l'envoi du formulaire d'inscription ou d'abonnement à la newsletter.",
     ],
   },

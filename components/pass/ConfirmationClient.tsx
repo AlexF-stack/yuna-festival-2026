@@ -111,13 +111,15 @@ export function ConfirmationClient({
       ) : (
         <a
           href={
+            registration.registration_type === "ambassadeur" ||
             registration.registration_type === "benevole"
               ? WHATSAPP_VOLUNTEERS_GROUP_URL
               : WHATSAPP_CHANNEL_URL
           }
           className="btn-cta-flame mt-6 inline-flex min-h-12 items-center justify-center rounded-full px-7 text-base font-extrabold uppercase tracking-[0.04em] text-papier"
         >
-          {registration.registration_type === "benevole"
+          {registration.registration_type === "ambassadeur" ||
+          registration.registration_type === "benevole"
             ? c.volunteersCta
             : c.channelCta}
         </a>

@@ -223,8 +223,8 @@ export const PARTICIPATE = {
   eyebrow: "Réponds à l'appel",
   title: "Lève-toi.",
   intro:
-    "Bénévoles, chorales, partenaires, sponsors, médias : YUNA 2026 se bâtit ensemble. Rejoins la génération qui se lève.",
-  ctaVolunteer: "Devenir bénévole",
+    "Ambassadeurs, chorales, partenaires, sponsors, médias : YUNA 2026 se bâtit ensemble. Rejoins la génération qui se lève.",
+  ctaVolunteer: "Devenir ambassadeur",
   ctaPartner: "Devenir partenaire",
 } as const;
 
@@ -333,10 +333,10 @@ export const DONATE = {
     },
     {
       id: "engager",
-      title: "S'engager bénévole",
-      text: "Créneaux concrets : accueil, sécurité, technique, protocole. Inscription avec pass QR obligatoire pour le staff jour J.",
-      cta: "S'inscrire bénévole →",
-      href: "/#inscription?type=benevole",
+      title: "Devenir ambassadeur",
+      text: "Rayonne YUNA autour de toi : invitation, présence, partage. Inscription avec pass QR, puis groupe WhatsApp dédié.",
+      cta: "S'inscrire ambassadeur →",
+      href: "/#inscription?type=ambassadeur",
     },
     {
       id: "partenariat",

@@ -206,8 +206,12 @@ export const en: Messages = {
       hint: "Saturday 3–5pm · limited seats",
     },
     benevole: {
-      label: "Volunteer / Ambassador",
-      hint: "Welcome, security, tech… · dedicated WhatsApp group",
+      label: "Volunteer",
+      hint: "Legacy type · already issued passes",
+    },
+    ambassadeur: {
+      label: "Ambassador",
+      hint: "Outreach, invites, presence · dedicated WhatsApp group",
     },
   },
   floatCta: "Register · Free",
@@ -295,9 +299,9 @@ export const en: Messages = {
     channelRedirect:
       "Next step: join the official YUNA channel for announcements.",
     channelCountdown: "Redirecting in {n} s…",
-    volunteersCta: "Join the volunteers group",
+    volunteersCta: "Join the ambassadors group",
     volunteersRedirect:
-      "Next step: join the WhatsApp group for volunteers and ambassadors.",
+      "Next step: join the YUNA ambassadors WhatsApp group.",
   },
   passActions: {
     confirmed: "Confirmed",

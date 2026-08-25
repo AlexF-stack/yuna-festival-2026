@@ -54,13 +54,13 @@ export const FAQ_ITEMS: FaqItem[] = [
       "The festival goes ahead except in extreme conditions. Follow our socials and WhatsApp channel on the day for updates.",
   },
   {
-    id: "benevole",
-    question: "Puis-je servir comme bénévole ou ambassadeur ?",
+    id: "ambassadeur",
+    question: "Puis-je devenir ambassadeur YUNA ?",
     answer:
-      "Oui ! Inscris-toi via le formulaire en cochant « Bénévole / Ambassadeur ». Après ton pass QR, tu es redirigé vers le groupe WhatsApp de l'équipe.",
-    questionEn: "Can I volunteer or be an ambassador?",
+      "Oui ! Inscris-toi via le formulaire en cochant « Ambassadeur ». Après ton pass QR, tu es redirigé vers le groupe WhatsApp dédié.",
+    questionEn: "Can I become a YUNA ambassador?",
     answerEn:
-      "Yes! Register via the form and check “Volunteer / Ambassador”. After your QR pass, you’re redirected to the team WhatsApp group.",
+      "Yes! Register via the form and check “Ambassador”. After your QR pass, you’re redirected to the dedicated WhatsApp group.",
   },
   {
     id: "inscription-place",

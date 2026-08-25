@@ -16,7 +16,7 @@ export type FestivalSession = {
   descriptionEn: string;
   speakers?: string[];
   /** Lien préselection type inscription */
-  registerType?: "pass" | "masterclass_entrepreneuriat" | "benevole";
+  registerType?: "pass" | "masterclass_entrepreneuriat" | "ambassadeur" | "benevole";
   capacity?: number;
 };
 

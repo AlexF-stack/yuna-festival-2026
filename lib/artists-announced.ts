@@ -176,9 +176,13 @@ const NAME_ALIASES: Record<string, string> = {
   yaziel: "Yaziel",
   "nista praise": "Nista Praise",
   "am rhk": "AM RHK",
-  "amrhk": "AM RHK",
+  amrhk: "AM RHK",
   "samuel ngolu": "Samuel Ngolu",
   "gildas zinsou": "Gildas Zinsou",
+  "david okit": "David Okit",
+  "david qkit": "David Okit",
+  "david o.": "David Okit",
+  "david o": "David Okit",
 };
 
 export function canonicalArtistName(name: string): string {

@@ -23,6 +23,8 @@ function stubHint(type: RegistrationType): string {
       return "Samedi 15h–17h";
     case "benevole":
       return "Staff · jour J";
+    case "ambassadeur":
+      return "Ambassadeur YUNA";
     default:
       return "Entrée libre · 2 soirées";
   }

@@ -35,7 +35,7 @@ export const WHATSAPP_CHANNEL_URL =
   process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_URL?.trim() ||
   "https://whatsapp.com/channel/0029Vb6ZGo37tkjEmwoRt80H";
 
-/** Groupe WhatsApp bÃ©nÃ©voles / ambassadeurs. */
+/** Groupe WhatsApp ambassadeurs. */
 export const WHATSAPP_VOLUNTEERS_GROUP_URL =
   process.env.NEXT_PUBLIC_WHATSAPP_VOLUNTEERS_GROUP_URL?.trim() ||
   "https://chat.whatsapp.com/KqjGksjZ4mD5z10GWae5J7";

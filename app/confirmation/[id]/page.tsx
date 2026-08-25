@@ -38,7 +38,7 @@ export default async function ConfirmationPage({
   const messaging = getMessagingCapabilities();
 
   const whatsappTarget =
-    wa === "benevole" || wa === "staff"
+    wa === "ambassadeur" || wa === "benevole" || wa === "staff"
       ? ("volunteers" as const)
       : wa === "1"
         ? ("channel" as const)

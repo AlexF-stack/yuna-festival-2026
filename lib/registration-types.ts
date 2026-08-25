@@ -20,10 +20,17 @@ const ALL_REGISTRATION_TYPES = [
     open: true,
   },
   {
-    value: "benevole",
-    label: "Bénévole / Ambassadeur",
-    hint: "Accueil, sécurité, technique… · groupe WhatsApp dédié",
+    value: "ambassadeur",
+    label: "Ambassadeur",
+    hint: "Rayonnement, invitation, présence · groupe WhatsApp dédié",
     open: true,
+  },
+  {
+    value: "benevole",
+    label: "Bénévole",
+    hint: "Ancien type · pass déjà émis",
+    /** Remplacé par ambassadeur — conservé pour les pass déjà émis. */
+    open: false,
   },
   {
     value: "masterclass_vteam",
@@ -99,7 +106,7 @@ export function parseOpenRegistrationTypes(input: {
 
   if (types.length === 0) {
     return {
-      error: "Choisis au moins une option (École royale, masterclass ou festival).",
+      error: "Choisis au moins une option (École royale, masterclass, festival ou ambassadeur).",
     };
   }
 
