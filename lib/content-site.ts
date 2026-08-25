@@ -152,7 +152,7 @@ export const PARTNERS_PAGE = {
   audienceTitle: "Audience attendue",
   audience: [
     "Des milliers de jeunes au Terrain de Midombo (5–6 septembre 2026).",
-    "Objectif d’inscriptions pass QR : 5 000, avec suivi staff et check-in sur site.",
+    "Objectif d’inscriptions pass QR : 15 000, avec suivi staff et check-in sur site.",
     "Public local Cotonou (Akpakpa) + rayonnement diaspora via le site et les réseaux.",
   ],
   visibilityTitle: "Visibilité offerte",
