@@ -47,6 +47,8 @@ function ensureAnnounced(rows: Artist[]): Artist[] {
       continue;
     }
     existing.is_revealed = true;
+    existing.order = announced.order;
+    existing.is_headliner = announced.is_headliner;
     existing.portrait_url =
       existing.portrait_url || announced.portrait_url;
     if (!existing.bio_short) existing.bio_short = announced.bio_short;
