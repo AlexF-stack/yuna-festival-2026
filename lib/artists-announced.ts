@@ -21,6 +21,18 @@ const BIO_EN =
 
 export const ANNOUNCED_ARTISTS: AnnouncedArtist[] = [
   {
+    name: "Dany Kasongo",
+    role: "Chantre",
+    roleEn: "Worship leader",
+    bio_short:
+      "Louange, adoration et présence scénique pour la génération.",
+    bio_short_en:
+      "Praise, worship and stage presence for the generation.",
+    is_headliner: false,
+    order: 1,
+    portrait_url: "/media/artists/dany-kasongo.png",
+  },
+  {
     name: "Moïse Adounkpè",
     role: "Chantre",
     roleEn: "Worship leader",
