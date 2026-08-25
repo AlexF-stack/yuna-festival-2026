@@ -41,6 +41,16 @@ export const ANNOUNCED_ARTISTS: AnnouncedArtist[] = [
     portrait_url: "/media/artists/exo-eclat.webp",
   },
   {
+    name: "David Okit",
+    role: "Chantre",
+    roleEn: "Worship leader",
+    bio_short: BIO_FR,
+    bio_short_en: BIO_EN,
+    is_headliner: false,
+    order: 5,
+    portrait_url: "/media/artists/david-okit.webp",
+  },
+  {
     name: "Miracle Agossa",
     role: "Chantre",
     roleEn: "Worship leader",
