@@ -2,6 +2,7 @@
  * Artistes annoncés avec affiche officielle.
  * Source : visuels YUNA Festival 2026.
  * Line-up complet : tous les noms ci-dessous sont dévoilés.
+ * Ordre d’affichage = `order` (1re ligne grille : Simiane, Kasongo, Okit, Exo).
  */
 export const LINEUP_FULLY_REVEALED = true;
 
@@ -23,6 +24,16 @@ const BIO_EN =
 
 export const ANNOUNCED_ARTISTS: AnnouncedArtist[] = [
   {
+    name: "Simiane Tatu",
+    role: "Chantre · Adoration",
+    roleEn: "Worship leader · Adoration",
+    bio_short: "Temps fort d'adoration. Louange et impactation divine.",
+    bio_short_en: "Key worship set. Praise and divine impact.",
+    is_headliner: false,
+    order: 1,
+    portrait_url: "/media/artists/simiane-tatu.png",
+  },
+  {
     name: "Dany Kasongo",
     role: "Chantre",
     roleEn: "Worship leader",
@@ -31,28 +42,8 @@ export const ANNOUNCED_ARTISTS: AnnouncedArtist[] = [
     bio_short_en:
       "Praise, worship and stage presence for the generation.",
     is_headliner: false,
-    order: 1,
+    order: 2,
     portrait_url: "/media/artists/dany-kasongo.png",
-  },
-  {
-    name: "Moïse Adounkpè",
-    role: "Chantre",
-    roleEn: "Worship leader",
-    bio_short: BIO_FR,
-    bio_short_en: BIO_EN,
-    is_headliner: false,
-    order: 4,
-    portrait_url: "/media/artists/moise-adounkpe.webp",
-  },
-  {
-    name: "Exo Éclat",
-    role: "Louange & adoration",
-    roleEn: "Praise & worship",
-    bio_short: BIO_FR,
-    bio_short_en: BIO_EN,
-    is_headliner: false,
-    order: 5,
-    portrait_url: "/media/artists/exo-eclat.webp",
   },
   {
     name: "David Okit",
@@ -61,8 +52,28 @@ export const ANNOUNCED_ARTISTS: AnnouncedArtist[] = [
     bio_short: BIO_FR,
     bio_short_en: BIO_EN,
     is_headliner: false,
-    order: 5,
+    order: 3,
     portrait_url: "/media/artists/david-okit.webp",
+  },
+  {
+    name: "Exo Éclat",
+    role: "Louange & adoration",
+    roleEn: "Praise & worship",
+    bio_short: BIO_FR,
+    bio_short_en: BIO_EN,
+    is_headliner: false,
+    order: 4,
+    portrait_url: "/media/artists/exo-eclat.webp",
+  },
+  {
+    name: "Moïse Adounkpè",
+    role: "Chantre",
+    roleEn: "Worship leader",
+    bio_short: BIO_FR,
+    bio_short_en: BIO_EN,
+    is_headliner: false,
+    order: 5,
+    portrait_url: "/media/artists/moise-adounkpe.webp",
   },
   {
     name: "Miracle Agossa",
@@ -143,18 +154,8 @@ export const ANNOUNCED_ARTISTS: AnnouncedArtist[] = [
     bio_short: BIO_FR,
     bio_short_en: BIO_EN,
     is_headliner: false,
-    order: 15,
+    order: 13,
     portrait_url: "/media/artists/gildas-zinsou.webp",
-  },
-  {
-    name: "Simiane Tatu",
-    role: "Chantre · Adoration",
-    roleEn: "Worship leader · Adoration",
-    bio_short: "Temps fort d'adoration. Louange et impactation divine.",
-    bio_short_en: "Key worship set. Praise and divine impact.",
-    is_headliner: false,
-    order: 20,
-    portrait_url: "/media/artists/simiane-tatu.png",
   },
   {
     name: "David Track",
@@ -163,7 +164,7 @@ export const ANNOUNCED_ARTISTS: AnnouncedArtist[] = [
     bio_short: BIO_FR,
     bio_short_en: BIO_EN,
     is_headliner: false,
-    order: 21,
+    order: 14,
     portrait_url: "/media/artists/david-track.webp",
   },
 ];
