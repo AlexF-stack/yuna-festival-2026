@@ -159,9 +159,7 @@ export function Register() {
         } catch {
           /* ignore */
         }
-        const wa = registrationTypes.includes("ambassadeur")
-          ? "ambassadeur"
-          : "1";
+        const wa = "1";
         // Échec partiel : au moins un pass existe — on oriente vers la confirmation.
         if (partialId) {
           if (partialIds && partialIds.length > 1) {
@@ -190,9 +188,7 @@ export function Register() {
         return;
       }
 
-      const wa = registrationTypes.includes("ambassadeur")
-        ? "ambassadeur"
-        : "1";
+      const wa = "1";
       if (payload.ids && payload.ids.length > 1) {
         router.push(
           `/confirmation/${payload.id}?wa=${wa}&groupe=${payload.ids.join(",")}`,

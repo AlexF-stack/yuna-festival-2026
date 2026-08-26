@@ -51,6 +51,9 @@ export function ConfirmationClient({
     whatsappTarget === "volunteers"
       ? c.volunteersRedirect
       : c.channelRedirect;
+  const isAmbassador =
+    registration.registration_type === "ambassadeur" ||
+    registration.registration_type === "benevole";
 
   const [secondsLeft, setSecondsLeft] = useState(
     joinWhatsapp ? Math.ceil(WA_REDIRECT_MS / 1000) : 0,
@@ -110,20 +113,21 @@ export function ConfirmationClient({
         </div>
       ) : (
         <a
-          href={
-            registration.registration_type === "ambassadeur" ||
-            registration.registration_type === "benevole"
-              ? WHATSAPP_VOLUNTEERS_GROUP_URL
-              : WHATSAPP_CHANNEL_URL
-          }
+          href={WHATSAPP_CHANNEL_URL}
           className="btn-cta-flame mt-6 inline-flex min-h-12 items-center justify-center rounded-full px-7 text-base font-extrabold uppercase tracking-[0.04em] text-papier"
         >
-          {registration.registration_type === "ambassadeur" ||
-          registration.registration_type === "benevole"
-            ? c.volunteersCta
-            : c.channelCta}
+          {c.channelCta}
         </a>
       )}
+
+      {isAmbassador ? (
+        <a
+          href={WHATSAPP_VOLUNTEERS_GROUP_URL}
+          className="mt-4 text-sm font-bold text-bleu underline underline-offset-4"
+        >
+          {c.volunteersCta}
+        </a>
+      ) : null}
 
       {groupIds.length > 0 ? (
         <div className="mt-6 w-full max-w-[420px] rounded-2xl border border-bleu/15 bg-papier p-4 text-sm text-charbon">

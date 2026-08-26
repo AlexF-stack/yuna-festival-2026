@@ -57,10 +57,10 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "ambassadeur",
     question: "Puis-je devenir ambassadeur YUNA ?",
     answer:
-      "Oui ! Inscris-toi via le formulaire en cochant « Ambassadeur ». Après ton pass QR, tu es redirigé vers le groupe WhatsApp dédié.",
+      "Oui ! Inscris-toi via le formulaire en cochant « Ambassadeur ». Sur ta page de pass QR, un lien te donne accès au groupe WhatsApp dédié.",
     questionEn: "Can I become a YUNA ambassador?",
     answerEn:
-      "Yes! Register via the form and check “Ambassador”. After your QR pass, you’re redirected to the dedicated WhatsApp group.",
+      "Yes! Register via the form and check “Ambassador”. On your QR pass page, a link gives you access to the dedicated WhatsApp group.",
   },
   {
     id: "inscription-place",

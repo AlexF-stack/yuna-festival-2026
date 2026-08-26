@@ -37,12 +37,9 @@ export default async function ConfirmationPage({
     .filter((x) => x && x !== id);
   const messaging = getMessagingCapabilities();
 
-  const whatsappTarget =
-    wa === "ambassadeur" || wa === "benevole" || wa === "staff"
-      ? ("volunteers" as const)
-      : wa === "1"
-        ? ("channel" as const)
-        : null;
+  // Tout le monde rejoint le canal officiel ; le groupe ambassadeurs reste
+  // accessible en lien secondaire depuis la confirmation.
+  const whatsappTarget = wa ? ("channel" as const) : null;
 
   return (
     <ConfirmationClient
