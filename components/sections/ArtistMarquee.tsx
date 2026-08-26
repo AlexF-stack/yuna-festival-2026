@@ -1,22 +1,26 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
+
+import { ANNOUNCED_ARTISTS } from "@/lib/artists-announced";
 
 type ArtistMarqueeProps = {
-  /** Noms révélés uniquement — sinon motif mystère. */
-  revealedNames: string[];
+  /** Noms à faire défiler — fallback = line-up officiel. */
+  revealedNames?: string[];
 };
 
 /**
- * Bandeau : noms révélés, sinon un motif court « ? · Bientôt dévoilé ».
- * Ne jamais passer de noms non révélés.
+ * Bandeau doré : noms des artistes en boucle.
+ * Rotation sur un wrapper externe pour ne pas casser l’animation CSS.
  */
 export function ArtistMarquee({ revealedNames }: ArtistMarqueeProps) {
   const reduce = useReducedMotion();
   const source =
-    revealedNames.length > 0
+    revealedNames && revealedNames.length > 0
       ? revealedNames
-      : ["?", "Bientôt dévoilé", "?", "Artistes YUNA"];
+      : ANNOUNCED_ARTISTS.map((a) => a.name);
+
+  // Deux copies identiques → translateX(-50%) boucle sans trou.
   const loop = [...source, ...source];
 
   return (
@@ -26,20 +30,23 @@ export function ArtistMarquee({ revealedNames }: ArtistMarqueeProps) {
       data-nav-tone="papier"
       className="relative z-10 overflow-hidden bg-gradient-to-r from-jaune via-[#f5c84a] to-jaune py-5"
     >
-      <div
-        className={`flex w-max gap-10 ${reduce ? "" : "marquee-track"} -rotate-[1.5deg] origin-center`}
-      >
-        {loop.map((name, i) => (
-          <motion.span
-            key={`${name}-${i}`}
-            className="font-display text-[clamp(1.4rem,3vw,2rem)] font-extrabold uppercase tracking-wide text-encre"
-          >
-            {name}
-            <span className="mx-10 text-feu" aria-hidden>
-              ✦
+      <div className="-rotate-[1.5deg] origin-center">
+        <div
+          className={`flex w-max gap-10 ${reduce ? "" : "marquee-track"}`}
+        >
+          {loop.map((name, i) => (
+            <span
+              key={`${name}-${i}`}
+              className="shrink-0 font-display text-[clamp(1.4rem,3vw,2rem)] font-extrabold uppercase tracking-wide text-encre"
+              aria-hidden={i >= source.length ? true : undefined}
+            >
+              {name}
+              <span className="mx-10 text-feu" aria-hidden>
+                ✦
+              </span>
             </span>
-          </motion.span>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

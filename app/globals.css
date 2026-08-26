@@ -313,7 +313,8 @@ body {
 }
 
 .marquee-track {
-  animation: marquee-scroll 42s linear infinite;
+  animation: marquee-scroll 48s linear infinite;
+  will-change: transform;
 }
 
 .marquee-track:hover {
