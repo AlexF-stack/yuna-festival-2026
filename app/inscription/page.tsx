@@ -76,7 +76,7 @@ export default function InscriptionPage() {
       </section>
 
       <Suspense fallback={null}>
-        <Register />
+        <Register compact />
       </Suspense>
     </main>
   );

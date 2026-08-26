@@ -38,7 +38,15 @@ function createIdempotencyKey(): string {
   });
 }
 
-export function Register() {
+type RegisterProps = {
+  /**
+   * Sur la page dédiée, l'en-tête de section répéterait le titre de la page et
+   * repousserait le premier champ d'autant.
+   */
+  compact?: boolean;
+};
+
+export function Register({ compact = false }: RegisterProps = {}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useMessages();
@@ -228,14 +236,20 @@ export function Register() {
     >
       <div className="relative z-10">
         <Reveal className="max-w-2xl">
-          <SectionHeading
-            eyebrow={t.register.eyebrow}
-            title={t.register.title}
-            titleId="register-title"
-            description={t.register.lead}
-            tone="encre"
-            accentLast
-          />
+          {compact ? (
+            <h2 id="register-title" className="sr-only">
+              {t.register.title}
+            </h2>
+          ) : (
+            <SectionHeading
+              eyebrow={t.register.eyebrow}
+              title={t.register.title}
+              titleId="register-title"
+              description={t.register.lead}
+              tone="encre"
+              accentLast
+            />
+          )}
           <RegistrationGauge />
         </Reveal>
 

@@ -10,6 +10,7 @@ import { useMessages } from "@/components/i18n/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { TransitionLink } from "@/components/ui/TransitionLink";
 import { FESTIVAL } from "@/lib/festival";
+import { registerHref } from "@/lib/register-href";
 
 type NavSurface = "hero" | "bleu" | "feu" | "papier";
 
@@ -248,7 +249,7 @@ export function SiteHeader() {
             {messages.common.myPass}
           </TransitionLink>
           <ButtonLink
-            href="/#inscription"
+            href={registerHref(pathname)}
             className={`cta-register-pulse min-h-12 !px-5 !py-3 text-[0.8rem] font-extrabold uppercase tracking-[0.06em] min-[1100px]:!px-6 min-[1100px]:text-[0.85rem] ${style.cta}`}
           >
             {messages.common.register}
@@ -258,7 +259,7 @@ export function SiteHeader() {
         <div className="flex max-w-[min(100%,14.5rem)] items-center justify-end gap-1.5 min-[380px]:max-w-none min-[380px]:gap-2 min-[900px]:hidden">
           <LanguageSwitcher light={lightText} surface={activeSurface} />
           <ButtonLink
-            href="/#inscription"
+            href={registerHref(pathname)}
             className={`cta-register-pulse min-h-10 shrink-0 !px-3 !py-2 text-[0.65rem] font-extrabold uppercase tracking-[0.04em] min-[380px]:!px-3.5 min-[380px]:text-[0.68rem] ${style.cta}`}
           >
             {messages.common.registerShort}
@@ -334,7 +335,7 @@ export function SiteHeader() {
             {messages.common.myPass}
           </TransitionLink>
           <ButtonLink
-            href="/#inscription"
+            href={registerHref(pathname)}
             className={`cta-register-pulse mt-3 w-full !py-4 text-[1.05rem] font-extrabold uppercase tracking-[0.06em] ${style.cta}`}
             onClick={() => setOpen(false)}
           >
