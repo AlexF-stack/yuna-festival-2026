@@ -7,6 +7,13 @@ import { FESTIVAL } from "@/lib/festival";
 const DESCRIPTION =
   "Génère ton pass QR gratuit pour le YUNA Festival 2026, les 5 et 6 septembre au Terrain de Midombo à Cotonou. Entrée libre, pass obligatoire, une minute suffit.";
 
+/**
+ * Rendu dynamique volontaire : `Register` lit les paramètres d'URL, ce qui en
+ * prérendu statique renvoie le formulaire côté client uniquement. Les visiteurs
+ * arriveraient sur un titre suivi d'un vide le temps du chargement JS.
+ */
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Prendre ma place",
   description: DESCRIPTION,
