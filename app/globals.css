@@ -305,16 +305,15 @@ body {
 
 @keyframes marquee-scroll {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 .marquee-track {
-  animation: marquee-scroll 48s linear infinite;
-  will-change: transform;
+  animation: marquee-scroll 42s linear infinite;
 }
 
 .marquee-track:hover {

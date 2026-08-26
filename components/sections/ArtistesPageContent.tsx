@@ -90,11 +90,7 @@ export function ArtistesPageContent({ artists }: ArtistesPageContentProps) {
   const hasMystery =
     !LINEUP_FULLY_REVEALED &&
     artists.some((a) => !a.is_revealed || !a.name);
-  const revealedNames = (
-    revealed.length > 0
-      ? revealed.map((a) => a.name as string)
-      : []
-  );
+  const revealedNames = revealed.map((a) => a.name as string);
   const headliner = revealed.find((a) => a.is_headliner);
   const withPortrait = revealed.filter((a) => a.portrait_url);
   const others = revealed.filter((a) => !a.is_headliner && !a.portrait_url);

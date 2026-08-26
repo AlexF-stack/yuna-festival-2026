@@ -1,20 +1,17 @@
 "use client";
 
-import { useReducedMotion } from "framer-motion";
-
 import { ANNOUNCED_ARTISTS } from "@/lib/artists-announced";
 
 type ArtistMarqueeProps = {
-  /** Noms à faire défiler — fallback = line-up officiel. */
+  /** Noms optionnels — sinon line-up officiel complet. */
   revealedNames?: string[];
 };
 
 /**
- * Bandeau doré : noms des artistes en boucle.
- * Rotation sur un wrapper externe pour ne pas casser l’animation CSS.
+ * Bandeau : noms des artistes en défilement continu.
+ * Animation CSS pure (pas de transform Framer sur le même nœud).
  */
 export function ArtistMarquee({ revealedNames }: ArtistMarqueeProps) {
-  const reduce = useReducedMotion();
   const source =
     revealedNames && revealedNames.length > 0
       ? revealedNames
@@ -30,10 +27,8 @@ export function ArtistMarquee({ revealedNames }: ArtistMarqueeProps) {
       data-nav-tone="papier"
       className="relative z-10 overflow-hidden bg-gradient-to-r from-jaune via-[#f5c84a] to-jaune py-5"
     >
-      <div className="-rotate-[1.5deg] origin-center">
-        <div
-          className={`flex w-max gap-10 ${reduce ? "" : "marquee-track"}`}
-        >
+      <div className="origin-center -rotate-[1.5deg]">
+        <div className="marquee-track flex w-max gap-10 will-change-transform">
           {loop.map((name, i) => (
             <span
               key={`${name}-${i}`}
