@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: "https://www.festivalyuna.com/inscription",
+      lastModified: LAST_DEPLOY,
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
       url: "https://www.festivalyuna.com/mouvement",
       lastModified: LAST_DEPLOY,
       changeFrequency: "monthly",

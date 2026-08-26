@@ -99,6 +99,7 @@ type RegistrationsTable = {
     notify_error: string | null;
     bus_wanted: boolean;
     bus_location: string | null;
+    source: string | null;
   };
   Insert: {
     id?: string;
@@ -118,6 +119,7 @@ type RegistrationsTable = {
     notify_error?: string | null;
     bus_wanted?: boolean;
     bus_location?: string | null;
+    source?: string | null;
   };
   Update: {
     id?: string;
@@ -137,6 +139,7 @@ type RegistrationsTable = {
     notify_error?: string | null;
     bus_wanted?: boolean;
     bus_location?: string | null;
+    source?: string | null;
   };
   Relationships: [];
 };

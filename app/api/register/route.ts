@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 
 import { after, NextResponse } from "next/server";
 
+import { sanitizeSource } from "@/lib/attribution";
 import { notifyCrmRegistration, siteOrigin } from "@/lib/crm";
 import { sendRegistrationConfirmation } from "@/lib/messaging";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
@@ -30,6 +31,7 @@ type RegisterBody = {
   website?: string;
   consent?: boolean;
   guests?: GuestBody[];
+  source?: string;
 };
 
 type ParsedPerson = {
@@ -71,7 +73,11 @@ function deriveCategoryIdempotencyKey(
 
 async function insertOne(
   supabase: ReturnType<typeof createSupabaseAdminClient>,
-  input: ParsedPerson & { idempotencyKey: string; partyId: string | null },
+  input: ParsedPerson & {
+    idempotencyKey: string;
+    partyId: string | null;
+    source: string | null;
+  },
 ) {
   const { data: existingByKey } = await supabase
     .from("registrations")
@@ -98,16 +104,29 @@ async function insertOne(
     bus_location: input.busLocation,
   };
 
-  // party_id / bus_* ajoutés en migration — cast jusqu’à regen des types.
+  // party_id / bus_* / source ajoutés en migration — cast jusqu’à regen des types.
   const withExtras = {
     ...baseRow,
     ...(input.partyId ? { party_id: input.partyId } : {}),
+    ...(input.source ? { source: input.source } : {}),
   };
   let { data, error } = await supabase
     .from("registrations")
     .insert(withExtras as typeof baseRow)
     .select("id, name, qr_code, created_at")
     .single();
+
+  // Migration source pas encore appliquée : retry sans la colonne.
+  if (error?.message?.includes("source") && input.source) {
+    ({ data, error } = await supabase
+      .from("registrations")
+      .insert({
+        ...baseRow,
+        ...(input.partyId ? { party_id: input.partyId } : {}),
+      } as typeof baseRow)
+      .select("id, name, qr_code, created_at")
+      .single());
+  }
 
   // Migration party_id pas encore appliquée : retry sans la colonne.
   if (error?.message?.includes("party_id") && input.partyId) {
@@ -228,6 +247,8 @@ export async function POST(request: Request) {
     );
   }
 
+  const source = sanitizeSource(body.source);
+
   const rawGuests = Array.isArray(body.guests) ? body.guests : [];
   if (rawGuests.length > MAX_PARTY - 1) {
     return NextResponse.json(
@@ -329,6 +350,7 @@ export async function POST(request: Request) {
         ...person,
         idempotencyKey: key,
         partyId,
+        source,
       });
 
       if (!result.ok) {

@@ -8,6 +8,7 @@ import { useMessages } from "@/components/i18n/LocaleProvider";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { resolveAttribution } from "@/lib/attribution";
 import { FESTIVAL } from "@/lib/festival";
 import {
   isOpenRegistrationType,
@@ -55,9 +56,11 @@ export function Register() {
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [pending, setPending] = useState(false);
+  const [source, setSource] = useState<string | null>(null);
 
   useEffect(() => {
     setIdempotencyKey(createIdempotencyKey());
+    setSource(resolveAttribution());
   }, []);
 
   useEffect(() => {
@@ -136,6 +139,7 @@ export function Register() {
           idempotencyKey: key,
           website,
           consent,
+          source: source ?? resolveAttribution(),
           guests: guests.map((g) => ({
             name: g.name.trim(),
             phone: g.phone.trim(),
