@@ -74,3 +74,6 @@ supabase/.temp/
 
 .env.count-test.local
 
+# dossier de travail campagnes (assets sources, exports)
+/campagne/
+
