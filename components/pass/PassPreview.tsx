@@ -96,7 +96,7 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
             <p className="font-mono text-[0.55rem] font-bold uppercase tracking-[0.2em] text-jaune">
               {typeLabel}
             </p>
-            <p className="mt-1 font-display text-[clamp(1.1rem,4.6vw,1.7rem)] font-extrabold leading-[1.05] text-papier [overflow-wrap:anywhere]">
+            <p className="mt-1 font-display text-[clamp(1.05rem,4.4vw,1.7rem)] font-extrabold leading-[1.08] text-papier break-words">
               {displayName}
             </p>
           </div>
@@ -122,7 +122,7 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
             <QrPlaceholder />
           </div>
           <div className="mt-1.5 w-full">
-            <p className="font-display text-[0.68rem] font-extrabold uppercase leading-snug text-bleu [overflow-wrap:anywhere] sm:text-[0.75rem]">
+            <p className="font-display text-[0.62rem] font-extrabold uppercase leading-snug text-bleu break-words sm:text-[0.75rem]">
               {typeLabel}
             </p>
             <p className="mt-0.5 text-[0.58rem] text-charbon/70">

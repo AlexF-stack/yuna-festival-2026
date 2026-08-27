@@ -69,7 +69,7 @@ export function PassTicket({
             <p className="font-mono text-[0.58rem] font-bold uppercase tracking-[0.2em] text-jaune">
               {typeLabel}
             </p>
-            <h2 className="mt-1.5 font-display text-[clamp(1.2rem,5vw,1.95rem)] font-extrabold leading-[1.05] tracking-tight text-papier [overflow-wrap:anywhere]">
+            <h2 className="mt-1.5 font-display text-[clamp(1.05rem,4.4vw,1.95rem)] font-extrabold leading-[1.08] tracking-tight text-papier break-words">
               {shownName}
             </h2>
           </div>
@@ -87,7 +87,7 @@ export function PassTicket({
           <span className="absolute bottom-0 left-1/2 size-4 -translate-x-1/2 translate-y-1/2 rounded-full bg-nuit-profonde" />
         </div>
 
-        <div className="relative flex w-[38%] min-w-[118px] flex-col items-center justify-between bg-papier px-2.5 py-3 text-center sm:min-w-[140px] sm:px-3 sm:py-4">
+        <div className="relative flex w-[38%] min-w-[108px] flex-col items-center justify-between bg-papier px-2 py-3 text-center sm:min-w-[140px] sm:px-3 sm:py-4">
           <div className="w-full rounded-lg bg-papier p-1.5 ring-1 ring-bleu/10">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -100,7 +100,7 @@ export function PassTicket({
           </div>
 
           <div className="mt-2 w-full">
-            <p className="font-display text-[0.68rem] font-extrabold uppercase leading-snug text-bleu [overflow-wrap:anywhere] sm:text-[0.78rem]">
+            <p className="font-display text-[0.62rem] font-extrabold uppercase leading-snug text-bleu break-words sm:text-[0.78rem]">
               {typeLabel}
             </p>
             <p className="mt-0.5 text-[0.62rem] leading-snug text-charbon/75 sm:text-[0.68rem]">
