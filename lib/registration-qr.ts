@@ -10,14 +10,28 @@ import { siteOrigin } from "@/lib/crm";
 export async function generateRegistrationQr(
   registrationId: string,
 ): Promise<string> {
-  const payload = `${siteOrigin()}/confirmation/${registrationId}`;
-  return QRCode.toDataURL(payload, {
-    errorCorrectionLevel: "M",
-    margin: 2,
-    width: 320,
-    color: {
-      dark: "#0A0E14",
-      light: "#ffffff",
-    },
-  });
+  const payload = confirmationPayload(registrationId);
+  return QRCode.toDataURL(payload, QR_OPTIONS);
 }
+
+/** PNG binaire — pièce jointe / image CID des mails de pass. */
+export async function generateRegistrationQrPng(
+  registrationId: string,
+): Promise<Buffer> {
+  const payload = confirmationPayload(registrationId);
+  return QRCode.toBuffer(payload, { ...QR_OPTIONS, type: "png" });
+}
+
+function confirmationPayload(registrationId: string): string {
+  return `${siteOrigin()}/confirmation/${registrationId}`;
+}
+
+const QR_OPTIONS = {
+  errorCorrectionLevel: "M" as const,
+  margin: 2,
+  width: 480,
+  color: {
+    dark: "#0A0E14",
+    light: "#ffffff",
+  },
+};
