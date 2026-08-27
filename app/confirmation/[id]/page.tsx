@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ConfirmationClient } from "@/components/pass/ConfirmationClient";
 import { getMessagingCapabilities } from "@/lib/messaging";
+import { generateRegistrationQr } from "@/lib/registration-qr";
 import { getRegistrationById } from "@/lib/registrations";
 
 type ConfirmationPageProps = {
@@ -31,6 +32,14 @@ export default async function ConfirmationPage({
 
   if (!registration) notFound();
 
+  // QR régénéré à l'affichage : origin et contraste à jour, sans migrer la base.
+  let qrCode = registration.qr_code;
+  try {
+    qrCode = await generateRegistrationQr(registration.id);
+  } catch {
+    /* image stockée en repli */
+  }
+
   const groupIds = (groupe ?? "")
     .split(",")
     .map((x) => x.trim())
@@ -46,7 +55,7 @@ export default async function ConfirmationPage({
       registration={{
         id: registration.id,
         name: registration.name,
-        qr_code: registration.qr_code,
+        qr_code: qrCode,
         registration_type: registration.registration_type,
       }}
       groupIds={groupIds}

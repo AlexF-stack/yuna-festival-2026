@@ -1,38 +1,22 @@
 "use client";
 
-import Image from "next/image";
-
 import { FESTIVAL } from "@/lib/festival";
 import {
-  REGISTRATION_TYPE_LABELS,
-  type RegistrationType,
-} from "@/lib/registration-types";
+  displayPassName,
+  passStubHint,
+  passTypeLabel,
+  passWhenLine,
+} from "@/lib/pass-copy";
+import type { RegistrationType } from "@/lib/registration-types";
 
 type PassPreviewProps = {
   name: string;
   registrationType: RegistrationType;
 };
 
-function stubHint(type: RegistrationType): string {
-  switch (type) {
-    case "ecole_royale":
-      return "École royale";
-    case "masterclass_vteam":
-      return "Samedi 10h–13h";
-    case "masterclass_entrepreneuriat":
-      return "Samedi 15h–17h";
-    case "benevole":
-      return "Staff · jour J";
-    case "ambassadeur":
-      return "Ambassadeur YUNA";
-    default:
-      return "Entrée libre · 2 soirées";
-  }
-}
-
 function QrPlaceholder() {
   return (
-    <svg viewBox="0 0 120 120" className="h-full w-full text-bleu" role="img">
+    <svg viewBox="0 0 120 120" className="h-full w-full text-encre" role="img">
       <title>Emplacement QR</title>
       <rect width="120" height="120" fill="white" />
       <rect x="8" y="8" width="28" height="28" fill="currentColor" />
@@ -72,8 +56,9 @@ function QrPlaceholder() {
 
 /** Aperçu live du billet à talon — le vrai QR n’est généré qu’après inscription. */
 export function PassPreview({ name, registrationType }: PassPreviewProps) {
-  const displayName = name.trim().length >= 2 ? name.trim() : "Ton nom";
-  const typeLabel = REGISTRATION_TYPE_LABELS[registrationType];
+  const displayName =
+    name.trim().length >= 2 ? displayPassName(name) : "Ton nom";
+  const typeLabel = passTypeLabel(registrationType);
 
   return (
     <aside
@@ -81,8 +66,8 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
       aria-live="polite"
       aria-label="Aperçu de ton ticket YUNA"
     >
-      <div className="relative flex min-h-[152px] overflow-hidden rounded-[0.9rem] sm:min-h-[176px]">
-        <div className="relative flex min-w-0 flex-[1.65] flex-col justify-between overflow-hidden bg-gradient-to-br from-bleu-fonce via-bleu to-[#005a94] px-3.5 py-3.5 text-papier sm:px-4 sm:py-4">
+      <div className="relative flex min-h-[160px] overflow-hidden rounded-[0.9rem] sm:min-h-[184px]">
+        <div className="relative flex min-w-0 flex-[1.65] flex-col justify-between bg-gradient-to-br from-bleu-fonce via-bleu to-[#005a94] px-3.5 py-3.5 text-papier sm:px-4 sm:py-4">
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 opacity-[0.14]"
@@ -94,13 +79,13 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
           />
 
           <div className="relative z-10 flex items-center gap-2">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/brand/yuna-mark.webp"
               alt=""
               width={32}
               height={32}
               className="h-7 w-7 object-contain"
-              unoptimized
             />
             <p className="font-mono text-[0.55rem] font-bold uppercase tracking-[0.2em] text-jaune">
               Aperçu ticket
@@ -108,19 +93,16 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
           </div>
 
           <div className="relative z-10 mt-4">
-            <p className="font-mono text-[0.58rem] font-bold uppercase tracking-[0.2em] text-jaune">
-              Billet d&apos;entrée
-            </p>
-            <p className="mt-1 font-display text-[clamp(1.05rem,4.2vw,1.55rem)] font-extrabold uppercase leading-[0.95] text-papier [overflow-wrap:anywhere]">
+            <p className="font-mono text-[0.55rem] font-bold uppercase tracking-[0.2em] text-jaune">
               {typeLabel}
             </p>
-            <p className="mt-1.5 text-sm font-semibold leading-snug text-papier [overflow-wrap:anywhere]">
+            <p className="mt-1 font-display text-[clamp(1.1rem,4.6vw,1.7rem)] font-extrabold leading-[1.05] text-papier [overflow-wrap:anywhere]">
               {displayName}
             </p>
           </div>
 
           <p className="relative z-10 mt-3 font-mono text-[0.55rem] font-bold uppercase tracking-[0.12em] text-jaune sm:text-[0.6rem]">
-            {FESTIVAL.datesShort} · {FESTIVAL.locationLine}
+            {passWhenLine(registrationType)}
           </p>
         </div>
 
@@ -140,11 +122,11 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
             <QrPlaceholder />
           </div>
           <div className="mt-1.5 w-full">
-            <p className="font-display text-[0.68rem] font-extrabold uppercase leading-tight text-bleu sm:text-[0.75rem]">
+            <p className="font-display text-[0.68rem] font-extrabold uppercase leading-snug text-bleu [overflow-wrap:anywhere] sm:text-[0.75rem]">
               {typeLabel}
             </p>
             <p className="mt-0.5 text-[0.58rem] text-charbon/70">
-              {stubHint(registrationType)}
+              {passStubHint(registrationType)}
             </p>
           </div>
           <div className="mt-1.5 w-full border-t border-bleu/10 pt-1.5">

@@ -304,6 +304,8 @@ export const en: Messages = {
     volunteersCta: "Join the ambassadors group",
     volunteersRedirect:
       "Next step: join the YUNA ambassadors WhatsApp group.",
+    channelAfterTicket:
+      "Then join the official channel for schedules, reminders and access info.",
   },
   passActions: {
     confirmed: "Confirmed",
@@ -311,6 +313,8 @@ export const en: Messages = {
     savePass:
       "Download your ticket (PNG) or save the link. You can also recover it via My pass.",
     downloadPng: "Download ticket",
+    downloadFail:
+      "Download failed on this phone. Screenshot the ticket, or recover it via My pass.",
     share: "Share / copy link",
     linkCopied: "Link copied",
     shareTitle: "YUNA Festival 2026 ticket",

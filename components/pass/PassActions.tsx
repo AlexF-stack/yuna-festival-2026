@@ -31,6 +31,7 @@ export function PassActions({
   const [caps, setCaps] = useState<Caps | null>(null);
   const [shareHint, setShareHint] = useState<string | null>(null);
   const [downloading, setDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -62,18 +63,27 @@ export function PassActions({
     if (!(node instanceof HTMLElement)) return;
 
     setDownloading(true);
+    setDownloadError(null);
+    const options = {
+      cacheBust: true,
+      pixelRatio: 2,
+      backgroundColor: "#0A0E14",
+    } as const;
     try {
-      const dataUrl = await toPng(node, {
-        cacheBust: true,
-        pixelRatio: 2,
-        backgroundColor: "#0A0E14",
-      });
+      let dataUrl: string;
+      try {
+        dataUrl = await toPng(node, options);
+      } catch {
+        // Safari iOS : les polices cross-origin tachent le canvas.
+        dataUrl = await toPng(node, { ...options, skipFonts: true });
+      }
       const link = document.createElement("a");
       link.download = `yuna-ticket-${shortId}.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {
       console.error("[pass] ticket export", err);
+      setDownloadError(a.downloadFail);
     } finally {
       setDownloading(false);
     }
@@ -142,6 +152,11 @@ export function PassActions({
         >
           {downloading ? "…" : a.downloadPng}
         </button>
+        {downloadError ? (
+          <p role="alert" className="text-center text-sm text-feu min-[420px]:col-span-2">
+            {downloadError}
+          </p>
+        ) : null}
         <button
           type="button"
           onClick={() => void onShare()}

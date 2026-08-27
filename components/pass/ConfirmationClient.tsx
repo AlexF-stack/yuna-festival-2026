@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 import { PassActions } from "@/components/pass/PassActions";
 import { PassTicket } from "@/components/pass/PassTicket";
@@ -25,11 +24,9 @@ type ConfirmationClientProps = {
   };
   groupIds: string[];
   messagingAny: boolean;
-  /** Après inscription : redirection WhatsApp (canal ou groupe bénévoles). */
+  /** Après inscription : CTA WhatsApp mis en avant (sans redirection auto). */
   whatsappTarget?: WhatsappTarget | null;
 };
-
-const WA_REDIRECT_MS = 2800;
 
 export function ConfirmationClient({
   registration,
@@ -40,46 +37,16 @@ export function ConfirmationClient({
   const t = useMessages();
   const c = t.confirmation;
   const shortId = registration.id.slice(0, 8).toUpperCase();
-  const joinWhatsapp = Boolean(whatsappTarget);
+  const highlightWhatsapp = Boolean(whatsappTarget);
   const waUrl =
     whatsappTarget === "volunteers"
       ? WHATSAPP_VOLUNTEERS_GROUP_URL
       : WHATSAPP_CHANNEL_URL;
   const waCta =
     whatsappTarget === "volunteers" ? c.volunteersCta : c.channelCta;
-  const waRedirect =
-    whatsappTarget === "volunteers"
-      ? c.volunteersRedirect
-      : c.channelRedirect;
   const isAmbassador =
     registration.registration_type === "ambassadeur" ||
     registration.registration_type === "benevole";
-
-  const [secondsLeft, setSecondsLeft] = useState(
-    joinWhatsapp ? Math.ceil(WA_REDIRECT_MS / 1000) : 0,
-  );
-
-  useEffect(() => {
-    if (!joinWhatsapp) return;
-
-    const started = Date.now();
-    const tick = window.setInterval(() => {
-      const left = Math.max(
-        0,
-        Math.ceil((WA_REDIRECT_MS - (Date.now() - started)) / 1000),
-      );
-      setSecondsLeft(left);
-    }, 200);
-
-    const redirect = window.setTimeout(() => {
-      window.location.assign(waUrl);
-    }, WA_REDIRECT_MS);
-
-    return () => {
-      window.clearInterval(tick);
-      window.clearTimeout(redirect);
-    };
-  }, [joinWhatsapp, waUrl]);
 
   return (
     <main
@@ -96,41 +63,8 @@ export function ConfirmationClient({
         {messagingAny ? c.leadMessaging : c.leadSave}
       </p>
 
-      {joinWhatsapp ? (
-        <div className="mt-6 w-full max-w-[420px] rounded-2xl border border-vert/30 bg-vert/10 px-4 py-4 text-center">
-          <p className="text-sm font-semibold text-encre">{waRedirect}</p>
-          {secondsLeft > 0 ? (
-            <p className="mt-1 font-mono text-xs font-bold uppercase tracking-wide text-charbon">
-              {fill(c.channelCountdown, { n: secondsLeft })}
-            </p>
-          ) : null}
-          <a
-            href={waUrl}
-            className="btn-cta-flame mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-full px-6 text-base font-extrabold uppercase tracking-[0.04em] text-papier"
-          >
-            {waCta}
-          </a>
-        </div>
-      ) : (
-        <a
-          href={WHATSAPP_CHANNEL_URL}
-          className="btn-cta-flame mt-6 inline-flex min-h-12 items-center justify-center rounded-full px-7 text-base font-extrabold uppercase tracking-[0.04em] text-papier"
-        >
-          {c.channelCta}
-        </a>
-      )}
-
-      {isAmbassador ? (
-        <a
-          href={WHATSAPP_VOLUNTEERS_GROUP_URL}
-          className="mt-4 text-sm font-bold text-bleu underline underline-offset-4"
-        >
-          {c.volunteersCta}
-        </a>
-      ) : null}
-
       {groupIds.length > 0 ? (
-        <div className="mt-6 w-full max-w-[420px] rounded-2xl border border-bleu/15 bg-papier p-4 text-sm text-charbon">
+        <div className="mt-6 w-full max-w-[560px] rounded-2xl border border-bleu/15 bg-papier p-4 text-sm text-charbon">
           <p className="font-semibold text-encre">
             {fill(c.groupTitle, { n: groupIds.length + 1 })}
           </p>
@@ -150,7 +84,7 @@ export function ConfirmationClient({
         </div>
       ) : null}
 
-      <div className="mt-10 w-full max-w-[560px]">
+      <div className="mt-8 w-full max-w-[560px]">
         <PassTicket
           name={registration.name}
           qrCode={registration.qr_code}
@@ -159,10 +93,33 @@ export function ConfirmationClient({
         />
       </div>
 
-      <PassActions
-        registrationId={registration.id}
-        shortId={shortId}
-      />
+      <PassActions registrationId={registration.id} shortId={shortId} />
+
+      <div
+        className={`mt-8 w-full max-w-[560px] rounded-2xl px-4 py-4 text-center ${
+          highlightWhatsapp
+            ? "border border-vert/30 bg-vert/10"
+            : "border border-bleu/12 bg-papier"
+        }`}
+      >
+        <p className="text-sm leading-relaxed text-charbon">
+          {c.channelAfterTicket}
+        </p>
+        <a
+          href={waUrl}
+          className="mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-full border border-vert/40 bg-vert px-6 text-base font-extrabold uppercase tracking-[0.04em] text-papier"
+        >
+          {waCta}
+        </a>
+        {isAmbassador ? (
+          <a
+            href={WHATSAPP_VOLUNTEERS_GROUP_URL}
+            className="mt-3 inline-block text-sm font-bold text-bleu underline underline-offset-4"
+          >
+            {c.volunteersCta}
+          </a>
+        ) : null}
+      </div>
 
       <p className="mt-6 text-center text-sm text-charbon">
         {c.lostLink}{" "}
@@ -174,7 +131,7 @@ export function ConfirmationClient({
         </Link>
       </p>
 
-      <ButtonLink href="/#inscription" variant="ghost" className="mt-6 !px-0">
+      <ButtonLink href="/" variant="ghost" className="mt-6 !px-0">
         {t.common.backHome}
       </ButtonLink>
     </main>

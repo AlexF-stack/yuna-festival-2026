@@ -171,12 +171,14 @@ export type Messages = {
     channelCountdown: string;
     volunteersCta: string;
     volunteersRedirect: string;
+    channelAfterTicket: string;
   };
   passActions: {
     confirmed: string;
     messageSent: string;
     savePass: string;
     downloadPng: string;
+    downloadFail: string;
     share: string;
     linkCopied: string;
     shareTitle: string;
