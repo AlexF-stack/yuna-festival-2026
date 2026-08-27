@@ -37,6 +37,23 @@ const nextConfig = {
         destination: "https://www.festivalyuna.com/:path*",
         permanent: true,
       },
+      // Liens courts de campagne : lisibles dans un message transféré ou une
+      // bio, et porteurs de l'attribution que l'URL nue ne donnerait pas.
+      {
+        source: "/w",
+        destination: "/inscription?utm_source=whatsapp&utm_medium=relais",
+        permanent: false,
+      },
+      {
+        source: "/insta",
+        destination: "/inscription?utm_source=instagram&utm_medium=bio",
+        permanent: false,
+      },
+      {
+        source: "/pass",
+        destination: "/inscription",
+        permanent: false,
+      },
       {
         source: "/don",
         destination: "/soutenir",
