@@ -111,10 +111,12 @@ export function PassPreview({ name, registrationType }: PassPreviewProps) {
             <p className="font-mono text-[0.58rem] font-bold uppercase tracking-[0.2em] text-jaune">
               Billet d&apos;entrée
             </p>
-            <p className="mt-1 font-display text-[clamp(1.15rem,4.8vw,1.75rem)] font-extrabold uppercase leading-[0.92] text-papier">
+            <p className="mt-1 font-display text-[clamp(1.05rem,4.2vw,1.55rem)] font-extrabold uppercase leading-[0.95] text-papier [overflow-wrap:anywhere]">
               {typeLabel}
             </p>
-            <p className="mt-1.5 truncate text-sm text-papier/80">{displayName}</p>
+            <p className="mt-1.5 text-sm font-semibold leading-snug text-papier [overflow-wrap:anywhere]">
+              {displayName}
+            </p>
           </div>
 
           <p className="relative z-10 mt-3 font-mono text-[0.55rem] font-bold uppercase tracking-[0.12em] text-jaune sm:text-[0.6rem]">

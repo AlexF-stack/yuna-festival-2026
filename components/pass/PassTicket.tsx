@@ -84,10 +84,10 @@ export function PassTicket({
             <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.22em] text-jaune">
               Billet d&apos;entrée
             </p>
-            <h2 className="mt-1.5 font-display text-[clamp(1.35rem,5.5vw,2.15rem)] font-extrabold uppercase leading-[0.92] tracking-tight text-papier">
+            <h2 className="mt-1.5 font-display text-[clamp(1.15rem,4.6vw,1.85rem)] font-extrabold uppercase leading-[0.95] tracking-tight text-papier [overflow-wrap:anywhere]">
               {typeLabel}
             </h2>
-            <p className="mt-2 max-w-[18ch] truncate font-sans text-sm text-papier/80 sm:text-[0.95rem]">
+            <p className="mt-2 font-sans text-sm font-semibold leading-snug text-papier [overflow-wrap:anywhere] sm:text-[0.95rem]">
               {name}
             </p>
           </div>
@@ -121,7 +121,7 @@ export function PassTicket({
           </div>
 
           <div className="mt-2 w-full">
-            <p className="font-display text-[0.72rem] font-extrabold uppercase leading-tight text-bleu sm:text-[0.82rem]">
+            <p className="font-display text-[0.68rem] font-extrabold uppercase leading-snug text-bleu [overflow-wrap:anywhere] sm:text-[0.78rem]">
               {typeLabel}
             </p>
             <p className="mt-0.5 text-[0.62rem] leading-snug text-charbon/75 sm:text-[0.68rem]">
