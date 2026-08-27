@@ -45,6 +45,11 @@ const nextConfig = {
         permanent: false,
       },
       {
+        source: "/s",
+        destination: "/inscription?utm_source=sms&utm_medium=campagne",
+        permanent: false,
+      },
+      {
         source: "/insta",
         destination: "/inscription?utm_source=instagram&utm_medium=bio",
         permanent: false,
