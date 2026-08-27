@@ -7,7 +7,7 @@ import {
   passTypeLabel,
   passWhenLine,
 } from "@/lib/pass-copy";
-import { generateRegistrationQrPng } from "@/lib/registration-qr";
+import { qrImageUrl } from "@/lib/registration-qr";
 import { isRegistrationType } from "@/lib/registration-types";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { SITE_CONTACT } from "@/lib/site";
@@ -68,7 +68,7 @@ function confirmationBody(job: NotifyJob): string {
       ? `YUNA Festival 2026 : ton pass a été mis à jour\n`
       : `YUNA Festival 2026 : inscription confirmée ✓\n`) +
     `${displayPassName(job.name)} · ${typeLabel(job.registrationType)}\n` +
-    `Le QR est joint à ce mail. Présente-le à l'entrée.\n` +
+    `Le QR est dans ce mail. Présente-le à l'entrée.\n` +
     `Lien de secours : ${job.confirmationUrl}\n` +
     `${passWhenLine(
       isRegistrationType(job.registrationType)
@@ -102,7 +102,7 @@ function passTicketHtml(job: NotifyJob): string {
                       <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#FCD116;">${escapeHtml(when)}</p>
                     </td>
                     <td width="42%" valign="middle" align="center" style="background:#ffffff;padding:14px 10px;">
-                      <img src="cid:yuna-qr" width="150" height="150" alt="QR code ticket ${escapeAttr(name)}" style="display:block;margin:0 auto;width:150px;height:150px;border:0;"/>
+                      <img src="${escapeAttr(qrImageUrl(job.id))}" width="150" height="150" alt="QR code ticket ${escapeAttr(name)}" style="display:block;margin:0 auto;width:150px;height:150px;border:0;"/>
                       <p style="margin:10px 0 0;font-size:11px;font-weight:800;text-transform:uppercase;color:#0077BB;">${escapeHtml(type)}</p>
                       <p style="margin:4px 0 0;font-size:11px;color:#4a5560;">${escapeHtml(hint)}</p>
                       <p style="margin:10px 0 0;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:#8b99a8;">YUNA ${FESTIVAL.edition} · ${shortId}</p>
@@ -138,7 +138,7 @@ function passEmailHtml(job: NotifyJob): string {
             ${lead}
           </p>
           ${passTicketHtml(job)}
-          <p style="margin:18px 0 0;font-size:13px;color:#64748b;">Réf. ticket : YUNA-${shortId} · aussi en pièce jointe PNG.</p>
+          <p style="margin:18px 0 0;font-size:13px;color:#64748b;">Réf. ticket : YUNA-${shortId}</p>
           <p style="margin:16px 0 0;">
             <a href="${escapeAttr(job.confirmationUrl)}"
                style="display:inline-block;background:#FF3B00;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 20px;border-radius:999px;">
@@ -180,9 +180,7 @@ export async function sendPassEmail(job: NotifyJob): Promise<void> {
   if (!apiKey) throw new Error("RESEND_API_KEY manquant");
   if (!job.email) throw new Error("E-mail destinataire manquant");
 
-  const qrPng = await generateRegistrationQrPng(job.id);
   const type = typeLabel(job.registrationType);
-  const shortId = job.id.slice(0, 8).toUpperCase();
   const subject =
     job.purpose === "update"
       ? `Ton pass YUNA a été mis à jour · ${type}`
@@ -196,13 +194,6 @@ export async function sendPassEmail(job: NotifyJob): Promise<void> {
     subject,
     html: passEmailHtml(job),
     text: confirmationBody(job),
-    attachments: [
-      {
-        filename: `yuna-pass-${shortId}.png`,
-        content: qrPng,
-        contentId: "yuna-qr",
-      },
-    ],
   });
   if (error) {
     throw new Error(error.message || "Resend send failed");

@@ -14,12 +14,17 @@ export async function generateRegistrationQr(
   return QRCode.toDataURL(payload, QR_OPTIONS);
 }
 
-/** PNG binaire — pièce jointe / image CID des mails de pass. */
+/** PNG binaire — image HTTPS `/api/pass/[id]/qr` (les CID Gmail restent souvent à « sent »). */
 export async function generateRegistrationQrPng(
   registrationId: string,
 ): Promise<Buffer> {
   const payload = confirmationPayload(registrationId);
   return QRCode.toBuffer(payload, { ...QR_OPTIONS, type: "png" });
+}
+
+/** URL publique du QR — à coller dans `<img src>` des mails, pas en CID. */
+export function qrImageUrl(registrationId: string): string {
+  return `${siteOrigin()}/api/pass/${registrationId}/qr`;
 }
 
 function confirmationPayload(registrationId: string): string {
