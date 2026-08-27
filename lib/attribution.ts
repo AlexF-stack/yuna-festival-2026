@@ -56,15 +56,20 @@ function fromReferrer(referrer: string, ownHost: string): string | null {
 export function resolveAttribution(): string | null {
   if (typeof window === "undefined") return null;
 
-  try {
-    const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored) return stored;
-  } catch {
-    /* sessionStorage indisponible (navigation privée stricte) */
-  }
-
   const params = new URLSearchParams(window.location.search);
   const utmSource = params.get("utm_source");
+
+  // Un paramètre de campagne explicite prime toujours sur la valeur mémorisée :
+  // sinon une visite antérieure dans la même session ferait passer un clic
+  // d'email pour du trafic direct.
+  if (!utmSource) {
+    try {
+      const stored = sessionStorage.getItem(STORAGE_KEY);
+      if (stored) return stored;
+    } catch {
+      /* sessionStorage indisponible (navigation privée stricte) */
+    }
+  }
 
   let resolved: string;
   if (utmSource) {
